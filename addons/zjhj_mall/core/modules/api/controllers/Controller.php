@@ -89,6 +89,9 @@ class Controller extends \app\controllers\Controller
         if (!$access_token) {
             $access_token = \Yii::$app->request->post('access_token');
         }
+        if (!$access_token) {
+            $access_token = \Yii::$app->request->getHeaders()->get('Access-token');
+        }
         if ($access_token) {
             \Yii::$app->user->loginByAccessToken($access_token);
         }
@@ -110,6 +113,7 @@ class Controller extends \app\controllers\Controller
                 $_acid = \Yii::$app->request->post('_acid');
             }
             $this->store_id = \Yii::$app->request->get('store_id');
+            $this->store_id = 126;
             if ($_acid && $_acid != -1) {
                 $this->store = Store::findOne([
                     'acid' => $_acid,

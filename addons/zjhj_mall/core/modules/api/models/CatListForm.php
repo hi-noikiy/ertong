@@ -15,11 +15,12 @@ class CatListForm extends ApiModel
 {
     public $store_id;
     public $limit;
+    public $parent_id;
 
     public function rules()
     {
         return [
-            [['store_id', 'limit'], 'integer'],
+            [['store_id', 'limit', 'parent_id',], 'integer'],
         ];
     }
 
@@ -28,9 +29,12 @@ class CatListForm extends ApiModel
         if (!$this->validate()) {
             return $this->errorResponse;
         }
+        if (empty($this->parent_id)){
+            $this->parent_id = 0;
+        }
         $query = Cat::find()->where([
             'is_delete' => 0,
-            'parent_id' => 0,
+            'parent_id' => $this->parent_id,
             'is_show' => 1,
         ]);
         if ($this->store_id) {

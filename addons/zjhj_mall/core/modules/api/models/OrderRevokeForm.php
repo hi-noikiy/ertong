@@ -77,7 +77,6 @@ class OrderRevokeForm extends ApiModel
         $order_detail_list = OrderDetail::find()->where(['order_id' => $order->id, 'is_delete' => 0])->all();
 
         $t = \Yii::$app->db->beginTransaction();
-
         //库存恢复
         foreach ($order_detail_list as $order_detail) {
             $goods = Goods::findOne($order_detail->goods_id);

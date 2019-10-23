@@ -432,6 +432,7 @@ class OrderSubmitPreviewForm extends OrderData
                 'weight' => $goods->weight,
                 'full_cut' => $goods->full_cut,
                 'cat_id' => $goods->cat_id,
+                'storage_type' => $goods->storage_type
             ];
 
             $total_price += $new_item->price;
@@ -645,6 +646,7 @@ class OrderSubmitPreviewForm extends OrderData
             'full_cut' => $goods->full_cut,
             'cat_id' => $goods->cat_id,
             'mch_id' => $goods->mch_id,
+            'storage_type' => $goods->storage_type
         ];
 
         $list = [];

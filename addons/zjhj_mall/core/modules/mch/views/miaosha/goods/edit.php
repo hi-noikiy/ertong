@@ -8,7 +8,7 @@ defined('YII_ENV') or exit('Access Denied');
  */
 
 $urlManager = Yii::$app->urlManager;
-$this->title = '商品编辑';
+$this->title = '秒杀商品编辑';
 $staticBaseUrl = Yii::$app->request->baseUrl . '/statics';
 $this->params['active_nav_group'] = 2;
 $returnUrl = Yii::$app->request->referrer;
@@ -209,6 +209,22 @@ if (!$returnUrl) {
         max-width: 160px;
         width: 160px;
     }
+    .input-group-addon-service{
+        margin-bottom: 0;
+        margin-right: 1rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.25;
+        color: #464a4c;
+        text-align: center;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: .25rem;
+        padding: .35rem .7rem;
+
+    }
+    .delelt-span{
+        padding-left: 0.8rem;
+    }
 </style>
 
 
@@ -237,7 +253,7 @@ if (!$returnUrl) {
                         <div class="head-content" flex="dir:left">
                             <a flex="cross:center" class="head-step" href="#step2">基本信息</a>
                             <a flex="cross:center" class="head-step" href="#step3">规格/库存</a>
-                            <a flex="cross:center" class="head-step" href="#step6">营销</a>
+                            <!-- <a flex="cross:center" class="head-step" href="#step6">营销</a> -->
 <!--                            <a flex="cross:center" class="head-step" href="#step5">分销设置</a>-->
                             <a flex="cross:center" class="head-step" href="#step4">商品详情</a>
                         </div>
@@ -250,59 +266,6 @@ if (!$returnUrl) {
                             <span class="step-location" id="step2"></span>
                         </div>
                         <div>
-                            <div class="form-group row">
-                                <div class="col-3 text-right">
-                                    <label class=" col-form-label">淘宝一键采集</label>
-                                </div>
-                                <div class="col-9">
-                                    <div class="input-group short-row">
-                                        <input class="form-control copy-url" placeholder="请输入淘宝商品详情地址连接">
-                                        <span class="input-group-btn">
-                                    <a class="btn btn-secondary copy-btn" href="javascript:">立即获取</a>
-                                </span>
-                                    </div>
-                                    <div class="short-row text-muted fs-sm">
-                                        例如：商品链接为:http://item.taobao.com/item.htm?id=522155891308
-                                        或:http://detail.tmall.com/item.htm?id=522155891308
-                                    </div>
-                                    <div class="short-row text-muted fs-sm">若不使用，则该项为空</div>
-                                    <div class="copy-error text-danger fs-sm" hidden></div>
-                                </div>
-                            </div>
-                            <div class="form-group row" hidden>
-                                <div class="col-3 text-right">
-                                    <label class=" col-form-label">京东一键采集</label>
-                                </div>
-                                <div class="col-9">
-                                    <div class="input-group short-row">
-                                        <input class="form-control copy-url" placeholder="请输入京东商品详情地址连接">
-                                        <span class="input-group-btn">
-                                    <a class="btn btn-secondary copy-btn" href="javascript:">立即获取</a>
-                                </span>
-                                    </div>
-                                    <div class="short-row text-muted fs-sm">
-                                        例如：商品链接为:https://item.jd.com/5346660.html
-                                    </div>
-                                    <div class="short-row text-muted fs-sm">若不使用，则该项为空</div>
-                                    <div class="copy-error text-danger fs-sm" hidden></div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-3 text-right">
-                                    <label class=" col-form-label">商城商品拉取</label>
-                                </div>
-                                <div class="col-9">
-                                    <div class="input-group short-row">
-                                        <input class="form-control copy-mall-id" name="mall_id" type="number"
-                                               placeholder="请输入商城商品ID">
-                                        <span class="input-group-btn">
-                                    <a class="btn btn-secondary mall-copy-btn" href="javascript:">立即获取</a>
-                                </span>
-                                    </div>
-                                    <div class="short-row text-muted fs-sm">若不使用，则该项为空</div>
-                                    <div class="copy-error text-danger fs-sm" hidden></div>
-                                </div>
-                            </div>
 
                             <div class="form-group row">
                                 <div class="col-3 text-right">
@@ -492,14 +455,20 @@ if (!$returnUrl) {
                             </div>
 
 
-                            <div class="form-group row">
+                            <div <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="form-group row">
                                 <div class="col-3 text-right">
                                     <label class=" col-form-label">服务内容</label>
                                 </div>
                                 <div class="col-9">
-                                    <input class="form-control short-row" name="model[service]"
-                                           value="<?= $goods['service'] ?>">
-                                    <div class="fs-sm text-muted">例子：正品保障,极速发货,7天退换货。多个请使用英文逗号<kbd>,</kbd>分隔</div>
+                                    
+                                    <div class="input-group short-row service">
+                                        <?php foreach ($service_arr as $p) : ?>
+                                        <span class="input-group-addon-service"><?= $p['name'] ?><span class="delelt-span">×</span></span>
+                                        <?php endforeach; ?>
+                                        <a class="select-service addcat" data-toggle="modal"
+                                                data-target="#catModal" style="color: #0275d8;">选择</a>
+                                    </div>
+                                    
                                 </div>
                             </div>
 
@@ -763,7 +732,6 @@ if (!$returnUrl) {
 
                         </div>
                     </div>
-
                     <div class="step-block" flex="dir:left box:first">
                         <div>
                             <span>营销</span>
@@ -904,7 +872,6 @@ if (!$returnUrl) {
 
                         </div>
                     </div>
-
                     <div class="step-block" flex="dir:left box:first">
                         <div>
                             <span>图文详情</span>
@@ -948,13 +915,46 @@ if (!$returnUrl) {
                 ]) ?>
             </div>
         </div>
-
+        <input name="model[service]" id="service_name_arr" type="hidden" value="<?= $goods['service'] ?>">
         <div style="margin-left: 0;" class="form-group row text-center">
             <a class="btn btn-primary auto-form-btn" href="javascript:">保存</a>
             <input type="button" class="btn btn-default ml-4"
                    name="Submit" onclick="javascript:history.back(-1);" value="返回">
         </div>
     </form>
+    <div class="modal fade" id="catModal" tabindex="-1" role="dialog"
+         aria-labelledby="catModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document" style="margin-top: 30rem">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <b>选择分类</b>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cat-box">
+                        <div class="row" style="height: 9rem;">
+                            <?php foreach ($option_arr as $index => $cat) : ?>
+                                <label class="input-group-addon-service cat-item <?= $index == 0 ? 'active' : '' ?>" style="height: 2.5rem;margin-left: 0.5rem;margin-top: 0.5rem;">
+                                    <?= $cat['service'] ?>
+                                    <input value="<?= $cat['id'] ?>"
+                                        <?= $index == 0 ? 'checked' : '' ?>
+                                           type="checkbox"
+                                           name="model[cat_id]">
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary cat-confirm">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?= $this->render('/layouts/attrs/common', [
@@ -964,6 +964,7 @@ if (!$returnUrl) {
 
 <script src="<?= Yii::$app->request->baseUrl ?>/statics/ueditor/ueditor.config.js?v=1.9.6"></script>
 <script src="<?= Yii::$app->request->baseUrl ?>/statics/ueditor/ueditor.all.min.js?v=1.9.6"></script>
+<script src="<?= Yii::$app->request->baseUrl ?>/statics/mch/js/Sortable.min.js"></script>
 <script>
     var Map = function () {
         this._data = [];
@@ -1016,24 +1017,76 @@ if (!$returnUrl) {
         enableContextMenu: false,
         autoHeightEnabled: false,
     });
-    $(document).on("change", ".cat-item input", function () {
+    // $(document).on("change", ".cat-item input", function () {
+    //     if ($(this).prop("checked")) {
+    //         $(".cat-item").removeClass("active");
+    //         $(this).parent(".cat-item").addClass("active");
+    //     } else {
+    //         $(this).parent(".cat-item").removeClass("active");
+    //     }
+    // });
+    //多项选择服务内容
+    $(document).on("click", ".cat-item input", function () {
+        
         if ($(this).prop("checked")) {
-            $(".cat-item").removeClass("active");
-            $(this).parent(".cat-item").addClass("active");
+            
+            // $(".cat-item").removeClass("active");
+            $(this).parents().addClass("active");
+            $(this).attr('checked','checked');
         } else {
             $(this).parent(".cat-item").removeClass("active");
+            $(this).removeAttr('checked');
         }
     });
-
     $(document).on("change", ".parent-cat-list input", function () {
         getSubCatList();
     });
 
-    //分类设置
-    $(document).on('click', '.cat-modal', function () {
+    //服务内容
+    $(document).on('click', '.addcat', function () {
         page.select_i = $(this).data('index');
     });
 
+    //服务内容设置
+    $(document).on("click", ".cat-confirm", function () {
+        
+        // var cat_id = new Array();
+        // $(".cat-item.active input").each(function(i){
+        //     cat_id[i] = $(this).val();
+        // });
+        
+
+        var cat_name = new Array();
+        $(".cat-item.active").each(function(i){
+            cat_name[i] = $.trim($(this).text());
+        });
+        var cat_name_vals = cat_name.join(",");
+        $("#service_name_arr").val(cat_name_vals);
+        var html='';
+        $(".service").empty()
+        for (var i = 0; i < cat_name.length; i++) {
+            html+='<span class="input-group-addon-service">'+cat_name[i]+'<span class="delelt-span">×</span></span>';
+        }
+        html+='<a class="select-service addcat" data-toggle="modal" data-target="#catModal" style="color: #0275d8;">选择</a>';
+        $(".service").html(html)
+        $("#catModal").modal("hide");
+    });
+    //删除服务内容
+    $(document).on('click', '.delelt-span', function () {
+        $(this).parent('span').remove();
+        var span_text=$(this).parent('span').text();
+
+        var span_text=span_text.substring(0,span_text.length-1)
+
+        var service_name_arr=$("#service_name_arr").val();
+        var arr=service_name_arr.split(',');
+        arr.splice($.inArray(span_text,arr),1);
+        var cat_name_vals = arr.join(",");
+        $("#service_name_arr").val(cat_name_vals);
+        // for(var i in service_name_arr.split(',')){
+        //     alert(arr[i])
+        // }
+    });
     function getSubCatList() {
         var parent_id = $(".parent-cat-list input:checked").val();
         page.sub_cat_list = [];

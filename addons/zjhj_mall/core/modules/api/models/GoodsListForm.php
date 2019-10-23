@@ -26,6 +26,9 @@ class GoodsListForm extends ApiModel
     public $cat_id;
     public $page;
     public $limit;
+    public $max_price;
+    public $mini_price;
+    public $brand_id;
 
     public $sort;
     public $sort_type;
@@ -40,6 +43,7 @@ class GoodsListForm extends ApiModel
         return [
             [['keyword'], 'trim'],
             [['store_id', 'cat_id', 'page', 'limit',], 'integer'],
+            [['max_price', 'mini_price'], 'string'],
             [['limit'], 'integer',],
             [['limit',], 'default', 'value' => 12],
             [['sort', 'sort_type', 'recommend_count'], 'integer',],
@@ -77,6 +81,10 @@ class GoodsListForm extends ApiModel
                 ]
             );
         }
+        if ($this->max_price && $this->mini_price){
+            $query->andWhere(['>=', 'g.price', $this->mini_price]);
+            $query->andWhere(['<=', 'g.price', $this->max_price]);
+        }
 
         if ($this->goods_id) {
             $arr = explode(',', $this->goods_id);
@@ -110,7 +118,6 @@ class GoodsListForm extends ApiModel
                 'g.addtime' => SORT_DESC,
             ]);
         }
-
         $od_query = OrderDetail::find()->alias('od')
             ->leftJoin(['o' => Order::tableName()], 'od.order_id=o.id')
             ->where(['od.is_delete' => 0, 'o.store_id' => $this->store_id, 'o.is_pay' => 1, 'o.is_delete' => 0])->groupBy('od.goods_id')->select('SUM(od.num) num,od.goods_id');

@@ -18,6 +18,7 @@ use Yii;
  * @property integer $is_delete
  * @property integer $type
  * @property string $open_type
+ * @property integer $is_show
  */
 class Banner extends \yii\db\ActiveRecord
 {
@@ -36,7 +37,7 @@ class Banner extends \yii\db\ActiveRecord
     {
         return [
             [['store_id', 'pic_url', 'title'], 'required'],
-            [['store_id', 'sort', 'addtime', 'is_delete', 'type'], 'integer'],
+            [['store_id', 'sort', 'addtime', 'is_delete', 'type', 'is_show'], 'integer'],
             [['pic_url', 'page_url'], 'string'],
             [['title', 'open_type'], 'string', 'max' => 255],
             ['type', 'default', 'value' => 1,],
@@ -57,6 +58,7 @@ class Banner extends \yii\db\ActiveRecord
             'sort' => '排序，升序',
             'addtime' => '添加时间',
             'is_delete' => '是否删除：0=未删除，1=已删除',
+            'is_show' => '是否显示【1=> 显示，2=> 隐藏】',
             'type' => '类型 【1=> 商城，2=> 拼团】',
             'open_type' => 'Open Type',
         ];

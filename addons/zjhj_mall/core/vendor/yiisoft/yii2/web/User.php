@@ -341,7 +341,6 @@ class User extends Component
     public function getId()
     {
         $identity = $this->getIdentity();
-
         return $identity !== null ? $identity->getId() : null;
     }
 

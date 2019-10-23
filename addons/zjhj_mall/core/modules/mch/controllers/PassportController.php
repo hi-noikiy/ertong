@@ -30,6 +30,7 @@ class PassportController extends \app\controllers\Controller
             exit;
         }
 
+
         $user = User::findOne([
             'we7_uid' => $we7_user['uid'],
         ]);

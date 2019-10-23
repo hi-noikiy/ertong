@@ -19,10 +19,10 @@ $this->params['active_nav_group'] = 1;
         <form class="auto-form" method="post" return="<?= $urlManager->createUrl(['mch/store/slide']) ?>">
             <div class="form-group row">
                 <div class="form-group-label col-sm-2 text-right">
-                    <label class="col-form-label">标题</label>
+                    <label class="col-form-label required">标题</label>
                 </div>
                 <div class="col-sm-6">
-                    <input class="form-control" type="text" name="model[title]" value="<?= $list['title'] ?>">
+                    <input class="form-control"  maxlength="10" type="text" name="model[title]" value="<?= $list['title'] ?>">
                 </div>
             </div>
             <div class="form-group row">
@@ -45,12 +45,57 @@ $this->params['active_nav_group'] = 1;
             </div>
             <div class="form-group row">
                 <div class="form-group-label col-sm-2 text-right">
-                    <label class="col-form-label">排序</label>
+                    <label class="col-form-label required">排序</label>
                 </div>
                 <div class="col-sm-6">
                     <input class="form-control" type="number" step="1" name="model[sort]"
                            value="<?= $list['sort'] ? $list['sort'] : 100 ?>">
                 </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-group-label col-sm-2 text-right">
+                    <label class="col-form-label required">状态</label>
+                </div>
+                <?php if ($list['is_show']==1) : ?>
+                    <div class="col-9 col-form-label">
+                        <label class="radio-label">
+                            <input checked="checked" value="1" name="model[is_show]" type="radio" class="custom-control-input">
+                            <span class="label-icon"></span>
+                            <span class="label-text">显示</span>
+                        </label>
+                        <label class="radio-label">
+                            <input value="2" name="model[is_show]" type="radio" class="custom-control-input">
+                            <span class="label-icon"></span>
+                            <span class="label-text">不显示</span>
+                        </label>
+                    </div>
+                <?php elseif ($list['is_show']==2) : ?>
+                    <div class="col-9 col-form-label">
+                        <label class="radio-label">
+                            <input value="1" name="model[is_show]" type="radio" class="custom-control-input">
+                            <span class="label-icon"></span>
+                            <span class="label-text">显示</span>
+                        </label>
+                        <label class="radio-label">
+                            <input checked="checked" value="2" name="model[is_show]" type="radio" class="custom-control-input">
+                            <span class="label-icon"></span>
+                            <span class="label-text">不显示</span>
+                        </label>
+                    </div>
+                <?php else : ?>
+                    <div class="col-9 col-form-label">
+                        <label class="radio-label">
+                            <input checked="checked" value="1" name="model[is_show]" type="radio" class="custom-control-input">
+                            <span class="label-icon"></span>
+                            <span class="label-text">显示</span>
+                        </label>
+                        <label class="radio-label">
+                            <input value="2" name="model[is_show]" type="radio" class="custom-control-input">
+                            <span class="label-icon"></span>
+                            <span class="label-text">不显示</span>
+                        </label>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="form-group row">
                 <div class="form-group-label col-sm-2 text-right">

@@ -344,13 +344,29 @@ class GoodsController extends Controller
         // 默认商品服务
         if (!$goods['service']) {
             $option = Option::get('good_services', $this->store->id, 'admin', []);
-            foreach ($option as $service) {
-                if ($service['is_default'] == 1) {
-                    $goods->service = $service['service'];
-                    break;
+            foreach ($option as $item) {
+                if ($item['is_default'] == 1) {
+                    $service[]=array(
+                            'id'=>$item['id'],
+                            'name'=>$item['service'],
+                    );
                 }
             }
+            $service_arr=array_slice($service,0,3);
+            
+            foreach ($service_arr as $key => $val) {
+                $service_name[]=$val['name'];
+            }
+            $goods['service']=implode(',',$service_name);
+        }else{
+            $service=explode(',',$goods['service']);
+            foreach ($service as $val) {
+                $service_arr[]=array(
+                    'name'=>$val,
+                );
+            }
         }
+        $option_arr = Option::get('good_services', $this->store->id, 'admin', []);
 
         isset($goods_share) ? $goods_share->is_level = $goods->is_level : '';
 
@@ -358,8 +374,11 @@ class GoodsController extends Controller
         if ($goods_share->is_level == '') {
             $goods_share->is_level = 1;
         }
+
         return $this->render('goods-edit', [
             'goods' => $goods,
+            'service_arr' => $service_arr,
+            'option_arr' => $option_arr,
             'cat' => $ptCat,
             'levelList' => $levelList,
             'postageRiles' => $postageRiles,

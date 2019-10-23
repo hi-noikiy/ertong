@@ -75,6 +75,7 @@ class CartListForm extends ApiModel
 
     public function search()
     {
+        //var_dump($this->store_id);die;
         $query = Cart::find()->where(['store_id' => $this->store_id, 'user_id' => $this->user_id, 'is_delete' => 0]);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'page' => $this->page - 1, 'pageSize' => 10000,]);

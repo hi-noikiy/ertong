@@ -109,7 +109,7 @@ class Model extends \yii\base\Model
                 $userLoginUrl = $urlManager->hostInfo . $urlManager->baseUrl . '/mch.php?store_id=' . $storeId;
                 break;
             case 'role':
-                $userLoginUrl = $urlManager->hostInfo . $urlManager->baseUrl . '/role.php?store_id=' . $storeId;
+                $userLoginUrl = $urlManager->hostInfo . $urlManager->baseUrl . '/home.php';
                 break;
             case 'bind' :
                 $userLoginUrl = Yii::$app->urlManager->createAbsoluteUrl(['wechat-platform/bind-user', 'store_id' => $this->getCurrentStoreId()]);

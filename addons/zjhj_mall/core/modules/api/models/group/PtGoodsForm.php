@@ -54,8 +54,9 @@ class PtGoodsForm extends ApiModel
             $query->andWhere(['cat_id' => $cid]);
         } else {
             // 热销
-            $query->andWhere(['is_hot' => 1]);
+            //$query->andWhere(['is_hot' => 1]);
         }
+
         $count = $query->count();
         $p = new Pagination(['totalCount' => $count, 'pageSize' => $limit, 'page' => $page - 1]);
         $list = $query
@@ -64,6 +65,7 @@ class PtGoodsForm extends ApiModel
             ->orderBy('sort ASC')
             ->asArray()
             ->all();
+        //var_dump($query->createCommand()->getRawSql());die;
         foreach ($list as $key => $goods) {
             $list[$key]['groupList'] = PtOrderDetail::find()
                 ->select([

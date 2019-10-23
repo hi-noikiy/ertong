@@ -42,7 +42,9 @@ class MiaoshaListForm extends ApiModel
             'g.status' => 1,
         ])->leftJoin(['g' => MsGoods::tableName()], 'mg.goods_id=g.id')
             ->groupBy('mg.start_time')->asArray()
-            ->select('mg.*')->all();
+            //->select('mg.id,g.name,g.cover_pic,g.original_price AS price,mg.start_time,mg.attr,mg.goods_id')->asArray()->all();
+            ->select('g.name, mg.*')->all();
+        //var_dump($miaosha_list);die;
         $has_active = false;
         foreach ($miaosha_list as $i => $item) {
             if ($item['start_time'] < $this->time) {

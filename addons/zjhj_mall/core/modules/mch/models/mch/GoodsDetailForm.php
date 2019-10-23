@@ -83,6 +83,7 @@ class GoodsDetailForm extends MchModel
                 'cover_pic' => $goods->cover_pic,
                 'price' => $goods->price,
                 'original_price' => $goods->original_price,
+                'merchant_price' => $goods->merchant_price,
                 'service' => $goods->service,
                 'full_cut' => $goods->full_cut ? json_decode($goods->full_cut, true) : ['pieces' => null, 'forehead' => null],
                 'use_attr' => $goods->use_attr ? 1 : 0,

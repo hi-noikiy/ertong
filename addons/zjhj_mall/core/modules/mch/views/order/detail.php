@@ -307,7 +307,7 @@ $urlStr = get_plugin_url();
                                             <span>电话：<?= $order['mobile'] ?></span>
                                         </div>
                                         <div>
-                                            <span>收货地址：<?= $order['address'] ?></span>
+                                            <span>收货地址：<?= $order['cabinet']['province'] ?><?= $order['cabinet']['city'] ?><?= $order['cabinet']['address'] ?></span>
                                         </div>
                                     <?php else : ?>
                                         <div>

@@ -52,6 +52,24 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
         border-color: #ddd #ddd #fff;
         background-color: #fff;
     }
+    .sea{
+        width:20rem;
+        height:auto;
+        border:1px solid #999;
+        border-top:none;
+        list-style-type:none;
+        margin:0;
+        padding:0;
+    }
+    .seali{
+        width:100%;
+        height:2rem;
+        line-height:2rem;
+        font-size:14px;
+    }
+    .seali:hover{
+        background:#ddd;
+    }
 </style>
 
 <!-- 地区选择模态框 -->
@@ -146,7 +164,7 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">修改收货地址</h5>
+                <h5 class="modal-title" id="exampleModalLabel">修改自提柜地址</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -169,8 +187,36 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                         <input class="form-control mobile" value="">
                     </div>
                 </div>
-
                 <div class="form-group row">
+                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
+                        <label class="col-form-label required">发件人地区</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select class="form-control province" style="float: left;"
+                                    name="model[province]">
+                                <option v-for="(item,index) in province"
+                                        :value="item.name" :data-index="index">{{item.name}}
+                                </option>
+                            </select>
+                            <select class="form-control city" style="float: left;" name="model[city]">
+                                <option v-for="(item,index) in city"
+                                        :value="item.name" :data-index="index">{{item.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
+                        <label class="col-form-label required">详细地址</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input class="form-control address" value="">
+                        <ul class="sea"></ul>
+                    </div>
+                </div>
+                <!-- <div class="form-group row">
                     <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
                         <label class="col-form-label required">发件人地区</label>
                     </div>
@@ -194,17 +240,17 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
                         <label class="col-form-label required">详细地址</label>
                     </div>
                     <div class="col-sm-6">
                         <input class="form-control address" value="">
                     </div>
-                </div>
-
+                </div> -->
+                <input style="display: none;" class="cabinet-id" name="cabinet_id" value="">
                 <input style="display: none;" class="order-id" name="orderId" value="">
                 <input style="display: none;" class="order-type" name="orderType" value="">
                 <div class="form-group row">
@@ -341,7 +387,162 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
 
 <!--更新地址相关-->
 <script>
+    // console.log(<?=$district?>);
     var editAddress = new Vue({
+        el: '#editAddress',
+        data: {
+            province:<?= Yii::$app->serializer->encode($province_arr) ?>,
+            city: [],
+            area: [],
+            sender_province: "<?=$sender->province?>",
+            sender_city: "<?=$sender->city?>",
+            sender_area: "<?=$sender->exp_area?>",
+            orderList: <?= Yii::$app->serializer->encode($list) ?>,
+            cabinet: <?= Yii::$app->serializer->encode($cabinet) ?>,
+            province_arr: <?= Yii::$app->serializer->encode($province_arr) ?>,
+        }
+    });
+    // 弹框
+    $(document).on("click", ".edit-address", function () {
+
+        var orderType = $(this).data('orderType');
+        var index = $(this).data('index');
+        var orderId = editAddress.orderList[index].id;
+        var name = editAddress.orderList[index].name;
+        var mobile = editAddress.orderList[index].mobile;
+
+        $('.name').val(name);
+        $('.mobile').val(mobile);
+        $('.order-id').val(orderId);
+        $('.order-type').val(orderType);
+        $('.address').val(editAddress.orderList[index].address)
+        // $('.cabinet-id').val(editAddress.orderList[index].cabinet_id)
+        editAddress.sender_province = editAddress.orderList[index].province
+        editAddress.sender_city = editAddress.orderList[index].city
+        
+        $('.province').find('option').each(function (i) {
+            if ($(this).val() == editAddress.sender_province) {
+                
+                $(this).prop('selected', 'selected');
+                return true;
+            }
+        });
+        
+        $('.city').find('option').each(function (i) {
+            
+            if ($(this).val() == editAddress.sender_city) {
+                $(this).prop('selected', 'selected');
+                return true;
+            }
+        });
+
+        editAddress.city = editAddress.province_arr[0].list;
+        
+        $(editAddress.province_arr).each(function (i) {
+            if (editAddress.province_arr[i].name == editAddress.sender_province) {
+                editAddress.city = editAddress.province_arr[i].list;
+                return true;
+            }
+        });
+        
+        $(editAddress.city).each(function (i) {
+            if (editAddress.city[i].name == editAddress.sender_city) {
+                editAddress.area = editAddress.city[i].list;
+                return true;
+            }
+        });
+        
+        $('#editAddress').modal('show');
+    });
+
+    $(document).on('change', '.province', function () {
+        var index = $(this).find('option:selected').data('index');
+        editAddress.city = editAddress.province_arr[index].list;
+    });
+    $(document).on('change', '.city', function () {
+        var index = $(this).find('option:selected').data('index');
+        editAddress.area = editAddress.city[index].list;
+    });
+
+    // 提交更新
+    $(document).on('click', '.update-address', function () {
+        $('.update-address').btnLoading('更新中');
+        var href = '<?= $urlManager->createUrl(['mch/order/update-order-address']) ?>';
+        $.ajax({
+            url: href,
+            type: "post",
+            data: {
+                orderId: $('.order-id').val(),
+                orderType: $('.order-type').val(),
+                name: $('.name').val(),
+                mobile: $('.mobile').val(),
+                province: $('.province').val(),
+                city: $('.city').val(),
+                cabinet_id: $('.cabinet-id').val(),
+                address: $('.address').val(),
+                _csrf: _csrf
+            },
+            dataType: "json",
+            success: function (res) {
+                $('.update-address').btnReset();
+                $.myAlert({
+                    content: res.msg,
+                    confirm: function () {
+                        if (res.code == 0) {
+                            location.reload();
+                        }
+                    }
+                })
+            }
+        });
+        return false;
+    });
+</script>
+<script type="text/javascript">
+    $(".address").bind("input", function() { 
+        if($(this).val().length>0){
+            search();
+        }else{
+            $(".sea").html('');
+     
+        }
+    })
+    function search(){
+        $.ajax({
+            type:"post",
+            url:"<?= $urlManager->createUrl(['mch/cabinet/cabinet-address']) ?>",
+            data:{
+                address:$(".address").val(),
+                province: $('.province').val(),
+                city: $('.city').val(),
+                _csrf: _csrf
+            },
+            dataType: "json",
+            
+            success:function(response){
+                var str="";
+                if(response.code==0){
+                    for(var i=0;i<response.sea.length;i++){
+                        str += "<li class='seali' attr-id='"+ response.sea[i].id +"'><div style='text-align:left;padding-left:0.5rem;'><span>" + response.sea[i].address + "</span></div></li>";
+                    }
+                }
+                
+ 
+                $(".sea").html(str);
+            }
+        })
+    }
+    $(document).on("click", ".seali", function () {
+        $(this).hide()
+        $(".address").val($(this).text())
+        $(".cabinet-id").val($(this).attr('attr-id'))
+        console.log($(this).text())
+        // alert($(this).html())
+    });
+</script>
+<!--更新地址相关-->
+<script>
+    /*var editAddress = new Vue({
         el: '#editAddress',
         data: {
             province:<?=$district?>,
@@ -356,6 +557,7 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
 
     // 弹框
     $(document).on("click", ".edit-address", function () {
+
         var orderType = $(this).data('orderType');
         var index = $(this).data('index');
         var orderId = editAddress.orderList[index].id;
@@ -370,7 +572,7 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
         editAddress.sender_province = editAddress.orderList[index].address_data.province
         editAddress.sender_city = editAddress.orderList[index].address_data.city
         editAddress.sender_area = editAddress.orderList[index].address_data.district
-
+        console.log(editAddress.sender_city);
         $('.province').find('option').each(function (i) {
             if ($(this).val() == editAddress.sender_province) {
                 $(this).prop('selected', 'selected');
@@ -450,5 +652,5 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
             }
         });
         return false;
-    });
+    });*/
 </script>

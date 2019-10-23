@@ -22,6 +22,7 @@ class BannerForm extends MchModel
     public $sort;
     public $open_type;
     public $type;
+    public $is_show;
 
     /**
      * @return array
@@ -31,7 +32,7 @@ class BannerForm extends MchModel
     {
         return [
             [['store_id', 'pic_url',], 'required'],
-            [['store_id','type'], 'integer'],
+            [['store_id','type','is_show'], 'integer'],
             [['pic_url', 'page_url','open_type'], 'string'],
             [['title'], 'string', 'max' => 255],
             [['title'],'default','value'=>'暂无标题'],
@@ -49,6 +50,7 @@ class BannerForm extends MchModel
             'store_id' => '商城id',
             'pic_url' => '图片',
             'title' => '标题',
+            'is_show' => '是否显示【1=> 显示，2=> 隐藏】',
             'page_url' => '页面路径',
             'sort' => '排序',
             'is_delete' => '是否删除：0=未删除，1=已删除',
@@ -94,7 +96,7 @@ class BannerForm extends MchModel
             }else{
                 $banner->type = 1;
             }
-
+            
             $banner->attributes = $this->attributes;
             return $banner->saveBanner();
         } else {

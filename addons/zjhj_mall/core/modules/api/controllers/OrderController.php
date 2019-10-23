@@ -47,7 +47,7 @@ class OrderController extends Controller
     public function actionSubmitPreview()
     {
         $form = new OrderSubmitPreviewForm();
-        $form->attributes = \Yii::$app->request->get();
+        $form->attributes = \Yii::$app->request->post();
         $form->store_id = $this->store->id;
         $form->user_id = \Yii::$app->user->id;
         return new BaseApiResponse($form->search());

@@ -107,12 +107,14 @@ class LoginForm extends ApiModel
         if (!$this->validate()) {
             return $this->errorResponse;
         }
-
+        
         $res = $this->getOpenid($this->code);
         if (!$res || empty($res['openid'])) {
             return new ApiResponse(1, '获取用户OpenId失败', $res);
         }
         $session_key = $res['session_key'];
+        // echo $this->wechat_app->app_id;die;
+        // $pc = new WXBizDataCrypt(self::appid, $session_key);
         $pc = new WXBizDataCrypt($this->wechat_app->app_id, $session_key);
         $errCode = $pc->decryptData($this->encrypted_data, $this->iv, $data);
         if ($errCode == 0 || $errCode == -41003) {

@@ -160,6 +160,7 @@ class OrderRefundForm extends MchModel
                         'msg' => '退货地址不能为空',
                     ];
                 };
+                
                 $order_refund->address_id = $this->address_id;
                 $order_refund->is_agree = 1;
                 $order_refund->save();
@@ -195,6 +196,23 @@ class OrderRefundForm extends MchModel
             } else {
                 //已同意，退款操作
                 $order_refund->status = 1;
+                $order_refund->is_agree = 1;
+                $order_refund->refuse_desc=$this->remark;
+                if (!$order_refund->refuse_desc) {
+                    return [
+                        'code' => 1,
+                        'msg' => '备注不能为空',
+                    ];
+                }
+                if ($this->refund_price) {
+                    if ($this->refund_price > $order_refund->refund_price) {
+                        return [
+                            'code' => 1,
+                            'msg' => '退款金额不能大于' . $order_refund->refund_price,
+                        ];
+                    }
+                    $order_refund->refund_price = $this->refund_price;
+                }
                 $order_refund->response_time = time();
                 if ($order_refund->refund_price > 0 && $order->pay_type == 1) {
                     $res = Refund::refund($order, $order_refund->order_refund_no, $order_refund->refund_price);
@@ -353,6 +371,7 @@ class OrderRefundForm extends MchModel
         }
         if ($this->action == 2) {//拒绝
             $order_refund->status = 3;
+            $order_refund->is_agree = 2;
             $order_refund->refuse_desc = $this->remark ? $this->remark : '卖家拒绝了您的退货请求';
             $order_refund->response_time = time();
             if ($order_refund->save()) {

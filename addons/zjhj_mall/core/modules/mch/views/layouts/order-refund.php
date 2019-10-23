@@ -35,13 +35,14 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
                 <input type="number" id="retreat_price" class="form-control" style="margin:10px 0" name="retreat_price"
                        min="0.01" max="" step="0.01" value="">
 
-                <div class="mb-3">收货地址（用户参考填写）</div>
+                <!-- <div class="mb-3">收货地址（用户参考填写）</div>
                 <select class="form-control" id="retreat_address" name="retreat_address">
                     <?php foreach ($address as $v): ?>
                         <option value="<?= $v->id;?>"><?= $v->name.'/'.$v->mobile.'/'.$v->address;?></option>
                     <?php endforeach; ?>
-                </select>
-
+                </select> -->
+                <div class="mb-3">备注</div>
+                    <textarea rows="6" cols="62" name="desc" id="refuse_desc"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -93,10 +94,19 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
             <div class="modal-body">
                 <input class="order-id" type="hidden">
                 <input class="url" type="hidden">
-                <div class="form-group row">
+                <input type="hidden" id="order_refund_id" name="order_refund_id" value="">
+                <!-- <div class="form-group row">
                     <label class="col-4 text-right col-form-label">填写拒绝理由：</label>
                     <div class="col-11" style="margin-left: 1rem;">
-                        <textarea id="order_refund_remark" name="seller_comments" cols="90"
+                        <textarea id="order_refund_remark" name="refuse_desc" cols="90"
+                                  rows="3"
+                                  style="width: 100%;"></textarea>
+                    </div>
+                </div> -->
+                <div class="form-group row">
+                    <label class="col-4 text-right col-form-label" style='text-align: left!important;'>备注：</label>
+                    <div class="col-11" style="margin-left: 1rem;">
+                        <textarea id="order_refund_remark_desc" name="desc" cols="90"
                                   rows="3"
                                   style="width: 100%;"></textarea>
                     </div>
@@ -157,6 +167,9 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
         $("#retreat_price").attr("max",retreat_price);
         $("#retreat_price").val(retreat_price);
     };
+    function refund_refuse(id){
+        $("#order_refund_id").val(id);
+    };
     function refund_change(id){
         $("#change_id").val(id);
     };
@@ -164,7 +177,8 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
     $(document).on("click", ".retreat-submit", function () {
         var id = $("#retreat_id").val();
         var retreat_price = $("#retreat_price").val();
-        var retreat_address = $("#retreat_address option:checked").val();
+        // var retreat_address = $("#retreat_address option:checked").val();
+        var refuse_desc = $("#refuse_desc").val();
         $("#retreatModal").modal("hide");
         $.myLoading({
             title: "正在提交"
@@ -177,8 +191,10 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
                 order_refund_id: id,
                 type: 1,
                 action: 1,
+                refund: 1,
                 refund_price: retreat_price,
-                address_id: retreat_address,
+                // address_id: retreat_address,
+                remark: refuse_desc,
                 orderType: '<?= $orderType ?>'
             },
             dataType: "json",
@@ -308,7 +324,8 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
     });
 
     $(document).on("click", ".agree-order-refund", function () {
-        var remark = $('#order_refund_remark').val();
+        var id = $('#order_refund_id').val();
+        var remark = $('#order_refund_remark_desc').val();
         var btn = $(this);
         btn.btnLoading(btn.text());
         $.ajax({
@@ -316,7 +333,7 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
             type: "post",
             data: {
                 _csrf: _csrf,
-                order_refund_id: orderRefundId,
+                order_refund_id: id,
                 type: 1,
                 action: 2,
                 remark: remark,

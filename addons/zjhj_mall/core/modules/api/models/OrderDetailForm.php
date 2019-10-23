@@ -54,11 +54,11 @@ class OrderDetailForm extends ApiModel
         }
         $status = "";
         if ($order->is_pay == 0) {
-            $status = '订单未付款';
+            $status = '等待付款';
         } elseif ($order->is_pay == 1 && $order->is_send == 0) {
-            $status = '订单待发货';
+            $status = '待发货';
         } elseif ($order->is_send == 1 && $order->is_confirm == 0) {
-            $status = '订单已发货';
+            $status = '配送中';
         } elseif ($order->is_confirm == 1) {
             $status = '订单已完成';
         }

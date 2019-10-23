@@ -346,6 +346,7 @@ class OrderPayDataForm extends ApiModel
     //单个订单微信支付下单
     private function unifiedOrder($goods_names)
     {
+        //var_dump($this->user->wechat_open_id);die;
         $res = $this->wechat->pay->unifiedOrder([
             'body' => $goods_names,
             'out_trade_no' => $this->order->order_no,
@@ -354,6 +355,7 @@ class OrderPayDataForm extends ApiModel
             'trade_type' => 'JSAPI',
             'openid' => $this->user->wechat_open_id,
         ]);
+
 
         if (!$res) {
             return [

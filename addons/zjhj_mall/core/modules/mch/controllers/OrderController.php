@@ -24,6 +24,7 @@ use app\modules\mch\models\OrderDetailForm;
 use app\modules\mch\models\OrderListForm;
 use app\modules\mch\models\OrderPriceForm;
 use app\modules\mch\models\OrderRefundForm;
+use app\modules\mch\models\OrderRefundDetailForm;
 use app\modules\mch\models\OrderRefundListForm;
 use app\modules\mch\models\OrderSendForm;
 use app\modules\mch\models\PrintForm;
@@ -67,11 +68,14 @@ class OrderController extends Controller
         if ($shop_id) {
             $shop = Shop::findOne(['store_id' => $this->store->id, 'id' => $shop_id]);
         }
-
+        // print_r($data);die;
+        // print_r($data['list']);die;
         return $this->render('index', [
             'row_count' => $data['row_count'],
             'pagination' => $data['pagination'],
             'list' => $data['list'],
+            'cabinet' => $data['cabinet'],
+            'province_arr' => $data['province_arr'],
             'store_data' => $store_data_form->search(),
             'express_list' => $this->getExpressList(),
             'user' => $user,
@@ -189,7 +193,7 @@ class OrderController extends Controller
             }
         }
         unset($v);
-
+        
         return $this->render('refund', [
             'row_count' => $data['row_count'],
             'pagination' => $data['pagination'],
@@ -282,7 +286,28 @@ class OrderController extends Controller
         $arr['is_update'] = true;
         return $this->render('detail', $arr);
     }
-
+    //售后订单详情
+    public function actionRefundDetail($refund_id = null)
+    {
+        $form = new OrderRefundDetailForm();
+        $form->store_id = $this->store->id;
+        $form->order_refund_id = $refund_id;
+        $arr = $form->search();
+        $address = RefundAddress::find()->where(['store_id' => $this->store->id, 'is_delete' => 0])->all();
+        foreach ($address as &$v) {
+            if (mb_strlen($v->address) > 20) {
+                $v->address = mb_substr($v->address, 0, 20) . '···';
+            }
+        }
+        unset($v);
+        $list=array(
+            'list'=>$arr['list'],
+            'goods_list'=>$arr['goods_list'],
+            'address'=>$address,
+        );
+        // print_r($arr['list']);die;
+        return $this->render('refund-detail', $list);
+    }
     public function actionOffline()
     {
         $form = new OrderListForm();
@@ -429,8 +454,10 @@ class OrderController extends Controller
     public function actionRefundHandle()
     {
         $form = new OrderRefundForm();
+        // print_r(\Yii::$app->request->post());die;
         $form->attributes = \Yii::$app->request->post();
         $form->store_id = $this->store->id;
+        // var_dump($form->save());die;
         return $form->save();
     }
 
@@ -487,7 +514,6 @@ class OrderController extends Controller
         $commonUpdateAddress = new CommonUpdateAddress();
         $commonUpdateAddress->data = \Yii::$app->request->post();
         $updateAddress = $commonUpdateAddress->updateAddress();
-
         return $updateAddress;
 
     }
@@ -498,4 +524,5 @@ class OrderController extends Controller
         $print = new PinterOrder($this->store->id, $get['order_id'], 'reprint', $get['order_type']);
         return $print->print_order();
     }
+
 }

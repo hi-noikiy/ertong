@@ -24,16 +24,26 @@ $statics = Yii::$app->request->baseUrl . '/statics';
                 <div class="col-6">
                     <input class="form-control short-row" name="service"
                            value="<?= $service['service'] ?>">
-                    <div class="fs-sm text-muted">例子：正品保障,极速发货,7天退换货。多个请使用英文逗号<kbd>,</kbd>分隔
+                    <div class="fs-sm text-muted">例子：正品保障,极速发货,7天退换货。
                     </div>
                 </div>
             </div>
-
+            <div class="form-group row">
+                <div class="col-2 text-right">
+                    <label class=" col-form-label">服务说明</label>
+                </div>
+                <div class="col-sm-6">
+                        <textarea rows="6" cols="50" name="service_desc"><?= $service['service_desc'] ?></textarea>
+                </div>
+            </div>
             <div class="form-group row">
                 <div class="form-group-label col-sm-2 text-right">
                 </div>
                 <div class="col-sm-6">
+                    <!-- <div class="text-danger form-error mb-3" style="display: none">错误信息</div> -->
                     <a class="btn btn-primary auto-form-btn" href="javascript:">保存</a>
+                    <input type="button" class="btn btn-default ml-4" 
+                           name="Submit" onclick="javascript:history.back(-1);" value="返回">
                 </div>
             </div>
         </form>
@@ -128,13 +138,13 @@ $statics = Yii::$app->request->baseUrl . '/statics';
         $('.video-check').attr('href', this.value);
     });
     $('.num').html($("textarea[name='model[content]']").val().length);
-    $(document).on('input propertychange', "textarea[name='model[content]']", function () {
+    $(document).on('input propertychange', "textarea[name='service_desc']", function () {
         var a = $(this).val().length;
         $('.form-error').hide();
-        if (a > 100) {
-            var num = $(this).val().substr(0, 100);
+        if (a > 50) {
+            var num = $(this).val().substr(0, 50);
             $(this).val(num);
-            $('.form-error').html('详情介绍不能超过100个字').show();
+            $('.form-error').html('详情介绍不能超过50个字').show();
         } else {
             $('.num').html(a)
         }

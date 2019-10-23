@@ -371,6 +371,14 @@ class StoreController extends Controller
         $form = new BannerForm();
         $form->type = 1;
         $arr = $form->getList($store);
+        // print_r($arr);die;
+        foreach ($arr[0] as $key => $val) {
+            if($val['is_show']==1){
+                $arr[0][$key]['is_show_name']="显示";
+            }else if($val['is_show']==2){
+                $arr[0][$key]['is_show_name']="不显示";
+            }
+        }
         return $this->render('slide', [
             'list' => $arr[0],
             'pagination' => $arr[1],
@@ -389,6 +397,26 @@ class StoreController extends Controller
         $form = new BannerForm();
         if (\Yii::$app->request->isPost) {
             $model = \Yii::$app->request->post('model');
+
+            if($model['title']==''){
+                return [
+                    'code' => 1,
+                    'msg' => '请输入标题',
+                ];
+            }
+            if($model['sort']==''){
+                return [
+                    'code' => 1,
+                    'msg' => '请输入排序',
+                ];
+            }
+            if(!preg_match("/^[1-9][0-9]*$/",$model['sort'])){
+                return [
+                    'code' => 1,
+                    'msg' => '排序必须是正整数！',
+                ];
+            }
+
             $model['store_id'] = $this->store->id;
             $form->attributes = $model;
             $form->banner = $banner;
@@ -429,6 +457,36 @@ class StoreController extends Controller
                 ];
             }
         }
+    }
+    /**
+     * 幻灯片修改状态
+     * @param int $id
+     */
+    public function actionSlideUpdate($id = 0, $is_show = 1)
+    {
+        
+        $dishes = Banner::findOne(['id' => $id, 'is_delete' => 0]);
+        if (!$dishes) {
+            return [
+                'code' => 1,
+                'msg' => '幻灯片不存在或已经删除',
+            ];
+        }
+        $dishes->is_show = $is_show;
+        if ($dishes->save()) {
+            return [
+                'code' => 0,
+                'msg' => '成功',
+            ];
+        } else {
+            foreach ($dishes->errors as $errors) {
+                return [
+                    'code' => 1,
+                    'msg' => $errors[0],
+                ];
+            }
+        }
+        
     }
 
     /**
@@ -1771,7 +1829,19 @@ class StoreController extends Controller
 
         return $this->render('service', ['list' => $list]);
     }
-
+    public function actionAbslength($str)
+    {
+        if(empty($str)){
+            return 0;
+        }
+        if(function_exists('mb_strlen')){
+            return mb_strlen($str,'utf-8');
+        }
+        else {
+            preg_match_all("/./u", $str, $ar);
+            return count($ar[0]);
+        }
+    }
     public function actionServiceEdit()
     {
         $option = Option::get('good_services', $this->store->id, 'admin', '');
@@ -1780,12 +1850,39 @@ class StoreController extends Controller
 
         if (\Yii::$app->request->isPost) {
             $data = \Yii::$app->request->post();
-
+            $service_len = $this->actionAbslength($data['service']);
+            if(empty($data['service'])){
+                return [
+                    'code' => 1,
+                    'msg' => '请输入服务内容！',
+                ];
+            }
+            if(empty($data['service_desc'])){
+                return [
+                    'code' => 1,
+                    'msg' => '请输入服务说明！',
+                ];
+            }
+            if($service_len>5){
+                return [
+                    'code' => 1,
+                    'msg' => '服务内容字数最多不能超过5字！',
+                ];
+            }
+            $service_desc_len = $this->actionAbslength($data['service_desc']);
+            if($service_desc_len>50){
+                return [
+                    'code' => 1,
+                    'msg' => '服务说明字数最多不能超过50字！',
+                ];
+            }
+            
             // 数据记录为空时
             if (empty($option)) {
                 $services[] = [
                     'id' => 1,
                     'service' => $data['service'],
+                    'service_desc' => $data['service_desc'],
                     'is_default' => 1,
                 ];
                 $option = Option::set('good_services', $services, $this->store->id, 'admin');
@@ -1801,6 +1898,7 @@ class StoreController extends Controller
                     $optionArr[] = [
                         'id' => $id,
                         'service' => $data['service'],
+                        'service_desc' => $data['service_desc'],
                         'is_default' => 0,
                     ];
 
@@ -1810,6 +1908,7 @@ class StoreController extends Controller
                     foreach ($optionArr as &$item) {
                         if ($item['id'] == $data['id']) {
                             $item['service'] = $data['service'];
+                            $item['service_desc'] = $data['service_desc'];
                             break;
                         }
                     }
@@ -1850,10 +1949,25 @@ class StoreController extends Controller
         $optionArr = json_decode($option, true);
 
         $data = \Yii::$app->request->get();
+        $count=0;
         foreach ($optionArr as &$item) {
-            $item['is_default'] = 0;
-            if ($item['id'] == $data['id'] && $data['status'] == 1) {
-                $item['is_default'] = 1;
+            if($item['is_default'] ==1){
+                $count++;
+            }
+        }
+        if($data['status'] == 1){
+            if($count==3){
+                return [
+                    'code' => 1,
+                    'msg' => '默认服务最多为三项',
+                ];
+            }
+        }
+        
+        foreach ($optionArr as &$item) {
+            // $item['is_default'] = 0;
+            if ($item['id'] == $data['id']) {
+                $item['is_default'] = $data['status'];
             }
         }
 

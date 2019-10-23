@@ -238,7 +238,7 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
                         </td>
                         <td class="order-tab-2">
                             <?php if ($order_item['refund_type'] == 1) : ?>
-                                <div class="orderTitle">售后类型：<span class="badge badge-warning">退货退款</span></div>
+                                <!-- <div class="orderTitle">售后类型：<span class="badge badge-warning">退货退款</span></div> -->
                                 <div class="orderTitle">退款金额：<span
                                             class="text-danger"><?= $order_item['refund_price'] ?></span>元
                                 </div>
@@ -254,7 +254,7 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
                                 </div>
                             <?php endif; ?>
                             <?php if ($order_item['refund_type'] == 2) : ?>
-                                <div class="orderTitle">售后类型：<span class="badge badge-primary">换货</span></div>
+                                <!-- <div class="orderTitle">售后类型：<span class="badge badge-primary">换货</span></div> -->
                                 <div class="orderTitle">退款金额：<span
                                             class="text-danger"><?= $order_item['refund_price'] ?></span>元
                                 </div>
@@ -271,83 +271,45 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
                             <?php endif; ?>
                         </td>
                         <td class="order-tab-3">
+                            
                             <?php if ($order_item['refund_status'] == 0) : ?>
-                                <?php if ($order_item['is_agree'] == 1) : ?>
-                                    <?php if ($order_item['is_user_send'] == 1) : ?>
-                                        <span class="badge badge-default">用户已发货</span>
-                                        <div>快递公司：<?= $order_item['user_send_express'] ?></div>
-                                        <div>快递单号：<a target="_blank"
-                                                     href="https://www.baidu.com/s?wd=<?= $order_item['user_send_express'] . ' ' . $order_item['user_send_express_no'] ?>"><?= $order_item['user_send_express_no'] ?></a>
-                                        </div>
-                                    <?php else : ?>
-                                        <span class="badge badge-default">待用户发货</span>
-                                    <?php endif; ?>
-                                <?php else : ?>
-                                    <span class="badge badge-default">待处理</span>
-                                <?php endif; ?>
+                                <span class="badge badge-default">待处理</span>
                             <?php elseif ($order_item['refund_status'] == 1) : ?>
-                                <span class="badge badge-success">已同意退款退货</span>
+                                <?php if ($order_item['is_agree'] == 1) : ?>
+                                    <span class="badge badge-success">已同意退款退货</span>
+                                <?php endif; ?>
                             <?php elseif ($order_item['refund_status'] == 2) : ?>
                                 <span class="badge badge-success">已同意换货</span>
                             <?php elseif ($order_item['refund_status'] == 3) : ?>
-                                <?php if ($order_item['refund_type'] == 1) : ?>
+                                <?php if ($order_item['is_agree'] == 2) : ?>
                                     <span class="badge badge-danger">已拒绝退货退款</span>
-                                <?php else : ?>
-                                    <span class="badge badge-danger">已拒换货</span>
                                 <?php endif; ?>
                                 <div><?= $order_item['refund_refuse_desc'] ?></div>
-                            <?php endif; ?>
-                            <?php if ($order_item['pay_type'] == 2) : ?>
-                                <div class="text-danger">注：货到付款方式的退款需要线下与客户自行协商</div>
                             <?php endif; ?>
                         </td>
                         <td class="order-tab-4">
 
                             <?php if ($order_item['refund_status'] == 0) : ?>
-                                <?php if ($order_item['refund_type'] == 1) : ?>
-                                    <?php if ($order_item['is_agree'] == 1) : ?>
-                                        <?php if ($order_item['is_user_send'] == 1) : ?>
-                                        <?php else : ?>
-                                            <div class="mb-2">
-                                                <a href="javascript:" class="btn btn-sm btn-danger disagree-btn-1"
-                                                   data-id="<?= $order_item['order_refund_id'] ?>">拒绝退货</a>
-                                            </div>
-                                        <?php endif; ?>
-                                        <div class="mb-2">
-                                            <a href="javascript:" class="btn btn-sm btn-success agree-btn-3"
-                                               data-id="<?= $order_item['order_refund_id'] ?>"
-                                               data-price="<?= $order_item['refund_price'] ?>">确认收货</a>
-                                        </div>
-                                    <?php else : ?>
-                                        <div class="mb-2">
-                                            <a href="javascript:" class="btn btn-sm btn-success agree-btn-1"
+                                <!-- 订单状态：0=待商家处理，1=同意并已退款，2=已同意换货，3=已拒绝退换货 -->
+                                <div class="mb-2">
+                                    <a href="javascript:" class="btn btn-sm btn-success agree-btn-1"
                                                data-toggle="modal" data-target="#retreatModal"
                                                onclick="refund_retreat(<?= $order_item['order_refund_id'] ?>,<?= $order_item['refund_price'] ?>)"
                                                data-id="<?= $order_item['order_refund_id'] ?>"
                                                data-price="<?= $order_item['refund_price'] ?>">同意退货</a>
-                                        </div>
-                                        <div class="mb-2">
-                                            <a href="javascript:" class="btn btn-sm btn-danger disagree-btn-1"
-                                               data-id="<?= $order_item['order_refund_id'] ?>">拒绝退货</a>
-                                        </div>
-                                    <?php endif; ?>
-
-                                <?php else : ?>
-                                    <div class="mb-2">
-                                        <a href="javascript:" class="btn btn-sm btn-success agree-btn-2"
-                                           data-toggle="modal" data-target="#changeModal"
-                                           onclick="refund_change(<?= $order_item['order_refund_id'] ?>)"
-                                           data-id="<?= $order_item['order_refund_id'] ?>">同意换货</a>
-                                    </div>
-                                    <div class="mb-2">
-                                        <a href="javascript:" class="btn btn-sm btn-danger disagree-btn-2"
-                                           data-id="<?= $order_item['order_refund_id'] ?>">拒绝换货</a>
-                                    </div>
-                                <?php endif; ?>
+                                </div>
+                                <div class="mb-2">
+                                    
+                                    <a href="javascript:" class="btn btn-sm btn-danger disagree-btn-1"
+                                                onclick="refund_refuse(<?= $order_item['order_refund_id'] ?>)"
+                                                data-id="<?= $order_item['order_refund_id'] ?>">拒绝退货</a>
+                                </div>
                             <?php elseif ($order_item['refund_status'] == 1) : ?>
                             <?php elseif ($order_item['refund_status'] == 2) : ?>
                             <?php endif; ?>
-
+                            <div class="mb-2">
+                                <a href="<?= $urlManager->createUrl(['mch/order/refund-detail', 'refund_id' => $order_item['order_refund_id']]) ?>" class="btn btn-sm btn-primary ">详情</a>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -355,7 +317,7 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
                             <span class="mr-3"><span class="orderTitle">收货人：</span><?= $order_item['name'] ?></span>
                             <span class="mr-3"><span
                                         class="orderTitle">电话：</span><?= $order_item['mobile'] ?></span>
-                            <span><span class="orderTitle">地址：</span><?= $order_item['address'] ?></span>
+                            <span><span class="orderTitle">地址：</span><?= $order_item['province'] ?><?= $order_item['city'] ?><?= $order_item['caddress'] ?></span>
                         </td>
                     </tr>
                 </table>
@@ -390,69 +352,6 @@ $urlHandle = $urlManager->createUrl(['mch/order/refund-handle']);
     </div>
     </div>
 
-    <!-- 退货 -->
-    <div class="modal fade" id="retreatModal" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">提示</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="retreat_id" name="retreat_id" value="">
-
-                    <div class="mb-3">确认同意退货？同意后由客户填写退货快递单号，确认收到货后退款金额返还给客户。</div>
-                    <div>请输入退款金额（最多<span id="max_price"></span>元）：</div>
-                    <input type="number" id="retreat_price" class="form-control" style="margin:10px 0"
-                           name="retreat_price"
-                           min="0.01" max="" step="0.01" value="">
-
-                    <div class="mb-3">收货地址（用户参考填写）</div>
-                    <select class="form-control" id="retreat_address" name="retreat_address">
-                        <?php foreach ($address as $v): ?>
-                            <option value="<?= $v->id; ?>"><?= $v->name . '/' . $v->mobile . '/' . $v->address; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary retreat-submit">提交</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- 换货 -->
-    <div class="modal fade" id="changeModal" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">提示</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="change_id" name="change_id" value="">
-
-                    <div class="mb-3">收货地址（用户参考填写）</div>
-                    <select class="form-control" id="change_address" name="change_address">
-                        <?php foreach ($address as $v): ?>
-                            <option value="<?= $v->id; ?>"><?= $v->name . '/' . $v->mobile . '/' . $v->address; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary change-submit">提交</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <div class="img-view-box" flex="cross:center main:center">

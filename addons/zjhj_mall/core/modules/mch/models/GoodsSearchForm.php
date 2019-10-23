@@ -39,7 +39,7 @@ class GoodsSearchForm extends MchModel
     public function search()
     {
         $goods = $this->goods;
-        $catList = Cat::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'parent_id' => 0])->all();
+        $catList = Cat::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'parent_id' => 0])->orderBy(['sort'=>SORT_ASC])->all();
         $postageRiles = PostageRules::find()->where(['store_id' => $this->store->id, 'is_delete' => 0])->all();
         $cardList = Card::find()->where(['store_id' => $this->store->id, 'is_delete' => 0])->asArray()->all();
         if ($goods->full_cut) {
@@ -59,6 +59,7 @@ class GoodsSearchForm extends MchModel
                 'more' => 0,
             ];
         }
+
         $goodsCardList = Goods::getGoodsCard($goods->id);
         $goodsCatList = Goods::getCatList($goods);
         foreach ($goods as $index => $value) {
@@ -70,7 +71,6 @@ class GoodsSearchForm extends MchModel
             }
             $goods[$index] = str_replace("\"", "&quot;", $value);
         }
-
         return [
             'goods' => $goods,
             'cat_list' => $catList,
@@ -103,7 +103,7 @@ class GoodsSearchForm extends MchModel
 
         $cat_query = clone $query;
 
-        $query->select('g.id,g.name,g.price,g.original_price,g.status,g.cover_pic,g.sort,g.attr,g.cat_id,g.virtual_sales,g.store_id,g.quick_purchase');
+        $query->select('g.id,g.name,g.price,g.original_price,g.merchant_price,g.status,g.cover_pic,g.sort,g.attr,g.cat_id,g.virtual_sales,g.store_id,g.quick_purchase');
         if (trim($keyword)) {
             $query->andWhere(['LIKE', 'g.name', $keyword]);
         }

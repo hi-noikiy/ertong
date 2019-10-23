@@ -25,16 +25,16 @@ class Menu
                         'is_menu' => true,
                         'route' => 'mch/store/setting',
                     ],
-                    [
-                        'name' => '短信通知',
-                        'is_menu' => true,
-                        'route' => 'mch/store/sms',
-                    ],
-                    [
-                        'name' => '邮件通知',
-                        'is_menu' => true,
-                        'route' => 'mch/store/mail',
-                    ],
+                    // [
+                    //     'name' => '短信通知',
+                    //     'is_menu' => true,
+                    //     'route' => 'mch/store/sms',
+                    // ],
+                    // [
+                    //     'name' => '邮件通知',
+                    //     'is_menu' => true,
+                    //     'route' => 'mch/store/mail',
+                    // ],
                     [
                         'name' => '运费规则',
                         'is_menu' => true,
@@ -75,24 +75,24 @@ class Menu
                             ],
                         ]
                     ],
-                    [
-                        'name' => '电子面单',
-                        'is_menu' => true,
-                        'route' => 'mch/store/express',
-                        'sub' => [
-                            [
-                                'name' => '快递单打印(S|U)',
-                                'is_menu' => false,
-                                'route' => 'mch/store/express-edit',
-                            ]
-                        ],
-                        'action' => [
-                            [
-                                'name' => '快递打印单删除',
-                                'route' => 'mch/store/express-del',
-                            ],
-                        ]
-                    ],
+                    // [
+                    //     'name' => '电子面单',
+                    //     'is_menu' => true,
+                    //     'route' => 'mch/store/express',
+                    //     'sub' => [
+                    //         [
+                    //             'name' => '快递单打印(S|U)',
+                    //             'is_menu' => false,
+                    //             'route' => 'mch/store/express-edit',
+                    //         ]
+                    //     ],
+                    //     'action' => [
+                    //         [
+                    //             'name' => '快递打印单删除',
+                    //             'route' => 'mch/store/express-del',
+                    //         ],
+                    //     ]
+                    // ],
                     [
                         'name' => '小票打印',
                         'is_menu' => true,
@@ -134,184 +134,214 @@ class Menu
                             ],
                         ],
                     ],
+                    // [
+                    //     'name' => '退货地址',
+                    //     'is_menu' => true,
+                    //     'route' => 'mch/refund-address/index',
+                    //     'sub' => [
+                    //         [
+                    //             'name' => '退货地址编辑',
+                    //             'is_menu' => false,
+                    //             'route' => 'mch/refund-address/edit',
+                    //         ]
+                    //     ],
+                    // ],
+                    
                     [
-                        'name' => '退货地址',
+                        'name' => '柜子管理',
                         'is_menu' => true,
-                        'route' => 'mch/refund-address/index',
+                        'route' => 'mch/cabinet/list',
                         'sub' => [
                             [
-                                'name' => '退货地址编辑',
+                                'name' => '添加柜子(S|U)',
                                 'is_menu' => false,
-                                'route' => 'mch/refund-address/edit',
-                            ]
+                                'route' => 'mch/cabinet/cabinet-edit',
+                            ],
                         ],
+                        'action' => [
+                            [
+                                'name' => '删除柜子',
+                                'route' => 'mch/cabinet/cabinet-del'
+                            ],
+                            [
+                                'name' => '查找自提柜是否可删除',
+                                'route' => 'mch/cabinet/cabinet-order'
+                            ],
+                            [
+                                'name' => '查找自提柜地址',
+                                'route' => 'mch/cabinet/cabinet-address'
+                            ],
+                        ]
                     ],
+                            
+                        
+                    
                 ],
             ],
-            [
-                'name' => '小程序管理',
-                'is_menu' => true,
-                'route' => '',
-                'icon' => 'icon-xiaochengxu3',
-                'children' => [
-                    [
-                        'name' => '微信小程序',
-                        'is_menu' => true,
-                        'route' => '',
-                        'children' => [
-                            [
-                                'name' => '基础配置',
-                                'is_menu' => true,
-                                'route' => 'mch/wechat/mp-config',
-                            ],
-                            [
+            // [
+            //     'name' => '小程序管理',
+            //     'is_menu' => true,
+            //     'route' => '',
+            //     'icon' => 'icon-xiaochengxu3',
+            //     'children' => [
+            //         [
+            //             'name' => '微信小程序',
+            //             'is_menu' => true,
+            //             'route' => '',
+            //             'children' => [
+            //                 [
+            //                     'name' => '基础配置',
+            //                     'is_menu' => true,
+            //                     'route' => 'mch/wechat/mp-config',
+            //                 ],
+            //                 [
 
-                                'name' => '模板消息',
-                                'is_menu' => true,
-                                'route' => 'mch/wechat/template-msg',
-                            ],
-                            [
-                                'name' => '群发模板消息',
-                                'is_menu' => true,
-                                'route' => 'mch/wechat-platform/send-msg',
-                            ],
-                            [
-                                'name' => '公众号配置',
-                                'is_menu' => true,
-                                'route' => 'mch/wechat-platform/setting',
-                            ],
+            //                     'name' => '模板消息',
+            //                     'is_menu' => true,
+            //                     'route' => 'mch/wechat/template-msg',
+            //                 ],
+            //                 [
+            //                     'name' => '群发模板消息',
+            //                     'is_menu' => true,
+            //                     'route' => 'mch/wechat-platform/send-msg',
+            //                 ],
+            //                 [
+            //                     'name' => '公众号配置',
+            //                     'is_menu' => true,
+            //                     'route' => 'mch/wechat-platform/setting',
+            //                 ],
                             
-                        ],
-                    ],
-                    [
-                        'key' => 'alipay',
-                        'name' => '支付宝小程序',
-                        'is_menu' => true,
-                        'route' => '',
-                        'children' => [
-                            [
-                                'name' => '基础配置',
-                                'is_menu' => true,
-                                'route' => 'mch/alipay/mp-config',
-                            ],
-                            [
-                                'name' => '模板消息',
-                                'is_menu' => true,
-                                'route' => 'mch/alipay/template-msg',
-                            ],
-                            [
-                                'name' => '小程序发布',
-                                'is_menu' => true,
-                                'route' => 'mch/alipay/publish',
-                            ],
-                        ],
-                    ],
-                    [
-                        'name' => '轮播图',
-                        'is_menu' => true,
-                        'route' => 'mch/store/slide',
-                        'sub' => [
-                            [
-                                'name' => '轮播图(S|U)',
-                                'is_menu' => false,
-                                'route' => 'mch/store/slide-edit',
-                            ],
-                        ],
-                        'action' => [
-                            [
-                                'name' => '轮播图删除',
-                                'route' => 'mch/store/slide-del',
-                            ]
-                        ]
-                    ],
-                    [
-                        'name' => '导航图标',
-                        'is_menu' => true,
-                        'route' => 'mch/store/home-nav',
-                        'sub' => [
-                            [
-                                'name' => '导航图标(S|U)',
-                                'is_menu' => false,
-                                'route' => 'mch/store/home-nav-edit',
-                            ],
-                        ],
-                        'action' => [
-                            [
-                                'name' => '导航图标删除',
-                                'route' => 'mch/store/home-nav-del'
-                            ]
-                        ]
-                    ],
-                    [
-                        'name' => '图片魔方',
-                        'is_menu' => true,
-                        'route' => 'mch/store/home-block',
-                        'sub' => [
-                            [
-                                'name' => '图片魔方(S|U)',
-                                'is_menu' => false,
-                                'route' => 'mch/store/home-block-edit',
-                            ]
-                        ],
-                        'action' => [
-                            [
-                                'name' => '图片魔方删除',
-                                'route' => 'mch/store/home-block-delete',
-                            ]
-                        ]
-                    ],
-                    [
-                        'name' => '导航栏',
-                        'is_menu' => true,
-                        'route' => 'mch/store/navbar',
-                        'sub' => [
-                            [
-                                'name' => '导航恢复默认设置',
-                                'is_mune' => false,
-                                'route' => '/mch/store/navbar-reset'
-                            ]
-                        ]
-                    ],
-                    [
-                        'name' => '首页布局',
-                        'is_menu' => true,
-                        'route' => 'mch/store/home-page',
-                    ],
-                    [
-                        'name' => '用户中心',
-                        'is_menu' => true,
-                        'route' => 'mch/store/user-center',
-                    ],
-                    [
-                        'name' => '下单表单',
-                        'is_menu' => true,
-                        'route' => 'mch/store/form',
-                    ],
-                    [
-                        'name' => '页面管理',
-                        'is_menu' => true,
-                        'route' => '',
-                        'children' => [
-                            [
-                                'name' => '小程序页面',
-                                'is_menu' => true,
-                                'route' => 'mch/store/wxapp-pages',
-                            ],
-                            [
-                                'name' => '页面标题设置',
-                                'is_menu' => true,
-                                'route' => 'mch/store/wx-title',
-                            ],
-                        ]
-                    ],
-                    [
-                        'key' => 'copyright',
-                        'name' => '版权设置',
-                        'is_menu' => true,
-                        'route' => 'mch/we7/copyright',
-                    ]
-                ]
-            ],
+            //             ],
+            //         ],
+            //         [
+            //             'key' => 'alipay',
+            //             'name' => '支付宝小程序',
+            //             'is_menu' => true,
+            //             'route' => '',
+            //             'children' => [
+            //                 [
+            //                     'name' => '基础配置',
+            //                     'is_menu' => true,
+            //                     'route' => 'mch/alipay/mp-config',
+            //                 ],
+            //                 [
+            //                     'name' => '模板消息',
+            //                     'is_menu' => true,
+            //                     'route' => 'mch/alipay/template-msg',
+            //                 ],
+            //                 [
+            //                     'name' => '小程序发布',
+            //                     'is_menu' => true,
+            //                     'route' => 'mch/alipay/publish',
+            //                 ],
+            //             ],
+            //         ],
+            //         [
+            //             'name' => '轮播图',
+            //             'is_menu' => true,
+            //             'route' => 'mch/store/slide',
+            //             'sub' => [
+            //                 [
+            //                     'name' => '轮播图(S|U)',
+            //                     'is_menu' => false,
+            //                     'route' => 'mch/store/slide-edit',
+            //                 ],
+            //             ],
+            //             'action' => [
+            //                 [
+            //                     'name' => '轮播图删除',
+            //                     'route' => 'mch/store/slide-del',
+            //                 ]
+            //             ]
+            //         ],
+            //         [
+            //             'name' => '导航图标',
+            //             'is_menu' => true,
+            //             'route' => 'mch/store/home-nav',
+            //             'sub' => [
+            //                 [
+            //                     'name' => '导航图标(S|U)',
+            //                     'is_menu' => false,
+            //                     'route' => 'mch/store/home-nav-edit',
+            //                 ],
+            //             ],
+            //             'action' => [
+            //                 [
+            //                     'name' => '导航图标删除',
+            //                     'route' => 'mch/store/home-nav-del'
+            //                 ]
+            //             ]
+            //         ],
+            //         [
+            //             'name' => '图片魔方',
+            //             'is_menu' => true,
+            //             'route' => 'mch/store/home-block',
+            //             'sub' => [
+            //                 [
+            //                     'name' => '图片魔方(S|U)',
+            //                     'is_menu' => false,
+            //                     'route' => 'mch/store/home-block-edit',
+            //                 ]
+            //             ],
+            //             'action' => [
+            //                 [
+            //                     'name' => '图片魔方删除',
+            //                     'route' => 'mch/store/home-block-delete',
+            //                 ]
+            //             ]
+            //         ],
+            //         [
+            //             'name' => '导航栏',
+            //             'is_menu' => true,
+            //             'route' => 'mch/store/navbar',
+            //             'sub' => [
+            //                 [
+            //                     'name' => '导航恢复默认设置',
+            //                     'is_mune' => false,
+            //                     'route' => '/mch/store/navbar-reset'
+            //                 ]
+            //             ]
+            //         ],
+            //         [
+            //             'name' => '首页布局',
+            //             'is_menu' => true,
+            //             'route' => 'mch/store/home-page',
+            //         ],
+            //         [
+            //             'name' => '用户中心',
+            //             'is_menu' => true,
+            //             'route' => 'mch/store/user-center',
+            //         ],
+            //         [
+            //             'name' => '下单表单',
+            //             'is_menu' => true,
+            //             'route' => 'mch/store/form',
+            //         ],
+            //         [
+            //             'name' => '页面管理',
+            //             'is_menu' => true,
+            //             'route' => '',
+            //             'children' => [
+            //                 [
+            //                     'name' => '小程序页面',
+            //                     'is_menu' => true,
+            //                     'route' => 'mch/store/wxapp-pages',
+            //                 ],
+            //                 [
+            //                     'name' => '页面标题设置',
+            //                     'is_menu' => true,
+            //                     'route' => 'mch/store/wx-title',
+            //                 ],
+            //             ]
+            //         ],
+            //         [
+            //             'key' => 'copyright',
+            //             'name' => '版权设置',
+            //             'is_menu' => true,
+            //             'route' => 'mch/we7/copyright',
+            //         ]
+            //     ]
+            // ],
             [
                 'key' => 'diy',
                 'name' => 'DIY装修',
@@ -395,11 +425,6 @@ class Menu
                             ]
                         ]
                     ],
-                    [
-                        'name' => '淘宝CSV上传',
-                        'is_menu' => true,
-                        'route' => 'mch/goods/taobao-copy',
-                    ],
                 ],
             ],
             [
@@ -455,6 +480,13 @@ class Menu
                         'name' => '售后订单',
                         'is_menu' => true,
                         'route' => 'mch/order/refund',
+                        'sub' => [
+                            [
+                                'name' => '售后订单详情',
+                                'is_menu' => false,
+                                'route' => 'mch/order/refund-detail'
+                            ],
+                        ],
                     ],
                     [
                         'name' => '评价管理',
@@ -847,6 +879,18 @@ class Menu
                 'icon' => 'icon-coupons',
                 'children' => [
                     [
+                        'name' => '意见反馈列表',
+                        'is_menu' => true,
+                        'route' => 'mch/feedback/index',
+                        'sub' => [
+                            [
+                                'name' => '意见反馈详情',
+                                'is_menu' => false,
+                                'route' => 'mch/feedback/detail',
+                            ],
+                        ],
+                    ],
+                    [
                         'key' => 'coupon',
                         'name' => '优惠券',
                         'is_menu' => true,
@@ -921,34 +965,47 @@ class Menu
                             ],
                         ],
                     ],
+                    // [
+                    //     'name' => '充值',
+                    //     'is_menu' => true,
+                    //     'route' => 'mch/recharge/index',
+                    //     'sub' => [
+                    //         [
+                    //             'name' => '充值编辑',
+                    //             'is_menu' => false,
+                    //             'route' => 'mch/recharge/edit',
+                    //         ],
+                    //         [
+                    //             'name' => '充值设置',
+                    //             'is_menu' => false,
+                    //             'route' => 'mch/recharge/setting',
+                    //         ],
+                    //     ],
+                    // ],
                     [
-                        'name' => '充值',
+                        'name' => '轮播图',
                         'is_menu' => true,
-                        'route' => 'mch/recharge/index',
+                        'route' => 'mch/store/slide',
                         'sub' => [
                             [
-                                'name' => '充值编辑',
+                                'name' => '轮播图(S|U)',
                                 'is_menu' => false,
-                                'route' => 'mch/recharge/edit',
-                            ],
-                            [
-                                'name' => '充值设置',
-                                'is_menu' => false,
-                                'route' => 'mch/recharge/setting',
+                                'route' => 'mch/store/slide-edit',
                             ],
                         ],
+                        'action' => [
+                            [
+                                'name' => '轮播图删除',
+                                'route' => 'mch/store/slide-del',
+                            ],
+                            [
+                                'name' => '轮播图修改',
+                                'route' => 'mch/store/slide-update',
+                            ]
+                        ]
                     ],
-                ],
-            ],
-            [
-                'name' => '应用专区',
-                'is_menu' => true,
-                'route' => 'mch/miaosha/index',
-                'icon' => 'icon-pintu-m',
-                'children' => [
                     [
-                        'key' => 'miaosha',
-                        'name' => '整点秒杀',
+                        'name' => '秒杀活动',
                         'is_menu' => true,
                         'route' => 'mch/miaosha/index',
                         'children' => [
@@ -956,12 +1013,6 @@ class Menu
                                 'name' => '开放时间',
                                 'is_menu' => true,
                                 'route' => 'mch/miaosha/index',
-                            ],
-                            [
-                                'name' => '秒杀设置',
-                                'is_menu' => true,
-                                'route' => 'mch/miaosha/setting',
-
                             ],
                             [
                                 'name' => '商品管理',
@@ -1036,54 +1087,24 @@ class Menu
                                     ]
                                 ]
                             ],
-                            [
-                                'name' => '自提订单',
-                                'is_menu' => true,
-                                'route' => 'mch/miaosha/order/offline',
-                            ],
-                            [
-                                'name' => '批量发货',
-                                'is_menu' => true,
-                                'route' => 'mch/miaosha/order/batch-ship',
-                            ],
-                            [
-                                'name' => '售后订单',
-                                'is_menu' => true,
-                                'route' => 'mch/miaosha/order/refund',
-                                'action' => [
-                                    [
-                                        'name' => '秒杀订单取消申请处理',
-                                        'route' => 'mch/miaosha/order/apply-delete-status'
-                                    ]
-                                ]
-                            ],
-                            [
-                                'name' => '评价管理',
-                                'is_menu' => true,
-                                'route' => 'mch/miaosha/comment/index',
-                                'action' => [
-                                    [
-                                        'name' => '整点秒杀隐藏评论',
-                                        'route' => 'mch/miaosha/comment/hide-status',
-                                    ],
-                                    [
-                                        'name' => '整点秒杀评论删除',
-                                        'route' => 'mch/miaosha/comment/delete-status',
-                                    ],
-                                ]
-                            ],
-                        ],
+                        ]
                     ],
                     [
-                        'key' => 'pintuan',
-                        'name' => '拼团管理',
+                        'name' => '拼团活动',
                         'is_menu' => true,
-                        'route' => 'mch/group/goods/index',
+                        'route' => 'mch/group/order/group',
                         'children' => [
                             [
-                                'name' => '拼团设置',
+                                'name' => '拼团管理',
                                 'is_menu' => true,
-                                'route' => 'mch/group/setting/index',
+                                'route' => 'mch/group/order/group',
+                                'sub' => [
+                                    [
+                                        'name' => '拼团列表',
+                                        'is_menu' => false,
+                                        'route' => 'mch/group/order/group-list'
+                                    ],
+                                ],
                             ],
                             [
                                 'name' => '商品管理',
@@ -1140,84 +1161,289 @@ class Menu
                                 'is_menu' => true,
                                 'route' => 'mch/group/order/refund',
                             ],
-                            [
-                                'name' => '批量发货',
-                                'is_menu' => true,
-                                'route' => 'mch/group/order/batch-ship',
-                            ],
-                            [
-                                'name' => '拼团管理',
-                                'is_menu' => true,
-                                'route' => 'mch/group/order/group',
-                                'sub' => [
-                                    [
-                                        'name' => '拼团列表',
-                                        'is_menu' => false,
-                                        'route' => 'mch/group/order/group-list'
-                                    ],
-                                ],
-                            ],
-                            // 隐藏该菜单
-//                            [
-//                                'name' => '机器人管理',
-//                                'is_menu' => true,
-//                                'route' => 'mch/group/robot/index',
-//                                'sub' => [
-//                                    [
-//                                        'name' => '机器人编辑',
-//                                        'is_menu' => false,
-//                                        'route' => 'mch/group/robot/edit'
-//                                    ],
-//                                ]
-//                            ],
-                            [
-                                'name' => '轮播图',
-                                'is_menu' => true,
-                                'route' => 'mch/group/pt/banner',
-                                'sub' => [
-                                    [
-                                        'name' => '轮播图编辑',
-                                        'is_menu' => false,
-                                        'route' => 'mch/group/pt/slide-edit'
-                                    ],
-                                ]
-                            ],
-                            [
-                                'name' => '拼团规则',
-                                'is_menu' => true,
-                                'route' => 'mch/group/article/edit',
-                            ],
-                            [
-                                'name' => '评论管理',
-                                'is_menu' => true,
-                                'route' => 'mch/group/comment/index',
-                                'sub' => [
-                                    [
-                                        'name' => '客户评价编辑',
-                                        'is_menu' => false,
-                                        'route' => 'mch/group/comment/edit'
-                                    ],
-                                ]
-                            ],
-                            [
-                                'name' => '广告设置',
-                                'is_menu' => true,
-                                'route' => 'mch/group/ad/setting',
-                            ],
-                            [
-                                'name' => '数据统计',
-                                'is_menu' => true,
-                                'route' => 'mch/group/data/goods',
-                                'sub' => [
-                                    [
-                                        'name' => '用户列表',
-                                        'is_menu' => false,
-                                        'route' => 'mch/group/data/user'
-                                    ],
-                                ]
-                            ],
-                        ],
+                        ]
                     ],
+                    
+                ],
+            ],
+            [
+                'name' => '应用专区',
+                'is_menu' => true,
+                'route' => 'mch/book/goods/index',
+                'icon' => 'icon-pintu-m',
+                'children' => [
+                    // [
+                    //     'key' => 'miaosha',
+                    //     'name' => '整点秒杀',
+                    //     'is_menu' => true,
+                    //     'route' => 'mch/miaosha/index',
+                    //     'children' => [
+                    //         [
+                    //             'name' => '开放时间',
+                    //             'is_menu' => true,
+                    //             'route' => 'mch/miaosha/index',
+                    //         ],
+                    //         [
+                    //             'name' => '秒杀设置',
+                    //             'is_menu' => true,
+                    //             'route' => 'mch/miaosha/setting',
+
+                    //         ],
+                    //         [
+                    //             'name' => '商品管理',
+                    //             'is_menu' => true,
+                    //             'route' => 'mch/miaosha/goods/index',
+                    //             'sub' => [
+                    //                 [
+                    //                     'name' => '秒杀商品(S|U)',
+                    //                     'is_menu' => false,
+                    //                     'route' => 'mch/miaosha/goods/edit',
+                    //                 ],
+                    //             ],
+                    //             'action' => [
+                    //                 [
+                    //                     'name' => '秒杀商品删除',
+                    //                     'route' => 'mch/miaosha/goods/del'
+                    //                 ],
+                    //                 [
+                    //                     'name' => '秒杀商品(上下架)',
+                    //                     'route' => 'mch/miaosha/goods/goods-up-down'
+                    //                 ],
+                    //                 [
+                    //                     'name' => '秒杀商品批量设置',
+                    //                     'route' => 'mch/miaosha/goods/batch'
+                    //                 ],
+                    //                 [
+                    //                     'name' => '秒杀商品批量设置积分',
+                    //                     'route' => 'mch/miaosha/goods/batch-integral'
+                    //                 ],
+                    //             ]
+                    //         ],
+                    //         [
+
+                    //             'name' => '商品设置',
+                    //             'is_menu' => true,
+                    //             'route' => 'mch/miaosha/goods',
+                    //             'sub' => [
+                    //                 [
+                    //                     'name' => '商品编辑',
+                    //                     'is_menu' => false,
+                    //                     'route' => 'mch/miaosha/goods-edit',
+                    //                 ],
+                    //                 [
+                    //                     'name' => '商品详情',
+                    //                     'is_menu' => false,
+                    //                     'route' => 'mch/miaosha/goods-detail',
+                    //                 ],
+                    //                 [
+                    //                     'name' => '日期',
+                    //                     'is_menu' => false,
+                    //                     'route' => 'mch/miaosha/calendar',
+                    //                 ],
+                    //                 [
+                    //                     'name' => '多规格详情',
+                    //                     'is_menu' => false,
+                    //                     'route' => 'mch/miaosha/goods-detail-edit',
+                    //                 ],
+                    //             ],
+                    //         ],
+                    //         [
+                    //             'name' => '订单列表',
+                    //             'is_menu' => true,
+                    //             'route' => 'mch/miaosha/order/index',
+                    //             'sub' => [
+                    //                 [
+                    //                     'name' => '秒杀商品发货',
+                    //                     'route' => 'mch/miaosha/order/send'
+                    //                 ],
+                    //                 [
+                    //                     'name' => '秒杀商品详情',
+                    //                     'route' => 'mch/miaosha/order/detail'
+                    //                 ]
+                    //             ]
+                    //         ],
+                    //         [
+                    //             'name' => '自提订单',
+                    //             'is_menu' => true,
+                    //             'route' => 'mch/miaosha/order/offline',
+                    //         ],
+                    //         [
+                    //             'name' => '批量发货',
+                    //             'is_menu' => true,
+                    //             'route' => 'mch/miaosha/order/batch-ship',
+                    //         ],
+                    //         [
+                    //             'name' => '售后订单',
+                    //             'is_menu' => true,
+                    //             'route' => 'mch/miaosha/order/refund',
+                    //             'action' => [
+                    //                 [
+                    //                     'name' => '秒杀订单取消申请处理',
+                    //                     'route' => 'mch/miaosha/order/apply-delete-status'
+                    //                 ]
+                    //             ]
+                    //         ],
+                    //         [
+                    //             'name' => '评价管理',
+                    //             'is_menu' => true,
+                    //             'route' => 'mch/miaosha/comment/index',
+                    //             'action' => [
+                    //                 [
+                    //                     'name' => '整点秒杀隐藏评论',
+                    //                     'route' => 'mch/miaosha/comment/hide-status',
+                    //                 ],
+                    //                 [
+                    //                     'name' => '整点秒杀评论删除',
+                    //                     'route' => 'mch/miaosha/comment/delete-status',
+                    //                 ],
+                    //             ]
+                    //         ],
+                    //     ],
+                    // ],
+//                     [
+//                         'key' => 'pintuan',
+//                         'name' => '拼团管理',
+//                         'is_menu' => true,
+//                         'route' => 'mch/group/goods/index',
+//                         'children' => [
+//                             [
+//                                 'name' => '拼团设置',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/setting/index',
+//                             ],
+//                             [
+//                                 'name' => '商品管理',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/goods/index',
+//                                 'sub' => [
+//                                     [
+//                                         'name' => '商品编辑',
+//                                         'is_menu' => false,
+//                                         'route' => 'mch/group/goods/goods-edit',
+//                                     ],
+//                                     [
+//                                         'name' => '商品规格',
+//                                         'is_menu' => false,
+//                                         'route' => 'mch/group/goods/goods-attr',
+//                                     ],
+//                                     [
+//                                         'name' => '商品标准',
+//                                         'is_menu' => false,
+//                                         'route' => 'mch/group/goods/standard',
+//                                     ],
+//                                     [
+//                                         'name' => '商品标准编辑',
+//                                         'is_menu' => false,
+//                                         'route' => 'mch/group/goods/standard-edit',
+//                                     ],
+//                                 ],
+//                             ],
+//                             [
+//                                 'name' => '商品分类',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/goods/cat',
+//                                 'sub' => [
+//                                     [
+//                                         'name' => '商品分类编辑',
+//                                         'is_menu' => true,
+//                                         'route' => 'mch/group/goods/cat-edit'
+//                                     ],
+//                                 ]
+//                             ],
+//                             [
+//                                 'name' => '订单管理',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/order/index',
+//                                 'sub' => [
+//                                     [
+//                                         'name' => '拼团商品详情',
+//                                         'route' => 'mch/group/order/detail'
+//                                     ]
+//                                 ]
+//                             ],
+//                             [
+//                                 'name' => '售后订单',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/order/refund',
+//                             ],
+//                             [
+//                                 'name' => '批量发货',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/order/batch-ship',
+//                             ],
+//                             [
+//                                 'name' => '拼团管理',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/order/group',
+//                                 'sub' => [
+//                                     [
+//                                         'name' => '拼团列表',
+//                                         'is_menu' => false,
+//                                         'route' => 'mch/group/order/group-list'
+//                                     ],
+//                                 ],
+//                             ],
+//                             // 隐藏该菜单
+// //                            [
+// //                                'name' => '机器人管理',
+// //                                'is_menu' => true,
+// //                                'route' => 'mch/group/robot/index',
+// //                                'sub' => [
+// //                                    [
+// //                                        'name' => '机器人编辑',
+// //                                        'is_menu' => false,
+// //                                        'route' => 'mch/group/robot/edit'
+// //                                    ],
+// //                                ]
+// //                            ],
+//                             [
+//                                 'name' => '轮播图',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/pt/banner',
+//                                 'sub' => [
+//                                     [
+//                                         'name' => '轮播图编辑',
+//                                         'is_menu' => false,
+//                                         'route' => 'mch/group/pt/slide-edit'
+//                                     ],
+//                                 ]
+//                             ],
+//                             [
+//                                 'name' => '拼团规则',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/article/edit',
+//                             ],
+//                             [
+//                                 'name' => '评论管理',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/comment/index',
+//                                 'sub' => [
+//                                     [
+//                                         'name' => '客户评价编辑',
+//                                         'is_menu' => false,
+//                                         'route' => 'mch/group/comment/edit'
+//                                     ],
+//                                 ]
+//                             ],
+//                             [
+//                                 'name' => '广告设置',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/ad/setting',
+//                             ],
+//                             [
+//                                 'name' => '数据统计',
+//                                 'is_menu' => true,
+//                                 'route' => 'mch/group/data/goods',
+//                                 'sub' => [
+//                                     [
+//                                         'name' => '用户列表',
+//                                         'is_menu' => false,
+//                                         'route' => 'mch/group/data/user'
+//                                     ],
+//                                 ]
+//                             ],
+//                         ],
+//                     ],
                     [
                         'key' => 'book',
                         'name' => '预约',
@@ -1877,6 +2103,37 @@ class Menu
                             [
                                 'name' => '用户(S)',
                                 'route' => 'mch/permission/user/store',
+                            ],
+                        ]
+                    ],
+                    [
+                        'is_menu' => true,
+                        'name' => '配送员管理',
+                        'route' => 'mch/permission/distributor/index',
+                        'sub' => [
+                            [
+                                'is_menu' => false,
+                                'name' => '添加配送员',
+                                'route' => 'mch/permission/distributor/create',
+                            ],
+                            [
+                                'is_menu' => false,
+                                'name' => '编辑配送员',
+                                'route' => 'mch/permission/distributor/edit',
+                            ],
+                        ],
+                        'action' => [
+                            [
+                                'name' => '配送员(U)',
+                                'route' => 'mch/permission/distributor/update',
+                            ],
+                            [
+                                'name' => '配送员删除',
+                                'route' => 'mch/permission/distributor/destroy',
+                            ],
+                            [
+                                'name' => '配送员(S)',
+                                'route' => 'mch/permission/distributor/store',
                             ],
                         ]
                     ],

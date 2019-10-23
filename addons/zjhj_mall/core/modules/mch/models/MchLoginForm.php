@@ -15,7 +15,7 @@ use Yii;
 class MchLoginForm extends MchModel
 {
     public $username;
-    public $store_id;
+    // public $store_id;
     public $password;
     public $captcha_code;
 
@@ -23,7 +23,7 @@ class MchLoginForm extends MchModel
     {
         return [
             [['username', 'captcha_code'], 'trim'],
-            [['username', 'captcha_code', 'password', 'store_id'], 'required'],
+            [['username', 'captcha_code', 'password'], 'required'],
             [['captcha_code',], 'captcha', 'captchaAction' => 'mch/permission/passport/captcha',],
         ];
     }
@@ -46,7 +46,7 @@ class MchLoginForm extends MchModel
         $admin = User::findOne([
             'username' => $this->username,
             'type' => User::USER_TYPE_ROLE,
-            'store_id' => $this->store_id,
+            'store_id' => 126,
             'is_delete' => Model::IS_DELETE_FALSE
         ]);
         if (!$admin) {

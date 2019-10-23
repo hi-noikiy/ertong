@@ -68,7 +68,7 @@ class GoodsController extends Controller
 
     public function actionGetCatList($parent_id = 0)
     {
-        $list = Cat::find()->select('id,name')->where(['is_delete' => 0, 'parent_id' => $parent_id, 'store_id' => $this->store->id])->asArray()->all();
+        $list = Cat::find()->select('id,name')->where(['is_delete' => 0, 'parent_id' => $parent_id, 'store_id' => $this->store->id])->orderBy(['sort'=>SORT_ASC])->asArray()->all();
         return [
             'code' => 0,
             'data' => $list,
@@ -116,6 +116,7 @@ class GoodsController extends Controller
      */
     public function actionGoodsEdit($id = 0)
     {
+
         $goods = Goods::findOne(['id' => $id, 'store_id' => $this->store->id, 'mch_id' => 0]);
         if (!$goods) {
             $goods = new Goods();
@@ -126,6 +127,7 @@ class GoodsController extends Controller
         $form = new GoodsForm();
         if (\Yii::$app->request->isPost) {
             $model = \Yii::$app->request->post('model');
+            // print_r(\Yii::$app->request->post());die;
             if ($model['quick_purchase'] == 0) {
                 $model['hot_cakes'] = 0;
             }
@@ -153,7 +155,7 @@ class GoodsController extends Controller
         $searchForm->goods = $goods;
         $searchForm->store = $this->store;
         $list = $searchForm->search();
-
+        // print_r($list);die;
         $args = new EventArgument();
         $args['goods'] = $goods;
         \Yii::$app->eventDispatcher->dispatch(new BaseAddGoodsEvent(), $args);
@@ -164,24 +166,50 @@ class GoodsController extends Controller
             $option = Option::get('good_services', $this->store->id, 'admin', []);
             foreach ($option as $item) {
                 if ($item['is_default'] == 1) {
-                    $list['goods']['service'] = $item['service'];
-                    break;
+                    $service[]=array(
+                            'id'=>$item['id'],
+                            'name'=>$item['service'],
+                    );
+                    // $list['goods']['service'][]['id'] = $item['id'];
+                    // $list['goods']['service']['name'] = $item['service'];
+                    // break;
                 }
+            }
+            $service_arr=array_slice($service,0,3);
+            
+            foreach ($service_arr as $key => $val) {
+                $service_name[]=$val['name'];
+            }
+            $goods['service']=implode(',',$service_name);
+        }else{
+            $service=explode(',',$goods['service']);
+            foreach ($service as $val) {
+                $service_arr[]=array(
+                    'name'=>$val,
+                );
             }
         }
 
+        $option_arr = Option::get('good_services', $this->store->id, 'admin', []);
+        
         // 会员折扣默认开启
         if ($list['goods']->is_level == '') {
             $list['goods']->is_level = 1;
         }
+
+        $goods_cat_son_list = Cat::find()->select('id,name')->where(['is_delete' => 0, 'parent_id'=>$list['goods_cat_list'][0]['cat_id'], 'store_id' => $this->store->id])->orderBy(['sort'=>SORT_ASC])->asArray()->all();
+        // print_r($list['goods_cat_list']);die;
         return $this->render('goods-edit', [
             'goods' => $list['goods'],
+            'service_arr' => $service_arr,
+            'option_arr' => $option_arr,
             'cat_list' => $list['cat_list'],
             'levelList' => $levelList,
             'postageRiles' => $list['postageRiles'],
             'card_list' => \Yii::$app->serializer->encode($list['card_list']),
             'goods_card_list' => \Yii::$app->serializer->encode($list['goods_card_list']),
             'goods_cat_list' => \Yii::$app->serializer->encode($list['goods_cat_list']),
+            'goods_cat_son_list' => $goods_cat_son_list,
             'plugins' => $plugins
         ]);
     }

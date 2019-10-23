@@ -15,6 +15,7 @@ use app\models\Option;
 use app\models\Order;
 use app\models\PtOrder;
 
+use app\models\Cabinet;
 class CommonUpdateAddress
 {
     public $data;//更新的数据
@@ -28,7 +29,22 @@ class CommonUpdateAddress
         $address = $this->data['address'];
         $province = $this->data['province'];
         $city = $this->data['city'];
-        $district = $this->data['district'];
+        // $district = $this->data['district'];
+        $cabinet_id = $this->data['cabinet_id'];
+        if(!isset($cabinet_id) || $cabinet_id==''){
+            $query = Cabinet::find()->where(['province' => $province, 'city' => $city, 'address' => $address, 'is_delete' => 0, 'store_id' => \Yii::$app->controller->store->id])->asArray()->one();
+            // return Cabinet::find()->where(['province' => $province, 'city' => $city, 'address' => $address, 'is_delete' => 0, 'store_id' => \Yii::$app->controller->store->id])->createCommand()->getRawSql();
+            
+            if($query){
+                $cabinet_id=$query['id'];
+            }else{
+                return [
+                    'code' => 1,
+                    'msg' => '没有当前自提柜地址'
+                ];
+            }
+        }
+        
 
         if (!isset($orderType)) {
             return [
@@ -65,12 +81,12 @@ class CommonUpdateAddress
                 'msg' => '请填写收件人手机号'
             ];
         }
-        if (!isset($address)) {
-            return [
-                'code' => 1,
-                'msg' => '请填写收件人地址'
-            ];
-        }
+        // if (!isset($address)) {
+        //     return [
+        //         'code' => 1,
+        //         'msg' => '请填写收件人地址'
+        //     ];
+        // }
 
         if ($orderType === 'store') {
             $order = Order::findOne($orderId);
@@ -87,17 +103,18 @@ class CommonUpdateAddress
             ];
         }
 
-        $arr = [
-            'province' => $province,
-            'city' => $city,
-            'district' => $district,
-            'detail' => $address
-        ];
+        // $arr = [
+        //     'province' => $province,
+        //     'city' => $city,
+        //     'district' => $district,
+        //     'detail' => $address
+        // ];
 
         $order->name = $name;
         $order->mobile = $mobile;
-        $order->address = $province . $city . $district . $address;
-        $order->address_data = \Yii::$app->serializer->encode($arr);
+        $order->cabinet_id = $cabinet_id;
+        // $order->address = $province . $city . $district . $address;
+        // $order->address_data = \Yii::$app->serializer->encode($arr);
 
         if ($order->save()) {
             return [

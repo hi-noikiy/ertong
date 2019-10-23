@@ -55,6 +55,7 @@ class GoodsController extends Controller
             $form->store_id = $this->store->id;
             $form->attr = \Yii::$app->request->post('attr');
             $form->attributes = \Yii::$app->request->post('model');
+            // print_r(\Yii::$app->request->post());die;
             $form->full_cut = \Yii::$app->request->post('full_cut');
             $form->full_cut = \Yii::$app->request->post('full_cut');
             $form->integral = \Yii::$app->request->post('integral');
@@ -97,19 +98,37 @@ class GoodsController extends Controller
             }
             $goods[$index] = str_replace("\"", "&quot;", $value);
         }
-
+        
         // 默认商品服务
         if (!$goods['service']) {
             $option = Option::get('good_services', $this->store->id, 'admin', []);
-            foreach ($option as $service) {
-                if ($service['is_default'] == 1) {
-                    $goods->service = $service['service'];
-                    break;
+            foreach ($option as $item) {
+                if ($item['is_default'] == 1) {
+                    $service[]=array(
+                            'id'=>$item['id'],
+                            'name'=>$item['service'],
+                    );
                 }
             }
+            $service_arr=array_slice($service,0,3);
+            
+            foreach ($service_arr as $key => $val) {
+                $service_name[]=$val['name'];
+            }
+            $goods['service']=implode(',',$service_name);
+        }else{
+            $service=explode(',',$goods['service']);
+            foreach ($service as $val) {
+                $service_arr[]=array(
+                    'name'=>$val,
+                );
+            }
         }
-
+        $option_arr = Option::get('good_services', $this->store->id, 'admin', []);
+        
         return $this->render('edit', [
+            'service_arr' => $service_arr,
+            'option_arr' => $option_arr,
             'levelList' => $levelList,
             'goods' => $goods,
             'postageRiles' => $postageRiles,

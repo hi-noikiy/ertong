@@ -16,6 +16,7 @@ class ActionLogForm extends MchModel
 {
     public $page;
     public $limit;
+    public $type;
 
     public function rules()
     {

@@ -12,6 +12,7 @@ use app\models\common\admin\order\CommonOrderSearch;
 use app\models\common\CommonGoods;
 use app\models\Goods;
 use app\models\Order;
+use app\models\Cabinet;
 use app\models\OrderDetail;
 use app\models\OrderRefund;
 use app\models\Shop;
@@ -73,7 +74,8 @@ class OrderListForm extends MchModel
             'o.mch_id' => 0
         ])->leftJoin(['u' => User::tableName()], 'u.id = o.user_id')
             ->leftJoin(['od' => OrderDetail::tableName()], 'od.order_id=o.id')
-            ->leftJoin(['g' => Goods::tableName()], 'g.id=od.goods_id')->groupBy('o.id');
+            ->leftJoin(['g' => Goods::tableName()], 'g.id=od.goods_id')->groupBy('o.id')
+            ->leftJoin(['c' => Cabinet::tableName()], 'o.cabinet_id=c.id');
 
         switch ($this->status) {
             case 0:
@@ -162,7 +164,7 @@ class OrderListForm extends MchModel
             ->limit(1);
 
         $list = $query->limit($pagination->limit)->offset($pagination->offset)->orderBy('o.addtime DESC')
-            ->select(['o.*', 'u.nickname', 'u.platform', 'clerk_name' => $clerkQuery, 'refund' => $refundQuery])->asArray()->all();
+            ->select(['o.*', 'c.province', 'c.city', 'c.address', 'u.nickname', 'u.platform', 'clerk_name' => $clerkQuery, 'refund' => $refundQuery])->asArray()->all();
 
         $listArray = ArrayHelper::toArray($list);
         foreach ($listArray as $i => &$item) {
@@ -181,12 +183,49 @@ class OrderListForm extends MchModel
             }
             $item['flag'] = 0;
         }
-
+        //查找云柜地址
+        $cabinet=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->groupBy('province')->asArray()->all();
+        foreach ($cabinet as $key => $val) {
+            $province[]=$val['province'];
+        }
+        // $province=array_unique($province);
+        // return $province;
+        $province_arr=array();
+        $city=array();
+        foreach ($province as $key => $val) {
+            // $cabinet_province=array();
+            $cabinet_province=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $val])->groupBy('city')->asArray()->all();
+            foreach ($cabinet_province as $k => $v) {
+                $city[$key][]=array(
+                        'id' => $v['id']+1,
+                        'level' => "city",
+                        'list' => array(),
+                        'name' => $v['city'],
+                        'parent_id' => $key+1,
+                );
+            }
+        }
+        foreach ($province as $key => $val) {
+            foreach ($city as $k => $v) {
+                if($key==$k){
+                    $province_arr[]=array(
+                        'id' => $key+1,
+                        'level' => "province",
+                        'list' => $city[$k],
+                        'name' => $val,
+                        'parent_id' => 1,
+                    );
+                }
+            }
+        }
+        // return $province_arr;
         return [
             'row_count' => $count,
             'page_count' => $pagination->pageCount,
             'pagination' => $pagination,
             'list' => $listArray,
+            'cabinet' => $cabinet,
+            'province_arr' => $province_arr,
         ];
     }
 

@@ -47,6 +47,15 @@ class ArticleController extends Controller
         if (\Yii::$app->request->isPost) {
             $form = new ArticleForm();
             $post = \Yii::$app->request->post();
+            $content_arr=array();
+            $content=$post['content'];
+            foreach ($content['question'] as $key => $v) {
+                $content_arr[]=array(
+                    'question'=>$v,
+                    'answer'=>$content['answer'][$key],
+                );
+            }
+            $content=json_encode($content_arr);
             $form->attributes = $post;
             $form->model = $model;
             $form->store_id = $this->store->id;
@@ -54,11 +63,12 @@ class ArticleController extends Controller
 
             return $form->save();
         } else {
-            foreach ($model as $index => $value) {
-                $model[$index] = str_replace("\"", "&quot;", $value);
-            }
+            $list=json_decode(\yii\helpers\Json::encode($model));
+            $list=(array)$list;
+            $list['content']=json_decode($list['content'],ture);
+            
             return $this->render('edit', [
-                'model' => $model,
+                'model' => $list,
             ]);
         }
     }

@@ -14,6 +14,7 @@ use app\models\OrderDetail;
 use app\models\OrderForm;
 use app\models\OrderRefund;
 use app\models\User;
+use app\models\Cabinet;
 
 class OrderDetailForm extends MchModel
 {
@@ -42,11 +43,15 @@ class OrderDetailForm extends MchModel
         $user = User::find()->where(['id' => $order['user_id'], 'store_id' => $this->store_id])->asArray()->one();
         $order_form = OrderForm::find()->where(['order_id' => $order['id'], 'is_delete' => 0, 'store_id' => $this->store_id])->asArray()->all();
         $order_refund = OrderRefund::findOne(['store_id' => $this->store_id, 'order_id' => $order['id'], 'is_delete' => 0]);
+        $order_cabinet = Cabinet::find()->where(['store_id' => $this->store_id, 'id' => $order['cabinet_id']])->asArray()->one();
         if ($order_refund) {
             $order['refund'] = $order_refund->status;
         }
         if ($order['mch_id'] > 0) {
             $mch = Mch::findOne(['store_id' => $this->store_id, 'id' => $order['mch_id']]);
+        }
+        if ($order_cabinet) {
+            $order['cabinet'] = $order_cabinet;
         }
 
         return [

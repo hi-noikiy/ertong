@@ -117,6 +117,9 @@ $statics = Yii::$app->request->baseUrl . '/statics';
 
                 if(res.code == 0) {
                     window.location.reload();
+                }else if(res.code == 1){
+                    alert(res.msg);
+                    window.location.reload();
                 }
             },
             complete: function () {

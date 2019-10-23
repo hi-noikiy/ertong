@@ -20,6 +20,7 @@ if (!$returnUrl) {
 $events = [
     1 => '页面转发',
     2 => '购买并付款',
+    3 => '邀请新用户',
 ];
 ?>
 <!--<link href="https://cdn.bootcss.com/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css" rel="stylesheet">-->

@@ -22,6 +22,7 @@ class OrderData extends ApiModel
     public $offline;
     public $total_price;
     public $address_id;
+    public $cabinet_id;
 
     public $cart_id_list;
     public $goods_info;
@@ -159,10 +160,17 @@ class OrderData extends ApiModel
                 'msg' => '不是快递配送'
             ];
         }
-        if (!$this->address) {
+//        if (!$this->address) {
+//            return [
+//                'code' => 1,
+//                'msg' => '请选择收货地址'
+//            ];
+//        }
+
+        if (!$this->cabinet_id) {
             return [
                 'code' => 1,
-                'msg' => '请选择收货地址'
+                'msg' => '请选择云柜'
             ];
         }
         $offerRule = Option::get('offer-price', $this->store_id, 'admin');

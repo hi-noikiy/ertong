@@ -238,7 +238,7 @@ class Controller extends \app\controllers\Controller
     {
         if (!Yii::$app->mchRoleAdmin->isGuest) {
             $urlManager = Yii::$app->urlManager;
-            $url = $urlManager->hostInfo . $urlManager->baseUrl . '/role.php?store_id=' . Yii::$app->mchRoleAdmin->identity->store_id;
+            $url = $urlManager->hostInfo . $urlManager->baseUrl . '/home.php';
             setcookie('adminLoginUrl', $url, time() + 24 * 3600);
         }
 
