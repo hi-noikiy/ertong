@@ -1,0 +1,207 @@
+<div class="temp_item temp_item_space"  >
+	
+<div ng-if="rtype == 'style'">
+	<div class="frm_control_group frm_control_group_editin" >
+		<label for="" class="frm_label">样式</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label " ng-click="item.params.style = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">样式一</span>
+	    		<input type="radio" name="type{{$index}}" on-selected value="1" class="frm_radio"  ng-model="item.params.style"  /> 
+	    	</label>	    	
+		</div>
+	</div>
+
+	<div class="frm_control_group">
+		<label for="" class="frm_label">边距距离</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.padding}}" name="padding"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.padding" />
+			</span><span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.bgcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.bgcolor" />
+			</span><a href="javascript:;" ng-click="item.params.bgcolor = 'rgba(0, 0, 0, 0)'">透明</a>
+		</div>
+	</div>
+	
+<div ng-show="item.params.style == 1">
+
+	
+		<div class="frm_control_group " >
+			<label for="" class="frm_label">上部背景色</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="color" ng-model="item.params.topbgcolor" />
+				</span>
+				<span class="frm_input_box frm_input_box_100">
+					<input class="frm_input" type="text" ng-model="item.params.topbgcolor" />
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">下部背景色</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="color" ng-model="item.params.botbgcolor" />
+				</span>
+				<span class="frm_input_box frm_input_box_100">
+					<input class="frm_input" type="text" ng-model="item.params.botbgcolor" />
+				</span>
+			</div>
+		</div>
+	
+
+	
+		<div class="frm_control_group " >
+			<label for="" class="frm_label">价格颜色</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="color" ng-model="item.params.pricecolor" />
+				</span>
+				<span class="frm_input_box frm_input_box_100">
+					<input class="frm_input" type="text" ng-model="item.params.pricecolor" />
+				</span>
+			</div>
+		</div>
+
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">使用条件颜色</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="color" ng-model="item.params.usecolor" />
+				</span>
+				<span class="frm_input_box frm_input_box_100">
+					<input class="frm_input" type="text" ng-model="item.params.usecolor" />
+				</span>
+			</div>
+		</div>
+	
+
+
+	<div class="frm_control_group">
+		<label for="" class="frm_label">卡券名称颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.namecolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.namecolor" />
+			</span>
+		</div>
+	</div>
+
+
+	<div class="frm_control_group">
+		<label for="" class="frm_label">底部文字</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_200">
+				<input type="text" class="frm_input" ng-model="item.params.botfont">
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-show="item.params.botfont">
+		<label for="" class="frm_label">点击跳转</label>
+		<div class="frm_controls">
+			<div >
+				<span class="frm_input_box frm_input_200 readonlybg">
+					<input type="text" class="frm_input " ng-model="item.params.urlname" readonly>
+				</span><a href="javascript:;" ng-click="showLink(item.id,false,'my')">链接</a>
+			</div>
+		</div>
+	</div>	
+	<div class="frm_control_group" ng-show="item.params.botfont">
+		<label for="" class="frm_label">文字颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.botcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.botcolor" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-show="item.params.botfont">
+		<label for="" class="frm_label">边框颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.botbord" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.botbord" />
+			</span>
+		</div>
+	</div>
+</div>
+</div>
+
+<div ng-if="rtype == 'data'">
+	<div class="frm_control_group frm_control_group_editin" >
+		<label for="" class="frm_label">显示方式</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label " ng-click="item.params.showtype = 0">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">选择显示</span>
+	    		<input type="radio" name="showtype{{$index}}" on-selected value="0" class="frm_radio"  ng-model="item.params.showtype"  /> 
+	    	</label>
+	    	<label class="frm_radio_label " ng-click="item.params.showtype = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">按类型自动显示</span>
+	    		<input type="radio" name="showtype{{$index}}" on-selected value="1" class="frm_radio"  ng-model="item.params.showtype"  /> 
+	    	</label>
+		</div>
+	</div>
+
+	<div ng-show="item.params.showtype == 1">
+		<div class="frm_control_group">
+			<label for="" class="frm_label">显示卡券数量</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="item.params.goodnum">
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group frm_control_group_editin" >
+			<label for="" class="frm_label">选择类型</label>
+			<div class="frm_controls">
+
+		    	<label class="frm_radio_label {{item.params.sortid == 0 ?'selected':''}}" ng-click="item.params.sortid = 0;item.params.sortname = '官网系统卡券'">
+		    		<i class="icon_radio"></i>
+		    		<span class="lbl_content">官网系统卡券</span>
+		    		<input type="radio" name="sortid" class="frm_radio" on-selected value="0" ng-model="item.params.sortid"  /> 
+		    	</label>
+		    	
+			</div>
+		</div>
+	</div>
+
+	<div ng-show="item.params.showtype == 0 || !item.params.showtype">
+		<a class="create_access_primary" href="javascript:;" ng-click="showAddgoods(item.id,'card')">
+			<i class="icon20_common add_gray"></i>    
+		</a>
+		<div class="edit_data_box" ui-sortable="sortableOptions" ng-model="item.params.data">
+			<div class="edit_data_item" ng-repeat="good in item.params.data track by $index" >
+				<span class="delete_this" ng-click="deleteItem(item.id,good.id)">x</span>
+				<div class="design_single_box edit_goods_item item_cell_box">
+					<div class="edit_goods_img">
+						<img src="{{good.img}}">
+					</div>
+					<div class="item_cell_flex edit_goods_title">
+						<div>{{good.name}}</div>
+						<div>￥{{good.value}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>

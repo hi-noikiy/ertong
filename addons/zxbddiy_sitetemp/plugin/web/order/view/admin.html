@@ -1,0 +1,74 @@
+{template '../../../addons/'.MODULE.'/template/web/common/myheader'}
+
+	{if $_GPC['op'] == 'list'}
+
+	<div class="admin_group settings_group">
+	    <div class="item_cell_box mt20">
+	        <div class="item_cell_flex">
+	        {if empty( $admin )}
+	        	<div class="no_data">没有数据</div>
+	        {else}
+			  <table class="table" cellspacing="0"> 
+			   <thead class="thead"> 
+			        <tr> 
+			            <th class="table_cell title td_col_1"> 
+			                <label class="frm_checkbox_label" for="selectAll"> 
+			                    <i class="icon_checkbaox"></i> 
+			                    <span class="lbl_content">id</span> 
+			                    <input type="checkbox" class="frm_checkbox" id="selectAll" /> 
+			                </label>
+			            </th>
+			            <th class="table_cell tl td_col_1">微信头像</th>
+			            <th class="table_cell tl td_col_1">微信昵称</th>
+			            <th class="table_cell tr td_col_1">操作</th>
+			        </tr> 
+			   </thead> 
+			   <tbody class="tbody" id="js_goods">
+			       {loop $admin $item}
+			            <tr> 
+			                <td class="table_cell title td_col_1"> 
+			                    <div class="goods_info">
+			                        <label class="frm_checkbox_label" > 
+			                            <i class="icon_cheackbox"></i> 
+			                            <input type="checkbox" name="checkall[]" class="frm_checkbox" value="{$item['id']}" /> 
+			                            {$item['id']}
+			                        </label>
+			                    </div>
+			                </td> 
+			                <td class="table_cell price tl td_col_1">
+			                    <img src="{$item['user']['headimgurl']}" width="30px" height="30px">
+			                </td>
+			                <td class="table_cell price tl td_col_1">
+			                    {$item['user']['nickname']}
+			                </td>               
+			                <td class="table_cell oper last_child tr opclass td_col_1" style="position: relative;">
+			                    <a href="javascript:;" class="deleteadmin" id="{$item['id']}">删除</a>
+			                </td>
+			            </tr>
+			        {/loop}
+			    </tbody>
+			    </table>
+	    	{/if}
+	        </div>
+
+	        <div style="width: 200px;" >
+	            <div class="frm_control_group">
+	                <label for="" class="frm_label"></label>
+	                <div class="frm_controls" style="text-align: center;">
+	                    <img src="{php echo $this->createWebUrl('img',array('op'=>'bindadmin','plug'=>2))}" id="qrcode" width="155px" height="155px">
+	                    <p class="frm_tipsm qrcode_tips" >扫上方二维码绑定管理员，管理员可前端查看订单数据、核销订单</p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<script type="text/javascript">
+	Http('post','json','checkqrcode',{page:'bindadmin'},function(data){
+		if( data.status == 201 ){
+			$('.qrcode_tips').text(data.res);
+		}
+	},true);
+</script>
+	{/if}
+	
+{template '../../../addons/'.MODULE.'/template/web/common/myfooter'}

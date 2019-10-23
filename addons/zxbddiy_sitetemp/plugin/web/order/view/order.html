@@ -1,0 +1,819 @@
+{template '../../../addons/'.MODULE.'/template/web/common/myheader'}
+
+{if $_GPC['op'] == 'info'}
+
+	<div class="highlight_box" style="margin-top: 20px;">   
+		<p class="title">订单编号 <a href="javascript:;" class="copy_url" data-href="{$item['orderid']}" >{$order['id']}</a> </p>
+		{if !empty( $order['uorderid'] )}
+			<p class="title">微信订单编号 <a href="javascript:;" class="copy_url" data-href="{$item['uorderid']}" >{$order['uorderid']}</a></p>
+		{/if}
+		<p class="desc">
+		{if $order['status'] == 0 && $order['paytype'] == 0}
+			未支付
+		{elseif $order['status'] == 0 && $order['paytype'] == 1}
+			待配送，待付款
+		{elseif $order['status'] == 1}
+			{if $order['taketype'] == 1}待发货{elseif $order['taketype'] == 2}待上店自提{/if}
+		{elseif $order['status'] == 2}
+			已发货
+		{elseif $order['status'] == 3}
+			已完成
+		{elseif $order['status'] == 4}
+			已退款
+		{/if}
+		</p>
+	</div>
+	<dl class="intro od_msg">
+		<dt><h3>下单商品</h3></dt>
+		<dd>
+			<div class="orderinfo_item item_cell_box">
+				<div class="orderinfo_item_in ordergood_item_img">
+					图片
+				</div>
+				<div class="orderinfo_item_in ordergood_item_title">
+					标题
+				</div>
+				<div class="orderinfo_item_in ordergood_item_rule">
+					规格
+				</div>
+				<div class="orderinfo_item_in">
+					数量
+				</div>				
+				<div class="orderinfo_item_in">
+					总额
+				</div>
+				<div class="orderinfo_item_in ">
+					{if $order['type'] == 0}运费{elseif $order['type'] == 1}配送费{/if}
+				</div>
+			</div>
+			{loop $ordergood $k $item}
+			<div class="orderinfo_item item_cell_box">
+				<div class="orderinfo_item_in ordergood_item_img">
+					<img src="{$item['thumb']}" style="width: 50px;height: 50px;">
+				</div>
+				<div class="orderinfo_item_in ordergood_item_title">
+					{$item['title']}
+				</div>
+				<div class="orderinfo_item_in ordergood_item_rule">
+					{$item['rulename']}
+				</div>
+				<div class="orderinfo_item_in">
+					{$item['num']}
+				</div>				
+				<div class="orderinfo_item_in">
+					{$item['money']}
+				</div>
+				<div class="orderinfo_item_in ordergood_item_other">
+					{if $order['type'] == 0}
+						{$item['costexpress']}
+					{elseif $order['type'] == 1}
+						{if $k == 0 && empty( $order['deskid'] )}{$order['sendmoney']}{/if}
+					{/if}
+					
+				</div>
+			</div>
+			{/loop}
+		</dd>
+	</dl>
+
+	<dl class="intro od_msg">
+		<dt><h3>买家信息</h3></dt>
+		<dd>
+			<div class="buyer_msg item_cell_box">
+				<div class="">
+					<img src="{$user['headimgurl']}">
+				</div>
+				<div class="msg_pre_view item_cell_flex">
+					<ul>
+						<li class="group">
+							<span class="l title">微信昵称</span>
+							<span class="msg">
+								<span id="js_buyerNick">{$user['nickname']}</span>
+							</span>
+						</li>
+						<li class="group">
+							<span class="l title">openid</span>
+							<span class="msg">
+								<span id="js_buyerNick">{$user['openid']}</span>
+							</span>
+						</li>
+						{if !empty( $order['tel'] )}
+							<li class="group">
+								<span class="l title">电话</span>
+								<span class="msg">
+									<span id="js_buyerNick">{$order['tel']}</span>
+								</span>
+							</li>
+						{/if}
+					</ul>
+				</div>
+			</div>
+		</dd>
+	</dl>
+
+	{if $order['deskid'] > 0}
+	<dl class="intro od_msg">
+		<dt><h3>餐桌信息</h3></dt>
+		<dd>
+			<div class="buyer_msg item_cell_box">
+				<div class="">
+				</div>
+				<div class="msg_pre_view item_cell_flex">
+					<ul>
+						<li class="group">
+							<span class="l title">餐桌名称</span>
+							<span class="msg">
+								<span id="js_buyerNick">{$desk['name']}</span>
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</dd>
+	</dl>
+	{/if}
+
+	{if $order['taketype'] == 2}
+	<dl class="intro od_msg">
+		<dt><h3>上店自提订单</h3></dt>
+		<dd>
+			<div class="buyer_msg" style="padding-left: 0px;">
+				<div class="msg_pre_view">
+					<ul>
+						<li class="group item_cell_box">
+							<p class="l title time_title">店铺电话</p>
+							<p class="msg item_cell_flex">
+								<span id="js_buyerNick">{php echo $this->module['config']['shoptel']}</span>
+							</p>
+						</li>
+						<li class="group item_cell_box">
+							<p class="l title time_title">店铺地址</p>
+							<p class="msg item_cell_flex">
+								<span id="js_buyerNick">{php echo $this->module['config']['shopaddress']}</span>
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</dd>
+	</dl>	
+	{/if}
+
+	{if !empty($order['hexiaoer'])}
+	<dl class="intro od_msg">
+		<dt><h3>核销人员</h3></dt>
+		<dd>
+			<div class="" style="padding-left: 0px;">
+				<div class="msg_pre_view">
+					<div class="group item_cell_box">
+						<div class="l">头像</div>
+						<div class="msg item_cell_flex">
+							<img src="{$hexiao['headimgurl']}" style="width: 50px;height: 50px;">
+						</div>
+					</div>
+					<div class="group item_cell_box">
+						<div class="l">昵称</div>
+						<div class="msg item_cell_flex">
+							<span id="js_buyerNick">{$hexiao['nickname']}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</dd>
+	</dl>	
+	{/if}
+
+	{if $order['taketype'] == 1}
+
+		<dl class="intro od_msg">
+			<dt><h3>收货信息</h3></dt>
+			<dd>
+				<div class="buyer_msg" style="padding-left: 0px;">
+					<div class="msg_pre_view">
+						<ul>
+							<li class="group item_cell_box">
+								<p class="l title time_title">姓名电话</p>
+								<p class="msg item_cell_flex">
+									<span id="js_buyerNick">{$order['address']['name']}，{$order['address']['tel']}</span>
+								</p>
+							</li>
+							<li class="group item_cell_box">
+								<div class="l title time_title">收货地址</div>
+								<div class="msg item_cell_flex">
+									<span id="js_buyerNick">{$order['address']['address']}</span>
+								</div>
+							</li>
+							<li class="group item_cell_box">
+								<div class="l title time_title"></div>
+					            <div class="opclass" style="padding-left: 15px">
+			                        <a href="javascript:;" class="drop_down_editbtn">修改</a>
+			                        <div class="dropdown_menu_box dropdown_menu dropdown_checkbox has_goods_group" >
+			                            <div class="dropdown_data_container jsDropdownsList" style="display: none;right: inherit;">
+			                                <div class="dropdown_data_list" style="">
+			                                    <ul class="drop_down_inputitem">
+			                                        <li class="">姓名</li>
+			                                        <li class="">
+			                                            <input type="text" class="drop_down_input addressname" name="name" value="{$order['address']['name']}">
+			                                        </li>
+			                                    </ul>
+			                                    <ul class="drop_down_inputitem">
+			                                        <li class="">电话</li>
+			                                        <li class="">
+			                                            <input type="text" class="drop_down_input addresstel" name="tel" value="{$order['address']['tel']}">
+			                                        </li>
+			                                    </ul>
+			                                    <ul class="drop_down_inputitem">
+			                                        <li class="">地址</li>
+			                                        <li class="">
+			                                            <textarea class="drop_down_textarea addressaddress" name="address">{$order['address']['address']}</textarea>
+			                                        </li>
+			                                    </ul>		                                    		                                    
+			                                    <div class="dropdown_tool_bar"> 
+			                                        <a href="javascript:;" class="btn js_btn btn_primary confirm_editaddress" oid="{$order['orderid']}" style="padding:0;">确定</a>
+			                                        <a href="javascript:;" class="btn js_btn btn_default dropdown_edit_cancel" style="padding:0;">取消</a>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+					            </div>
+							</li>							
+
+						</ul>
+					</div>
+				</div>
+			</dd>
+		</dl>
+	{/if}
+
+	{if !empty( $order['formdata'] )}
+		<dl class="intro od_msg">
+			<dt><h3>表单数据</h3></dt>
+			<dd>
+				<div class="buyer_msg" style="padding-left: 0px;">
+					<div class="msg_pre_view">
+						<ul>
+							{loop $order['formdata'] $item}
+							<li class="group item_cell_box">
+								<p class="l title time_title">{$item['name']}</p>
+								<p class="msg item_cell_flex">
+									<span id="js_buyerNick">
+										{if is_array($item['value'])}	
+											{loop $item['value'] $in}
+												{$in}，
+											{/loop}
+										{else}
+											{$item['value']}
+										{/if}
+									</span>
+								</p>
+							</li>
+							{/loop}
+						</ul>
+					</div>
+				</div>
+			</dd>
+		</dl>
+	{/if}
+
+	{if $order['taketype'] == 1 && !empty( $order['expressname'] )}
+		<dl class="intro od_msg">
+			<dt><h3>快递信息</h3></dt>
+			<dd>
+				<div class="buyer_msg" style="padding-left: 0px;">
+					<div class="msg_pre_view">
+						<ul>
+							<li class="group item_cell_box">
+								<p class="l title time_title">快递名称</p>
+								<p class="msg item_cell_flex">
+									<span id="js_buyerNick">{$order['expressname']}</span>
+								</p>
+							</li>
+							<li class="group item_cell_box">
+								<div class="l title time_title">快递编号</div>
+								<div class="msg item_cell_flex">
+									<span id="js_buyerNick">{$order['expressnum']}</span>
+								</div>
+							</li>
+							<li class="group item_cell_box">
+								<div class="l title time_title"></div>
+				            <div class="opclass" style="padding-left: 15px">
+		                        <a href="javascript:;" class="drop_down_editbtn">修改</a>
+		                        <div class="dropdown_menu_box dropdown_menu dropdown_checkbox has_goods_group" >
+		                            <div class="dropdown_data_container jsDropdownsList" style="display: none;right: inherit;">
+		                                <div class="dropdown_data_list" style="">
+		                                    <ul class="drop_down_inputitem">
+		                                        <li class="">快递名称</li>
+		                                        <li class="">
+		                                            <input type="text" class="drop_down_input expressname" name="name" value="{$order['expressname']}">
+		                                        </li>
+		                                    </ul>
+		                                    <ul class="drop_down_inputitem">
+		                                        <li class="">快递编号</li>
+		                                        <li class="">
+		                                            <input type="text" class="drop_down_input expressnum" name="tel" value="{$order['expressnum']}">
+		                                        </li>
+		                                    </ul>
+		                                    <div class="dropdown_tool_bar"> 
+		                                        <a href="javascript:;" class="btn js_btn btn_primary confirm_express" oid="{$order['orderid']}" style="padding:0;">确定</a>
+		                                        <a href="javascript:;" class="btn js_btn btn_default dropdown_edit_cancel" style="padding:0;">取消</a>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+				            </div>
+							</li>							
+
+						</ul>
+					</div>
+				</div>
+			</dd>
+		</dl>	
+
+	{/if}
+	<dl class="intro od_msg">
+		<dt>
+			<h3>订单进度</h3> 
+			{if empty( $order['progress'] )} 
+				<a href="javascript:;" class="add_progress">自定进度</a>
+			{else}
+				<a href="javascript:;" class="add_progress">添加进度</a> 
+			{/if}
+		</dt>
+		<dd>
+			<div class="buyer_msg" style="padding-left: 0px;">
+				<div class="msg_pre_view">
+					<ul>
+						{if empty( $order['progress'] )}
+							{if $order['createtime'] > 0}
+								<li class="group item_cell_box">
+									<p class="l title time_title">{php echo date('Y-m-d H:i:s',$order['createtime'])}</p>
+									<p class="msg item_cell_flex">买家下单</p>
+								</li>
+							{/if}
+							{if $order['sendtime'] > 0}
+								<li class="group item_cell_box">
+									<p class="l title time_title">{php echo date('Y-m-d H:i:s',$order['sendtime'])}</p>
+									<p class="msg item_cell_flex">发货处理</p>
+								</li>
+							{/if}
+							{if $order['comtime'] > 0}
+								<li class="group item_cell_box">
+									<p class="l title time_title">{php echo date('Y-m-d H:i:s',$order['comtime'])}</p>
+									<p class="msg item_cell_flex">订单完成</p>
+								</li>
+							{/if}
+						{else}
+							{loop $order['progress'] $key $item}
+								<li class="group item_cell_box">
+									<p class="l title time_title">{php echo date('Y-m-d H:i:s',$item['time'])}</p>
+									<p class="msg item_cell_flex">{$item['text']} <a href="javascript:;" class="deletepro" tid="{$item['key']}">删除</a></p>
+								</li>
+							{/loop}
+						{/if}															
+					</ul>
+				</div>
+			</div>
+		</dd>
+	</dl>
+
+<div class="my_model" addgoodsort style="display: none;position: relative;z-index: 111">
+    <div class=" ui-draggable " >
+        <div class="dialog">
+            <div class="dialog_hd">
+                <a href="javascript:;" class="icon16_opr closed pop_closed model_close" >关闭</a>
+            </div>
+            <div class="dialog_bd info_box" >
+                <form>
+					<div class="frm_control_group">
+						<label for="" class="frm_label">进度名称</label>
+						<div class="frm_controls msg">
+							<span class="frm_input_box">
+								<input type="text" class="frm_input"  name="pname" value="">
+							</span>
+							<p class="frm_tips frm_tips_default">填写进度名称</p>
+							<input type="hidden" name="oid" value="{$_GPC['id']}">
+						</div>
+					</div>
+					<div class="frm_control_group">
+						<label for="" class="frm_label">进度时间</label>
+						<div class="frm_controls msg">
+							{php echo tpl_form_field_date('rangetime','', true);}
+						</div>
+					</div>
+
+                </form>
+            </div>
+            <div class="dialog_ft">
+                <span class="btn btn_primary btn_input js_btn_p" id="confirm_addorderpro" >
+                    <button type="button" class="js_btn">保存</button>
+                </span>
+                <span class="btn btn_default btn_input js_btn_p model_close" >
+                    <button type="button" class="js_btn">取消</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="mask ui-draggable" style="display: block;"></div>
+</div>
+
+<script type="text/javascript">
+	$(function(){
+
+		$('.add_progress').click(function(){
+			$('.my_model[addgoodsort]').show();
+		});
+		
+		$('#confirm_addorderpro').click(function(){
+			var postdata = {
+				name : $('input[name=pname]').val(),
+				oid : $('input[name=oid]').val(),
+				time : $('input[name="rangetime"]').val(),
+			};
+
+			if( postdata.name == '' ){
+				webAlert('请填写进度名称');return false;
+			}
+			
+
+			Http('post','json','addorderpro',postdata,function(data){
+				if(data.status == 200){
+					webAlert(data.res);
+					setTimeout(function(){
+						location.href = '';
+					},500);
+				}else{
+					webAlert(data.res);
+				}
+			},true);
+
+		});
+
+		$('.deletepro').click(function(){
+			var _this = $(this);
+			var postdata = {
+				oid : $('input[name=oid]').val(),
+				tid : $(this).attr('tid'),
+			};
+			if( confirm('确定删除吗？') ) {
+				Http('post','json','deletepro',postdata,function(data){
+					if(data.status == 200){
+						webAlert(data.res);
+						_this.parents('.group').remove();
+					}else{
+						webAlert(data.res);
+					}
+				},true);
+			}
+			
+		});
+
+	});
+</script>
+
+{elseif $_GPC['op'] > 0}
+
+{if !empty( $list )}
+{template '../../../addons/'.MODULE.'/template/web/common/topbar'}
+
+	{if !empty( $desk )}
+		{loop $desk $item}
+			<a href="{php echo self::pwUrl('order','order',array('op'=>$_GPC['op'],'did'=>$item['id']))}" class="tempsortbtn {if $_GPC['did'] == $item['id']}tempsortbtn_act{/if}">{$item['name']}</a>
+		{/loop}
+	{/if}
+
+  <table class="table" cellspacing="0"> 
+   <thead class="thead"> 
+    	<tr>
+     		<th class="table_cell title td_col_1"> 
+     			<label class="frm_checkbox_label" for="selectAll"> 
+     				<i class="icon_checkbox"></i> 
+     				<span class="lbl_content">编号</span> 
+     				<input type="checkbox" class="frm_checkbox" id="selectAll" /> 
+     			</label>
+     		</th> 
+     		<th class="table_cell tl td_col_1">订单标题</th>
+     		<th class="table_cell tl td_col_2">订单商品</th>
+     		<th class="table_cell tl td_col_1">订单金额</th>
+     		<th class="table_cell tl td_col_1">订单状态</th>
+     		<th class="table_cell tr td_col_1">操作订单</th>
+    	</tr>
+   </thead>
+   <tbody class="tbody" id="js_goods">
+   <form method="post">
+	   {loop $list $item}
+	    	<tr> 
+	     		<td class="table_cell title"> 
+	      			<div class="goods_info">
+	      			 	<label class="frm_checkbox_label" > 
+	       					<i class="icon_checkbox"></i> 
+	       					<input type="checkbox" name="checkall[]" class="frm_checkbox" value="{$item['id']}" /> 
+	       					{$item['id']}
+	       				</label>
+	      			</div>
+	     		</td> 
+	     		<td class="table_cell price tl">
+	    			{$item['title']}
+	     		</td> 
+	     		<td class="table_cell price tl">
+	     			{loop $item['ordergood'] $in}
+		     			<div class="item_cell_box ordergood_item" style="padding: 10px;background: #eee;border-bottom: 1px solid #fff;">
+		     				<div class="">
+		     					<img src="{$in['thumb']}" height="40px" width="40px">
+		     				</div>
+		     				<div class="item_cell_flex ordergood_title">
+		     					{$in['title']}
+		     				</div>
+		     				<div>x{$in['num']}</div>
+		     			</div>
+	     			{/loop}
+	     		</td>	     		   		
+	     		<td class="table_cell price tl">
+	     			{$item['fee']}
+	     		</td>     			
+	    		<td class="table_cell count tl">
+	    			{if $item['status'] == 0 && $item['paytype'] == 0}
+	    				待支付
+	    			{elseif $item['status'] == 0 && $item['paytype'] == 1}
+	    				待配送，待付款
+	    			{elseif $item['status'] == 1 }
+	    				<p class="font_ff5f27">{if $item['taketype'] == 1}待发货{elseif $item['taketype'] == 2}待上店自提{/if}</p>
+	    				
+	    			{elseif $item['status'] == 2 }
+	    				已发货
+	    			{elseif $item['status'] == 3 }
+	    				<p class="font_green">已完成</p>
+	    			{elseif $item['status'] == 4 }
+	    				<p class="font_ff5f27">已退款</p>
+	    			{/if}
+    				{if $item['deskid'] > 0}
+    					<p class="font_mini">扫码点餐</p>
+    					{loop $desk $in}
+    						{if $in['id'] == $item['deskid']}
+    							<p class="font_mini">桌号:{$in['name']}</p>
+    						{/if}
+    					{/loop}
+    				{/if}
+	    		</td>
+			    <td class="table_cell oper last_child tr opclass" style="position: relative;">
+			    	{if $item['status'] == 1 && $item['taketype'] == 1}
+			            <div class="opclass" >
+			            	{if $item['type'] == 1}
+			            		<a href="javascript:;" class="comorder" oid="{$item['orderid']}" >完成</a>
+			            	{/if}
+	                        <a href="javascript:;" class="drop_down_editbtn" style="margin-right: -5px">发货</a>
+	                        <div class="dropdown_menu_box dropdown_menu dropdown_checkbox has_goods_group" >
+	                            <div class="dropdown_data_container jsDropdownsList" style="display: none;right: 0;">
+	                                <div class="dropdown_data_list" style="">
+	                                    <ul class="drop_down_inputitem">
+	                                        <li class="">快递名称</li>
+	                                        <li class="">
+	                                            <input type="text" class="drop_down_input expressname" name="name" value="{$item['expressname']}">
+	                                        </li>
+	                                    </ul>
+	                                    <ul class="drop_down_inputitem">
+	                                        <li class="">快递编号</li>
+	                                        <li class="">
+	                                            <input type="text" class="drop_down_input expressnum" name="tel" value="{$item['expressnum']}">
+	                                        </li>
+	                                    </ul>
+	                                    <div class="dropdown_tool_bar"> 
+	                                        <a href="javascript:;" class="btn js_btn btn_primary confirm_express" oid="{$item['orderid']}" style="padding:0;">确定</a>
+	                                        <a href="javascript:;" class="btn js_btn btn_default dropdown_edit_cancel" style="padding:0;">取消</a>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+			            </div>
+			    	{/if}
+			    	{if ($item['status'] == 1 && $item['taketype'] == 2) || ($item['status'] == 2 && $item['taketype'] == 1) }
+			    		<a href="javascript:;" class="comorder" oid="{$item['orderid']}" >完成</a>
+			    	{/if}	    	
+			    	{if ($item['status'] == 1 || $item['status'] == 2) && $item['fee'] > 0}
+			            <div class="opclass" >
+	                        <a href="javascript:;" class="drop_down_editbtn" style="margin-right: -5px">退款</a>
+	                        <div class="dropdown_menu_box dropdown_menu dropdown_checkbox has_goods_group" >
+	                            <div class="dropdown_data_container jsDropdownsList" style="display: none;right: 0;">
+	                                <div class="dropdown_data_list" style="">
+	                                    <ul class="drop_down_inputitem">
+	                                        <li class="">退款金额</li>
+	                                        <li class="">
+	                                            <input type="text" class="drop_down_input" name="name" value="{$item['fee']}">
+	                                        </li>
+	                                    </ul>
+	                                    <div class="dropdown_tool_bar"> 
+	                                        <a href="javascript:;" class="btn js_btn btn_primary confirm_refund" oid="{$item['orderid']}" style="padding:0;">确定</a>
+	                                        <a href="javascript:;" class="btn js_btn btn_default dropdown_edit_cancel" style="padding:0;">取消</a>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+			            </div>
+			    	{/if}
+			    	<p>
+		            	{if $item['paytype'] == 1 && $item['status'] == 0}
+		            		<a href="javascript:;" class="comorder" oid="{$item['orderid']}" >完成</a>
+		            	{/if}
+			    		<a href="{php echo self::pwUrl('shop','order',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('删除不能恢复，确定要删除吗？');">删除</a>
+			    		<a href="{php echo self::pwUrl('shop','order',array('op'=>'info','id'=>$item['id']))}" >详情</a>
+			    	</p>
+			    </td>
+	    	</tr>
+	    {/loop}
+   	</tbody> 
+  	</table>
+	<div class="bottom_page item_cell_box">
+		<div class="dib tl">
+     			<label class="frm_checkbox_label" for="selectAll"> 
+     				<i class="icon_checkbox"></i> 
+     				<span class="lbl_content">全选</span> 
+     				<input type="checkbox" class="frm_checkbox" id="selectAll" /> 
+     			</label>
+  			<div class="filter_content dropdown_topbar"> 
+		   		<div class="dropdown_menu ">
+		    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt">
+		    			<label class="jsBtLabel">批量操作</label>
+		    			<i class="arrow"></i>
+		    		</a> 
+		    		<div class="dropdown_data_container jsDropdownList" > 
+			     		<ul class="dropdown_data_list"> 
+			      			<li class="dropdown_data_item "> 
+			      				<input name="deleteall" class="alldeal_btn" value="删除所选" onclick="return confirm('确定要删除选择的吗？');" type="submit">
+			      			</li> 
+			    		</ul> 
+		    		</div> 
+		   		</div>
+  			</div>
+		</div>
+		<div class="tr dib item_cell_flex">
+			{$pager}
+		</div>
+	</div>
+		<input name="token" type="hidden" value="{$_W['token']}" />
+	</form>
+
+	{elseif $_GPC['op'] == 'gettb'}
+
+		<form>
+			<div class="frm_control_group">
+				<label for="" class="frm_label"></label>
+				<div class="frm_controls">
+				</div>
+			</div>
+
+			<div class="frm_control_group"> 
+	  			<label for="" class="frm_label">商品链接</label> 
+	   			<div class="frm_controls"> 
+					<div class="edit_right_list width_750 group_tb_box">
+						<span id="add_tb" class="btn btn_primary btn_small edit_right_btn">添加一项</span>
+						<div class="edit_right_item">
+							链接<span class="frm_input_box frm_input_box_500">
+								<input type="text" class="frm_input"  name="tburl" value="">
+							</span>
+							<a href="javascript:;" class="delete_params">删除</a>
+						</div>
+					</div>
+	   			</div>
+	  		</div>
+			<div class="frm_control_group" >
+	  			<label for="" class="frm_label">存进分类</label>
+	   			<div class="frm_controls">
+		  			<div class="filter_content dropdown_topbar"> 
+				   		<div class="dropdown_menu ">
+				    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt width_200">
+				    			<label class="jsBtLabel">
+				    				{loop $goodsort $item}
+				    					{loop $item['down'] $in}
+					    					{if $in['id'] == $info['sortid']}
+					    						{$in['name']}
+					    					{/if}
+				    					{/loop}
+				    				{/loop}
+				    			</label>
+				    			<i class="arrow"></i>
+				    		</a> 
+				    		<div class="dropdown_data_container jsDropdownList width_200" > 
+					     		<ul class="dropdown_data_list">
+					     			{loop $goodsort $item}
+					     				{loop $item['down'] $in}
+					      					<li class="dropdown_data_item "> <a href="javascript:;" id="{$in['id']}" class="select_item">{$in['name']}</a> </li> 
+					      				{/loop}
+					      			{/loop}
+					    		</ul>
+				    		</div> 
+				    		<input type="hidden" name="sortid" value="{$info['sortid']}" value="">
+				   		</div>
+		  			</div>
+	   			</div>
+	  		</div>
+
+			<div class="tool_bar">
+				<div class="btn btn_primary" id="gettb">采集</div>
+			</div>
+
+{else}
+	<div class="no_data">没有数据</div>
+{/if}
+
+
+	{elseif $_GPC['op'] == 'down'}
+
+        <div class="dealorder_l " style="margin-left: 100px;">
+            <div class="dealorder_war">
+                请先按条件筛选，然后点击下载订单
+            </div>
+            <form class="import_order" action="" method="post">
+                <div class="frm_control_group" >
+                    <label for="" class="frm_label">订单状态</label>
+                    <div class="frm_controls">
+                        <label class="frm_radio_label">
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">全部</span>
+                            <input type="radio" name="status" value="0" class="frm_radio" />
+                        </label>
+                        <label class="frm_radio_label">
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">未支付</span>
+                            <input type="radio" name="status" value="1" class="frm_radio"  /> 
+                        </label>                     
+                        <label class="frm_radio_label">
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">待发货</span>
+                            <input type="radio" name="status" value="2" class="frm_radio" checked="checked" /> 
+                        </label>
+                        <label class="frm_radio_label">
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">已发货</span>
+                            <input type="radio" name="status" value="3" class="frm_radio" />
+                        </label>
+                        <label class="frm_radio_label" >
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">已完成</span>
+                            <input type="radio" name="status" value="4" class="frm_radio" />
+                        </label>
+                        <label class="frm_radio_label" >
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">已退款</span>
+                            <input type="radio" name="status" value="5" class="frm_radio" />
+                        </label>                    
+                    </div>
+                </div>
+
+                <!-- <div class="frm_control_group" >
+                    <label for="" class="frm_label">收货方式</label>
+                    <div class="frm_controls">
+                        <label class="frm_radio_label">
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">全部</span>
+                            <input type="radio" name="sendtype" value="0" class="frm_radio" />
+                        </label>
+                        <label class="frm_radio_label" >
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">上店自提</span>
+                            <input type="radio" name="sendtype" value="1" class="frm_radio" /> 
+                        </label>
+                        <label class="frm_radio_label" >
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">物流配送</span>
+                            <input type="radio" name="sendtype" value="2" class="frm_radio" checked="checked" /> 
+                        </label>
+                    </div>
+                </div> -->
+                <!-- <div class="frm_control_group" >
+                    <label for="" class="frm_label">收货方式</label>
+                    <div class="frm_controls">
+                        <label class="frm_radio_label">
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">全部</span>
+                            <input type="radio" name="paytype" value="0" class="frm_radio" checked="checked"/>
+                        </label>
+                        <label class="frm_radio_label" >
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">在线支付</span>
+                            <input type="radio" name="paytype" value="1" class="frm_radio" /> 
+                        </label>                     
+                        <label class="frm_radio_label" >
+                            <i class="icon_radio"></i>
+                            <span class="lbl_content">货到付款</span>
+                            <input type="radio" name="paytype" value="2" class="frm_radio"  /> 
+                        </label>                      
+                    </div>
+                </div>  -->               
+                <div class="frm_control_group">
+                    <label for="" class="frm_label">下单时间</label>
+                    <div class="frm_controls">
+                        {php echo tpl_form_field_daterange('rangetime', $rangetime, true);}
+                    </div>
+                </div>
+                <div class="frm_control_group">
+                    <label for="" class="frm_label">  &nbsp;</label>
+                    <div class="frm_controls">
+                        <input type="submit" name="down" class=" btn btn_primary" value="下载订单" />
+                    </div>
+                </div>               
+                <input name="token" type="hidden" value="{$_W['token']}" />
+            </form>
+        </div>
+
+	{/if}
+	
+{template '../../../addons/'.MODULE.'/template/web/common/myfooter'}

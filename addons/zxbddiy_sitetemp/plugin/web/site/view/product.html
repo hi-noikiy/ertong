@@ -1,0 +1,175 @@
+{template '../../../addons/'.MODULE.'/template/web/common/myheader'}
+
+	{if $_GPC['op'] == 'add' || $_GPC['op'] == 'edit'}
+		<form method="post" action="" style="margin-left: 100px">
+			<div class="frm_control_group">
+				<label for="" class="frm_label"></label>
+				<div class="frm_controls">
+				</div>
+			</div>
+			<div class="frm_control_group">
+				<label for="" class="frm_label">产品名称</label>
+				<div class="frm_controls msg">
+					<span class="frm_textarea_box textarea_60px">
+						<textarea  name="title" class="frm_textarea" rows="6" placeholder="">{$info['title']}</textarea>
+					</span>
+				</div>
+			</div>
+			<div class="frm_control_group">
+				<label for="" class="frm_label">排序序号</label>
+				<div class="frm_controls msg">
+					<span class="frm_input_box">
+						<input type="text" class="frm_input"  name="number" value="{$info['number']}">
+					</span>
+					<p class="frm_tips">填入数字，越大越前</p>
+				</div>
+			</div>
+			<div class="frm_control_group" >
+	  			<label for="" class="frm_label">所属分类</label>
+	   			<div class="frm_controls">
+		  			<div class="filter_content dropdown_topbar"> 
+				   		<div class="dropdown_menu ">
+				    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt width_200">
+				    			<label class="jsBtLabel">
+				    				{loop $artsort $item}
+				    					{if $item['id'] == $info['sortid']}
+				    						{$item['name']}
+				    					{/if}
+				    				{/loop}
+				    			</label>
+				    			<i class="arrow"></i>
+				    		</a> 
+				    		<div class="dropdown_data_container jsDropdownList width_200" > 
+					     		<ul class="dropdown_data_list">
+					     			{loop $artsort $item}
+					      				<li class="dropdown_data_item "> <a href="javascript:;" id="{$item['id']}" class="select_item">{$item['name']}</a> </li> 
+					      			{/loop}
+					    		</ul>
+				    		</div> 
+				    		<input type="hidden" name="sortid" value="{$info['sortid']}">
+				   		</div>
+		  			</div>
+	   			</div>
+	  		</div>		
+			<div class="frm_control_group single_img_upload">
+				<label for="" class="frm_label">封面图片</label>
+				<div class="frm_controls">
+					{php echo  WebCommon::tpl_form_field_image('img',$info['img'])}
+					<p class="frm_tips">建议设置正方形图片</p>
+				</div>
+			</div>
+			<div class="frm_control_group">
+				<label for="" class="frm_label">腾讯视频链接</label>
+				<div class="frm_controls">
+					<span class="frm_input_box frm_input_600">
+						<input type="text" class="frm_input"  name="vurl" value="{$info['vurl']}">
+					</span>
+					<p class="frm_tips">如果插入了腾讯视频链接详情顶部会展示此视频。只能使用腾讯视频链接</p>
+				</div>
+			</div>
+			<div class="frm_control_group textarea_item">
+				<label for="" class="frm_label">产品详情</label>
+				<div class="frm_controls">
+					{php echo Util::tpl_ueditor('content', htmlspecialchars_decode($info['content']));}
+					<span class="frm_tips">提示：请不要设置视频、超链接、表情等特殊内容，因为小程序无法解析特殊内容。</span>
+				</div>
+
+			</div>
+			<div class="tool_bar">
+				<input type="submit" name="create" class="btn btn_primary" value="确定" >
+				<input name="token" type="hidden" value="{$_W['token']}" />
+			</div>
+		</form>
+	
+{elseif $_GPC['op'] == 'list'}
+	{if !empty( $list )}
+  	<table class="table" cellspacing="0"> 
+   	<thead class="thead"> 
+    	<tr> 
+     		<th class="table_cell title td_col_1"> 
+     			<label class="frm_checkbox_label" for="selectAll"> 
+     				<i class="icon_checkbox"></i> 
+     				<span class="lbl_content">id</span> 
+     				<input type="checkbox" class="frm_checkbox" id="selectAll" /> 
+     			</label>
+     		</th>
+     		<th class="table_cell tl td_col_1">图片</th>		
+     		<th class="table_cell tl td_col_2">名称</th>
+     		<th class="table_cell tl td_col_1">分类</th> 
+     		<th class="table_cell tl td_col_1">序号</th> 		
+     		<th class="table_cell tr td_col_1">操作</th>
+    	</tr> 
+   </thead> 
+   <tbody class="tbody" id="js_goods">
+   <form method="post">
+	   {loop $list $item}
+	    	<tr> 
+	     		<td class="table_cell title td_col_1"> 
+	      			<div class="goods_info">
+	      			 	<label class="frm_checkbox_label" > 
+	       					<i class="icon_checkbox"></i> 
+	       					<input type="checkbox" name="checkall[]" class="frm_checkbox" value="{$item['id']}" /> 
+	       					{$item['id']}
+	       				</label>
+	      			</div>
+	     		</td>
+	     		<td class="table_cell price tl td_col_1">
+	    			<img src="{php echo tomedia( $item['img'] )}" width="30px" height="30px">
+	     		</td>	     		
+	     		<td class="table_cell price tl td_col_2">
+	    			{$item['title']}
+	     		</td>
+	     		<td class="table_cell price tl td_col_1">
+	    			{loop $artsort $in}
+	    				{if $in['id'] == $item['sortid']} {$in['name']} {/if}
+	    			{/loop}
+	     		</td>	     		
+	     		<td class="table_cell price tl td_col_1">
+	    			{$item['number']}
+	     		</td>	     		     		
+			    <td class="table_cell oper last_child tr opclass td_col_1" style="position: relative;">
+			    	<a href="javascript:;" class="copy_url" data-href="{php echo '/zxbddiy_sitetemp/pages/product/product?aid='.$item['id']}">复制路径</a>
+			    	<a  href="{php echo self::pwUrl('site','product',array('op'=>'edit','id'=>$item['id'],'page'=>$_GPC['page']))}" class="edit_listitem" >编辑</a>
+			    	<a href="{php echo self::pwUrl('site','product',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('删除不能恢复，确定要删除吗？');">删除</a>
+			    </td>
+	    	</tr>
+	    {/loop}
+   	</tbody>
+  	</table>
+	<div class="bottom_page item_cell_box">
+		<div class="dib tl">
+     			<label class="frm_checkbox_label" for="selectAll"> 
+     				<i class="icon_checkbox"></i> 
+     				<span class="lbl_content">全选</span> 
+     				<input type="checkbox" class="frm_checkbox" id="selectAll" /> 
+     			</label>
+  			<div class="filter_content dropdown_topbar"> 
+		   		<div class="dropdown_menu ">
+		    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt">
+		    			<label class="jsBtLabel">批量操作</label>
+		    			<i class="arrow"></i>
+		    		</a> 
+		    		<div class="dropdown_data_container jsDropdownList" > 
+			     		<ul class="dropdown_data_list"> 
+			      			<li class="dropdown_data_item "> 
+			      				<input name="deleteall" class="alldeal_btn" value="删除所选" onclick="return confirm('确定要删除选择的吗？');" type="submit">
+			      			</li>			      			
+			    		</ul> 
+		    		</div> 
+		   		</div>
+  			</div>
+		</div>
+		<div class="tr dib item_cell_flex">
+			{$pager}
+		</div>
+	</div>
+		<input name="token" type="hidden" value="{$_W['token']}" />
+	</form>
+    {else}
+    	<div class="no_data">没有找到数据</div>
+    {/if}
+
+{/if}
+	
+	
+{template '../../../addons/'.MODULE.'/template/web/common/myfooter'}

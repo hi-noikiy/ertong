@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.zx-app.cn" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[百度官网DIY版]]></name>
+		<identifie><![CDATA[zxbddiy_sitetemp]]></identifie>
+		<version><![CDATA[2.5.7]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[百度官网DIY版]]></ability>
+		<description><![CDATA[百度官网DIY版]]></description>
+		<author><![CDATA[zxgc]]></author>
+		<url><![CDATA[http://www.zx-app.cn]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+		<supports><item type="wxapp" /></supports>
+		<plugin-main name="0" />
+	</platform>
+	<bindings>
+		<page>
+			<entry title="首页" do="/zxbddiy_sitetemp/pages/page/page" state="" direct="false" />
+			<entry title="查看表单数据" do="/zxbddiy_sitetemp/pages/form/form" state="" direct="false" />
+			<entry title="文章列表" do="/zxbddiy_sitetemp/pages/artlist/artlist" state="" direct="false" />
+			<entry title="产品列表" do="/zxbddiy_sitetemp/pages/product/list" state="" direct="false" />
+		</page>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_address`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_admin`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_appoint`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_appointorder`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_appsort`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_article`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_artsort`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_auth`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_bar`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_card`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_cardlog`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_cart`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_copyright`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_desk`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_form`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_good`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_goodsort`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_order`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_orderform`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_ordergood`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_page`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_print`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_product`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_prosort`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_set`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_sms`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_smtp`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_temp`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_tempsort`;
+DROP TABLE IF EXISTS `ims_zxbddiy_sitetemp_vicead`;
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

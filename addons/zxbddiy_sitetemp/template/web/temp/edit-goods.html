@@ -1,0 +1,220 @@
+<div class="temp_item temp_item_space"  >
+<div ng-if="rtype == 'style'">	
+	<div class="frm_control_group frm_control_group_editin" >
+		<label for="" class="frm_label">商品样式</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label " ng-click="item.params.style = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">单排样式</span>
+	    		<input type="radio" name="type{{$index}}" on-selected value="1" class="frm_radio"  ng-model="item.params.style"  /> 
+	    	</label>	    	
+	    	<label class="frm_radio_label " ng-click="item.params.style = 3">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">双排样式</span>
+	    		<input type="radio" name="type{{$index}}" on-selected value="3" class="frm_radio"  ng-model="item.params.style"  /> 
+	    	</label>
+	    	<label class="frm_radio_label " ng-click="item.params.style = 4">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">三排样式</span>
+	    		<input type="radio" name="type{{$index}}" on-selected value="4" class="frm_radio"  ng-model="item.params.style"  /> 
+	    	</label>
+	    	<label class="frm_radio_label " ng-click="item.params.style = 5">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">左拉滑动</span>
+	    		<input type="radio" name="type{{$index}}" on-selected value="5" class="frm_radio"  ng-model="item.params.style"  /> 
+	    	</label>	    	
+	    	<!-- <label class="frm_radio_label " ng-click="item.params.style = 5">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">拼团样式</span>
+	    		<input type="radio" name="type{{$index}}" on-selected value="5" class="frm_radio"  ng-model="item.params.style"  />
+	    	</label> -->
+		</div>
+	</div>
+	<div class="frm_control_group frm_control_group_editin" >
+		<label for="" class="frm_label">显示标题</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label " ng-click="item.params.istitle = 0">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">显示</span>
+	    		<input type="radio" name="istitle{{$index}}" on-selected value="0" class="frm_radio"  ng-model="item.params.istitle"  /> 
+	    	</label>	    	
+	    	<label class="frm_radio_label " ng-click="item.params.istitle = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">不显示</span>
+	    		<input type="radio" name="istitle{{$index}}" on-selected value="1" class="frm_radio"  ng-model="item.params.istitle"  /> 
+	    	</label>
+		</div>
+	</div>
+	<div class="frm_control_group frm_control_group_editin" ng-if="item.params.istitle == 0">
+		<label for="" class="frm_label">文字位置</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label " ng-click="item.params.titlepos = 'left'">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">居左</span>
+	    		<input type="radio" name="titlepos{{$index}}" on-selected value="left" class="frm_radio"  ng-model="item.params.titlepos"  /> 
+	    	</label>	    	
+	    	<label class="frm_radio_label " ng-click="item.params.titlepos = 'center'">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">居中</span>
+	    		<input type="radio" name="titlepos{{$index}}" on-selected value="center" class="frm_radio"  ng-model="item.params.titlepos"  /> 
+	    	</label>
+	    	<label class="frm_radio_label " ng-click="item.params.titlepos = 'right'">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">居右</span>
+	    		<input type="radio" name="titlepos{{$index}}" on-selected value="right" class="frm_radio"  ng-model="item.params.titlepos"  /> 
+	    	</label>	    	
+		</div>
+	</div>
+	<div class="frm_control_group frm_control_group_editin" >
+		<label for="" class="frm_label">显示价格</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label " ng-click="item.params.isprice = 0">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">显示</span>
+	    		<input type="radio" name="isprice{{$index}}" on-selected value="0" class="frm_radio"  ng-model="item.params.isprice"  /> 
+	    	</label>
+	    	<label class="frm_radio_label " ng-click="item.params.isprice = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">不显示</span>
+	    		<input type="radio" name="isprice{{$index}}" on-selected value="1" class="frm_radio"  ng-model="item.params.isprice"  /> 
+	    	</label>
+		</div>
+	</div>
+
+	<div class="frm_control_group">
+		<label for="" class="frm_label">上下边距</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.paddingv}}" name="paddingv"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.paddingv" />
+			</span><span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.bgcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.bgcolor" />
+			</span><a href="javascript:;" ng-click="item.params.bgcolor = 'rgba(0, 0, 0, 0)'">透明</a>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">底部文字</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_200">
+				<input type="text" class="frm_input" ng-model="item.params.botfont">
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-show="item.params.botfont">
+		<label for="" class="frm_label">点击跳转</label>
+		<div class="frm_controls">
+			<div >
+				<span class="frm_input_box frm_input_200 readonlybg">
+					<input type="text" class="frm_input " ng-model="item.params.urlname" readonly>
+				</span><a href="javascript:;" ng-click="showLink(item.id,false,'my')">设置链接</a>
+			</div>
+		</div>
+	</div>	
+	<div class="frm_control_group" ng-show="item.params.botfont">
+		<label for="" class="frm_label">文字颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.botcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.botcolor" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-show="item.params.botfont">
+		<label for="" class="frm_label">边框颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.botbord" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.botbord" />
+			</span>
+		</div>
+	</div>
+</div>
+<div ng-if="rtype == 'data'">
+	<div class="frm_control_group frm_control_group_editin" >
+		<label for="" class="frm_label">显示方式</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label " ng-click="item.params.showtype = 0">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">选择显示</span>
+	    		<input type="radio" name="showtype{{$index}}" on-selected value="0" class="frm_radio"  ng-model="item.params.showtype"  /> 
+	    	</label>
+	    	<label class="frm_radio_label " ng-click="item.params.showtype = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">按分类自动显示</span>
+	    		<input type="radio" name="showtype{{$index}}" on-selected value="1" class="frm_radio"  ng-model="item.params.showtype"  /> 
+	    	</label>
+		</div>
+	</div>
+	<div ng-show="item.params.showtype == 1">
+		<div class="frm_control_group">
+			<label for="" class="frm_label">显示商品数量</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="item.params.goodnum">
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group frm_control_group_editin" >
+			<label for="" class="frm_label">排序方式</label>
+			<div class="frm_controls">
+		    	<label class="frm_radio_label " ng-click="item.params.ordertype = 0">
+		    		<i class="icon_radio"></i>
+		    		<span class="lbl_content">按最新排序</span>
+		    		<input type="radio" name="ordertype{{$index}}" on-selected value="0" class="frm_radio"  ng-model="item.params.ordertype"  /> 
+		    	</label>
+		    	<label class="frm_radio_label " ng-click="item.params.ordertype = 1">
+		    		<i class="icon_radio"></i>
+		    		<span class="lbl_content">按排序号排序</span>
+		    		<input type="radio" name="ordertype{{$index}}" on-selected value="1" class="frm_radio"  ng-model="item.params.ordertype"  /> 
+		    	</label>
+			</div>
+		</div>
+		<div class="frm_control_group frm_control_group_editin" >
+			<label for="" class="frm_label">选择分类</label>
+			<div class="frm_controls">
+
+		    	<label ng-repeat="inn in goodtowsort" class="frm_radio_label {{item.params.sortid == inn.id ?'selected':''}}" ng-click="item.params.sortid = inn.id;item.params.sortname = inn.name">
+		    		<i class="icon_radio"></i>
+		    		<span class="lbl_content">{{inn.name}}</span>
+		    		<input type="radio" name="sortid" class="frm_radio" on-selected value="{{inn.id}}" ng-model="item.params.sortid"  /> 
+		    	</label>
+		    	
+			</div>
+		</div>
+	</div>
+
+	<div ng-show="item.params.showtype == 0 || !item.params.showtype">
+		<a class="create_access_primary" href="javascript:;" ng-click="showAddgoods(item.id,'good')">
+			<i class="icon20_common add_gray"></i>    
+		</a>
+		<div class="edit_data_box" ui-sortable="sortableOptions" ng-model="item.params.data">
+			<div class="edit_data_item" ng-repeat="good in item.params.data track by $index" >
+				<span class="delete_this" ng-click="deleteItem(item.id,good.id)">x</span>
+				<div class="design_single_box edit_goods_item item_cell_box">
+					<div class="edit_goods_img">
+						<img src="{{good.thumb}}">
+					</div>
+					<div class="item_cell_flex edit_goods_title">
+						<div>{{good.title}}</div>
+						<div>￥{{good.price}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>

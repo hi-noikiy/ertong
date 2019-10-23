@@ -1,0 +1,262 @@
+<div class="temp_item temp_item_space"  >
+<div  ng-if="rtype == 'style'">
+	<div class="frm_control_group">
+		<label for="" class="frm_label">边距距离</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.padding}}" name="padding"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.padding" />
+			</span><span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+
+	<div class="frm_control_group">
+		<label for="" class="frm_label">背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.bgcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.bgcolor" />
+			</span><a href="javascript:;" ng-click="item.params.bgcolor = 'rgba(0, 0, 0, 0)'">透明</a>
+		</div>
+	</div>	
+	<div class="frm_control_group">
+		<label for="" class="frm_label">背景图片</label>
+		<div class="frm_controls">
+			<div class="edit_image_upload" ng-click="uploadImage(item.id,'bgimg')">
+				<img class="upload_image_img" src="{{item.params.bgimg}}" >
+				<span class="edit_image_notice">修改</span>
+			</div>
+			<div class="clearimg ml5">
+				<span class="frm_input_box frm_input_box_100">
+					<input class="frm_input" type="text" ng-model="item.params.bgimg" />
+				</span>
+				<a href="javascript:;" ng-click="item.params.bgimg = ''">清除</a>
+			</div>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮背景</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.btnbg" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.btnbg" />
+			</span>
+		</div>
+	</div>				
+	<div class="frm_control_group">
+		<label for="" class="frm_label">标题文字颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.color" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.color" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">提示文字颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.placolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.placolor" />
+			</span>
+		</div>
+	</div>	
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.btncolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.btncolor" />
+			</span>
+		</div>
+	</div>	
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">提交后动作</label>
+		<div class="frm_controls">
+	    	
+  			<div class="filter_content dropdown_topbar"> 
+		   		<div class="dropdown_menu ">
+		    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt width_200">
+		    			<label class="jsBtLabel">
+		    				<span ng-repeat="inn in clickEvents" ng-if="inn.type == 'url' || inn.type == 'weburl' || inn.type == 'other'">{{item.params.type == inn.type ? inn.name : ''}}</span>
+		    			</label>
+		    			<i class="arrow"></i>
+		    		</a> 
+		    		<div class="dropdown_data_container jsDropdownList width_200" >
+			     		<ul class="dropdown_data_list">
+			     			<li  class="dropdown_data_item " ng-click="item.params.type = ''">
+			     				<a href="javascript:;" class="select_item">无</a> 
+			     			</li> 
+			     			<li ng-repeat="inn in clickEvents" ng-if="inn.type == 'url' || inn.type == 'weburl' || inn.type == 'other'" class="dropdown_data_item " ng-click="item.params.type = inn.type">
+			     				<a href="javascript:;" class="select_item">{{inn.name}}</a> 
+			     			</li> 
+			    		</ul>
+		    		</div> 
+		   		</div>
+  			</div>
+
+		</div>
+	</div>	
+	<div class="frm_control_group" ng-show="item.params.type == 'url'">
+		<label for="" class="frm_label">跳转页面</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_200 readonlybg">
+				<input type="text" class="frm_input " ng-model="item.params.urlname" readonly>
+			</span><a href="javascript:;" ng-click="showLink(item.id,false,'my')">设置链接</a>
+		</div>
+	</div>
+	
+
+	<div class="frm_control_group" ng-show="item.params.type == 'other'">
+		<label for="" class="frm_label">小程序appid</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_200">
+				<input type="text" class="frm_input" ng-model="item.params.appid" >
+			</span><a href="javascript:;" ng-click="showLink(item.id,false,'app')">选择</a>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-show="item.params.type == 'other'">
+		<label for="" class="frm_label">页面路径</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_200">
+				<input type="text" class="frm_input" ng-model="item.params.appurl" >
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-show="item.params.type == 'weburl'">
+		<label for="" class="frm_label">网页链接</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_200">
+				<input type="text" class="frm_input" ng-model="item.params.weburl" >
+			</span>
+		</div>
+	</div>
+</div>
+<div ng-if="rtype == 'data'">	
+	<div class="frm_control_group" > 
+	  	<label for="" class="frm_label">添加表单</label> 
+	   	<div class="frm_controls"> 
+	   		<a class="a_btn" href="javascript:;" ng-click="addForm(item.id,'input')">输入框</a>
+	   		<a class="a_btn" href="javascript:;" ng-click="addForm(item.id,'text')">多行输入框</a>
+	   		<a class="a_btn" href="javascript:;" ng-click="addForm(item.id,'time')">日期选择器</a>
+	   		<a class="a_btn" href="javascript:;" ng-click="addForm(item.id,'times')">时间选择器</a>
+	   		<a class="a_btn" href="javascript:;" ng-click="addForm(item.id,'city')">省市区选择器</a>
+	   		<a class="a_btn" href="javascript:;" ng-click="addForm(item.id,'radio')">单项选择器</a>
+	   		<a class="a_btn" href="javascript:;" ng-click="addForm(item.id,'checkbox')">多项选择器</a>
+	   		<a class="a_btn" href="javascript:;" ng-click="addForm(item.id,'img')">上传图片</a>
+	   		<p class="font_mini">请点击按钮添加表单</p>
+	   	</div>
+	</div>
+	<div class="edit_data_box" ui-sortable="sortableOptions" ng-model="item.params.data">
+		<div class="edit_data_item" ng-repeat="vv in item.params.data">
+			<span class="delete_this" ng-click="deleteItem(item.id,vv.id)">x</span>
+			<div class="design_single_box item_cell_box" >
+				<div class="item_cell_flex">
+					<div>
+						表单名称
+						<span class="frm_input_box frm_input_200">
+							<input type="text" class="frm_input" ng-model="vv.name">
+						</span>
+						<span class="tips">
+							{{vv.type == 'input' ? '输入框' : ''}}
+							{{vv.type == 'text' ? '多行输入框' : ''}}
+							{{vv.type == 'time' ? '日期选择器' : ''}}
+							{{vv.type == 'times' ? '时间选择器' : ''}}
+							{{vv.type == 'city' ? '城市选择器' : ''}}
+							{{vv.type == 'radio' ? '单项选择器' : ''}}
+							{{vv.type == 'checkbox' ? '多选选择器' : ''}}
+							{{vv.type == 'img' ? '上传图片' : ''}}
+						</span>
+					</div>
+					<div style="margin-top: 5px;" ng-if="vv.type != 'img'">
+						提示文字
+						<span class="frm_input_box frm_input_200">
+							<input type="text" class="frm_input" ng-model="vv.pla">
+						</span>
+					</div>
+					<div class="frm_control_group form_ingroup" ng-if="vv.type == 'radio' || vv.type == 'checkbox'">
+						<label for="" class="frm_label form_inlabel">选框颜色</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_box_50">
+								<input class="frm_input" type="color" ng-model="vv.color" />
+							</span>
+							<span class="frm_input_box frm_input_box_100">
+								<input class="frm_input" type="text" ng-model="vv.color" />
+							</span>
+						</div>
+					</div>
+
+					<div class="frm_control_group form_ingroup" ng-if="vv.type == 'input' || vv.type == 'text'">
+						<label for="" class="frm_label form_inlabel">圆角处理</label>
+						<div class="frm_controls ">
+							<span class="frm_input_box frm_input_200">
+								<input class="frm_input" type="text" ng-model="vv.radius" />
+							</span>
+							<span class="my_slider_notice tips">像素</span>
+						</div>
+					</div>
+					<div class="frm_control_group form_ingroup" ng-if="vv.type == 'img'">
+						<label for="" class="frm_label form_inlabel">最多图片</label>
+						<div class="frm_controls ">
+							<span class="frm_input_box frm_input_200">
+								<input class="frm_input" type="text" value="1" ng-model="vv.maxnum" />
+							</span>
+						</div>
+					</div>
+					<div style="margin-top: 5px;" ng-if="vv.type == 'radio' || vv.type == 'checkbox'" class="item_cell_box">
+						<div>
+							选择内容
+						</div>
+						<div class="item_cell_flex" style="margin-left: 5px;">
+							<span class="frm_input_box frm_input_100" ng-repeat="vvv in vv.data" style="margin-top: 5px;margin-right: 5px;">
+								<input type="text" class="frm_input" ng-model="vvv.name">
+								<span class="delete_this_in" ng-click="deleteFormIn(item.id,vv.id,vvv.id)">×</span>
+							</span>
+							<a class="a_btn" href="javascript:;" ng-click="addFormIn(item.id,vv.id)">添加选择内容</a>
+						</div>
+					</div>
+					<div>
+						隐藏名称
+				    	<label class="frm_radio_label" ng-click="vv.hidename = 0"> 
+				    		<i class="icon_radio"></i> 
+				    		<span class="lbl_content">显示名称</span>
+				    		<input type="radio" name="hidename{{vv.id}}" on-selected value="0" class="frm_radio"  ng-model="vv.hidename"  /> 
+				    	</label> 
+				    	<label class="frm_radio_label " ng-click="vv.hidename = 1">
+				    		<i class="icon_radio"></i>
+				    		<span class="lbl_content">隐藏名称</span>
+				    		<input type="radio" name="hidename{{vv.id}}" on-selected value="1" class="frm_radio"  ng-model="vv.hidename"  /> 
+				    	</label>
+					</div>
+					<div>
+						是否必须
+				    	<label class="frm_radio_label" ng-click="vv.ismust = 0"> 
+				    		<i class="icon_radio"></i> 
+				    		<span class="lbl_content">必须填写</span>
+				    		<input type="radio" name="ismust{{vv.id}}" on-selected value="0" class="frm_radio"  ng-model="vv.ismust"  /> 
+				    	</label> 
+				    	<label class="frm_radio_label " ng-click="vv.ismust = 1">
+				    		<i class="icon_radio"></i>
+				    		<span class="lbl_content">不必填写</span>
+				    		<input type="radio" name="ismust{{vv.id}}" on-selected value="1" class="frm_radio"  ng-model="vv.ismust"  /> 
+				    	</label>
+					</div>
+
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</div>
+</div>

@@ -1,0 +1,11 @@
+<div class="temp_item temp_item_card fixbgimg" ng-style="{'background-image':'url('+item.params.bgimg+')','margin':item.params.margin+'px','background-color':item.params.bgcolor}">
+	<div class="temp_card_top" ng-show="item.params.ishead == 1" ng-style="{'font-size':item.params.headsize+'px','color':item.params.headcolor,'text-align':item.params.headalign}">
+		{{item.params.headcontent}}
+	</div>
+	<div class="temp_card_content" ng-style="{'font-size':item.params.fontsize+'px','color':item.params.contentcolor,'text-indent':item.params.indent+'px'}">
+		{{item.params.content}} <span ng-style="{'color':item.params.noticecolor}">{{item.params.notice}}</span>
+	</div>
+	<div class="temp_card_bot" ng-show="item.params.isbot == 1" ng-style="{'font-size':item.params.botsize+'px','color':item.params.botcolor,'text-align':item.params.botalign}">
+		{{item.params.botcontent}}
+	</div>
+</div>

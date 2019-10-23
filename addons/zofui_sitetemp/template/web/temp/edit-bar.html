@@ -1,0 +1,399 @@
+<div class="temp_item temp_item_basic" >
+
+<div ng-if="rtype == 'style'">
+	<div class="frm_control_group">
+		<label for="" class="frm_label">删除重置</label>
+		<div class="frm_controls ">
+			<a href="javascript:;" id="deletebar" tid="{{tempid}}">删除导航数据</a>
+			<p class="tips">此功能作用是在导航数据出现错误，导航无法打开编辑后，可删除导航数据重新设计导航</p>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">模板主题颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="bar.maincolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="bar.maincolor" />
+			</span><a href="javascript:;" ng-click="bar.maincolor = ''">清除</a>
+			<p class="tips">设置此颜色后，模板的页面主题颜色将以此颜色为主。</p>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">顶部导航背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="bar.topbg" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="bar.topbg" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">顶部导航文字颜色</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label" ng-click="bar.topcolor = '#000000'"> 
+	    		<i class="icon_radio"></i> 
+	    		<span class="lbl_content">黑色</span>
+	    		<input type="radio" name="topcolor" on-selected value="#000000" class="frm_radio"  ng-model="bar.topcolor"  /> 
+	    	</label> 
+	    	<label class="frm_radio_label " ng-click="bar.topcolor = '#ffffff'">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">白色</span>
+	    		<input type="radio" name="topcolor" on-selected value="#ffffff" class="frm_radio"  ng-model="bar.topcolor"  /> 
+	    	</label>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">底部导航类型</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label" ng-click="bar.bartype = 0"> 
+	    		<i class="icon_radio"></i> 
+	    		<span class="lbl_content font_ff5f27">模块自定导航</span>
+	    		<input type="radio" name="bartype" on-selected value="0" class="frm_radio"  ng-model="bar.bartype"  /> 
+	    	</label> 
+	    	<label class="frm_radio_label " ng-click="bar.bartype = '1'" ng-if="isacttemp == 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content font_ff5f27">微信系统导航</span>
+	    		<input type="radio" name="bartype" on-selected value="1" class="frm_radio"  ng-model="bar.bartype"  /> 
+	    	</label>
+	    	<p class="tips">提示：选择微信系统导航每次修改导航后都需要提交审核代码。</p>
+		</div>
+	</div>
+	<div ng-if="bar.bartype == 0 || !bar.bartype">
+		
+		<div class="frm_control_group">
+			<label for="" class="frm_label">底部导航图标宽高</label>
+			<div class="frm_controls ">
+				<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="80" type="bar" value="{{bar.iconwidth}}" name="iconwidth"></li>
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="text" ng-model="bar.iconwidth" />
+				</span>像素
+			</div>
+		</div>
+		<div class="frm_control_group">
+			<label for="" class="frm_label">底部导航文字图标距离</label>
+			<div class="frm_controls ">
+				<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="80" type="bar" value="{{bar.padfont}}" name="padfont"></li>
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="text" ng-model="bar.padfont" />
+				</span>像素
+			</div>
+		</div>
+		<div class="frm_control_group">
+			<label for="" class="frm_label">底部导航文字尺寸</label>
+			<div class="frm_controls ">
+				<li class="frm_input_box_200 my_slider_line slider" my-slider min="12" max="30" type="bar" value="{{bar.fontsize}}" name="fontsize"></li>
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="text" ng-model="bar.fontsize" />
+				</span>像素
+			</div>
+		</div>	
+		<div class="frm_control_group">
+			<label for="" class="frm_label">底部导航上边距</label>
+			<div class="frm_controls ">
+				<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="30" type="bar" value="{{bar.paddingtop}}" name="paddingtop"></li>
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="text" ng-model="bar.paddingtop" />
+				</span>像素
+			</div>
+		</div>
+		<div class="frm_control_group">
+			<label for="" class="frm_label">底部导航下边距</label>
+			<div class="frm_controls ">
+				<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="30" type="bar" value="{{bar.paddingbot}}" name="paddingbot"></li>
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="text" ng-model="bar.paddingbot" />
+				</span>像素
+			</div>
+		</div>
+		<div class="frm_control_group">
+			<label for="" class="frm_label">底部导航背景图片</label>
+			<div class="frm_controls">
+				<div class="edit_image_upload" ng-click="uploadImage('bar','bgimg')">
+					<img class="upload_image_img" src="{{bar.bgimg}}" >
+					<span class="edit_image_notice">修改</span>
+				</div>
+				<div class="clearimg ml5">
+					<span class="frm_input_box frm_input_box_100">
+						<input class="frm_input" type="text" ng-model="bar.bgimg" />
+					</span>
+					<a href="javascript:;" ng-click="bar.bgimg = ''">清除</a>
+				</div>
+			</div>
+		</div>
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">底部导航上边颜色</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_box_50">
+					<input class="frm_input" type="color" ng-model="bar.bjcolor" />
+				</span>
+				<span class="frm_input_box frm_input_box_100">
+					<input class="frm_input" type="text" ng-model="bar.bjcolor" />
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">底部导航背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="bar.bgcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="bar.bgcolor" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">导航文字默认颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="bar.color" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="bar.color" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">导航文字激活颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="bar.actcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="bar.actcolor" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-if="bar.bartype == 1">
+		<label for="" class="frm_label">底部导航上边颜色</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label" ng-click="bar.wxbjcolor = 'black'"> 
+	    		<i class="icon_radio"></i> 
+	    		<span class="lbl_content">黑色</span>
+	    		<input type="radio" name="wxbjcolor" on-selected value="black" class="frm_radio"  ng-model="bar.wxbjcolor"  /> 
+	    	</label> 
+	    	<label class="frm_radio_label " ng-click="bar.wxbjcolor = 'white'">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">白色</span>
+	    		<input type="radio" name="wxbjcolor" on-selected value="white" class="frm_radio"  ng-model="bar.wxbjcolor"  /> 
+	    	</label>
+	    	<p class="tips">提示：选择微信系统导航每次修改导航后都需要提交审核代码。</p>
+		</div>
+	</div>
+	<!-- <div class="frm_control_group" ng-if="bar.bartype == 1">
+		<label for="" class="frm_label">&nbsp;</label>
+		<div class="frm_controls">
+	    	
+		</div>
+	</div> -->
+	<div class="frm_control_group" ng-if="bar.bartype == 1">
+		<label for="" class="frm_label">图标尺寸</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="81" type="1" value="{{bar.fontsizesys}}" name="fontsizesys"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="bar.fontsizesys" />
+			</span>像素
+			<p class="my_slider_notice tips">导航图标尺寸大小限制为40kb，建议尺寸为 81px * 81px。拉取到0系统不改变上传的图标尺寸。若想缩小显示的图标,可用图片软件在图标的周围增加透明色<a href="http://www.iconfont.cn/collections" target="_blank">下载图标</a></p>
+		</div>
+	</div>
+</div>
+<div ng-if="rtype == 'data'">
+	<div class="frm_control_group" > 
+	  	<label for="" class="frm_label">底部导航数量</label> 
+	   	<div class="frm_controls"> 
+	    	<label class="frm_radio_label" ng-click="changeNum(2)"> 
+	    		<i class="icon_radio"></i> 
+	    		<span class="lbl_content">2个</span>
+	    		<input type="radio" name="num" on-selected value="2" class="frm_radio"  ng-model="bar.num"  /> 
+	    	</label> 
+	    	<label class="frm_radio_label " ng-click="changeNum(3)">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">3个</span>
+	    		<input type="radio" name="num" on-selected value="3" class="frm_radio"  ng-model="bar.num"  /> 
+	    	</label>
+	    	<label class="frm_radio_label " ng-click="changeNum(4)">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">4个</span>
+	    		<input type="radio" name="num" on-selected value="4" class="frm_radio"  ng-model="bar.num"  /> 
+	    	</label>
+	    	<label class="frm_radio_label " ng-click="changeNum(5)">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">5个</span>
+	    		<input type="radio" name="num" on-selected value="5" class="frm_radio"  ng-model="bar.num"  /> 
+	    	</label>	    		    	
+	   	</div>
+	</div>
+	
+	<div class="edit_data_box" ui-sortable="sortableOptions" ng-model="bar.data">
+		<div class="edit_data_item" ng-repeat="vv in bar.data track by $index" ng-init="outerIndex = $index">
+			<div class="design_single_box">
+				
+				<div class="frm_control_group" >
+					<label for="" class="frm_label">导航名称</label>
+					<div class="frm_controls">
+						<span class="frm_input_box frm_input_200 ">
+							<input type="text" class="frm_input " ng-model="vv.name" >
+						</span>
+					</div>
+				</div>
+				<div class="frm_control_group" >
+					<label for="" class="frm_label">导航类型</label>
+					<div class="frm_controls">
+			  			<div class="filter_content dropdown_topbar"> 
+					   		<div class="dropdown_menu ">
+					    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt width_200">
+					    			<label class="jsBtLabel">
+					    				<span ng-repeat="inn in clickEvents">{{vv.type == inn.type ? inn.name : ''}}</span>
+					    			</label>
+					    			<i class="arrow"></i>
+					    		</a> 
+					    		<div class="dropdown_data_container jsDropdownList width_200" >
+						     		<ul class="dropdown_data_list">
+						     			<li ng-repeat="inn in clickEvents" ng-if="(inn.type == 'url' && outerIndex == 0) || outerIndex > 0" class="dropdown_data_item " ng-click="vv.type = inn.type">
+						     				<a href="javascript:;" class="select_item">{{inn.name}}</a> 
+						     			</li> 
+						    		</ul>
+					    		</div> 
+					   		</div>
+			  			</div>
+				    		    	
+					</div>
+				</div>
+				<div class="frm_control_group" ng-show="vv.type == 'url'">
+					<label for="" class="frm_label">跳转页面</label>
+					<div class="frm_controls">
+						<span class="frm_input_box frm_input_200 readonlybg">
+							<input type="text" class="frm_input " ng-model="vv.urlname" readonly>
+						</span><a href="javascript:;" ng-click="showLink('bar',vv.id,'my')">链接</a>
+					</div>
+				</div>
+
+				<div ng-if="bar.bartype == 0 || !bar.bartype">
+					<div class="frm_control_group" ng-show="vv.type == 'kefu'">
+						<label for="" class="frm_label">sess-from</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="vv.sfrom" >
+							</span>(可不填)
+						</div>
+					</div>	
+					
+					<div class="frm_control_group" ng-show="vv.type == 'tel'">
+						<label for="" class="frm_label">电话号码</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="vv.tel" >
+							</span>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="vv.type == 'map'">
+						<label for="" class="frm_label">地图坐标</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200 readonlybg">
+								<input type="text" class="frm_input " value="{{vv.lat +','+ vv.lng}}" readonly>
+							</span><a href="javascript:;" ng-click="showMap( 'bar',$index )">选择坐标</a>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="vv.type == 'map'">
+						<label for="" class="frm_label">位置名称</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input " ng-model="vv.addname">
+							</span>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="vv.type == 'map'">
+						<label for="" class="frm_label">详细地址</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input " ng-model="vv.address">
+							</span>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="vv.type == 'other'">
+						<label for="" class="frm_label">小程序appid</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="vv.appid" >
+							</span><a href="javascript:;" ng-click="showLink('bar',vv.id,'app')">选择</a>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="vv.type == 'other'">
+						<label for="" class="frm_label">页面路径</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="vv.appurl" >
+							</span>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="vv.type == 'weburl'">
+						<label for="" class="frm_label">网页链接</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="vv.weburl" >
+							</span>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="vv.type == 'images'">
+						<label for="" class="frm_label">图片内容</label>
+						<div class="frm_controls">
+							<div class="imagesdata_box">
+								<img ng-repeat="inn in vv.imagesdata" ng-src="{{inn.url}}" ng-click="deleteImagesdata(vv.imagesdata,inn.id)">
+							</div>
+							
+							<a href="javascript:;" ng-click="uploadMultiImage('bar',vv.id)">选择图片</a>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="vv.type == 'copy'">
+						<label for="" class="frm_label">文字内容</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="vv.text" >
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="frm_control_group">
+					<label for="" class="frm_label">&nbsp;</label>
+					<div class="frm_controls bar_upbox">
+						<div class="edit_image_upload edit_image_upload60" ng-click="uploadImage(vv,'goodimg')" style="margin-right: 5px;">
+							<img class="upload_image_img" ng-src="{{siteroot + vv.img}}" >
+							<span class="edit_image_notice">默认图标</span>
+						</div>
+						<div class="edit_image_upload edit_image_upload60" ng-click="uploadImage(vv,'actimg')">
+							<img class="upload_image_img" ng-src="{{siteroot + vv.actimg}}" >
+							<span class="edit_image_notice">激活图标</span>
+						</div>
+						<a class="clearimg" href="javascript:;" ng-click="loadicon($index)" style="margin-left: 5px;">导入</a>
+					</div>
+				</div>
+				<div class="frm_control_group frm_control_group_editin">
+					<label for="" class="frm_label">默认图标</label>
+					<div class="frm_controls">
+						<span class="frm_input_box frm_input_200">
+							<input type="text" class="frm_input" ng-model="vv.img" >
+						</span>
+					</div>
+				</div>
+				<div class="frm_control_group frm_control_group_editin">
+					<label for="" class="frm_label">激活图标</label>
+					<div class="frm_controls">
+						<span class="frm_input_box frm_input_200">
+							<input type="text" class="frm_input" ng-model="vv.actimg" >
+						</span>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+</div>
+</div>
