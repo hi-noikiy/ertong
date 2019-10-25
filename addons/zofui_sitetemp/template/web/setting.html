@@ -1,0 +1,259 @@
+{template '../../../addons/'.MODULE.'/template/web/common/myheader'}
+	<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=P2XBZ-HVMCQ-YZ75X-G5VUJ-OFXFZ-F5BFR"></script>
+	<div class="title_tab">
+		<ul class="tab_navs title_tab">
+			<li class="tab_nav js_top selected" showme="basic_group"><a href="javascript:;">基本参数</a></li>
+			<li class="tab_nav js_top " showme="shop_group"><a href="javascript:;">商城参数</a></li>
+			<li class="tab_nav js_top " showme="refund_group"><a href="javascript:;">退款证书</a></li>
+			<li class="tab_nav js_top " showme="admin_group"><a href="javascript:;">订单核销员</a></li>
+			<!-- <li class="tab_nav js_top " showme="basic2_group"><a href="javascript:;">去去去去</a></li>
+			<li class="tab_nav js_top " showme="other_group"><a href="javascript:;">防封设置</a></li>
+			<li class="tab_nav js_top " showme="share_group"><a href="javascript:;">分享参数</a></li> -->
+		</ul>
+	</div>
+
+<form action="" method="POST">
+	<div class="basic_group settings_group">
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">删除缓存</label>
+			<div class="frm_controls">
+				<a class="btn btn_primary deletecache"  type="cache" href="javascript:;">删除缓存</a>
+				<p class="frm_tips tips_width_200">重装模块后必须删除缓存</p>
+			</div>
+		</div>
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">数据验证码</label>
+			<div class="frm_controls">
+				<span class="frm_input_box">
+					<input type="text" class="frm_input" name="frompass" value="{$settings['frompass']}">
+				</span>
+				<p class="frm_tips">输入别人不知道的字符，前端查看表单数据和订单时，需输入此验证码才能查看</p>
+			</div>
+		</div>
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">接收通知邮箱</label>
+			<div class="frm_controls">
+				<span class="frm_input_box">
+					<input type="text" class="frm_input" name="mail" value="{$settings['mail']}">
+				</span>
+				<p class="frm_tips">填写你的电子邮箱，接收表单通知等。例如：test@163.com</p>
+			</div>
+		</div>
+		<div class="tool_bar">
+			<button type="submit" name="submit" value="123" class="btn btn_primary" >保存</button>
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+
+	</div>
+	<div class="shop_group settings_group">
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">门店名称</label>
+			<div class="frm_controls">
+				<span class="frm_input_box">
+					<input type="text" class="frm_input" name="shopname" value="{$settings['shopname']}">
+				</span>
+				<p class="frm_tips">这个参数的作用是会员下单选择上店自提时，提示自提的门店名称</p>
+			</div>
+		</div>		
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">门店电话</label>
+			<div class="frm_controls">
+				<span class="frm_input_box">
+					<input type="text" class="frm_input" name="shoptel" value="{$settings['shoptel']}">
+				</span>
+				<p class="frm_tips">这个参数的作用是会员下单选择上店自提时，提示自提的门店电话</p>
+			</div>
+		</div>
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">门店地址</label>
+			<div class="frm_controls">
+				<span class="frm_input_box">
+					<input type="text" class="frm_input" name="shopaddress" value="{$settings['shopaddress']}">
+				</span>
+				<p class="frm_tips">这个参数的作用是会员下单选择上店自提时，提示自提的门店地址</p>
+			</div>
+		</div>
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">门店坐标</label>
+			<div class="frm_controls">
+				<span class="location">
+					{$settings['shoplat']}，{$settings['shoplng']}
+					<input type="hidden" name="shoplat" value="{$settings['shoplat']}">
+					<input type="hidden" name="shoplng" value="{$settings['shoplng']}">
+				</span>
+				<a href="javascript:;" class="showmap" latname="shoplat" lngname="shoplng" >选择</a>
+				<p class="frm_tips">点击选择后选择到门店位置</p>
+			</div>
+		</div>		
+		<div class="frm_control_group" >
+  			<label for="" class="frm_label">商城客服</label>
+   			<div class="frm_controls">
+    			<label class="frm_radio_label hide_item" hideitem=".kefutype">
+    				<i class="icon_radio"></i>
+    				<span class="lbl_content">关闭</span>
+    				<input type="radio" name="kefutype" value="0" class="frm_radio" {if $settings['kefutype'] == 0}checked="checked"{/if} />
+    			</label>
+    			<label class="frm_radio_label hide_item show_item" showitem=".kefutype1" hideitem=".kefutype">
+    				<i class="icon_radio"></i>
+    				<span class="lbl_content">电话客服</span>
+    				<input type="radio" name="kefutype" value="1" class="frm_radio" {if $settings['kefutype'] == 1}checked="checked"{/if} /> 
+    			</label>
+    			<label class="frm_radio_label hide_item" hideitem=".kefutype">
+    				<i class="icon_radio"></i>
+    				<span class="lbl_content">客服会话</span>
+    				<input type="radio" name="kefutype" value="2" class="frm_radio" {if $settings['kefutype'] == 2}checked="checked"{/if} /> 
+    			</label>
+    			<label class="frm_radio_label hide_item show_item" showitem=".kefutype3" hideitem=".kefutype">
+    				<i class="icon_radio"></i>
+    				<span class="lbl_content">跳转链接</span>
+    				<input type="radio" name="kefutype" value="3" class="frm_radio" {if $settings['kefutype'] == 3}checked="checked"{/if} /> 
+    			</label>
+    			<label class="frm_radio_label hide_item show_item" showitem=".kefutype4" hideitem=".kefutype">
+    				<i class="icon_radio"></i>
+    				<span class="lbl_content">个人微信</span>
+    				<input type="radio" name="kefutype" value="4" class="frm_radio" {if $settings['kefutype'] == 4}checked="checked"{/if} /> 
+    			</label>
+   			</div>
+  		</div>
+		<div class="frm_control_group hideitem kefutype kefutype1" {if $settings['kefutype'] == 1}style="display:block"{/if}>
+			<label for="" class="frm_label">电话号码</label>
+			<div class="frm_controls">
+				<span class="frm_input_box">
+					<input type="text" class="frm_input" name="kefutel" value="{$settings['kefutel']}">
+				</span>
+				<p class="frm_tips">填写客服电话号码</p>
+			</div>
+		</div>	
+		<div class="frm_control_group hideitem kefutype kefutype3" {if $settings['kefutype'] == 3}style="display:block"{/if}>
+			<label for="" class="frm_label">网页链接</label>
+			<div class="frm_controls">
+				<span class="frm_input_box">
+					<input type="text" class="frm_input" name="kefuurl" value="{$settings['kefuurl']}">
+				</span>
+				<p class="frm_tips">这个网页链接一定要在微信小程序后台设置业务域名</p>
+			</div>
+		</div>
+		<div class="frm_control_group hideitem kefutype single_img_upload kefutype4" {if $settings['kefutype'] == 4}style="display:block"{/if}>
+			<label for="" class="frm_label">微信二维码</label>
+			<div class="frm_controls">
+				{php echo  WebCommon::tpl_form_field_image('kefuimg',$settings['kefuimg'])}
+				<p class="frm_tips tips_width_200">上传客服微信二维码</p>
+			</div>
+		</div>	
+
+
+		<div class="tool_bar">
+			<button type="submit" name="submit" value="123" class="btn btn_primary" >保存</button>
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+
+	</div>
+
+	<div class="admin_group settings_group">
+	    <div class="item_cell_box mt20">
+	        <div class="item_cell_flex">
+	        {if empty( $admin )}
+	        	<div class="no_data">没有数据</div>
+	        {else}
+			  <table class="table" cellspacing="0"> 
+			   <thead class="thead"> 
+			        <tr> 
+			            <th class="table_cell title td_col_1"> 
+			                <label class="frm_checkbox_label" for="selectAll"> 
+			                    <i class="icon_checkbaox"></i> 
+			                    <span class="lbl_content">id</span> 
+			                    <input type="checkbox" class="frm_checkbox" id="selectAll" /> 
+			                </label>
+			            </th>
+			            <th class="table_cell tl td_col_1">微信头像</th>
+			            <th class="table_cell tl td_col_1">微信昵称</th>
+			            <th class="table_cell tr td_col_1">操作</th>
+			        </tr> 
+			   </thead> 
+			   <tbody class="tbody" id="js_goods">
+			       {loop $admin $item}
+			            <tr> 
+			                <td class="table_cell title td_col_1"> 
+			                    <div class="goods_info">
+			                        <label class="frm_checkbox_label" > 
+			                            <i class="icon_cheackbox"></i> 
+			                            <input type="checkbox" name="checkall[]" class="frm_checkbox" value="{$item['id']}" /> 
+			                            {$item['id']}
+			                        </label>
+			                    </div>
+			                </td> 
+			                <td class="table_cell price tl td_col_1">
+			                    <img src="{$item['user']['headimgurl']}" width="30px" height="30px">
+			                </td>
+			                <td class="table_cell price tl td_col_1">
+			                    {$item['user']['nickname']}
+			                </td>               
+			                <td class="table_cell oper last_child tr opclass td_col_1" style="position: relative;">
+			                    <a href="javascript:;" class="deleteadmin" id="{$item['id']}">删除</a>
+			                </td>
+			            </tr>
+			        {/loop}
+			    </tbody>
+			    </table>
+	    	{/if}
+	        </div>
+
+	        <div style="width: 200px;" >
+	            <div class="frm_control_group">
+	                <label for="" class="frm_label"></label>
+	                <div class="frm_controls" style="text-align: center;">
+	                    <img src="{php echo $this->createWebUrl('img',array('op'=>'bindadmin'))}" id="qrcode" width="155px" height="155px">
+	                    <p class="frm_tipsm qrcode_tips" >扫上方二维码绑定管理员</p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+	<div class="refund_group settings_group">
+		<div class="frm_control_group">
+			<label for="" class="frm_label">cert证书</label>
+			<div class="frm_controls">
+				<span class="frm_textarea_box">
+					<textarea  name="cert" class="frm_textarea" rows="6" placeholder="为保证安全性, 不显示证书内容. 若要修改, 请直接粘贴"></textarea>
+				</span>
+				<p class="frm_tips">从商户平台上下载支付证书, 解压并取得其中的 apiclient_cert.pem 用记事本打开并复制文件内容, 填至此处</p>
+			</div>
+		</div>
+		<div class="frm_control_group">
+			<label for="" class="frm_label">key证书</label>
+			<div class="frm_controls">
+				<span class="frm_textarea_box">
+					<textarea  name="key" class="frm_textarea" rows="6" placeholder="为保证安全性, 不显示证书内容. 若要修改, 请直接粘贴"></textarea>
+				</span>
+				<p class="frm_tips">从商户平台上下载支付证书, 解压并取得其中的 apiclient_key.pem 用记事本打开并复制文件内容, 填至此处</p>
+			</div>
+		</div>
+		<div class="frm_control_group">
+			<label for="" class="frm_label">rootca证书</label>
+			<div class="frm_controls">
+				<span class="frm_textarea_box">
+					<textarea  name="rootca" class="frm_textarea" rows="6" placeholder="为保证安全性, 不显示证书内容. 若要修改, 请直接粘贴"></textarea>
+				</span>
+				<p class="frm_tips">从商户平台上下载支付证书, 解压并取得其中的 rootca.pem 用记事本打开并复制文件内容, 填至此处</p>
+			</div>
+		</div>
+
+		<div class="tool_bar">
+			<button type="submit" name="submit" value="123" class="btn btn_primary" >保存</button>
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+
+	</div>
+
+</form>
+<script type="text/javascript">
+
+	Http('post','json','checkqrcode',{page:'bindadmin'},function(data){
+		if( data.status == 201 ){
+			$('.qrcode_tips').text(data.res);
+		}
+	},false);
+
+</script>
+{template '../../../addons/'.MODULE.'/template/web/common/myfooter'}

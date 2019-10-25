@@ -1,0 +1,141 @@
+---------------------------------------------------------------
+[ 2019-10-24T10:19:44+08:00 ] 125.121.37.64 GET /web/index.php?c=home&a=welcome&do=ext&m=sqtg_sun&version_id=317
+[ info ] shop.ertongkeji.com/web/index.php?c=home&a=welcome&do=ext&m=sqtg_sun&version_id=317 [运行时间：0.099908s][吞吐率：10.01req/s] [内存消耗：3,888.32kb] [文件加载：100]
+[ info ] [ RUN ] app\admin\controller\Index->index[ /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/view/index/index.html [ array (
+  0 => 'admin',
+  1 => 'setting',
+  2 => 'menugroup',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.008577s ] mysql:host=rm-wz9180i3p98261zfdyo.mysql.rds.aliyuncs.com;port=3306;dbname=ertong;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_system` [ RunTime:0.006412s ]
+[ sql ] [ SQL ] SELECT * FROM `ims_sqtg_sun_system` WHERE  `ims_sqtg_sun_system`.`uniacid` = 304 LIMIT 1 [ RunTime:0.005526s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_menugroup` [ RunTime:0.005989s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_menu` [ RunTime:0.005978s ]
+[ sql ] [ SQL ] SELECT * FROM `ims_sqtg_sun_menugroup` WHERE  `state` = 1 ORDER BY `index` ASC [ RunTime:0.005458s ]
+[ sql ] [ SQL ] SELECT * FROM `ims_sqtg_sun_menu` WHERE  `state` = 1  AND `menu_id` = 0  AND `menugroup_id` IN (657,653,658,659,661,662,666,663) ORDER BY `index`,`id` [ RunTime:0.005604s ]
+[ sql ] [ SQL ] SELECT * FROM `ims_sqtg_sun_menu` WHERE  `menu_id` IN (662,669,670,672,675,698,714,753,757,760,762,764,771,754,761,759,755,746,772,674,677,748,749,678,763,758,750,751) ORDER BY `index`,`id` [ RunTime:0.005540s ]
+---------------------------------------------------------------
+[ 2019-10-24T10:19:44+08:00 ] 125.121.37.64 GET /web/index.php?c=site&a=entry&do=index&op=home&m=sqtg_sun&version_id=1%23
+[ info ] shop.ertongkeji.com/web/index.php?c=site&a=entry&do=index&op=home&m=sqtg_sun&version_id=1%23 [运行时间：0.109095s][吞吐率：9.17req/s] [内存消耗：3,530.96kb] [文件加载：98]
+[ info ] [ RUN ] app\admin\controller\Index->home[ /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/view/index/home.html [ array (
+  0 => '_W',
+  1 => 'user',
+  2 => 'user_order',
+  3 => 'saledata7',
+  4 => 'saledata8',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.009083s ] mysql:host=rm-wz9180i3p98261zfdyo.mysql.rds.aliyuncs.com;port=3306;dbname=ertong;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_user` [ RunTime:0.006465s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ims_sqtg_sun_user` WHERE  `ims_sqtg_sun_user`.`uniacid` = 304 LIMIT 1 [ RunTime:0.005667s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ims_sqtg_sun_user` WHERE  `ims_sqtg_sun_user`.`uniacid` = 304  AND (  TO_DAYS(NOW()) - TO_DAYS( FROM_UNIXTIME(create_time)) = 0 ) LIMIT 1 [ RunTime:0.005766s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ims_sqtg_sun_user` WHERE  `ims_sqtg_sun_user`.`uniacid` = 304  AND (  TO_DAYS(NOW()) - TO_DAYS( FROM_UNIXTIME(create_time)) = 1 ) LIMIT 1 [ RunTime:0.005663s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `ims_sqtg_sun_user` WHERE  `ims_sqtg_sun_user`.`uniacid` = 304  AND (  DATE_FORMAT(NOW(),'%Y%m') - DATE_FORMAT( FROM_UNIXTIME(create_time),'%Y%m') = 0 ) LIMIT 1 [ RunTime:0.005732s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_ordergoods` [ RunTime:0.006526s ]
+[ sql ] [ SQL ] SELECT `Ordergoods`.*,user_id,sum(amount) as amount FROM `ims_sqtg_sun_ordergoods` `Ordergoods` INNER JOIN `ims_sqtg_sun_user` `User` ON `Ordergoods`.`user_id`=`User`.`id` WHERE  `Ordergoods`.`uniacid` = 304  AND `store_id` = 0  AND `state` IN (2,3,4,5) GROUP BY `user_id` ORDER BY `amount` DESC LIMIT 6 [ RunTime:0.006049s ]
+[ sql ] [ SQL ] 
+            select DATE_FORMAT(d,'%m-%d') as d,sum(t1.goods_num) as goods_count,sum(total_price) as amount_sum
+            from (
+                select t1.d,coalesce(t2.num,0)as goods_num,coalesce(t2.pay_amount,0)as total_price
+                from(
+                    select DATE_SUB(curdate(),INTERVAL 0 DAY) as d
+                    union all
+                    select DATE_SUB(curdate(),INTERVAL 1 DAY) as d
+                    union all
+                    select DATE_SUB(curdate(),INTERVAL 2 DAY) as d
+                    union all
+                    select DATE_SUB(curdate(),INTERVAL 3 DAY) as d
+                    union all
+                    select DATE_SUB(curdate(),INTERVAL 4 DAY) as d
+                    union all
+                    select DATE_SUB(curdate(),INTERVAL 5 DAY) as d
+                    union all
+                    select DATE_SUB(curdate(),INTERVAL 6 DAY) as d
+                )t1
+                left join `ims_sqtg_sun_ordergoods` t2 
+                    on t2.state in(2,3,4,5) and FROM_UNIXTIME(t2.create_time,'%y-%m-%d') = t1.d
+                    and t2.store_id = 0
+                    and t2.uniacid = 304
+            )t1
+            GROUP BY DATE_FORMAT(d,'%m-%d')
+            order by DATE_FORMAT(d,'%m-%d') [ RunTime:0.006095s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_leader` [ RunTime:0.006367s ]
+[ sql ] [ SQL ] SELECT `id` FROM `ims_sqtg_sun_leader` WHERE  `ims_sqtg_sun_leader`.`uniacid` = 304 [ RunTime:0.005639s ]
+[ sql ] [ SQL ] SELECT COUNT(distinct order_id) AS tp_count FROM `ims_sqtg_sun_ordergoods` WHERE  `ims_sqtg_sun_ordergoods`.`uniacid` = 304  AND `store_id` = 0  AND `state` = 1  AND `leader_id` IN ('') LIMIT 1 [ RunTime:0.005724s ]
+[ sql ] [ SQL ] SELECT COUNT(distinct order_id) AS tp_count FROM `ims_sqtg_sun_ordergoods` WHERE  `ims_sqtg_sun_ordergoods`.`uniacid` = 304  AND `store_id` = 0  AND `state` = 2  AND `leader_id` IN ('') LIMIT 1 [ RunTime:0.005797s ]
+[ sql ] [ SQL ] SELECT COUNT(distinct order_id) AS tp_count FROM `ims_sqtg_sun_ordergoods` WHERE  `ims_sqtg_sun_ordergoods`.`uniacid` = 304  AND `store_id` = 0  AND `state` = 4  AND `leader_id` IN ('') LIMIT 1 [ RunTime:0.005721s ]
+---------------------------------------------------------------
+[ 2019-10-24T10:19:45+08:00 ] 125.121.37.64 POST /web/index.php?c=site&a=entry&do=index&op=leaderOrder&m=sqtg_sun&version_id=1%23
+[ info ] shop.ertongkeji.com/web/index.php?c=site&a=entry&do=index&op=leaderOrder&m=sqtg_sun&version_id=1%23 [运行时间：0.036645s][吞吐率：27.29req/s] [内存消耗：2,945.49kb] [文件加载：94]
+[ info ] [ RUN ] app\admin\controller\Index->leaderOrder[ /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.007678s ] mysql:host=rm-wz9180i3p98261zfdyo.mysql.rds.aliyuncs.com;port=3306;dbname=ertong;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_ordergoods` [ RunTime:0.005501s ]
+[ sql ] [ SQL ] SELECT leader_id,sum(amount) as amount FROM `ims_sqtg_sun_ordergoods` WHERE  `ims_sqtg_sun_ordergoods`.`uniacid` = 304  AND `create_time` >= 1571846400  AND `state` IN (5)  AND `store_id` = 0 GROUP BY `leader_id` ORDER BY `num` DESC LIMIT 5 [ RunTime:0.004998s ]
+---------------------------------------------------------------
+[ 2019-10-24T10:19:45+08:00 ] 125.121.37.64 POST /web/index.php?c=site&a=entry&do=index&op=saleData&m=sqtg_sun&version_id=1%23
+[ info ] shop.ertongkeji.com/web/index.php?c=site&a=entry&do=index&op=saleData&m=sqtg_sun&version_id=1%23 [运行时间：0.047161s][吞吐率：21.20req/s] [内存消耗：2,861.88kb] [文件加载：90]
+[ info ] [ RUN ] app\admin\controller\Index->saleData[ /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.008006s ] mysql:host=rm-wz9180i3p98261zfdyo.mysql.rds.aliyuncs.com;port=3306;dbname=ertong;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_ordergoods` [ RunTime:0.005689s ]
+[ sql ] [ SQL ] SELECT SUM(num) AS tp_sum FROM `ims_sqtg_sun_ordergoods` WHERE  `ims_sqtg_sun_ordergoods`.`uniacid` = 304  AND `create_time` >= 1571846400  AND `state` IN (2,3,4,5)  AND `store_id` = 0 LIMIT 1 [ RunTime:0.005122s ]
+[ sql ] [ SQL ] SELECT SUM(pay_amount) AS tp_sum FROM `ims_sqtg_sun_ordergoods` WHERE  `ims_sqtg_sun_ordergoods`.`uniacid` = 304  AND `create_time` >= 1571846400  AND `state` IN (2,3,4,5)  AND `store_id` = 0 LIMIT 1 [ RunTime:0.005085s ]
+[ sql ] [ SQL ] SELECT `pay_amount` FROM `ims_sqtg_sun_ordergoods` WHERE  `ims_sqtg_sun_ordergoods`.`uniacid` = 304  AND `create_time` >= 1571846400  AND `state` IN (2,3,4,5)  AND `store_id` = 0 GROUP BY `order_id` [ RunTime:0.005115s ]
+---------------------------------------------------------------
+[ 2019-10-24T10:19:45+08:00 ] 125.121.37.64 POST /web/index.php?c=site&a=entry&do=index&op=goodsSale&m=sqtg_sun&version_id=1%23
+[ info ] shop.ertongkeji.com/web/index.php?c=site&a=entry&do=index&op=goodsSale&m=sqtg_sun&version_id=1%23 [运行时间：0.037722s][吞吐率：26.51req/s] [内存消耗：2,857.70kb] [文件加载：90]
+[ info ] [ RUN ] app\admin\controller\Index->goodsSale[ /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.008467s ] mysql:host=rm-wz9180i3p98261zfdyo.mysql.rds.aliyuncs.com;port=3306;dbname=ertong;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_ordergoods` [ RunTime:0.005968s ]
+[ sql ] [ SQL ] SELECT goods_name,sum(num) as num FROM `ims_sqtg_sun_ordergoods` WHERE  `ims_sqtg_sun_ordergoods`.`uniacid` = 304  AND `create_time` >= 1571846400  AND `state` IN (2,3,4,5)  AND `store_id` = 0 GROUP BY `goods_name` ORDER BY `num` DESC LIMIT 5 [ RunTime:0.005464s ]
+---------------------------------------------------------------
+[ 2019-10-24T10:19:48+08:00 ] 125.121.37.64 GET /web/index.php?c=site&a=entry&do=csystem&op=platform&m=sqtg_sun&version_id=1%23
+[ info ] shop.ertongkeji.com/web/index.php?c=site&a=entry&do=csystem&op=platform&m=sqtg_sun&version_id=1%23 [运行时间：0.040825s][吞吐率：24.49req/s] [内存消耗：3,395.48kb] [文件加载：95]
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\admin\controller\Csystem->platform[ /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/controller/Csystem.php ]
+[ info ] [ VIEW ] /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/view/csystem/platform.html [ array (
+  0 => '_W',
+  1 => '_GPC',
+  2 => 'info',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.008472s ] mysql:host=rm-wz9180i3p98261zfdyo.mysql.rds.aliyuncs.com;port=3306;dbname=ertong;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_system` [ RunTime:0.006144s ]
+[ sql ] [ SQL ] SELECT * FROM `ims_sqtg_sun_system` WHERE  `ims_sqtg_sun_system`.`uniacid` = 304 LIMIT 1 [ RunTime:0.005529s ]
+[ error ] [8]Undefined index: extras[/www/wwwroot/shop.ertongkeji.com/web/common/tpl.func.php:352]
+[ error ] [8]Undefined index: extras[/www/wwwroot/shop.ertongkeji.com/web/common/tpl.func.php:358]
+[ error ] [8]Undefined index: extras[/www/wwwroot/shop.ertongkeji.com/web/common/tpl.func.php:352]
+[ error ] [8]Undefined index: extras[/www/wwwroot/shop.ertongkeji.com/web/common/tpl.func.php:358]
+---------------------------------------------------------------
+[ 2019-10-24T10:19:48+08:00 ] 125.121.37.64 GET /web/index.php?c=site&a=entry&do=csms&op=set&m=sqtg_sun&version_id=1%23
+[ info ] shop.ertongkeji.com/web/index.php?c=site&a=entry&do=csms&op=set&m=sqtg_sun&version_id=1%23 [运行时间：0.038498s][吞吐率：25.98req/s] [内存消耗：3,343.04kb] [文件加载：92]
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\admin\controller\Csms->set[ /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/controller/Csms.php ]
+[ info ] [ VIEW ] /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/view/csms/set.html [ array (
+  0 => '_W',
+  1 => '_GPC',
+  2 => 'info',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.007697s ] mysql:host=rm-wz9180i3p98261zfdyo.mysql.rds.aliyuncs.com;port=3306;dbname=ertong;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_sms` [ RunTime:0.005567s ]
+[ sql ] [ SQL ] SELECT * FROM `ims_sqtg_sun_sms` WHERE  `ims_sqtg_sun_sms`.`uniacid` = 304  AND `uniacid` = 304 LIMIT 1 [ RunTime:0.004816s ]
+---------------------------------------------------------------
+[ 2019-10-24T10:19:49+08:00 ] 125.121.37.64 GET /web/index.php?c=site&a=entry&do=csms&op=select&m=sqtg_sun&version_id=1%23
+[ info ] shop.ertongkeji.com/web/index.php?c=site&a=entry&do=csms&op=select&m=sqtg_sun&version_id=1%23 [运行时间：0.036739s][吞吐率：27.22req/s] [内存消耗：2,776.62kb] [文件加载：93]
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\admin\controller\Csms->select[ /www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/application/admin/controller/Csms.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.009041s ] mysql:host=rm-wz9180i3p98261zfdyo.mysql.rds.aliyuncs.com;port=3306;dbname=ertong;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `ims_sqtg_sun_sms` [ RunTime:0.006246s ]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'name' in 'field list'[/www/wwwroot/shop.ertongkeji.com/addons/sqtg_sun/thinkphp/library/think/db/Connection.php:390]

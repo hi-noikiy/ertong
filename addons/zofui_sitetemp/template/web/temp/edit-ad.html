@@ -1,0 +1,364 @@
+<div class="temp_item temp_item_space"  >
+<div ng-if="rtype == 'style'">
+	<div class="frm_control_group frm_control_group_editin" >
+		<label for="" class="frm_label">广播样式</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label " ng-click="item.params.adtype = 0">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">单条横向播放</span>
+	    		<input type="radio" name="type{{$index}}" on-selected value="0" class="frm_radio"  ng-model="item.params.adtype"  /> 
+	    	</label>	    	
+	    	<label class="frm_radio_label " ng-click="item.params.adtype = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">多条竖向滚动播放</span>
+	    		<input type="radio" name="type{{$index}}" on-selected value="1" class="frm_radio"  ng-model="item.params.adtype"  /> 
+	    	</label>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">左侧图片</label>
+		<div class="frm_controls">
+			<div class="edit_image_upload" ng-click="uploadImage(item.id,'leftimg')">
+				<img class="upload_image_img" src="{{item.params.leftimg}}" >
+				<span class="edit_image_notice">修改</span>
+			</div>
+			<div class="clearimg ml5">
+				<span class="frm_input_box frm_input_box_100">
+					<input class="frm_input" type="text" ng-model="item.params.leftimg" />
+				</span>
+				<a href="javascript:;" ng-click="item.params.leftimg = ''">清除</a>
+			</div>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-if="item.params.leftimg">
+		<label for="" class="frm_label">图标宽度</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="20" max="100" value="{{item.params.imgwidth}}" name="imgwidth"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.imgwidth" />
+			</span><span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">右边高度</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="20" max="80" value="{{item.params.height}}" name="height"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.height" />
+			</span><span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">左右边距</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.paddingv}}" name="paddingv"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.paddingv" />
+			</span><span class="my_slider_notice">像素</span>
+		</div>
+	</div>	
+	<div class="frm_control_group">
+		<label for="" class="frm_label">上下边距</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.padding}}" name="padding"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.padding" />
+			</span><span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">文字尺寸</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="12" max="30" value="{{item.params.fontsize}}" name="fontsize"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.fontsize" />
+			</span><span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.bgcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_70">
+				<input class="frm_input" type="text" ng-model="item.params.bgcolor" />
+			</span> - 
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.tobgcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_70">
+				<input class="frm_input" type="text" ng-model="item.params.tobgcolor" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">文字颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.color" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.color" />
+			</span>
+		</div>
+	</div>
+</div>
+<div ng-if="rtype == 'data'">
+	<div class="frm_control_group" ng-show="item.params.adtype == 0 || !item.params.adtype">
+		<label for="" class="frm_label">广播内容</label>
+		<div class="frm_controls msg">
+			<span class="frm_textarea_box textarea_60px" style="height: 100px;">
+				<textarea style="height: 100px;" name="content" class="frm_textarea" rows="6" placeholder="" ng-model="item.params.text" ></textarea>
+			</span>
+		</div>
+	</div>
+
+	<div ng-show="item.params.adtype == 0 || !item.params.adtype">
+		
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">点击动作</label>
+			<div class="frm_controls">
+				<div class="filter_content dropdown_topbar"> 
+			   		<div class="dropdown_menu ">
+			    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt width_200">
+			    			<label class="jsBtLabel">
+			    				<span ng-repeat="inn in clickEvents">{{item.params.type == inn.type ? inn.name : ''}}</span>
+			    			</label>
+			    			<i class="arrow"></i>
+			    		</a> 
+			    		<div class="dropdown_data_container jsDropdownList width_200" >
+				     		<ul class="dropdown_data_list">
+				     			<li ng-repeat="inn in clickEvents" class="dropdown_data_item " ng-click="item.params.type = inn.type">
+				     				<a href="javascript:;" class="select_item">{{inn.name}}</a> 
+				     			</li> 
+				    		</ul>
+			    		</div> 
+			   		</div>
+	  			</div>  	
+			</div>
+		</div>	
+		<div class="frm_control_group" ng-show="item.params.type == 'url'">
+			<label for="" class="frm_label">跳转页面</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200 readonlybg">
+					<input type="text" class="frm_input " ng-model="item.params.urlname" readonly>
+				</span><a href="javascript:;" ng-click="showLink(item.id,false,'my')">设置链接</a>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="item.params.type == 'kefu'">
+			<label for="" class="frm_label">sess-from</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="item.params.sfrom" >
+				</span>(可不填)
+			</div>
+		</div>		
+
+		<div class="frm_control_group" ng-show="item.params.type == 'tel'">
+			<label for="" class="frm_label">电话号码</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="item.params.tel" >
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="item.params.type == 'map'">
+			<label for="" class="frm_label">地图坐标</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200 readonlybg">
+					<input type="text" class="frm_input " value="{{item.params.lat +','+ item.params.lng}}" readonly>
+				</span><a href="javascript:;" ng-click="showMap( item.id )">选择坐标</a>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="item.params.type == 'map'">
+			<label for="" class="frm_label">位置名称</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input " ng-model="item.params.addname">
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="item.params.type == 'map'">
+			<label for="" class="frm_label">详细地址</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input " ng-model="item.params.address">
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="item.params.type == 'other'">
+			<label for="" class="frm_label">小程序appid</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="item.params.appid" >
+				</span><a href="javascript:;" ng-click="showLink(item.id,false,'app')">选择</a>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="item.params.type == 'other'">
+			<label for="" class="frm_label">页面路径</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="item.params.appurl" >
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="item.params.type == 'weburl'">
+			<label for="" class="frm_label">网页链接</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="item.params.weburl" >
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="item.params.type == 'images'">
+			<label for="" class="frm_label">图片内容</label>
+			<div class="frm_controls">
+				<div class="imagesdata_box">
+					<img ng-repeat="inn in item.params.imagesdata" ng-src="{{inn.url}}" ng-click="deleteImagesdata(item.params.imagesdata,inn.id)">
+				</div>
+				
+				<a href="javascript:;" ng-click="uploadMultiImage(item.id)">选择图片</a>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="item.params.type == 'text'">
+			<label for="" class="frm_label">文字内容</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="item.params.text" >
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="edit_data_box" ui-sortable="sortableOptions" ng-model="item.params.data" ng-show="item.params.adtype == 1">
+		<div class="edit_data_item" ng-repeat="good in item.params.data" >
+			<span class="delete_this" ng-click="deleteItem(item.id,good.id)">x</span>
+			<div class="design_single_box item_cell_box">
+				<div class="item_cell_flex">
+					<div class="frm_control_group frm_control_group_editin" >
+						<label for="" class="frm_label">广播文字</label>
+						<div class="frm_controls">
+						 <span class="frm_input_box frm_input_250">
+							<input type="text" class="frm_input" ng-model="good.text">
+						</span>
+						</div>
+					</div>
+					
+					<div class="frm_control_group frm_control_group_editin" >
+						<label for="" class="frm_label">点击动作</label>
+						<div class="frm_controls">
+					    	<div class="filter_content dropdown_topbar"> 
+						   		<div class="dropdown_menu ">
+						    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt width_200">
+						    			<label class="jsBtLabel">
+						    				<span ng-repeat="inn in clickEvents">{{good.type == inn.type ? inn.name : ''}}</span>
+						    			</label>
+						    			<i class="arrow"></i>
+						    		</a> 
+						    		<div class="dropdown_data_container jsDropdownList width_200" >
+							     		<ul class="dropdown_data_list">
+							     			<li ng-repeat="inn in clickEvents" class="dropdown_data_item " ng-click="good.type = inn.type">
+							     				<a href="javascript:;" class="select_item">{{inn.name}}</a> 
+							     			</li> 
+							    		</ul>
+						    		</div> 
+						   		</div>
+				  			</div>
+					    						    	
+						</div>
+					</div>
+					<div class="frm_control_group frm_control_group_editin" ng-show="good.type == 'url'">
+						<label for="" class="frm_label">跳转页面</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200 readonlybg">
+								<input type="text" class="frm_input " ng-model="good.urlname" readonly>
+							</span><a href="javascript:;" ng-click="showLink(item.id,good.id,'my')">设置链接</a>
+						</div>
+					</div>
+					<div class="frm_control_group frm_control_group_editin" ng-show="good.type == 'kefu'">
+						<label for="" class="frm_label">sess-from</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="good.sfrom" >
+							</span>(可不填)
+						</div>
+					</div>
+					<div class="frm_control_group frm_control_group_editin" ng-show="good.type == 'tel'">
+						<label for="" class="frm_label">电话号码</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="good.tel" >
+							</span>
+						</div>
+					</div>
+					<div class="frm_control_group frm_control_group_editin" ng-show="good.type == 'map'">
+						<label for="" class="frm_label">地图坐标</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200 readonlybg">
+								<input type="text" class="frm_input " value="{{good.lat +','+ good.lng}}" readonly>
+							</span><a href="javascript:;" ng-click="showMap( item.id,good.id )">选择坐标</a>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="good.type == 'map'">
+						<label for="" class="frm_label">位置名称</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input " ng-model="good.addname">
+							</span>
+						</div>
+					</div>
+					<div class="frm_control_group" ng-show="good.type == 'map'">
+						<label for="" class="frm_label">详细地址</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input " ng-model="good.address">
+							</span>
+						</div>
+					</div>
+					
+					<div class="frm_control_group frm_control_group_editin" ng-show="good.type == 'other'">
+						<label for="" class="frm_label">小程序appid</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="good.appid" >
+							</span><a href="javascript:;" ng-click="showLink(item.id,good.id,'app')">选择</a>
+						</div>
+					</div>
+					<div class="frm_control_group frm_control_group_editin" ng-show="good.type == 'other'">
+						<label for="" class="frm_label">页面路径</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="good.appurl" >
+							</span>
+						</div>
+					</div>
+					<div class="frm_control_group frm_control_group_editin" ng-show="good.type == 'weburl'">
+						<label for="" class="frm_label">网页链接</label>
+						<div class="frm_controls">
+							<span class="frm_input_box frm_input_200">
+								<input type="text" class="frm_input" ng-model="good.weburl" >
+							</span>
+							<p class="font_999">一定要在微信小程序后台设置此域名为业务域名</p>
+						</div>
+					</div>
+					<div class="frm_control_group frm_control_group_editin" ng-show="good.type == 'images'">
+						<label for="" class="frm_label">图片内容</label>
+						<div class="frm_controls">
+							<div class="imagesdata_box">
+								<img ng-repeat="inn in good.imagesdata" ng-src="{{inn.url}}" ng-click="deleteImagesdata(good.imagesdata,inn.id)">
+							</div>
+							
+							<a href="javascript:;" ng-click="uploadMultiImage(item.id,good.id)">选择图片</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="create_access_primary" href="javascript:;" ng-click="addgood(item.params.data)">
+			<i class="icon20_common add_gray"></i>    
+		</a>
+	</div>
+</div>
+
+</div>

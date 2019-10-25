@@ -1,0 +1,101 @@
+{template 'common/header-base'}
+<div data-skin="default" class="skin-default {if $_GPC['main-lg']} main-lg-body {/if}">
+{php $frames = buildframes(FRAME);_calc_current_frames($frames);}
+
+ 
+<script type="text/javascript">
+	window.version_id = "{php echo intval( $_GPC['version_id'] )}";
+	window.auth = {php echo json_encode( model_auth::authList() )};
+	window.myset = {php echo json_encode( model_sysset::getSet() )};
+	window.now = {php echo TIMESTAMP};
+</script>
+<link rel="stylesheet" type="text/css" href="{php echo MODULE_URL}template/web/css/common.css{php echo '?t='.TIMESTAMP}">
+<link rel="stylesheet" type="text/css" href="{php echo MODULE_URL}template/web/css/tao.css{php echo '?t='.TIMESTAMP}">
+<link rel="stylesheet" href="{php echo MODULE_URL}template/web/css/jquery-ui.css">
+<script src="{php echo MODULE_URL}template/web/js/jquery-ui.js"></script>
+<script type="text/javascript" src="{php echo MODULE_URL}template/web/js/tao.js{php echo '?t='.TIMESTAMP}"></script>
+
+{php $menu = menu::init()}
+
+<div class="header" style="padding-top: 0;">
+    <div class="wrap">
+        <div class="logo" style="padding-right: 0;">
+        	<img src="{php echo $_W['siteroot'].'attachment/headimg_'.$_W['uniacid'].'.jpg?time='.TIMESTAMP}" style="display: inline-block;">
+        	<span class="header_name">{$_W['account']['name']}</span>
+        </div>
+        <div class="nav">
+            <ul>
+                {loop $menu $item}
+                	<li {if $_GPC['p'] == $item['p'] }class="selected"{/if}><a href="{$item['url']}">{$item['name']}</a></li>
+                {/loop}
+            </ul>
+        </div>
+        <div class="nav_r">
+        	<li>
+        		<a href="./index.php?c=wxapp&a=display&do=home">返回小程序</a>
+        	</li>
+        </div>
+    </div>
+</div>
+{if $_GPC['do'] == 'page' && in_array($_GPC['op'],array('add','edit'))}
+
+{else}
+{loop $menu $out}
+{if $out['p'] == $_GPC['p']}
+	
+ 	<div id="body" class="body page_message" style="padding-top: 1px;">
+   		<div id="js_container_box" class="container_box cell_layout side_l">
+	    	<div class="col_side"> 
+	    		
+	    		 <div class="menu_box" id="menuBar">
+				    {loop $out['leftbar'] $k $item}
+
+				    	{if $item['hide'] == 0 && !empty( $item )}
+					    <dl class="menu">
+					     	<dt class="menu_title clickable">
+					     		<a href="{php echo empty($item['url']) ? 'javascript:;' : $item['url']}">
+					      			<i class="icon_menu" style="background:url({$item['icon']}) no-repeat;"> </i>{$item['name']} 
+					      		</a>
+					     	</dt>
+					     	{loop $item['list'] $kk $vv}
+					     		{if $vv['hide'] == 0}
+							    <dd class="menu_item {if ($_GPC['do'] == $k && $_GPC['op'] == $vv['op']) || $_GPC['c'] == 'module' && $vv['op'] == 'set' }selected{/if}">
+							      	<a href="{$vv['url']}" class="left_title_box">{$vv['name']} {if isset($vv['num'])}<i>{$vv['num']}</i>{/if}</a>
+							    </dd>
+							    {/if}
+							{/loop}
+					    </dl>
+					    {/if}
+				    {/loop}
+	     		</div>
+
+	    	</div>
+	    	<div class="col_main">
+
+	    		{loop $out['leftbar'] $k $item}
+	    			{if $_GPC['do'] == $k}
+						<div class="main_hd">
+							<h2>{$item['name']}</h2>
+							<div class="title_tab" id="topTab">
+								<ul class="tab_navs title_tab">
+									{loop $item['list'] $kk $vv}
+										
+										{if $vv['hide'] != 1 || ($_GPC['op'] == $vv['op'] && $vv['hide'] == 1 ) || $vv['showtop'] == 1}
+										<li class="tab_nav first js_top {if $_GPC['op'] == $vv['op']}selected{/if}">
+										{if in_array( $_GPC['op'],(array)$item['toplist'] )}
+											<a class="left_title_box top_title_box" href="{$vv['url']}">{$vv['name']} {if isset($vv['num'])}<i>{$vv['num']}</i>{/if} </a>
+										{/if}
+										</li>
+										{/if}
+									{/loop}
+								</ul>
+							</div>
+						</div>
+					{/if}
+				{/loop}
+				
+
+				<div class="main_bd">
+{/if}
+{/loop}
+{/if}

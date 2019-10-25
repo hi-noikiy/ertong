@@ -1,0 +1,19 @@
+<div class="temp_item temp_item_title fixbgimg" ng-style="{'background-image':'url('+item.params.bgimg+')','padding':item.params.paddingv+'px '+'0px','background-color':item.params.bgcolor}">
+	
+	<div class="item_cell_box" style="align-items: center;" ng-style="{'padding':'0px ' + item.params.paddingh+'px','border-left':item.params.leftbord == 1 ? '4px solid '+item.params.bordbg : 0 }">
+		<div class="temp_title_limg" ng-show="item.params.lefticon">
+			<img ng-style="{'width':item.params.lwidth+'px'}" ng-src="{{item.params.leftimg}}">
+		</div>
+		<div class="item_cell_flex temp_title_mfont" ng-style="{'text-align':item.params.pos,'font-size':item.params.size+'px','color':item.params.color}">
+			<img ng-if="item.params.fonticon" ng-style="{'width':item.params.fontwidth+'px'}" ng-src="{{item.params.fontimg}}">
+			{{item.params.content}}
+		</div>
+		<div class="temp_title_rfont" ng-show="item.params.rightfont" ng-style="{'color':item.params.rfontcolor}">
+			{{item.params.rightfont}}
+		</div>		
+		<div class="temp_title_rimg" ng-show="item.params.righticon">
+			<img ng-style="{'width':item.params.rwidth+'px'}" ng-src="{{item.params.rightimg}}">
+		</div>
+	</div>
+
+</div>

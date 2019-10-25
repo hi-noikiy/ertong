@@ -1,0 +1,10 @@
+<div class="temp_item temp_item_head fixbgimg"  ng-style="{'background-image':'url('+item.params.bgimg+')','background-color':item.params.bgcolor,'padding': item.params.topbot+'px 0'  }">
+	<div class="head_box head_style1" ng-if="item.params.style == 0">
+		<img class="temp_head_headimg" src="{{item.params.headimg}}">
+		<div class="temp_head_nick" ng-style="{'color':item.params.nickcolor,'font-size':item.params.nicksize}">会员昵称</div>
+	</div>
+	<div class="head_box head_style2 item_cell_box" ng-if="item.params.style == 1">
+		<img class="temp_head_headimg" src="{{item.params.headimg}}">
+		<div class="temp_head_nick item_cell_flex" ng-style="{'color':item.params.nickcolor,'font-size':item.params.nicksize}">会员昵称</div>
+	</div>	
+</div>

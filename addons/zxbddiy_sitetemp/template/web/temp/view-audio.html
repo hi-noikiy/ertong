@@ -1,0 +1,14 @@
+<div class="temp_item temp_item_space" ng-style="{padding:item.params.padding + 'px', background : item.params.bgcolor}" >
+	<div class="item_cell_box temp_audio_box">
+		<div class="temp_audio_thumb">
+			<img src="{{item.params.thumb ? item.params.thumb : '../addons/zxbddiy_sitetemp/public/images/au.png'}}">
+		</div>
+		<div class="temp_audio_name item_cell_flex">
+			<div ng-if="item.params.name" class="temp_audio_namen" ng-style="{color:item.params.ncolor}">{{item.params.name}}</div>
+			<div ng-if="item.params.desc" ng-style="{color:item.params.dcolor}">{{item.params.desc}}</div>
+		</div>
+		<div class="temp_audio_btn">
+			<img src="../addons/zxbddiy_sitetemp/public/images/v.png">
+		</div>
+	</div>
+</div>

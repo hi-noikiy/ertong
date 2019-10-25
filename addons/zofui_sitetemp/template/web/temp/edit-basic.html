@@ -1,0 +1,306 @@
+<div class="temp_item temp_item_basic" ng-if="rtype == 'style'">	
+	<div class="frm_control_group">
+		<label for="" class="frm_label">备注名称</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_250">
+				<input type="text" class="frm_input" ng-model="basic.name">
+			</span>
+			<p class="font_mini frm_input_250">备注名称，便于区别不同的页面</p>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">顶部背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="basic.topbg" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="basic.topbg" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">顶部文字颜色</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label" ng-click="basic.topcolor = '#000000'"> 
+	    		<i class="icon_radio"></i> 
+	    		<span class="lbl_content">黑色</span>
+	    		<input type="radio" name="topcolor" on-selected value="#000000" class="frm_radio"  ng-model="basic.topcolor"  /> 
+	    	</label> 
+	    	<label class="frm_radio_label " ng-click="basic.topcolor = '#ffffff'">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">白色</span>
+	    		<input type="radio" name="topcolor" on-selected value="#ffffff" class="frm_radio"  ng-model="basic.topcolor"  /> 
+	    	</label>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">页面背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="basic.pagebg" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="basic.pagebg" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">背景图片</label>
+		<div class="frm_controls">
+			<div class="edit_image_upload" ng-click="uploadImage(basic.id,'pbgimg')">
+				<img class="upload_image_img" src="{{basic.bgimg}}" >
+				<span class="edit_image_notice">修改</span>
+			</div>
+			<div class="clearimg ml5">
+				<span class="frm_input_box frm_input_box_100">
+					<input class="frm_input" type="text" ng-model="basic.bgimg" />
+				</span>
+				<a href="javascript:;" ng-click="basic.bgimg = ''">清除</a>
+			</div>
+		</div>
+	</div>	
+	<div class="frm_control_group">
+		<label for="" class="frm_label">转发图片</label>
+		<div class="frm_controls">
+			<div class="edit_image_upload" ng-click="uploadImage(basic.id,'shareimg')">
+				<img class="upload_image_img" src="{{basic.shareimg}}" >
+				<span class="edit_image_notice">修改</span>
+			</div>
+			<div class="clearimg ml5">
+				<span class="frm_input_box frm_input_box_100">
+					<input class="frm_input" type="text" ng-model="basic.shareimg" />
+				</span>
+				<a href="javascript:;" ng-click="basic.shareimg = ''">清除</a>
+			</div>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">转发标题</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_250">
+				<input type="text" class="frm_input" ng-model="basic.sharetitle">
+			</span>
+		</div>
+	</div>	
+	<div class="frm_control_group">
+		<label for="" class="frm_label">页面标题</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_250">
+				<input type="text" class="frm_input" ng-model="basic.title">
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group" > 
+	  	<label for="" class="frm_label">显示导航</label> 
+	   	<div class="frm_controls"> 
+	    	<label class="frm_radio_label" ng-click="basic.isbar = 0"> 
+	    		<i class="icon_radio"></i> 
+	    		<span class="lbl_content">显示</span>
+	    		<input type="radio" name="isbar" on-selected value="0" class="frm_radio"  ng-model="basic.isbar"  /> 
+	    	</label> 
+	    	<label class="frm_radio_label " ng-click="basic.isbar = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">不显示</span>
+	    		<input type="radio" name="isbar" on-selected value="1" class="frm_radio"  ng-model="basic.isbar"  /> 
+	    	</label>
+	   	</div>
+	</div>	
+	<div class="frm_control_group">
+		<label for="" class="frm_label">底部间距</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="100" type="3" value="{{basic.pbot}}" name="pbot"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="basic.pbot" />
+			</span>像素
+			<p class="font_999">设置底部间距的作用是：避免部分内容被底部导航遮盖</p>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">背景音乐</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label" ng-click="basic.isaudio = 0"> 
+	    		<i class="icon_radio"></i> 
+	    		<span class="lbl_content">关闭</span>
+	    		<input type="radio" name="isaudio" on-selected value="0" class="frm_radio"  ng-model="basic.isaudio"  /> 
+	    	</label> 
+	    	<label class="frm_radio_label " ng-click="basic.isaudio = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">设置</span>
+	    		<input type="radio" name="isaudio" on-selected value="1" class="frm_radio"  ng-model="basic.isaudio"  /> 
+	    	</label>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-if="basic.isaudio == 1">
+		<label for="" class="frm_label">音乐文件</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_200">
+				<input type="text" class="frm_input" ng-model="basic.audiourl">
+			</span><a href="javascript:;" ng-click="upaudio('basic')">上传音乐</a>
+		</div>
+	</div>
+	<div class="frm_control_group" ng-if="basic.isaudio == 1">
+		<label for="" class="frm_label">是否显示音乐按钮</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label" ng-click="basic.showaudiobtn = 0"> 
+	    		<i class="icon_radio"></i> 
+	    		<span class="lbl_content">不显示</span>
+	    		<input type="radio" name="showaudiobtn" on-selected value="0" class="frm_radio"  ng-model="basic.showaudiobtn"  /> 
+	    	</label> 
+	    	<label class="frm_radio_label " ng-click="basic.showaudiobtn = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">显示</span>
+	    		<input type="radio" name="showaudiobtn" on-selected value="1" class="frm_radio"  ng-model="basic.showaudiobtn"  /> 
+	    	</label>
+		</div>
+	</div>
+	<div class="frm_control_group" >
+		<label for="" class="frm_label">封面图片</label>
+		<div class="frm_controls">
+	    	<label class="frm_radio_label" ng-click="basic.isf = 0"> 
+	    		<i class="icon_radio"></i> 
+	    		<span class="lbl_content">关闭</span>
+	    		<input type="radio" name="isf" on-selected value="0" class="frm_radio"  ng-model="basic.isf"  /> 
+	    	</label> 
+	    	<label class="frm_radio_label " ng-click="basic.isf = 1">
+	    		<i class="icon_radio"></i>
+	    		<span class="lbl_content">设置</span>
+	    		<input type="radio" name="isf" on-selected value="1" class="frm_radio"  ng-model="basic.isf"  /> 
+	    	</label>
+		</div>
+	</div>
+	<div ng-if="basic.isf == 1">
+		<div class="frm_control_group">
+			<label for="" class="frm_label">封面图片</label>
+			<div class="frm_controls">
+				<div class="edit_image_upload" ng-click="uploadImage(basic.id,'fimg')">
+					<img class="upload_image_img" ng-src="{{basic.fimg}}" >
+					<span class="edit_image_notice">修改</span>
+				</div>
+				<div class="clearimg ml5">
+					<span class="frm_input_box frm_input_box_100">
+						<input class="frm_input" type="text" ng-model="basic.fimg" />
+					</span>
+					<a href="javascript:;" ng-click="basic.fimg = ''">清除</a>
+				</div>
+			</div>
+		</div>
+		<div class="frm_control_group" >
+			<label for="" class="frm_label">点击动作</label>
+			<div class="frm_controls">
+				<div class="filter_content dropdown_topbar"> 
+			   		<div class="dropdown_menu ">
+			    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt width_200">
+			    			<label class="jsBtLabel">
+			    				<span ng-repeat="inn in clickEvents">{{basic.ftype == inn.type ? inn.name : ''}}</span>
+			    			</label>
+			    			<i class="arrow"></i>
+			    		</a> 
+			    		<div class="dropdown_data_container jsDropdownList width_200" >
+				     		<ul class="dropdown_data_list">
+				     			<li ng-repeat="inn in clickEvents" class="dropdown_data_item " ng-click="basic.ftype = inn.type">
+				     				<a href="javascript:;" class="select_item">{{inn.name}}</a> 
+				     			</li> 
+				    		</ul>
+			    		</div> 
+			   		</div>
+	  			</div>
+
+			</div>
+		</div>	
+		<div class="frm_control_group" ng-show="basic.ftype == 'url'">
+			<label for="" class="frm_label">跳转页面</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200 readonlybg">
+					<input type="text" class="frm_input " ng-model="basic.furlname" readonly>
+				</span><a href="javascript:;" ng-click="showLink('fimg','fimg','my')">链接</a>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="basic.ftype == 'kefu'">
+			<label for="" class="frm_label">sess-from</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="basic.sfrom" >
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="basic.ftype == 'tel'">
+			<label for="" class="frm_label">电话号码</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="basic.ftel" >
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="basic.ftype == 'map'">
+			<label for="" class="frm_label">地图坐标</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200 readonlybg">
+					<input type="text" class="frm_input " value="{{basic.flat +','+ basic.flng}}" readonly>
+				</span><a href="javascript:;" ng-click="showMap( 'fimg','fimg' )">选择坐标</a>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="basic.ftype == 'map'">
+			<label for="" class="frm_label">位置名称</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input " ng-model="basic.faddname">
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="basic.ftype == 'map'">
+			<label for="" class="frm_label">详细地址</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input " ng-model="basic.faddress">
+				</span>
+			</div>
+		</div>
+
+		<div class="frm_control_group" ng-show="basic.ftype == 'other'">
+			<label for="" class="frm_label">小程序appid</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="basic.fappid" >
+				</span><a href="javascript:;" ng-click="showLink('fimg','fimg','app')">选择</a>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="basic.ftype == 'other'">
+			<label for="" class="frm_label">页面路径</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="basic.fappurl" >
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="basic.ftype == 'weburl'">
+			<label for="" class="frm_label">网页链接</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="basic.fweburl" >
+				</span>
+				<p class="font_999">一定要在微信小程序后台设置此域名为业务域名</p>
+			</div>
+		</div>	
+		<div class="frm_control_group" ng-show="basic.ftype == 'images'">
+			<label for="" class="frm_label">图片内容</label>
+			<div class="frm_controls">
+				<div class="imagesdata_box">
+					<img ng-repeat="inn in basic.fimagesdata" ng-src="{{inn.url}}" ng-click="deleteImagesdata(basic.fimagesdata,inn.id)">
+				</div>
+				
+				<a href="javascript:;" ng-click="uploadMultiImage('fimg')">选择图片</a>
+			</div>
+		</div>
+		<div class="frm_control_group" ng-show="basic.ftype == 'copy'">
+			<label for="" class="frm_label">文字内容</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="basic.text" >
+				</span>
+			</div>
+		</div>
+	</div>
+
+
+</div>

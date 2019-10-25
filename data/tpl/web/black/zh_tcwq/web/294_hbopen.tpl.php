@@ -1,0 +1,148 @@
+<?php defined('IN_IA') or exit('Access Denied');?><?php (!empty($this) && $this instanceof WeModuleSite || 1) ? (include $this->template('public/header', TEMPLATE_INCLUDEPATH)) : (include template('public/header', TEMPLATE_INCLUDEPATH));?>
+<?php (!empty($this) && $this instanceof WeModuleSite || 1) ? (include $this->template('public/comhead', TEMPLATE_INCLUDEPATH)) : (include template('public/comhead', TEMPLATE_INCLUDEPATH));?>
+<link rel="stylesheet" type="text/css" href="../addons/zh_tcwq/template/public/ygcss.css">
+<style type="text/css">
+    input[type="radio"] + label::before {
+        content: "\a0"; /*不换行空格*/
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 16px;
+        width: 1em;
+        height: 1em;
+        margin-right: .4em;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+        text-indent: .15em;
+        line-height: 1; 
+    }
+    input[type="radio"]:checked + label::before {
+        background-color: #44ABF7;
+        background-clip: content-box;
+        padding: .1em;
+        border: 2px solid #44ABF7;
+    }
+    input[type="radio"] {
+        position: absolute;
+        clip: rect(0, 0, 0, 0);
+    }
+</style>
+
+<ul class="nav nav-tabs">    
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>
+    <li class="active"><a href="javascript:void(0);">红包设置</a></li>
+</ul>
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+        <!--<input type="hidden" name="parentid" value="<?php  echo $parent['id'];?>" />-->
+        <div class="panel panel-default ygdefault">
+            <div class="panel-heading wyheader">
+                红包设置
+            </div>
+            <div class="panel-body">
+        
+               <div class="form-group">
+                    <label for="#frame-15{display: block;visibility: visible;}astname" class="col-sm-2 control-label">红包福利</label>
+                    <div class="col-sm-10">
+                         <label class="radio-inline">
+                            <input type="radio" id="emailwy1" name="is_hbfl" value="1" <?php  if($item['is_hbfl']==1) { ?>checked<?php  } ?> />
+                            <label for="emailwy1">开启</label>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" id="emailwy2" name="is_hbfl" value="2" <?php  if($item['is_hbfl']==2|| empty($item['is_hbfl'])) { ?>checked<?php  } ?> />
+                            <label for="emailwy2">关闭</label>
+                        </label>
+                        <div class="help-block">*是否开启红包福利，选择关闭前端首页则不显示</div>
+                    </div>
+                </div>
+                   <div class="form-group">
+                    <label for="lastname" class="col-sm-2 control-label">用户帖子塞福利</label>
+                    <div class="col-sm-10">
+                         <label class="radio-inline">
+                            <input type="radio" id="emailwy3" name="is_tzhb" value="1" <?php  if($item['is_tzhb']==1 || empty($item['is_tzhb'])) { ?>checked<?php  } ?> />
+                            <label for="emailwy3">开启</label>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" id="emailwy4" name="is_tzhb" value="2" <?php  if($item['is_tzhb']==2) { ?>checked<?php  } ?> />
+                            <label for="emailwy4">关闭</label>
+                        </label>
+                        <div class="help-block">*是否开启用户帖子红包功能,不开启则前台不显示此功能</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastname" class="col-sm-2 control-label">商家帖子塞福利</label>
+                    <div class="col-sm-10">
+                         <label class="radio-inline">
+                            <input type="radio" id="emailwy5" name="is_sjhb" value="1" <?php  if($item['is_sjhb']==1 || empty($item['is_sjhb'])) { ?>checked<?php  } ?> />
+                            <label for="emailwy5">开启</label>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" id="emailwy6" name="is_sjhb" value="2" <?php  if($item['is_sjhb']==2) { ?>checked<?php  } ?> />
+                            <label for="emailwy6">关闭</label>
+                        </label>
+                        <div class="help-block">*是否开启商家帖子红包功能,不开启则前台不显示此功能</div>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="#frame-15{display: block;visibility: visible;}astname" class="col-sm-2 control-label">红包转发</label>
+                    <div class="col-sm-10">
+                         <label class="radio-inline">
+                            <input type="radio" id="emailwy7" name="is_hbzf" value="1" <?php  if($item['is_hbzf']==1 ) { ?>checked<?php  } ?> />
+                            <label for="emailwy7">开启</label>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" id="emailwy8" name="is_hbzf" value="2" <?php  if($item['is_hbzf']==2|| empty($item['is_hbzf'])) { ?>checked<?php  } ?> />
+                            <label for="emailwy8">关闭</label>
+                        </label>
+                        <div class="help-block">*是否开启红包转发，选择关闭状态，红包福利则可直接领取</div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">红包手续费(%)</label>
+                    <div class="col-sm-9">
+                       <input type="number" name="hb_sxf"  class="form-control" value="<?php  echo $item['hb_sxf'];?>" />
+                       <div class="help-block">*发布帖子中，发红包、置顶等所提取的手续费，0或不填则不收取该费用</div>
+                    </div>
+                </div>
+                
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">红包分享群内容设置</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="hb_content" value="<?php  echo $item['hb_content'];?>" id="review_user" class="form-control" />
+                        <div class="help-block">*tyep为分享的帖子所属的分类,name为分享者用户昵称,例如:type,红包来袭,name邀请你赶快来抢吧！</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">红包转发背景图片</label>
+                    <div class="col-sm-9">
+                        <?php  echo tpl_form_field_image('hb_img', $item['hb_img'])?>
+                        <span class="help-block">*建议比例 100*100px</span>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">福利页面背景图</label>
+                    <div class="col-sm-9">
+                        <?php  echo tpl_form_field_image('hbbj_img', $item['hbbj_img'])?>
+                        <span class="help-block">*建议比例 100*100px</span>
+                    </div>
+                </div>
+                                               
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="submit" value="提交" class="btn col-lg-3" style="color: white;background-color: #44ABF7;"/>
+            <input type="hidden" name="token" value="<?php  echo $_W['token'];?>" />
+            <input type="hidden" name="id" value="<?php  echo $item['id'];?>" />
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#frame-9").show();
+        $("#yframe-9").addClass("wyactive");
+    })
+</script>

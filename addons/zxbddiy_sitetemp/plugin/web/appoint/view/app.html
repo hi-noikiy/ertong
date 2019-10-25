@@ -1,0 +1,31 @@
+{template '../../../addons/'.MODULE.'/template/web/common/myheader'}
+
+{if $_GPC['op'] == 'list'}
+	
+	<div class="tc" >
+
+		<div class="admin_box_r" style="display: inline-block;margin-top: 50px;">
+			<div>
+				<img id="qrcode" src="{php echo $this->createWebUrl('img',array('op'=>'adminlist'))}">
+				<p class="font_tips qrcode_tips">此二维码是微信端查看会员提交的预约数据的二维码，查看验证码在参数设置里设置</p>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+
+	function  getqrcode(){
+		Http('post','json','getqrcode',{},function(data){
+			if( data.status == 202 ){
+				$('#qrcode').attr('src',data.obj.url);
+			}
+		},false);
+	}
+	Http('post','json','checkqrcode',{page:'adminlist'},function(data){
+		if( data.status == 201 ){
+			$('.qrcode_tips').text(data.res);
+		}
+	},true);
+
+</script>
+{/if}
+{template '../../../addons/'.MODULE.'/template/web/common/myfooter'}

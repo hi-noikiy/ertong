@@ -1,0 +1,11 @@
+<div class="temp_item_link" ng-style="{'background':item.params.bgcolor,padding:item.params.padding+'px '+ item.params.paddingv+'px'}">
+    <div class="item_cell_box temp_link_item" ng-repeat="in in item.params.data" ng-style="{'color':item.params.color,padding:item.params.pin+'px 0px','border-bottom':item.params.isborder == 0 ? '1px solid '+item.params.bdcolor : 0}">
+        <div ng-if="in.img" class="temp_link_img">
+            <img src='{{in.img}}' />
+        </div>
+        <div class="item_cell_flex temp_link_text" ng-style="{'color':item.params.fontcolor,'font-size':item.params.fontsize+'px'}">
+            {{in.text}}
+        </div>
+        <div class="icon_r temp_link_r"></div>
+    </div>
+</div>

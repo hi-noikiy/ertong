@@ -1,0 +1,148 @@
+<div class="temp_item">
+<div ng-if="rtype == 'style'">
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_70">
+				<input class="frm_input" type="color" ng-model="item.params.bgcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_70">
+				<input class="frm_input" type="text" ng-model="item.params.bgcolor" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮文字颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.color" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.color" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮激活颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="color" ng-model="item.params.actcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_100">
+				<input class="frm_input" type="text" ng-model="item.params.actcolor" />
+			</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮文字尺寸</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="12" max="30" value="{{item.params.fontsize}}" name="fontsize"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.fontsize" />
+			</span>
+			<span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮文字边距</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.fontp}}" name="fontp"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.fontp" />
+			</span>
+			<span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮文字距底</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.fontpv}}" name="fontpv"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.fontpv" />
+			</span>
+			<span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮上下边距</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.padding}}" name="padding"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.padding" />
+			</span>
+			<span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">按钮左右边距</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.paddingv}}" name="paddingv"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.paddingv" />
+			</span>
+			<span class="my_slider_notice">像素</span>
+		</div>
+	</div>	
+	<div class="frm_control_group">
+		<label for="" class="frm_label">内容背景颜色</label>
+		<div class="frm_controls">
+			<span class="frm_input_box frm_input_box_70">
+				<input class="frm_input" type="color" ng-model="item.params.cbgcolor" />
+			</span>
+			<span class="frm_input_box frm_input_box_70">
+				<input class="frm_input" type="text" ng-model="item.params.cbgcolor" />
+			</span>
+		</div>
+	</div>
+
+	<div class="frm_control_group">
+		<label for="" class="frm_label">内容上下边距</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.cpadding}}" name="cpadding"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.cpadding" />
+			</span>
+			<span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+	<div class="frm_control_group">
+		<label for="" class="frm_label">内容左右边距</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.cpaddingv}}" name="cpaddingv"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.cpaddingv" />
+			</span>
+			<span class="my_slider_notice">像素</span>
+		</div>
+	</div>	
+	<div class="frm_control_group">
+		<label for="" class="frm_label">内容上部距离</label>
+		<div class="frm_controls ">
+			<li class="frm_input_box_200 my_slider_line slider" my-slider min="0" max="50" value="{{item.params.margintop}}" name="margintop"></li>
+			<span class="frm_input_box frm_input_box_50">
+				<input class="frm_input" type="text" ng-model="item.params.margintop" />
+			</span>
+			<span class="my_slider_notice">像素</span>
+		</div>
+	</div>
+
+</div>
+<div class="temp_item temp_item_text" ng-if="rtype == 'data'">
+	<div class="tabbtn_box item_cell_box">
+		<div ng-repeat="inn in item.params.data" class="tabbtn_item {{(!item.params.actid && $index == 0) || item.params.actid == inn.id ? 'act_tabbtn' : ''}}" ng-click="item.params.actid = inn.id">{{inn.name}}</div>
+		<div class="tabbtn_add" ng-click="addTabbtn(item.params.data)">添加一项</div>
+	</div>
+
+	<div class="mt10" ng-repeat="inn in item.params.data" ng-if="(!item.params.actid && $index == 0) || item.params.actid == inn.id">
+		<div class="frm_control_group">
+			<label for="" class="frm_label">按钮文字</label>
+			<div class="frm_controls">
+				<span class="frm_input_box frm_input_200">
+					<input type="text" class="frm_input" ng-model="inn.name">
+				</span><a href="javascript:;" ng-click="deleteTabbtn(item.params.data,inn.id)">删除</a>
+			</div>
+		</div>
+		<div class="ueditor" ng-model="inn.text" style="height:200px; width:390px; margin-top:10px;"></div>
+	</div>
+</div>
+</div>
