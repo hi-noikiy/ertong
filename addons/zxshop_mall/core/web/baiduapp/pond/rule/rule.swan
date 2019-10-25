@@ -1,3 +1,0 @@
-<view style="padding:30rpx">
-    <text>{{rule}}</text>
-</view>

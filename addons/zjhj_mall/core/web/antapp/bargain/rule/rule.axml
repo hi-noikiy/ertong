@@ -1,5 +1,0 @@
-<!--bargain/rule/rule.wxml-->
-<include src="/commons/extension/extension" />
-<view class='main'>
-    <text>{{content}}</text>
-</view>

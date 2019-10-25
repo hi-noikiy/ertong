@@ -1,8 +1,0 @@
-/* bargain/rule/rule.wxss */
-page {
-    background-color: #fff;
-}
-
-.main {
-    padding: 40rpx;
-}

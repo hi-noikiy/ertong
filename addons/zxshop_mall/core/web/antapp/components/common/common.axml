@@ -1,5 +1,0 @@
-<view class="common">
-    <include src="/components/_toast/_toast" />
-    <include src="./get-coupon" />
-    <include src="./navbar" />
-</view>

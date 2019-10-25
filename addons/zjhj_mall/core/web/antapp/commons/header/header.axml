@@ -1,3 +1,0 @@
-<view class="header">
-    <include src="/commons/navbar/navbar" />
-</view>
