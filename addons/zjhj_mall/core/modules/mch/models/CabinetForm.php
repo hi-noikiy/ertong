@@ -98,13 +98,14 @@ class CabinetForm extends MchModel
                 ];
             }
             $cabinet = $this->cabinet;
-            
-            $result=Cabinet::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'cabinet_id'=>$this->cabinet_id])->one();
-            if($result){
-                return [
-                    'code' => 1,
-                    'msg' => '柜子ID已存在',
-                ];
+            if (!$this->id || $this->id=='') {
+                $result=Cabinet::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'cabinet_id'=>$this->cabinet_id])->one();
+                if($result){
+                    return [
+                        'code' => 1,
+                        'msg' => '柜子ID已存在',
+                    ];
+                }
             }
             $cabinet->store_id = $this->store_id;
             $cabinet->cabinet_id = $this->cabinet_id;//自提柜ID
