@@ -236,24 +236,24 @@ class Menu
                             ],
                         ],
                     ],
-                    [
-                        'name' => '轮播图',
-                        'is_menu' => true,
-                        'route' => 'mch/store/slide',
-                        'sub' => [
-                            [
-                                'name' => '轮播图(S|U)',
-                                'is_menu' => false,
-                                'route' => 'mch/store/slide-edit',
-                            ],
-                        ],
-                        'action' => [
-                            [
-                                'name' => '轮播图删除',
-                                'route' => 'mch/store/slide-del',
-                            ]
-                        ]
-                    ],
+                    // [
+                    //     'name' => '轮播图',
+                    //     'is_menu' => true,
+                    //     'route' => 'mch/store/slide',
+                    //     'sub' => [
+                    //         [
+                    //             'name' => '轮播图(S|U)',
+                    //             'is_menu' => false,
+                    //             'route' => 'mch/store/slide-edit',
+                    //         ],
+                    //     ],
+                    //     'action' => [
+                    //         [
+                    //             'name' => '轮播图删除',
+                    //             'route' => 'mch/store/slide-del',
+                    //         ]
+                    //     ]
+                    // ],
                     [
                         'name' => '导航图标',
                         'is_menu' => true,
