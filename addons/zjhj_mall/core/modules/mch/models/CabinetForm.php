@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
 class CabinetForm extends MchModel
 {
     public $cabinet;
-
+    public $id;
     public $store_id;
     public $cabinet_id;
     public $cabinet_type;
@@ -32,7 +32,7 @@ class CabinetForm extends MchModel
     {
         return [
             [['store_id', 'cabinet_id', 'cabinet_type', 'province', 'city', 'address'], 'required'],
-            [['store_id', 'cabinet_type'], 'integer'],
+            [['store_id', 'cabinet_type', 'id'], 'integer'],
             [['cabinet_id', 'province', 'city', 'address'], 'string'],
             
         ];
@@ -98,6 +98,7 @@ class CabinetForm extends MchModel
                 ];
             }
             $cabinet = $this->cabinet;
+            
             if (!$this->id || $this->id=='') {
                 $result=Cabinet::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'cabinet_id'=>$this->cabinet_id])->one();
                 if($result){
@@ -107,6 +108,7 @@ class CabinetForm extends MchModel
                     ];
                 }
             }
+            
             $cabinet->store_id = $this->store_id;
             $cabinet->cabinet_id = $this->cabinet_id;//自提柜ID
             $cabinet->cabinet_type = $this->cabinet_type;//自提柜类型
