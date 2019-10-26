@@ -45,21 +45,21 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                     
                         <?php if ($list['cabinet_type']): ?>
                             <?php if ($list['cabinet_type']==1): ?>
-                                <select class="form-control parent" name="model[cabinet_type]" disabled>
+                                <select class="form-control parent" name="model[cabinet_type]" readonly>
                                     <option value="0"></option>
                                     <option value="1" selected>常温柜</option>
                                     <option value="2">冷藏柜</option>
                                     <option value="3">冷冻柜</option>
                                 </select>
                             <?php elseif ($list['cabinet_type']==2) : ?>
-                                <select class="form-control parent" name="model[cabinet_type]" disabled>
+                                <select class="form-control parent" name="model[cabinet_type]" readonly>
                                     <option value="0"></option>
                                     <option value="1">常温柜</option>
                                     <option value="2" selected>冷藏柜</option>
                                     <option value="3">冷冻柜</option>
                                 </select>
                             <?php elseif ($list['cabinet_type']==3) : ?>
-                                <select class="form-control parent" name="model[cabinet_type]" disabled>
+                                <select class="form-control parent" name="model[cabinet_type]" readonly>
                                     <option value="0"></option>
                                     <option value="1">常温柜</option>
                                     <option value="2">冷藏柜</option>
