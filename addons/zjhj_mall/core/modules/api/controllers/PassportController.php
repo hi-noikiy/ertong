@@ -130,11 +130,11 @@ class PassportController extends Controller
         $mobile = \Yii::$app->request->post('contact_way');
         $valcode = \Yii::$app->request->post('valcode');
         $smsRecord = new SmsMobileRecord();
-        $result=$smsRecord->getMobileCode($mobile,$valcode);
-        if($result){
-            return $this->ResultReturn(0);
-        }else{
-            return $this->ResultReturn(203);
-        }
+        return $smsRecord->getMobileCode($mobile,$valcode);
+        // if($result){
+        //     $this->ResultReturn(0);
+        // }else{
+        //     return $this->ResultReturn(203);
+        // }
     }
 }

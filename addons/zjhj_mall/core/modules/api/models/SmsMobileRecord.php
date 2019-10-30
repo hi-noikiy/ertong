@@ -37,9 +37,15 @@ class SmsMobileRecord extends ApiModel
         $code=json_decode($code,true);
         
         if($content==$code['code']){
-            return true;
+            return [
+                'code' => 0,
+                'msg' => '成功'
+            ];
         }else{
-            return false;
+            return [
+                'code' => 1,
+                'msg' => '验证失败'
+            ];
         }
     }
 }
