@@ -119,7 +119,7 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                     <input class="form-control" type="text" name="model[address]" value="<?= $list['address'] ?>" maxlength="50">
                 </div>
             </div>
-            
+            <input class="form-control" type="hidden" name="model[id]" value="<?= $list['id'] ?>" >
             <div class="form-group row">
                 <div class="form-group-label col-sm-2 text-right">
                 </div>
