@@ -466,6 +466,7 @@ $imgurl = Yii::$app->request->baseUrl;
         $.upload_file({
             url: _upload_url + '&group_id=' + group_id,
             accept: group.attr('accept') || 'image/*',
+            multiple: 'multiple',
             start: function () {
                 btn.btnLoading(btn.text());
             },
