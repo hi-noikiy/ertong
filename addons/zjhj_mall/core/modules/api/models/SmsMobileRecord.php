@@ -34,7 +34,7 @@ class SmsMobileRecord extends ApiModel
         $sms_record = SmsRecord::find()->where(['mobile' => $mobile, 'tpl' => 'SMS_116750368'])->andWhere(['>','addtime',time()])->asArray()->one();
         
         $code_content=$sms_record['content'];
-        $code=json_decode($code,true);
+        $code=json_decode($code_content,true);
         
         if($content==$code['code']){
             return [
