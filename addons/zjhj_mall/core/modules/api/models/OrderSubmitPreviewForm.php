@@ -379,12 +379,18 @@ class OrderSubmitPreviewForm extends OrderData
         $goodsIds = [];
         $goods_card_list = [];
         foreach ($cart_list as $item) {
+            $cart = Cart::findOne([
+                'store_id' => $this->store_id,
+                'id' => $item,
+                'is_delete' => 0,
+            ]);
             $goods = Goods::findOne([
                 'store_id' => $this->store_id,
-                'id' => $item->id,
+                'id' => $cart->goods_id,
                 'is_delete' => 0,
                 'status' => 1,
             ]);
+
             if (!$goods) {
                 continue;
             }
@@ -422,9 +428,9 @@ class OrderSubmitPreviewForm extends OrderData
                 'goods_id' => $goods->id,
                 'goods_name' => $goods->name,
                 'goods_pic' => $goods_pic,
-                'num' => $item->num,
-                'price' => doubleval(empty($goods_attr_info['price']) ? $goods->price : $goods_attr_info['price']) * $item->num,
-                'attr_list' => $item->attr,
+                'num' => $cart->num,
+                'price' => doubleval(empty($goods_attr_info['price']) ? $goods->price : $goods_attr_info['price']) * $cart->num,
+                'attr_list' => $goods_attr_info,
                 'give' => 0,
                 'single_price' => doubleval(empty($goods_attr_info['price']) ? $goods->price : $goods_attr_info['price']),
                 'freight' => $goods->freight,
@@ -493,7 +499,6 @@ class OrderSubmitPreviewForm extends OrderData
             'is_delete' => 0,
             'id' => json_decode($cart_id_list, true),
         ])->all();
-
         $list = [];
         $total_price = 0;
         $new_cart_id_list = [];
