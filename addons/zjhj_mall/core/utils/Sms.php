@@ -256,7 +256,7 @@ class Sms
         $smsRecord->tpl = $tpl['tpl'];
         $smsRecord->content = $content_sms;
         $smsRecord->ip = \Yii::$app->request->userIP;
-        $smsRecord->addtime = time();
+        $smsRecord->addtime = time()+60;
         $smsRecord->save();
         return [
             'code' => 0,
