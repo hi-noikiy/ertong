@@ -89,7 +89,7 @@ class PassportController extends Controller
         $form->attributes = \Yii::$app->request->post();
         $form->store_id = $this->store->id;
 
-        return $form->searchOne();
+        return new BaseApiResponse($form->searchOne());
 
         
     }
@@ -101,7 +101,7 @@ class PassportController extends Controller
         $form->attributes = \Yii::$app->request->post();
         $form->store_id = $this->store->id;
 
-        return $form->register();
+        return new BaseApiResponse($form->register());
     }
     //找回密码
     public function actionForgetPassword()
@@ -111,7 +111,7 @@ class PassportController extends Controller
         $form = new LoginFormMobile();
         $form->attributes = \Yii::$app->request->post();
         $form->store_id = $this->store->id;
-        return $form->forgetPassword();
+        return new BaseApiResponse($form->forgetPassword());
         
     }
 

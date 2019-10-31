@@ -80,7 +80,7 @@ class LoginFormMobile extends ApiModel
         }
         if(!preg_match($preg_pw,$password)){//验证密码
             return new ApiResponse(102,$this->ErrorData[102]);
-            return $this->ResultReturn(102);
+            
         }
 
         $list=array();
