@@ -80,7 +80,7 @@ class LoginFormMobile extends ApiModel
         }
         if(!preg_match($preg_pw,$password)){//验证密码
             return new ApiResponse(102,$this->ErrorData[102]);
-            
+
         }
 
         $list=array();
@@ -136,7 +136,7 @@ class LoginFormMobile extends ApiModel
         $User->avatar_url = \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/statics/images/avatar.png';
         $User->store_id = 1;
         $User->platform = 1; // 支付宝
-        
+        $User->binding=$contact_way;
         if($User->save()){
             $list_user_info = User::find()->where(['id'=>$User->id])->asArray()->one();
             return new ApiResponse(0,'success', $list_user_info);
