@@ -75,11 +75,16 @@ class LoginFormMobile extends ApiModel
         $preg_pw    = "/^[A-Za-z0-9]{6,20}$/";
 
         if(!preg_match($preg_phone,$contact_way)){//验证手机号
-            return new ApiResponse(101,'手机号格式不正确');
-            // return $this->ResultReturn(101);
+            return [
+                'code' => 101,
+                'msg' => '手机号格式不正确',
+            ];
         }
         if(!preg_match($preg_pw,$password)){//验证密码
-            return new ApiResponse(102,'密码格式不正确');
+            return [
+                'code' => 102,
+                'msg' => '密码格式不正确',
+            ];
 
         }
 
@@ -88,11 +93,19 @@ class LoginFormMobile extends ApiModel
             ->where(['store_id'=>$this->store_id, 'contact_way' => $contact_way, 'password' => md5($password)])->asArray()->one();
         
         if($list){
-            
-            return new ApiResponse(0,'success', $list);
+            return [
+                'code' => 0,
+                'msg' => 'success',
+                'data'=>$list,
+            ];
+            // return new ApiResponse(0,'success', $list);
             
         }else{
-            return new ApiResponse(103,'手机号或密码错误');
+            return [
+                'code' => 103,
+                'msg' => '手机号或密码错误',
+            ];
+            // return new ApiResponse(103,'手机号或密码错误',json_encode(array()));
             
         }
         
@@ -106,19 +119,26 @@ class LoginFormMobile extends ApiModel
         $preg_phone = "/^1[23456789]\d{9}$/";
         $preg_pw    = "/^[A-Za-z0-9]{6,20}$/";
         if(!preg_match($preg_phone,$contact_way)){//验证手机号
-            return new ApiResponse(101,'手机号格式不正确');
-            // return $this->ResultReturn(101);
+            return [
+                'code' => 101,
+                'msg' => '手机号格式不正确',
+            ];
         }
         if(!preg_match($preg_pw,$password)){//验证密码
-            return new ApiResponse(102,'密码格式不正确');
+            return [
+                'code' => 102,
+                'msg' => '密码格式不正确',
+            ];
         }
         
         
 
         $list = User::find()->where(['contact_way'=>$contact_way])->one();
         if($list){
-            return new ApiResponse(106,'该手机号已被注册');
-            // return $this->ResultReturn(106);
+            return [
+                'code' => 106,
+                'msg' => '该手机号已被注册',
+            ];
         }
         $list_user_info=array();
         $User = new User();
@@ -138,10 +158,16 @@ class LoginFormMobile extends ApiModel
         $User->binding=$contact_way;
         if($User->save()){
             $list_user_info = User::find()->where(['id'=>$User->id])->asArray()->one();
-            return new ApiResponse(0,'success', $list_user_info);
-            // return $this->ResultReturn(0,$list_user_info);
+            return [
+                'code' => 0,
+                'msg' => 'success',
+                'data'=>$list_user_info,
+            ];
         }else{
-            return new ApiResponse(104,'注册失败');
+            return [
+                'code' => 104,
+                'msg' => '注册失败',
+            ];
 
         }
         
@@ -155,11 +181,16 @@ class LoginFormMobile extends ApiModel
         $preg_phone = "/^1[23456789]\d{9}$/";
         $preg_pw    = "/^[A-Za-z0-9]{6,20}$/";
         if(!preg_match($preg_phone,$contact_way)){//验证手机号
-            return new ApiResponse(101,'手机号格式不正确');
-            // return $this->ResultReturn(101);
+            return [
+                'code' => 101,
+                'msg' => '手机号格式不正确',
+            ];
         }
         if(!preg_match($preg_pw,$password)){//验证密码
-            return new ApiResponse(102,'密码格式不正确');
+            return [
+                'code' => 102,
+                'msg' => '密码格式不正确',
+            ];
         }
 
         $list = User::find()->where(['contact_way'=>$contact_way])->one();
@@ -171,13 +202,17 @@ class LoginFormMobile extends ApiModel
                 return new ApiResponse(0,'success', $list_user_info);
                 // return $this->ResultReturn(0,$list_user_info);
             }else{
-                return new ApiResponse(105,'密码修改失败');
-                // return $this->ResultReturn(105);
+                return [
+                    'code' => 105,
+                    'msg' => '密码修改失败',
+                ];
             }
             
         }else{
-            return new ApiResponse(103,'手机号或密码错误');
-            // return $this->ResultReturn(103);
+            return [
+                'code' => 103,
+                'msg' => '手机号或密码错误',
+            ];
         }
     }
 
