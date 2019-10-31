@@ -75,11 +75,11 @@ class LoginFormMobile extends ApiModel
         $preg_pw    = "/^[A-Za-z0-9]{6,20}$/";
 
         if(!preg_match($preg_phone,$contact_way)){//验证手机号
-            return new ApiResponse(101,$this->ErrorData[101]);
+            return new ApiResponse(101,$this->ErrorData[101],[]);
             // return $this->ResultReturn(101);
         }
         if(!preg_match($preg_pw,$password)){//验证密码
-            return new ApiResponse(102,$this->ErrorData[102]);
+            return new ApiResponse(102,$this->ErrorData[102],[]);
 
         }
 
@@ -92,7 +92,7 @@ class LoginFormMobile extends ApiModel
             return new ApiResponse(0,'success', $list);
             
         }else{
-            return new ApiResponse(103,$this->ErrorData[103]);
+            return new ApiResponse(103,$this->ErrorData[103],[]);
             
         }
         
@@ -106,11 +106,11 @@ class LoginFormMobile extends ApiModel
         $preg_phone = "/^1[23456789]\d{9}$/";
         $preg_pw    = "/^[A-Za-z0-9]{6,20}$/";
         if(!preg_match($preg_phone,$contact_way)){//验证手机号
-            return new ApiResponse(101,$this->ErrorData[101]);
+            return new ApiResponse(101,$this->ErrorData[101],[]);
             // return $this->ResultReturn(101);
         }
         if(!preg_match($preg_pw,$password)){//验证密码
-            return new ApiResponse(102,$this->ErrorData[102]);
+            return new ApiResponse(102,$this->ErrorData[102],[]);
             return $this->ResultReturn(102);
         }
         
@@ -118,7 +118,7 @@ class LoginFormMobile extends ApiModel
 
         $list = User::find()->where(['contact_way'=>$contact_way])->one();
         if($list){
-            return new ApiResponse(106,$this->ErrorData[106]);
+            return new ApiResponse(106,$this->ErrorData[106],[]);
             // return $this->ResultReturn(106);
         }
         $list_user_info=array();
@@ -142,7 +142,7 @@ class LoginFormMobile extends ApiModel
             return new ApiResponse(0,'success', $list_user_info);
             // return $this->ResultReturn(0,$list_user_info);
         }else{
-            return new ApiResponse(104,$this->ErrorData[104]);
+            return new ApiResponse(104,$this->ErrorData[104],[]);
 
         }
         
@@ -156,11 +156,11 @@ class LoginFormMobile extends ApiModel
         $preg_phone = "/^1[23456789]\d{9}$/";
         $preg_pw    = "/^[A-Za-z0-9]{6,20}$/";
         if(!preg_match($preg_phone,$contact_way)){//验证手机号
-            return new ApiResponse(101,$this->ErrorData[101]);
+            return new ApiResponse(101,$this->ErrorData[101],[]);
             // return $this->ResultReturn(101);
         }
         if(!preg_match($preg_pw,$password)){//验证密码
-            return new ApiResponse(102,$this->ErrorData[102]);
+            return new ApiResponse(102,$this->ErrorData[102],[]);
             return $this->ResultReturn(102);
         }
 
@@ -173,12 +173,12 @@ class LoginFormMobile extends ApiModel
                 return new ApiResponse(0,'success', $list_user_info);
                 // return $this->ResultReturn(0,$list_user_info);
             }else{
-                return new ApiResponse(105,$this->ErrorData[105]);
+                return new ApiResponse(105,$this->ErrorData[105],[]);
                 // return $this->ResultReturn(105);
             }
             
         }else{
-            return new ApiResponse(103,$this->ErrorData[103]);
+            return new ApiResponse(103,$this->ErrorData[103],[]);
             // return $this->ResultReturn(103);
         }
     }
