@@ -126,14 +126,14 @@ class LoginFormMobile extends ApiModel
         $User->type        =1;
         $User->contact_way =$contact_way;
         $User->password    =md5($password);
-        $User->username = "呵呵哒";
+        $User->username = $contact_way;
         $User->auth_key = \Yii::$app->security->generateRandomString();
         $User->access_token = \Yii::$app->security->generateRandomString();
         $User->addtime = time();
         $User->is_delete = 0;
         $User->wechat_open_id = '2123';
-        $User->nickname = "呵呵哒";
-        $User->avatar_url = "123456";
+        $User->nickname = $contact_way;
+        $User->avatar_url = \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/statics/images/avatar.png';
         $User->store_id = 1;
         $User->platform = 1; // 支付宝
         
