@@ -134,7 +134,7 @@ class LoginFormMobile extends ApiModel
         $User->wechat_open_id = '2123';
         $User->nickname = $contact_way;
         $User->avatar_url = \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/statics/images/avatar.png';
-        $User->store_id = 1;
+        $User->store_id = $this->store_id;
         $User->platform = 1; // 支付宝
         $User->binding=$contact_way;
         if($User->save()){
