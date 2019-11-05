@@ -59,6 +59,8 @@ class OrderDetailForm extends ApiModel
             $status = '待发货';
         } elseif ($order->is_send == 1 && $order->is_confirm == 0) {
             $status = '配送中';
+        } elseif ($order->is_send == 1 && $order->put_status == 2){
+            $status = '等待自提';
         } elseif ($order->is_confirm == 1) {
             $status = '订单已完成';
         }
