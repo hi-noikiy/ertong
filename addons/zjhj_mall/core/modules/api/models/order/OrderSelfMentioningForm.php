@@ -126,6 +126,6 @@ class OrderSelfMentioningForm extends OrderForm
     public function sendSms($mobile, $store_id, $content){
         $form = new Sms();
         //$content = '亲，您购买的正大鸡蛋、三全水饺已存放到上海市静安区456号云柜，提货码为46478912，请及时取出。';
-        $form->sendSms($store_id, $content, $mobile, 3);
+        $form->sendSms($store_id, $content, $mobile, 'SMS_176942676');
     }
 }

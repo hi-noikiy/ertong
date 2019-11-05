@@ -361,7 +361,7 @@ class Sms
      * 取货通知
      */
     public function sendSms($store_id, $content = null, $mobile, $sms_setting){
-        $sms_setting = SmsSetting::findOne(['is_delete' => 0, 'store_id' => $store_id, 'id' => $sms_setting]);
+        $sms_setting = SmsSetting::findOne(['is_delete' => 0, 'store_id' => $store_id]);
 
         $mobile_cache = \Yii::$app->cache->get('mobile_cache' . $mobile);
         if ($mobile_cache) {
@@ -397,7 +397,6 @@ class Sms
         $content_sms[$tpl['msg']] = $content;
         $res = null;
         $resp = null;
-
         try {
             $sender = new AliyunSender($sms_setting->AccessKeyId, $sms_setting->AccessKeySecret);
             $messageParams = [
