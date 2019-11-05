@@ -360,7 +360,7 @@ class Sms
     /**
      * 取货通知
      */
-    public function sendSms($store_id, $content = null, $mobile, $sms_setting){
+    public function sendSms($store_id, $content = null, $mobile, $tep){
         $sms_setting = SmsSetting::findOne(['is_delete' => 0, 'store_id' => $store_id]);
 
         $mobile_cache = \Yii::$app->cache->get('mobile_cache' . $mobile);
@@ -402,7 +402,7 @@ class Sms
             $messageParams = [
                 'sender' => $sender,
                 'sign' => $sms_setting->sign,
-                'tplId' => $tpl['tpl'],
+                'tplId' => $tep,
                 'tplParams' => $content,
                 'phoneNumber' => $mobile
             ];
