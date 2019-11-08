@@ -30,6 +30,7 @@ use app\modules\api\models\AddWechatAddressForm;
 use app\modules\api\models\AuthorizationBindForm;
 use app\modules\api\models\CardListForm;
 use app\modules\api\models\FavoriteAddForm;
+use app\modules\api\models\FavoriteCheckForm;
 use app\modules\api\models\FavoriteListForm;
 use app\modules\api\models\FavoriteRemoveForm;
 use app\modules\api\models\OrderListForm;
@@ -328,6 +329,15 @@ class UserController extends Controller
         $form->store_id = $this->store->id;
         $form->user_id = \Yii::$app->user->id;
         return new BaseApiResponse($form->save());
+    }
+
+    //判断商品是否被收藏
+    public function actionFavoriteCheck(){
+        $form = new FavoriteCheckForm();
+        $form->attributes = \Yii::$app->request->post();
+        $form->store_id = $this->store->id;
+        $form->user_id = \Yii::$app->user->id;
+        return new BaseApiResponse($form->search());
     }
 
 //喜欢的商品列表
