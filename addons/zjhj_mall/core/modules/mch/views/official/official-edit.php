@@ -69,7 +69,7 @@ if (!$returnUrl) {
             </div>
             <div class="form-group row">
                 <div class="form-group-label col-sm-2 text-right">
-                    <label class="col-form-label required">排序</label>
+                    <label class="col-form-label">排序</label>
                 </div>
                 <div class="col-sm-6">
                     <input class="form-control cat-name" name="official_sort"
@@ -79,7 +79,7 @@ if (!$returnUrl) {
             </div>
             <div class="form-group row">
                 <div class="form-group-label col-sm-2 text-right">
-                    <label class="col-form-label required">图文详情</label>
+                    <label class="col-form-label">图文详情</label>
                 </div>
                 <div class="col-sm-6">
                     <textarea class="short-row" id="editor" name="official_content"><?= $model['official_content'] ?></textarea>
