@@ -1015,6 +1015,7 @@ class OrderSubmitForm extends OrderData
                 return $this->getErrorResponse($order);
             }
         }
+        //获取用户手机号
         if (!empty($data['mch_list'])) {//入驻商商品下的单子
             foreach ($data['mch_list'] as $mch) {
                 $order = new Order();
@@ -1032,7 +1033,7 @@ class OrderSubmitForm extends OrderData
                 $order->discount = 10;
                 $order->coupon_sub_price = 0;
                 $order->address = $address->province . $address->city . $address->district . $address->detail;
-                $order->mobile = $address->mobile;
+                $order->mobile = $user->binding;
                 $order->name = $address->name;
                 $order->addtime = time();
                 $order->mch_id = $mch['mch_id'];

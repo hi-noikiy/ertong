@@ -39,4 +39,12 @@ class VerificationCodeMessage extends TemplateMessage
     {
         return $this->code === $input;
     }
+    public function sendSms(){
+        return $this->sender->send(
+            $this->phoneNumber,
+            $this->tplId,
+            $this->tplParams,
+            $this->sign
+        );
+    }
 }
