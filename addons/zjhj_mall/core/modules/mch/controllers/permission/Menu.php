@@ -870,6 +870,24 @@ class Menu
                             ]
                         ]
                     ],
+                    [
+                        'name' => '官网新闻动态',
+                        'is_menu' => true,
+                        'route' => 'mch/official/index',
+                        'sub' => [
+                            [
+                                'name' => '专题(S|U)',
+                                'is_menu' => false,
+                                'route' => 'mch/official/official-edit',
+                            ]
+                        ],
+                        'action' => [
+                            [
+                                'name' => '专题删除',
+                                'route' => 'mch/official/Official-del'
+                            ],
+                        ],
+                    ],
                 ],
             ],
             [
