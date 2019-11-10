@@ -74,6 +74,7 @@ if (!$returnUrl) {
                 <div class="col-sm-6">
                     <input class="form-control cat-name" name="official_sort"
                            value="<?= $model['official_sort'] ? $model['official_sort'] : 100 ?>">
+                    <div class="text-muted fs-sm">排序按升序排列,数值一样按照添加时间倒叙排列</div>
                 </div>
             </div>
             <div class="form-group row">
