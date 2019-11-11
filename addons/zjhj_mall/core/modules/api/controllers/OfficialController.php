@@ -57,22 +57,16 @@ class OfficialController extends Controller
         $province=isset($attributes['province'])?$attributes['province']:'';
         $city=isset($attributes['city'])?$attributes['city']:'';
         $address=isset($attributes['address'])?$attributes['address']:'';
-        if($address!==''){
-            $array_where=array(
-                'province'=>$province,
+        
+        $query=Cabinet::find()->where([
+            'province'=>$province,
                 'city'=>$city,
-                'address'=>$address,
-            );
-        }else {
-            $array_where = array(
-                'province' => $province,
-                'city' => $city,
-            );
+            ]);
+        if($address!==''){
+            $query->andWhere(['LIKE', 'address', $address]);
         }
-        $list=Cabinet::find()->where($array_where)
-            ->asArray()
-            ->all();
-
+        $list=$query->asArray()->all();
+        
         $appId='19103111555648';
         $appScret='105ef16489204001b046ab742b4acb7c';
         $loginUrl="http://open.iwuyi.net/api/authorization/login";
