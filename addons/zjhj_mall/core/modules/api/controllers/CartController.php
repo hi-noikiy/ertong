@@ -13,6 +13,7 @@ use app\hejiang\BaseApiResponse;
 use app\modules\api\behaviors\LoginBehavior;
 use app\modules\api\models\AddCartForm;
 use app\modules\api\models\CartDeleteForm;
+use app\modules\api\models\CartEditForm;
 use app\modules\api\models\CartListForm;
 
 class CartController extends Controller
@@ -55,7 +56,7 @@ class CartController extends Controller
         return new BaseApiResponse($form->save());
     }
 
-    public function actionCartEdit()
+    public function actionCartEditV1()
     {
         if (\Yii::$app->request->isPost) {
             $form = new CartListForm();
@@ -63,6 +64,18 @@ class CartController extends Controller
             $form->user_id = \Yii::$app->user->id;
             $form->list = \Yii::$app->request->post('list');
             $form->mch_list = \Yii::$app->request->post('mch_list');
+            return new BaseApiResponse($form->save());
+        }
+    }
+
+    public function actionCartEdit()
+    {
+        if (\Yii::$app->request->isPost) {
+            $form = new CartEditForm();
+            $form->car_id = \Yii::$app->request->post('cart_id');
+            $form->num = \Yii::$app->request->post('num');
+            $form->store_id = $this->store->id;
+            $form->user_id = \Yii::$app->user->id;
             return new BaseApiResponse($form->save());
         }
     }

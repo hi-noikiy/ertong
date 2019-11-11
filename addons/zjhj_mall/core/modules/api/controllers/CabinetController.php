@@ -7,6 +7,7 @@ namespace app\modules\api\controllers;
 use app\hejiang\BaseApiResponse;
 use app\models\Cabinet;
 use app\modules\api\behaviors\LoginBehavior;
+use app\modules\api\models\CabinetListForm;
 
 class CabinetController extends Controller
 {
@@ -33,5 +34,13 @@ class CabinetController extends Controller
                 'list' => $list,
             ],
         ]);
+    }
+
+    public function actionCommonUseList(){
+        $form = new CabinetListForm();
+        $form->attributes = \Yii::$app->request->get();
+        $form->store_id = $this->store->id;
+        $form->user_id = \Yii::$app->user->id;
+        return new BaseApiResponse($form->search());
     }
 }
