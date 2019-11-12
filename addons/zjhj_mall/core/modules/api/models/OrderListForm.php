@@ -112,6 +112,18 @@ class OrderListForm extends ApiModel
                 ];
             }
             $orderRefund = OrderRefund::find()->where(['store_id' => $order->store_id, 'order_id' => $order->id])->exists();
+            $status = "";
+            if ($order->is_pay == 0) {
+                $status = '等待付款';
+            } elseif ($order->is_pay == 1 && $order->is_send == 0) {
+                $status = '待发货';
+            } elseif ($order->is_send == 1 && $order->is_confirm == 0) {
+                $status = '配送中';
+            } elseif ($order->is_send == 1 && $order->put_status == 2){
+                $status = '等待自提';
+            } elseif ($order->is_confirm == 1) {
+                $status = '订单已完成';
+            }
             $new_list[] = (object)[
                 'order_id' => $order->id,
                 'order_no' => $order->order_no,
@@ -131,7 +143,8 @@ class OrderListForm extends ApiModel
                 'mch' => $mch,
                 'pay_type' => $order->pay_type,
                 'refund' => $orderRefund,
-                'currency' => $order->currency
+                'currency' => $order->currency,
+                'status' => $status
             ];
         }
         $pay_type_list = OrderData::getPayType($this->store_id, array(), ['huodao']);
