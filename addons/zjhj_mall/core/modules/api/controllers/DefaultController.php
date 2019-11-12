@@ -180,6 +180,41 @@ class DefaultController extends Controller
         return new ApiResponse(0, 'success', $district);
     }
 
+    public function actionDistrictV2(){
+
+        $data = array(
+            [
+                "id"=> 2223,
+                "name"=> "海口市",
+                "parent_id" => 2214,
+                "level" => "city",
+            ],
+            [
+                "id" => 2228,
+                "name" => "三亚市",
+                "parent_id" => 2214,
+                "level" => "city",
+            ],
+            [
+                "id" => 2237,
+                "name" => "儋州市",
+                "parent_id" => 2214,
+                "level" => "city",
+            ],
+
+        );
+        $id = \Yii::$app->request->get('id');
+        if (!empty($id)){
+            foreach ($data as $k => $value){
+                if ($value['id'] != $id){
+                    unset($data[$k]);
+                }
+            }
+        }
+        $data = array_values($data);
+        return new ApiResponse(0, 'success', $data);
+    }
+
 
     public function actionGoodsAttrInfo()
     {
