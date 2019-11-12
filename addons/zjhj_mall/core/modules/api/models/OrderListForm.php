@@ -57,20 +57,27 @@ class OrderListForm extends ApiModel
                 'is_send' => 0,
             ])->andWhere(['or', ['is_pay' => 1], ['pay_type' => 2]]);
         }
-        if ($this->status == 2) {//待收货
+        if ($this->status == 2) {//已发货
             $query->andWhere([
                 'is_send' => 1,
                 'is_confirm' => 0,
             ]);
         }
-        if ($this->status == 3) {//已完成
+        if ($this->status == 3){//待自提
+            $query->andWhere([
+                'is_send' => 1,
+                'put_status' => 2,
+            ]);
+        }
+        if ($this->status == 4) {//已完成
             $query->andWhere([
                 'is_confirm' => 1,
             ]);
         }
-        if ($this->status == 4) {//售后订单
+        if ($this->status == 5) {//售后订单
             return $this->getRefundList();
         }
+
         $query->andWhere(['is_recycle' => 0]);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'page' => $this->page - 1, 'pageSize' => $this->limit]);
