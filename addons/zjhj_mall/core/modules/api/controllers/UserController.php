@@ -33,6 +33,8 @@ use app\modules\api\models\FavoriteAddForm;
 use app\modules\api\models\FavoriteCheckForm;
 use app\modules\api\models\FavoriteListForm;
 use app\modules\api\models\FavoriteRemoveForm;
+use app\modules\api\models\GoodsForm;
+use app\modules\api\models\GoodsListForm;
 use app\modules\api\models\OrderListForm;
 use app\modules\api\models\TopicFavoriteForm;
 use app\modules\api\models\TopicFavoriteListForm;
@@ -636,5 +638,26 @@ class UserController extends Controller
         $data = $model->checkBind();
 
         return new BaseApiResponse($data);
+    }
+
+    public function actionGoodsTrace(){
+
+        $userId =  \Yii::$app->user->identity->id;
+        $store_id = $this->store->id;
+        $goods_ids = $_COOKIE['goods_'.$userId.'_'.$store_id];
+
+        $arr = json_decode($goods_ids, true);
+        $form = new GoodsListForm();
+        $form->goods_id = implode(',', $arr);
+        $form->store_id = $this->store->id;
+        return new BaseApiResponse($form->search());
+        $detail = [];
+//        foreach ($arr as $k => $value){
+//            $form->id = $value;
+//            $detail[$k] = ($form->search())['data'];
+//
+//
+//        }
+//        return new ApiResponse(0, 'success', $detail);
     }
 }

@@ -155,6 +155,18 @@ class DefaultController extends Controller
             $form->user_id = \Yii::$app->user->id;
         }
         $form->store_id = $this->store->id;
+        $goodsIdJson = $_COOKIE['goods_'.$form->user_id.'_'.$form->store_id];
+        $arr = json_decode($goodsIdJson, true);
+        if (empty($arr)){
+            $arr = [];
+        }
+
+        //var_dump($arr);die;
+        if (!in_array(($form->attributes)['id'], $arr)){
+            array_push($arr, ($form->attributes)['id']);
+        }
+        $name = 'goods_'.$form->user_id.'_'.$form->store_id;
+        setcookie($name, json_encode($arr));
         return $form->search();
     }
 

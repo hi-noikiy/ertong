@@ -167,7 +167,6 @@ class GoodsForm extends ApiModel
             'is_level' => $res['is_level'],
             'is_member_price' => $isMemberPrice,
         ];
-
         return new ApiResponse(0, 'success', $data);
     }
 
