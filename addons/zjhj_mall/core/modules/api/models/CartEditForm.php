@@ -43,10 +43,14 @@ class CartEditForm extends ApiModel
                 ];
             }
             $cart->num = $this->num;
+            if ($this->num == 0){
+                $cart->is_delete = 1;
+            }
             if ($cart->save()){
                 return [
                     'code' => 0,
                     'msg' => 'success',
+                    'num' => $cart->num
                 ];
             }
         //} catch (\Exception $e) {
