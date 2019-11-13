@@ -24,6 +24,8 @@ class OfficialForm extends MchModel
     public $official_title;
     public $official_sort;
     public $official_content;
+    public $official_image;
+    public $official_small_title;
     public $addtime;
 
     /**
@@ -34,7 +36,7 @@ class OfficialForm extends MchModel
         return [
             [['official_title'], 'required'],
             [['official_sort',], 'integer','min'=>0 ,'max'=>99999999],
-            [['official_content'], 'string'],
+            [['official_content', 'official_image', 'official_small_title'], 'string'],
             [['official_title'], 'string', 'max' => 255],
             // [['addtime', 'is_show', 'is_delete'],'integer'],
         ];
@@ -49,6 +51,8 @@ class OfficialForm extends MchModel
             'id' => 'ID',
             'official_title' => '新闻标题',
             'official_content' => '新闻内容',
+            'official_image' => '新闻动态列表图片',
+            'official_small_title' => '新闻动态小标题',
             'official_sort' => '新闻排序',
             'addtime' => '添加时间',
             'is_show' => '是否显示0未显示1未显示',
@@ -104,10 +108,24 @@ class OfficialForm extends MchModel
                     'msg' => '请填写新闻标题',
                 ];
             }
+            if($_this_attributes['official_image'] === null || $_this_attributes['official_image'] === ''){
+                return [
+                    'code' => 1,
+                    'msg' => '请上传新闻动态列表图片',
+                ];
+            }
+            if($_this_attributes['official_small_title'] === null || $_this_attributes['official_small_title'] === ''){
+                return [
+                    'code' => 1,
+                    'msg' => '请填写新闻动态小标题',
+                ];
+            }
             $official = $this->official;
 
             $official->official_title = $_this_attributes['official_title'];
             $official->official_sort = $_this_attributes['official_sort'];
+            $official->official_image = $_this_attributes['official_image'];
+            $official->official_small_title = $_this_attributes['official_small_title'];
             //去除部分emoji
             function userTextEncode($str){
                 if(!is_string($str)) return $str;

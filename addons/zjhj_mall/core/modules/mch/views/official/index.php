@@ -127,6 +127,7 @@ $urlStr = get_plugin_url();
                     <span class="label-text">新闻ID</span>
                 </th>
                 <th>新闻标题</th>
+                <th>列表图片</th>
                 <th>状态</th>
                 <th>排序</th>
                 <th>添加时间</th>
@@ -135,6 +136,7 @@ $urlStr = get_plugin_url();
             </thead>
             <col style="width: 6%">
             <col style="width: 5%">
+            <col style="width: 8%">
             <col style="width: 8%">
             <col style="width: 5%">
             <col style="width: 8%">
@@ -148,6 +150,10 @@ $urlStr = get_plugin_url();
                     </td>
                     <td class="nowrap">
                         <?= $official['official_title'] ?>
+                    </td>
+                    <td class="p-0" style="vertical-align: middle">
+                        <div class="goods-pic"
+                             style="background-image: url(<?= $official['official_image'] ?>)"></div>
                     </td>
                     <td class="nowrap">
                         <?php if ($official['is_show'] == 1) : ?>

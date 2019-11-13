@@ -34,7 +34,7 @@ class Official extends \yii\db\ActiveRecord
         return [
             [['official_title', 'official_content'], 'required'],
             [['official_sort',], 'integer','min'=>0 ,'max'=>99999999],
-            [['official_content'], 'string'],
+            [['official_content', 'official_image', 'official_small_title'], 'string'],
             [['official_title'], 'string', 'max' => 255],
             [['addtime', 'is_show', 'is_delete'],'integer'],
         ];
@@ -49,6 +49,8 @@ class Official extends \yii\db\ActiveRecord
             'id' => 'ID',
             'official_title' => '新闻标题',
             'official_content' => '新闻内容',
+            'official_image' => '新闻动态列表图片',
+            'official_small_title' => '新闻动态小标题',
             'official_sort' => '新闻排序',
             'addtime' => '添加时间',
             'is_show' => '是否显示0未显示1未显示',

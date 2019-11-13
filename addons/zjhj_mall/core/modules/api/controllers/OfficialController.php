@@ -38,6 +38,9 @@ class OfficialController extends Controller
                 
             ]);
         }else{
+            foreach ($result as $key => $val) {
+                $result[$key]['add_time']=date('Y-m-d H:i:s',$val['addtime']);
+            }
             return new BaseApiResponse([
                 'code' => 0,
                 'msg' => 'success',
@@ -48,7 +51,38 @@ class OfficialController extends Controller
         }
         
     }
-
+    //单个新闻动态
+    public function actionOfficialDetail()
+    {
+        $attributes=\Yii::$app->request->post();
+        $id=isset($attributes['id'])?$attributes['id']:'';
+        if($id===''){
+            return new BaseApiResponse((object)[
+                'code' => 2,
+                'msg' => '请求与参数异常',
+                
+            ]);
+        }
+        $result=Official::find()->where(['is_show'=>1,'is_delete'=>0,'id'=>$id])->asArray()->one();
+        if(empty($result)){
+            return new BaseApiResponse((object)[
+                'code' => 1,
+                'msg' => '未找到新闻数据',
+                
+            ]);
+        }else{
+            $result['add_time']=date('Y-m-d H:i:s',$result['addtime']);
+            return new BaseApiResponse([
+                'code' => 0,
+                'msg' => 'success',
+                'data' => [
+                    'list' => $result,
+                ],               
+            ]);
+        }
+        
+    }
+    //柜子坐标
     public function actionCabinetList()
     {
         

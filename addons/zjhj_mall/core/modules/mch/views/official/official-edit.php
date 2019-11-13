@@ -61,10 +61,48 @@ if (!$returnUrl) {
         <form class="auto-form" method="post" return="<?= $returnUrl ?>">
             <div class="form-group row">
                 <div class="form-group-label col-sm-2 text-right">
-                    <label class="col-form-label required">标题</label>
+                    <label class="col-form-label required">新闻动态标题</label>
                 </div>
                 <div class="col-sm-6">
                     <input class="form-control cat-name" name="official_title" value="<?= $model['official_title'] ?>">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-group-label col-sm-2 text-right">
+                    <label class="col-form-label required">新闻动态列表图片</label>
+                </div>
+                <div class="col-sm-6">
+                    <div class="upload-group">
+                        <div class="upload-group">
+                            <div class="input-group">
+                                <input class="form-control file-input" name="official_image"
+                                       value="<?= $model['official_image'] ?>">
+                                <span class="input-group-btn">
+                                <a class="btn btn-secondary upload-file" href="javascript:" data-toggle="tooltip"
+                                   data-placement="bottom" title="上传文件">
+                                    <span class="iconfont icon-cloudupload"></span>
+                                </a>
+                            </span>
+                                <span class="input-group-btn">
+                                <a class="btn btn-secondary select-file" href="javascript:" data-toggle="tooltip"
+                                   data-placement="bottom" title="从文件库选择">
+                                    <span class="iconfont icon-viewmodule"></span>
+                                </a>
+                            </div>
+                            <div class="upload-preview text-center upload-preview">
+                                <span class="upload-preview-tip">200&times;200</span>
+                                <img class="upload-preview-img" src="<?= $model['official_image'] ?>">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-group-label col-sm-2 text-right">
+                    <label class="col-form-label required">新闻动态小标题</label>
+                </div>
+                <div class="col-sm-6">
+                    <input class="form-control cat-name" name="official_small_title" value="<?= $model['official_small_title'] ?>">
                 </div>
             </div>
             <div class="form-group row">
