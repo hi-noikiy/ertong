@@ -14,8 +14,8 @@ use app\modules\mch\models\OfficialForm;
 
 header('Access-Control-Allow-Origin:*');
 header('Access-Control-Allow-Methods:OPTIONS, GET, POST'); // 允许option，get，post请求
-header('Access-Control-Allow-Headers:x-requested-with'); 
-
+header("Content-type:text/json;charset=utf-8");
+header("Access-Control-Allow-Headers:x-requested-with,content-type");
 class OfficialController extends Controller
 {
     public function actionIndex($keyword = null, $is_show = null)
