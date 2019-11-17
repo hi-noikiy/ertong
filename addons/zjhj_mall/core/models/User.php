@@ -41,6 +41,9 @@ use yii\web\IdentityInterface;
  * @property integer $platform
  * @property integer $blacklist
  * @property integer $parent_user_id
+ * @property integer $servicer_id
+ * @property integer $is_enterprise
+ * @property string $invitation_code
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -75,9 +78,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['type', 'addtime', 'is_delete', 'store_id', 'is_distributor', 'parent_id', 'time', 'is_clerk', 'we7_uid', 'shop_id', 'level', 'integral', 'total_integral'], 'integer'],
+            [['type', 'addtime', 'is_delete', 'store_id', 'is_distributor', 'parent_id', 'time', 'is_clerk', 'we7_uid', 'shop_id', 'level', 'integral', 'total_integral', 'parent_user_id', 'servicer_id', 'is_enterprise'], 'integer'],
             [['username', 'password', 'auth_key', 'access_token', 'avatar_url'], 'required'],
-            [['avatar_url', 'binding'], 'string'],
+            [['avatar_url', 'binding', 'invitation_code'], 'string'],
             [['total_price', 'price', 'money', 'order_money'], 'number'],
             [['username', 'password', 'auth_key', 'access_token', 'wechat_open_id', 'wechat_union_id', 'nickname', 'contact_way', 'comments'], 'string', 'max' => 255],
             [['platform'], 'integer',],
@@ -121,7 +124,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'wechat_platform_open_id' => '微信公众号openid',
             'platform' => '小程序平台 微信:wx，支付宝:my',
             'blacklist' => '黑名单 0.否 | 1.是',
-            'parent_user_id' => '可能成为上级的ID'
+            'parent_user_id' => '可能成为上级的ID',
+            'servicer_id' => '关联客服id',
+            'is_enterprise' => '用户种类，1为个人用户，2为企业用户',
+            'invitation_code' => '邀请码',
         ];
     }
 

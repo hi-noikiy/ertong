@@ -21,6 +21,7 @@ use app\models\Store;
 use app\models\User;
 use app\models\UserCard;
 use app\models\YyOrder;
+use app\models\Servicer;
 use app\modules\mch\extensions\Export;
 use yii\data\Pagination;
 
@@ -31,6 +32,7 @@ class UserListForm extends MchModel
     public $keyword;
     public $is_clerk;
     public $level;
+    public $is_enterprise;
     public $user_id;
     public $mobile;
     public $platform;
@@ -40,7 +42,7 @@ class UserListForm extends MchModel
     public function rules()
     {
         return [
-            [['keyword', 'level', 'user_id', 'mobile', 'flag'], 'trim'],
+            [['keyword', 'level', 'is_enterprise', 'user_id', 'mobile', 'flag'], 'trim'],
             [['page', 'is_clerk'], 'integer'],
             [['page'], 'default', 'value' => 1],
             [['platform','fields'], 'safe']
@@ -78,8 +80,8 @@ class UserListForm extends MchModel
             $orderQuery = Order::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'is_cancel' => 0, 'is_recycle' => 0, 'mch_id' => 0])->andWhere('user_id = u.id')->select('count(1)');
             $cardQuery = UserCard::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->andWhere('user_id = u.id')->select('count(1)');
         }
-        if ($this->level || $this->level === '0' || $this->level === 0) {
-            $query->andWhere(['l.level' => $this->level]);
+        if ($this->is_enterprise || $this->is_enterprise === '0' || $this->is_enterprise === 0) {
+            $query->andWhere(['is_enterprise' => $this->is_enterprise]);
         }
 
         $couponQuery = UserCoupon::find()->where(['is_delete' => 0])->andWhere('user_id = u.id')->select('count(1)');
@@ -107,6 +109,18 @@ class UserListForm extends MchModel
         $list = $query->select([
             'u.*', 's.name shop_name', 'l.name l_name', 'card_count' => $cardQuery, 'order_count' => $orderQuery, 'coupon_count' => $couponQuery
         ])->limit($pagination->limit)->offset($pagination->offset)->orderBy('u.addtime DESC')->asArray()->all();
+        $servicer=array();
+        $servicer_list=array();
+        $servicer = Servicer::find()->where(['store_id' => $this->store->id])
+            ->orderBy(['id' => SORT_ASC])->asArray()->all();
+        foreach ($servicer as $key => $val) {
+            $servicer_list[$val['id']]=$val['name'];
+        }
+        foreach ($list as $key => $val) {
+            if($val['servicer_id']!=0){
+                $list[$key]['kefu']=$servicer_list[$val['servicer_id']];
+            }
+        }
         return [
             'row_count' => $count,
             'page_count' => $pagination->pageCount,

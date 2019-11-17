@@ -45,10 +45,10 @@ $urlPlatform = Yii::$app->controller->route;
         <div class="dropdown float-left">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <?php if (isset($_GET['level'])) : ?>
-                    <?php foreach ($level_list as $index => $value) : ?>
-                        <?php if ($value['level'] == $_GET['level']) : ?>
-                            <?= $value['name']; ?>
+                <?php if (isset($_GET['is_enterprise'])) : ?>
+                    <?php foreach ($enterprise_list as $index => $value) : ?>
+                        <?php if ($index == $_GET['is_enterprise']) : ?>
+                            <?= $value; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 <?php else : ?>
@@ -57,31 +57,14 @@ $urlPlatform = Yii::$app->controller->route;
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
                  style="max-height: 200px;overflow-y: auto">
-                <a class="dropdown-item" href="<?= $urlManager->createUrl(['mch/user/index']) ?>">全部会员</a>
-                <?php foreach ($level_list as $index => $value) : ?>
+                <a class="dropdown-item" href="<?= $urlManager->createUrl(['mch/user/index']) ?>">全部</a>
+                <?php foreach ($enterprise_list as $index => $value) : ?>
                     <a class="dropdown-item"
-                       href="<?= $urlManager->createUrl(array_merge(['mch/user/index'], $_GET, ['level' => $value['level'], 'page' => 1])) ?>"><?= $value['name'] ?></a>
+                       href="<?= $urlManager->createUrl(array_merge(['mch/user/index'], $_GET, ['is_enterprise' => $index, 'page' => 1])) ?>"><?= $value ?></a>
                 <?php endforeach; ?>
             </div>
             <div class="dropdown float-right ml-2">
-                <button class="btn btn-secondary dropdown-toggle" type="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?php if ($_GET['platform'] === '1') :
-                        ?>支付宝
-                    <?php elseif ($_GET['platform'] === '0') :
-                        ?>微信
-                    <?php elseif ($_GET['platform'] == '') :
-                        ?>所有用户
-                    <?php else : ?>
-                    <?php endif; ?>
-                </button>
-                <div class="dropdown-menu" style="min-width:8rem">
-                    <a class="dropdown-item" href="<?= $urlManager->createUrl([$urlPlatform]) ?>">所有用户</a>
-                    <a class="dropdown-item"
-                       href="<?= $urlManager->createUrl([$urlPlatform, 'platform' => 1]) ?>">支付宝</a>
-                    <a class="dropdown-item"
-                       href="<?= $urlManager->createUrl([$urlPlatform, 'platform' => 0]) ?>">微信</a>
-                </div>
+                
                 <a class="btn btn-secondary export-btn"
                    href="javascript:">批量导出</a>
             </div>
@@ -122,6 +105,7 @@ $urlPlatform = Yii::$app->controller->route;
                 <th>所属平台</th>
                 <th>绑定手机号</th>
                 <th>联系方式</th>
+                <th>用户类型</th>
                 <th>备注</th>
                 <th>加入时间</th>
                 <th>身份</th>
@@ -130,6 +114,7 @@ $urlPlatform = Yii::$app->controller->route;
                 <th>卡券数量</th>
                 <th>当前积分</th>
                 <th>当前余额</th>
+                <th>客服</th>
                 <th>操作</th>
 
             </tr>
@@ -159,6 +144,13 @@ $urlPlatform = Yii::$app->controller->route;
                     </td>
                     <td><?= $u['binding']; ?></td>
                     <td><?= $u['contact_way']; ?></td>
+                    <td>
+                        <?php if ($u['is_enterprise']==1): ?>
+                            个人用户
+                        <?php else: ?>
+                            企业用户
+                        <?php endif; ?>
+                    </td>
                     <td><?= $u['comments']; ?></td>
                     <td><?= date('Y-m-d H:i:s', $u['addtime']) ?></td>
                     <td>
@@ -186,6 +178,13 @@ $urlPlatform = Yii::$app->controller->route;
                            href="<?= $urlManager->createUrl(['mch/user/recharge-money-log', 'user_id' => $u['id']]) ?>"><?= $u['money'] ?></a>
                     </td>
                     <td>
+                        <?php if (isset($u['servicer_id']) && $u['servicer_id'] > 0): ?>
+                            <?= $u['kefu']; ?>
+                        <?php else: ?>
+                            — —
+                        <?php endif; ?>
+                    </td>
+                    <td>
                         <a class="btn btn-sm btn-primary"
                            href="<?= $urlManager->createUrl(['mch/user/edit', 'id' => $u['id']]) ?>">编辑</a>
                         <a class="btn btn-sm btn-success rechangeBtn"
@@ -198,6 +197,18 @@ $urlPlatform = Yii::$app->controller->route;
                            href="javascript:;"
                            data-money="<?= $u['money'] ?>"
                            data-id="<?= $u['id'] ?>">充值余额</a>
+                        <?php if (isset($u['servicer_id']) && $u['servicer_id'] > 0): ?>
+                            <a class="btn btn-sm btn-primary rechargeServicer"
+                                data-toggle="modal" data-target="#servicerAddModal"
+                                href="javascript:;"
+                                data-id="<?= $u['id'] ?>" data-val="<?= $u['kefu']; ?>">关联客服</a>
+                        <?php else: ?>
+                            <a class="btn btn-sm btn-primary rechargeServicer"
+                                data-toggle="modal" data-target="#servicerAddModal"
+                                href="javascript:;"
+                                data-id="<?= $u['id'] ?>" data-val="— —">关联客服</a>
+                        <?php endif; ?>
+                           
                     </td>
                     <!--
                 <td>
@@ -356,6 +367,49 @@ $urlPlatform = Yii::$app->controller->route;
             </div>
         </div>
     </div>
+    <!-- 关联客服 -->
+    <div class="modal fade" id="servicerAddModal" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">关联客服</h5>
+                    <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="form-group-label col-3 text-right">
+                            <label class="col-form-label">当前客服</label>
+                        </div>
+                        <div class="col-9" id="servicer">
+                            
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group-label col-3 text-right">
+                            <label class="col-form-label">修改客服</label>
+                        </div>
+                        <div class="col-9">
+                            <select class="form-control" name="servicer" id="servicer-select">
+                                <option value="0">请选择</option>
+                                <?php foreach ($servicer_list as $value) : ?>
+                                    <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="uid" value="">
+                    <div class="form-error text-danger mt-3 servicer-error" style="display: none">ddd</div>
+                    <div class="form-success text-success mt-3" style="display: none">sss</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary save-servicer">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?= $this->render('/layouts/ss', [
@@ -396,6 +450,41 @@ $urlPlatform = Yii::$app->controller->route;
         });
         return false;
     });
+    //关联客服开始
+    $(document).on('click', '.rechargeServicer', function () {
+        var a = $(this);
+        var id = a.data('id');
+        var val = a.data('val');
+        
+        $('#uid').val(id);
+        $('#servicer').text(val);
+        // $('.integral-reduce').attr('data-integral', integral);
+    });
+    $(document).on('click', '.save-servicer', function () {
+        var user_id = $('#uid').val();
+        var servicer = $("#servicer-select option:selected").val();
+        // if (!servicer || servicer <= 0) {
+        //     $('.servicer-error').css('display', 'block');
+        //     $('.servicer-error').text('请选择要关联的客服');
+        //     return;
+        // }
+        $.ajax({
+            url: "<?= Yii::$app->urlManager->createUrl(['mch/user/servicer-change']) ?>",
+            type: 'post',
+            dataType: 'json',
+            data: {user_id: user_id, servicer: servicer, _csrf: _csrf},
+            success: function (res) {
+                if (res.code == 0) {
+                    $("#attrAddModal").modal('hide');
+                    window.location.reload();
+                } else {
+                    $('.servicer-error').css('display', 'block');
+                    $('.servicer-error').text(res.msg);
+                }
+            }
+        });
+    });
+    //关联客服结束
     $(document).on('click', '.rechangeBtn', function () {
         var a = $(this);
         var id = a.data('id');

@@ -600,6 +600,32 @@ class Menu
                                 'name' => '用户卡券删除',
                                 'route' => 'mch/user/coupon-del'
                             ],
+                            [
+                                'name' => '关联客服',
+                                'route' => 'mch/user/servicer-change'
+                            ],
+                        ]
+                    ],
+                    [
+                        'name' => '企业用户审核',
+                        'is_menu' => true,
+                        'route' => 'mch/enterprise/index',
+                        'sub' => [
+                            [
+                                'name' => '企业用户审核详情',
+                                'is_menu' => false,
+                                'route' => 'mch/enterprise/detail',
+                            ],
+                        ],
+                        'action' => [
+                            [
+                                'name' => '企业用户审核状态',
+                                'route' => 'mch/enterprise/edit-status'
+                            ],
+                            [
+                                'name' => '邀请码查找',
+                                'route' => 'mch/enterprise/invitation-code-list'
+                            ],
                         ]
                     ],
                     [
@@ -2152,6 +2178,37 @@ class Menu
                             [
                                 'name' => '配送员(S)',
                                 'route' => 'mch/permission/distributor/store',
+                            ],
+                        ]
+                    ],
+                    [
+                        'is_menu' => true,
+                        'name' => '客服管理',
+                        'route' => 'mch/permission/servicer/index',
+                        'sub' => [
+                            [
+                                'is_menu' => false,
+                                'name' => '添加客服',
+                                'route' => 'mch/permission/servicer/create',
+                            ],
+                            [
+                                'is_menu' => false,
+                                'name' => '编辑客服',
+                                'route' => 'mch/permission/servicer/edit',
+                            ],
+                        ],
+                        'action' => [
+                            [
+                                'name' => '客服(U)',
+                                'route' => 'mch/permission/servicer/update',
+                            ],
+                            [
+                                'name' => '客服删除',
+                                'route' => 'mch/permission/servicer/destroy',
+                            ],
+                            [
+                                'name' => '客服(S)',
+                                'route' => 'mch/permission/servicer/store',
                             ],
                         ]
                     ],

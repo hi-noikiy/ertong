@@ -533,7 +533,7 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
         })
     }
     $(document).on("click", ".seali", function () {
-        $(this).hide()
+        $(".sea").hide()
         $(".address").val($(this).text())
         $(".cabinet-id").val($(this).attr('attr-id'))
         console.log($(this).text())

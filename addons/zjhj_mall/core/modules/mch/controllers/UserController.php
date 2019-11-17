@@ -19,6 +19,7 @@ use app\models\Store;
 use app\models\User;
 use app\models\UserCard;
 use app\models\UserCoupon;
+use app\models\Servicer;
 use app\modules\mch\models\ExportList;
 use app\modules\mch\models\LevelForm;
 use app\modules\mch\models\LevelListForm;
@@ -35,6 +36,7 @@ class UserController extends Controller
 {
     public function actionIndex()
     {
+        $enterprise_list=array('1'=>'个人用户','2'=>'企业用户');
         $form = new UserListForm();
         $exportList = $form->excelFields();
         $form->attributes = \Yii::$app->request->get();
@@ -43,15 +45,52 @@ class UserController extends Controller
         $data = $form->search();
         $level_list = Level::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'status' => 1])
             ->orderBy(['level' => SORT_ASC])->asArray()->all();
+        $servicer_list = Servicer::find()->where(['store_id' => $this->store->id, 'is_delete' => 1])
+            ->orderBy(['id' => SORT_ASC])->asArray()->all();
+
         return $this->render('index', [
             'row_count' => $data['row_count'],
             'pagination' => $data['pagination'],
             'list' => $data['list'],
+            'enterprise_list' => $enterprise_list,
             'level_list' => $level_list,
+            'servicer_list' => $servicer_list,
             'exportList' => \Yii::$app->serializer->encode($exportList)
         ]);
     }
 
+    /**
+     * @return mixed|string
+     * 后台用户关联客服
+     */
+    public function actionServicerChange()
+    {
+        
+        $user_id = \Yii::$app->request->post('user_id');
+        $servicer = \Yii::$app->request->post('servicer');
+        $user = User::findOne(['id' => $user_id, 'store_id' => $this->store->id]);
+
+        if (!$user) {
+            return [
+                'code' => 1,
+                'msg' => '用户不存在，或已删除',
+            ];
+        }
+
+        $user->servicer_id = $servicer;
+
+        if ($user->save()) {
+            return [
+                'code' => 0,
+                'msg' => '操作成功',
+            ];
+        } else {
+            return [
+                'code' => 1,
+                'msg' => '操作失败',
+            ];
+        }
+    }
     /**
      * @param null $id
      * @param int $status //0--解除核销员  1--设置核销员
