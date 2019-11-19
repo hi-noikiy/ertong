@@ -13,6 +13,7 @@ use app\hejiang\ApiResponse;
 use app\models\Cat;
 use app\models\Goods;
 use app\models\GoodsCat;
+use app\models\HotSearch;
 use app\models\GoodsPic;
 use app\models\Mch;
 use app\models\Order;
@@ -90,8 +91,22 @@ class GoodsListForm extends ApiModel
             $arr = explode(',', $this->goods_id);
             $query->andWhere(['in', 'g.id', $arr]);
         }
-        if ($this->keyword)
+        if ($this->keyword){
+            return $this->keyword;
             $query->andWhere(['LIKE', 'g.name', $this->keyword]);
+            //添加热搜词
+            $hot_search=HotSearch::find()->where(['store_id'=>$this->store_id,'keyword'=>$this->keyword])->one();
+            if($hot_search){
+                $hot_search->number=$hot_search+1;
+                $hot_search->save();
+            }else{
+                $HotSearch=new HotSearch();
+                $HotSearch->store_id=$this->store_id;
+                $HotSearch->keyword=$this->keyword;
+                $HotSearch->number=1;
+                $HotSearch->save();
+            }
+        }
         $count = $query->count();
 
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => $this->limit, 'page' => $this->page - 1]);
