@@ -67,7 +67,6 @@ class GoodsListForm extends ApiModel
                 ['g.mch_id' => 0],
                 ['m.is_delete' => 0]
             ]);
-        return $this->store_id;
         if ($this->store_id)
             $query->andWhere(['g.store_id' => $this->store_id]);
         if ($this->cat_id) {
