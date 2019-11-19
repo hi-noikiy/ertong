@@ -96,7 +96,7 @@ class GoodsListForm extends ApiModel
             //添加热搜词
             $hot_search=HotSearch::find()->where(['store_id'=>$this->store_id,'keyword'=>$this->keyword])->one();
             if($hot_search){
-                $hot_search->number=$hot_search+1;
+                $hot_search->number=$hot_search->number+1;
                 $hot_search->save();
             }else{
                 $HotSearch=new HotSearch();
