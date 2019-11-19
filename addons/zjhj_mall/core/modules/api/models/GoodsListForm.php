@@ -143,7 +143,9 @@ class GoodsListForm extends ApiModel
             ->offset($pagination->offset)
             ->asArray()->groupBy('g.id')->all();
 
+
         foreach ($list as $i => $item) {
+            $goods = Goods::findOne(['id' => $item['id']]);
             if (!$item['pic_url']) {
                 $list[$i]['pic_url'] = Goods::getGoodsPicStatic($item['id'])->pic_url;
             }
@@ -151,6 +153,8 @@ class GoodsListForm extends ApiModel
                 $list[$i]['price'] = Goods::GOODS_NEGOTIABLE;
             }
             $list[$i]['sales'] = $this->numToW($item['num'] + $item['virtual_sales']) . $item['unit'];
+            $list[$i]['attr_group_list'] = $goods->getAttrGroupList();
+
         }
         $data = [
             'row_count' => $count,
