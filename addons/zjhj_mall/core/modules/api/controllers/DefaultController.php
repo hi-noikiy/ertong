@@ -121,7 +121,7 @@ class DefaultController extends Controller
     public function actionGoodsList()
     {
         $form = new GoodsListForm();
-        $form->attributes = \Yii::$app->request->get();
+        $form->attributes = \Yii::$app->request->post();
         $form->store_id = $this->store->id;
         return $form->search();
     }
