@@ -154,7 +154,8 @@ class LoginFormMobile extends ApiModel
         $User->nickname = $contact_way;
         $User->avatar_url = \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/statics/images/avatar.png';
         $User->store_id = $this->store_id;
-        $User->platform = 1; // 支付宝
+        $User->platform = 0; // 支付宝
+        $user->invitation_code = mt_rand(100000, 999999);
         $User->binding=$contact_way;
         if($User->save()){
             $list_user_info = User::find()->where(['id'=>$User->id])->asArray()->one();

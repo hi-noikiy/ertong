@@ -77,6 +77,7 @@ class LoginForm extends ApiModel
             $user->nickname = preg_replace('/[\xf0-\xf7].{3}/', '', $data['nick_name']);
             $user->avatar_url = $data['avatar'] ? $data['avatar'] : \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/statics/images/avatar.png';
             $user->store_id = $this->store_id;
+            $user->invitation_code = mt_rand(100000, 999999);
             $user->platform = 1; // 支付宝
             $user->save();
         } else {
@@ -148,6 +149,7 @@ class LoginForm extends ApiModel
                 $user->nickname = preg_replace('/[\xf0-\xf7].{3}/', '', $data['nickName']);
                 $user->avatar_url = $data['avatarUrl'] ? $data['avatarUrl'] : \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/statics/images/avatar.png';
                 $user->store_id = $this->store_id;
+                $user->invitation_code = mt_rand(100000, 999999);
                 $user->platform = 0; // 微信
                 $user->save();
                 $same_user = User::find()->select('id')->where([
