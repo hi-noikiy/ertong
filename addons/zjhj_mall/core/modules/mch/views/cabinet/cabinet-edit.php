@@ -42,7 +42,6 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                     <label class="col-form-label required">类型</label>
                 </div>
                 <div class="col-sm-6">
-                    
                         <?php if ($list['cabinet_type']): ?>
                             <?php if ($list['cabinet_type']==1): ?>
                                 <select class="form-control parent" name="model[cabinet_type]" readonly>
@@ -78,19 +77,24 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                     
                 </div>
             </div>
-            <!-- <div class="form-group row">
+            <div class="form-group row">
                 <div class="form-group-label col-sm-2 text-right">
-                    <label class="col-form-label required">投放城市</label>
+                    <label class="col-form-label required">仓库分类</label>
                 </div>
                 <div class="col-sm-6">
-                    <select id="province" class="form-control parent" name="model[province]" style="width: 48%;display: inline;">
-                        <option value="载入中">载入中</option>
-                    </select>
-                    <select id="city" class="form-control parent" name="model[city]" style="width: 48%;display: inline;">
-                        <option value="载入中">载入中</option>
+                    <select class="form-control parent" name="model[wherehouse_id]">
+                        <option value="0">选择仓库分类</option>
+                        <?php foreach ($warehouse_list as $p) : ?>
+                            <?php if ($list['wherehouse_id']== $p['id']): ?>
+                                <option value="<?= $p['id'] ?>" selected><?= $p['warehouse_name'] ?></option>
+                            <?php else : ?>
+                                <option value="<?= $p['id'] ?>"><?= $p['warehouse_name'] ?></option>
+                            <?php endif; ?>
+                            
+                        <?php endforeach; ?>
                     </select>
                 </div>
-            </div> -->
+            </div>
             <div class="form-group row">
                     <div class="form-group-label col-sm-2 text-right">
                         <label class="col-form-label required">投放城市</label>

@@ -19,6 +19,7 @@ class CabinetForm extends MchModel
     public $store_id;
     public $cabinet_id;
     public $cabinet_type;
+    public $wherehouse_id;
     public $province;
     public $city;
     public $address;
@@ -31,8 +32,8 @@ class CabinetForm extends MchModel
     public function rules()
     {
         return [
-            [['store_id', 'cabinet_id', 'cabinet_type', 'province', 'city', 'address'], 'required'],
-            [['store_id', 'cabinet_type', 'id'], 'integer'],
+            [['store_id', 'cabinet_id', 'cabinet_type', 'wherehouse_id', 'province', 'city', 'address'], 'required'],
+            [['store_id', 'cabinet_type', 'wherehouse_id', 'id'], 'integer'],
             [['cabinet_id', 'province', 'city', 'address'], 'string'],
             
         ];
@@ -45,6 +46,7 @@ class CabinetForm extends MchModel
             'store_id' => 'Store ID',
             'cabinet_id' => '自提柜ID',
             'cabinet_type' => '自提柜类型',
+            'wherehouse_id' => '柜子所属仓库ID',
             'province' => '省',
             'city' => '市',
             'address' => '详细地址',
@@ -59,7 +61,6 @@ class CabinetForm extends MchModel
     {
        if ($this->validate()) {
             $preg = "/^\d{1,12}$/";
-
             if (!$this->cabinet_id || $this->cabinet_id=='') {
                 return [
                     'code' => 1,
@@ -77,6 +78,13 @@ class CabinetForm extends MchModel
                 return [
                     'code' => 1,
                     'msg' => '请选择类型',
+                ];
+            }
+
+            if (!$this->wherehouse_id || $this->wherehouse_id==0) {
+                return [
+                    'code' => 1,
+                    'msg' => '请选择仓库分类',
                 ];
             }
             if (!$this->province || $this->province=='' || $this->province=='请选择') {
@@ -112,6 +120,7 @@ class CabinetForm extends MchModel
             $cabinet->store_id = $this->store_id;
             $cabinet->cabinet_id = $this->cabinet_id;//自提柜ID
             $cabinet->cabinet_type = $this->cabinet_type;//自提柜类型
+            $cabinet->wherehouse_id = $this->wherehouse_id;//柜子所属仓库ID
             $cabinet->province = $this->province;//省
             $cabinet->city = $this->city;//市
             $cabinet->address = $this->address;//详细地址

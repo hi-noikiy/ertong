@@ -11,6 +11,7 @@ namespace app\modules\mch\controllers;
 
 use app\models\Cabinet;
 use app\models\Order;
+use app\models\Warehouse;
 use app\modules\mch\models\CabinetForm;
 use Hejiang\Event\EventArgument;
 use yii\web\HttpException;
@@ -34,9 +35,22 @@ class CabinetController extends Controller
         $form->keyword = $keyword;
         $form->cabinet_type = $cabinet_type;
         $res = $form->getList();
-        // print_r($res['goodsList']);die;
+        $house_list=array();
+        $warehouse_list=Warehouse::find()->where(['is_delete'=>0, 'store_id' => $this->store->id])->orderBy('addtime DESC')->asArray()->all();
+        foreach ($warehouse_list as $key => $val) {
+            $house_list[$val['id']]=$val['warehouse_name'];
+        }
+        foreach ($res['goodsList'] as $key => $val) {
+            if(isset($val['wherehouse_id']) && $val['wherehouse_id']!=''){
+                $res['goodsList'][$key]['warehouse_name']=$house_list[$val['wherehouse_id']];
+            }else{
+                $res['goodsList'][$key]['warehouse_name']='';
+            }
+            
+        }
         return $this->render('list', [
             'list' => $res['list'],
+            'warehouse_list' => $warehouse_list,
             'goodsList' => $res['goodsList'],
             'pagination' => $res['pagination'],
         ]);
@@ -60,16 +74,17 @@ class CabinetController extends Controller
         if (\Yii::$app->request->isPost) {
             $model = \Yii::$app->request->post('model');
             $model['store_id'] = $this->store->id;
-
             $form->attributes = $model;
-
             $form->cabinet = $cabinet;
             return $form->save();
         }
 
         $list = ArrayHelper::toArray($cabinet);
+        $warehouse_list=Warehouse::find()->where(['is_delete'=>0, 'store_id' => $this->store->id])->orderBy('addtime DESC')->asArray()->all();
+        
         return $this->render('cabinet-edit', [
             'list' => $list,
+            'warehouse_list' => $warehouse_list,
         ]);
     }
 

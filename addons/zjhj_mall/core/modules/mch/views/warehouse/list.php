@@ -13,7 +13,7 @@ defined('YII_ENV') or exit('Access Denied');
 use yii\widgets\LinkPager;
 
 $urlManager = Yii::$app->urlManager;
-$this->title = '柜子管理';
+$this->title = '仓库管理';
 $this->params['active_nav_group'] = 5;
 $urlPlatform = Yii::$app->controller->route;
 $urlStr = get_plugin_url();
@@ -57,34 +57,10 @@ $urlStr = get_plugin_url();
                         <input type="hidden" name="<?= $_gi ?>" value="<?= $_gv ?>">
                     <?php endforeach; ?>
                     <div flex="dir:left">
-                        <div class="dropdown float-right mr-2">
-                            <button class="btn btn-secondary dropdown-toggle" type="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <?php if ($_GET['cabinet_type'] === '1') :
-                                    ?>常温
-                                <?php elseif ($_GET['cabinet_type'] === '2') :
-                                    ?>冷藏
-                                <?php elseif ($_GET['cabinet_type'] === '3') :
-                                    ?>冷冻
-                                <?php elseif ($_GET['cabinet_type'] == '') :
-                                    ?>全部
-                                <?php else : ?>
-                                <?php endif; ?>
-                            </button>
-                            <div class="dropdown-menu" style="min-width:8rem">
-                                <a class="dropdown-item" href="<?= $urlManager->createUrl([$urlPlatform, 'cabinet_type' => '', 'keyword'=>$_GET['keyword']]) ?>">全部</a>
-                                <a class="dropdown-item"
-                                   href="<?= $urlManager->createUrl([$urlPlatform, 'cabinet_type' => 1, 'keyword'=>$_GET['keyword']]) ?>">常温柜</a>
-                                <a class="dropdown-item"
-                                   href="<?= $urlManager->createUrl([$urlPlatform, 'cabinet_type' => 2, 'keyword'=>$_GET['keyword']]) ?>">冷藏柜</a>
-                                   <a class="dropdown-item"
-                                   href="<?= $urlManager->createUrl([$urlPlatform, 'cabinet_type' => 3, 'keyword'=>$_GET['keyword']]) ?>">冷冻柜</a>
-                            </div>
-                        </div>
                         <div>
                             <div class="input-group">
                                 <input class="form-control"
-                                       placeholder="柜子ID"
+                                       placeholder="仓库名称"
                                        name="keyword"
                                        autocomplete="off"
                                        value="<?= isset($_GET['keyword']) ? trim($_GET['keyword']) : null ?>">
@@ -95,8 +71,8 @@ $urlStr = get_plugin_url();
                         </div>
                     </div>
                 </form>
-                <a href="<?= $urlManager->createUrl([$urlStr . '/cabinet-edit']) ?>" class="btn btn-primary" style="margin-top: 1rem;"><i
-                        class="iconfont icon-playlistadd"></i>添加柜子</a>
+                <a href="<?= $urlManager->createUrl([$urlStr . '/warehouse-edit']) ?>" class="btn btn-primary" style="margin-top: 1rem;"><i
+                        class="iconfont icon-playlistadd"></i>添加仓库</a>
             </div>
 
         </div>
@@ -104,37 +80,39 @@ $urlStr = get_plugin_url();
         <table class="table table-bordered bg-white">
             <tr>
                 <td style="text-align: center;">ID</td>
-                <td style="text-align: center; width: 200px;">柜子ID</td>
-                <td style="text-align: center;">投放时间</td>
-                <td style="text-align: center;">仓库分类</td>
-                <td style="text-align: center;">投放城市</td>
-                <td style="text-align: center;">类型</td>
+                <td style="text-align: center;">仓库名称</td>
+                <td style="text-align: center;">是否使用</td>
+                <td style="text-align: center;">创建时间</td>
                 <td style="text-align: center;">操作</td>
             </tr>
-            <?php foreach ($goodsList as $index => $value) : ?>
+            <?php foreach ($houseList as $index => $value) : ?>
                 <tr>
                     <td class="nowrap" style="text-align: center;">
                         <?= $value['id'] ?>
                     </td>
                     <td class="nowrap" style="text-align: center;">
-                        <?= $value['cabinet_id'] ?>
-                    </td>
-                    <td class="nowrap" style="text-align: center;">
-                        <?= $value['put_in_time'] ?>
-                    </td>
-                    <td class="nowrap" style="text-align: center;">
                         <?= $value['warehouse_name'] ?>
                     </td>
                     <td class="nowrap" style="text-align: center;">
-                        <?= $value['province'] ?>-<?= $value['city'] ?>
+                        <?php if ($value['is_delete'] === 1) :
+                            ?>未使用
+                        <?php else : ?>
+                            已使用
+                        <?php endif; ?>
+
                     </td>
                     <td class="nowrap" style="text-align: center;">
-                        <?= $value['cabinet_type'] ?>
+                        <?= $value['create_time'] ?>
                     </td>
                     <td class="nowrap">
                         <a class="btn btn-sm btn-primary"
-                           href="<?= $urlManager->createUrl([$urlStr . '/cabinet-edit', 'id' => $value['id']]) ?>">修改</a>
-                        <a class="btn btn-sm btn-danger del" attr-id="<?= $value['id']?>">删除</a>
+                           href="<?= $urlManager->createUrl([$urlStr . '/warehouse-edit', 'id' => $value['id']]) ?>">修改</a>
+                        <?php if ($value['is_delete'] === 1) : ?>
+                            <a class="btn btn-sm btn-danger del" attr-del='0' attr-id="<?= $value['id']?>">启用</a>
+                        <?php else : ?>
+                            <a class="btn btn-sm btn-danger del" attr-del='1' attr-id="<?= $value['id']?>">停用</a>
+                        <?php endif; ?>
+                        
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -170,27 +148,26 @@ $urlStr = get_plugin_url();
         
     </div>
 </div>
-
-
 <script>
     $(document).on('click', '.del', function () {
-        if (confirm("是否删除？")) {
+        
+        if (confirm("确认此操作？")) {
             $.ajax({
-                url: '<?= $urlManager->createUrl(['mch/cabinet/cabinet-del'])?>',
+                url: '<?= $urlManager->createUrl(['mch/warehouse/warehouse-del'])?>',
                 type: 'get',
                 dataType: 'json',
                 data: {
                     id: $(this).attr('attr-id'),
+                    is_delete: $(this).attr('attr-del'),
                 },
                 success: function (res) {
                     if (res.code == 0) {
                         window.location.reload();
-                    }else{
-                        alert(res.msg)
                     }
                 }
             });
         }
         return false;
+                
     });
 </script>

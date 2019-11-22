@@ -146,7 +146,6 @@ class Menu
                             ]
                         ],
                     ],
-                    
                     [
                         'name' => '柜子管理',
                         'is_menu' => true,
@@ -173,9 +172,24 @@ class Menu
                             ],
                         ]
                     ],
-                            
-                        
-                    
+                    [
+                        'name' => '仓库管理',
+                        'is_menu' => true,
+                        'route' => 'mch/warehouse/list',
+                        'sub' => [
+                            [
+                                'name' => '添加仓库(S|U)',
+                                'is_menu' => false,
+                                'route' => 'mch/warehouse/warehouse-edit',
+                            ],
+                        ],
+                        'action' => [
+                            [
+                                'name' => '删除仓库',
+                                'route' => 'mch/warehouse/warehouse-del'
+                            ],
+                        ]
+                    ],
                 ],
             ],
             [
