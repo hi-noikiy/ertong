@@ -789,7 +789,7 @@ if (!$returnUrl) {
                                 </div>
                             </div>
 
-                            <!-- <div <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="step-block" flex="dir:left box:first">
+                            <div <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="step-block" flex="dir:left box:first">
                                 <div>
                                     <span>营销</span>
                                     <span class="step-location" id="step6"></span>
@@ -805,12 +805,7 @@ if (!$returnUrl) {
                                             <label class="radio-label">
                                                 <input value="2" name="model[marketing]" type="radio" class="custom-control-input">
                                                 <span class="label-icon"></span>
-                                                <span class="label-text">秒杀</span>
-                                            </label>
-                                            <label class="radio-label">
-                                                <input value="3" name="model[marketing]" type="radio" class="custom-control-input">
-                                                <span class="label-icon"></span>
-                                                <span class="label-text">团购</span>
+                                                <span class="label-text">添加活动</span>
                                             </label>
                                         </div>
                                     <?php elseif ($goods['marketing']==2) : ?>
@@ -823,30 +818,7 @@ if (!$returnUrl) {
                                             <label class="radio-label">
                                                 <input checked="checked" value="2" name="model[marketing]" type="radio" class="custom-control-input">
                                                 <span class="label-icon"></span>
-                                                <span class="label-text">秒杀</span>
-                                            </label>
-                                            <label class="radio-label">
-                                                <input value="3" name="model[marketing]" type="radio" class="custom-control-input">
-                                                <span class="label-icon"></span>
-                                                <span class="label-text">团购</span>
-                                            </label>
-                                        </div>
-                                    <?php elseif ($goods['marketing']==3) : ?>
-                                        <div class="col-9 col-form-label">
-                                            <label class="radio-label">
-                                                <input value="1" name="model[marketing]" type="radio" class="custom-control-input">
-                                                <span class="label-icon"></span>
-                                                <span class="label-text">新品</span>
-                                            </label>
-                                            <label class="radio-label">
-                                                <input value="2" name="model[marketing]" type="radio" class="custom-control-input">
-                                                <span class="label-icon"></span>
-                                                <span class="label-text">秒杀</span>
-                                            </label>
-                                            <label class="radio-label">
-                                                <input checked="checked" value="3" name="model[marketing]" type="radio" class="custom-control-input">
-                                                <span class="label-icon"></span>
-                                                <span class="label-text">团购</span>
+                                                <span class="label-text">添加活动</span>
                                             </label>
                                         </div>
                                     <?php else : ?>
@@ -859,17 +831,12 @@ if (!$returnUrl) {
                                             <label class="radio-label">
                                                 <input value="2" name="model[marketing]" type="radio" class="custom-control-input">
                                                 <span class="label-icon"></span>
-                                                <span class="label-text">秒杀</span>
-                                            </label>
-                                            <label class="radio-label">
-                                                <input value="3" name="model[marketing]" type="radio" class="custom-control-input">
-                                                <span class="label-icon"></span>
-                                                <span class="label-text">团购</span>
+                                                <span class="label-text">添加活动</span>
                                             </label>
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                            </div> -->
+                            </div>
                             <!--额外设置-->
                             <div class="step-block" flex="dir:left box:first">
                                 <?php foreach ($plugins as $plugin) : ?>
