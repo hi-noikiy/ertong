@@ -76,11 +76,13 @@ class OrderSubmitForm extends OrderData
     public $lottery_id;
     public $step_id;
     public $mode;
-
+    public $service_day;
+    public $service_time;
+    
     public function rules()
     {
         return [
-            [['cart_id_list', 'goods_info', 'content', 'address_name', 'address_mobile', 'cart_list', 'mch_list'], 'string'],
+            [['cart_id_list', 'goods_info', 'content', 'address_name', 'address_mobile', 'cart_list', 'mch_list', 'service_day', 'service_time'], 'string'],
             [['cabinet_id'], 'required', 'on' => "EXPRESS"],
             [['address_name', 'address_mobile'], 'required', 'on' => "OFFLINE"],
             [['user_coupon_id', 'offline', 'shop_id', 'use_integral'], 'integer'],
@@ -845,7 +847,8 @@ class OrderSubmitForm extends OrderData
             $order->user_id = $this->user_id;
             $order->order_no = $this->getOrderNo();
             $order->cabinet_id = $this->cabinet_id;
-
+            $order->service_day = $this->service_day;
+            $order->service_time = $this->service_time;
             // 此处判断起送规则
             $this->total_price = $total_price;
             $checkOffer = $this->checkOfferRule();
