@@ -240,9 +240,10 @@ if (!$returnUrl) {
                                 <div class="head-content" flex="dir:left">
                                     <a flex="cross:center" class="head-step" href="#step1">选择分类</a>
                                     <a flex="cross:center" class="head-step" href="#step2">基本信息</a>
-                                    <a flex="cross:center" <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="head-step" href="#step6">营销</a>
-                                    <a flex="cross:center" <?= in_array(get_plugin_type(), [0,5]) ? 'hidden' : '' ?> class="head-step" href="#step9">砍价设置</a>
-                                    <!-- <a flex="cross:center" <?= in_array(get_plugin_type(), [2,5]) ? 'hidden' : '' ?> class="head-step" href="#step7">快速购买</a> -->
+                                    <a flex="cross:center" <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="head-step" href="#step5">存放类型</a>
+                                    <a flex="cross:center" <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="head-step" href="#step5">营销</a>
+                                    <!-- <a flex="cross:center" <?= in_array(get_plugin_type(), [0,5]) ? 'hidden' : '' ?> class="head-step" href="#step9">砍价设置</a>
+                                    <a flex="cross:center" <?= in_array(get_plugin_type(), [2,5]) ? 'hidden' : '' ?> class="head-step" href="#step7">快速购买</a> -->
                                     <a flex="cross:center" class="head-step" href="#step4">商品详情</a>
                                 </div>
                             </div>
@@ -710,7 +711,7 @@ if (!$returnUrl) {
                             <div <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="step-block" flex="dir:left box:first">
                                 <div>
                                     <span>商品存放类型</span>
-                                    <span class="step-location" id="step6"></span>
+                                    <span class="step-location" id="step5"></span>
                                 </div>
                                 <div>
                                     <?php if ($goods['storage_type']==1) : ?>
