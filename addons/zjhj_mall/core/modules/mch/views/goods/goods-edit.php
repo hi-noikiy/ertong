@@ -241,7 +241,7 @@ if (!$returnUrl) {
                                     <a flex="cross:center" class="head-step" href="#step1">选择分类</a>
                                     <a flex="cross:center" class="head-step" href="#step2">基本信息</a>
                                     <a flex="cross:center" <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="head-step" href="#step5">存放类型</a>
-                                    <a flex="cross:center" <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="head-step" href="#step5">营销</a>
+                                    <a flex="cross:center" <?= in_array(get_plugin_type(), [5]) ? 'hidden' : '' ?> class="head-step" href="#step6">营销</a>
                                     <!-- <a flex="cross:center" <?= in_array(get_plugin_type(), [0,5]) ? 'hidden' : '' ?> class="head-step" href="#step9">砍价设置</a>
                                     <a flex="cross:center" <?= in_array(get_plugin_type(), [2,5]) ? 'hidden' : '' ?> class="head-step" href="#step7">快速购买</a> -->
                                     <a flex="cross:center" class="head-step" href="#step4">商品详情</a>
