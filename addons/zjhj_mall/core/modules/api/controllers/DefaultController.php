@@ -473,4 +473,14 @@ class DefaultController extends Controller
         return new ApiResponse(0, 'success', $res);
 
     }
+
+    public function actionGoodsCoupon(){
+        $form = new GoodsForm();
+        $form->attributes = \Yii::$app->request->get();
+        if (!\Yii::$app->user->isGuest) {
+            $form->user_id = \Yii::$app->user->id;
+        }
+        $form->store_id = $this->store->id;
+        return $form->getCouponList();
+    }
 }

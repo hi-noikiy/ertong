@@ -9,8 +9,11 @@
 namespace app\modules\api\models;
 
 use app\models\common\CommonGoods;
+use app\models\Coupon;
+use app\models\CouponAutoSend;
 use app\models\Level;
 use app\models\Option;
+use app\models\UserCoupon;
 use app\modules\mch\models\LevelListForm;
 use app\utils\GetInfo;
 use app\hejiang\ApiResponse;
@@ -255,5 +258,85 @@ class GoodsForm extends ApiModel
             return null;
         }
         return $shop;
+    }
+
+    public function getCouponList()
+    {
+        $goods = Goods::findOne([
+            'id' => $this->id,
+            'is_delete' => 0,
+            'status' => 1,
+            'store_id' => $this->store_id,
+            'type' => get_plugin_type()
+        ]);
+        $goodsPrice = $goods->price;
+        $list = UserCoupon::find()->alias('uc')
+            ->leftJoin(['c' => Coupon::tableName()], 'uc.coupon_id=c.id')
+            ->leftJoin(['cas' => CouponAutoSend::tableName()], 'uc.coupon_auto_send_id=cas.id')
+            ->where([
+                'AND',
+                ['uc.is_delete' => 0],
+                ['uc.is_use' => 0],
+                ['uc.is_expire' => 0],
+                ['uc.user_id' => $this->user_id],
+                ['<=', 'c.min_price', $goodsPrice],
+            ])
+            ->select('uc.id user_coupon_id,c.sub_price,c.min_price,cas.event,uc.begin_time,uc.end_time,uc.type,c.appoint_type,c.cat_id_list,c.goods_id_list')
+            ->asArray()->all();
+        $events = [
+            0 => '平台发放',
+            1 => '分享红包',
+            2 => '购物返券',
+            3 => '领券中心',
+        ];
+        $new_list = [];
+        foreach ($list as $i => $item) {
+            if ($item['begin_time'] > (strtotime(date('Y-M-d')) + 86400) || $item['end_time'] < time()) {
+                continue;
+            }
+            $list[$i]['status'] = 0;
+            if ($item['is_use']) {
+                $list[$i]['status'] = 1;
+            }
+
+            if ($item['is_expire']) {
+                $list[$i]['status'] = 2;
+            }
+
+            $list[$i]['min_price_desc'] = $item['min_price'] == 0 ? '无门槛' : '满' . $item['min_price'] . '元可用';
+            $list[$i]['begin_time'] = date('Y.m.d H:i', $item['begin_time']);
+            $list[$i]['end_time'] = date('Y.m.d H:i', $item['end_time']);
+            if (!$item['event']) {
+                if ($item['type'] == 2) {
+                    $list[$i]['event'] = $item['event'] = 3;
+                } else {
+                    $list[$i]['event'] = $item['event'] = 0;
+                }
+            }
+            $list[$i]['event_desc'] = $events[$item['event']];
+            $list[$i]['min_price'] = doubleval($item['min_price']);
+            $list[$i]['sub_price'] = doubleval($item['sub_price']);
+
+            if ($list[$i]['appoint_type'] == 1) {
+                $list[$i]['cat_id_list'] = json_decode($list[$i]['cat_id_list']);
+                if ($list[$i]['cat_id_list'] != null) {
+                    if (!array_intersect($list[$i]['cat_id_list'], [$goods->getCat()])) {
+                        unset($list[$i]);
+                        continue;
+                    }
+                }
+            } elseif ($list[$i]['appoint_type'] == 2) {
+                $list[$i]['goods_id_list'] = json_decode($list[$i]['goods_id_list']);
+                if ($list[$i]['goods_id_list'] != null) {
+                    if (!array_intersect($list[$i]['goods_id_list'], [$this->id])) {
+                        unset($list[$i]);
+                        continue;
+                    }
+                }
+            }
+
+            $new_list[] = $list[$i];
+        }
+        return new ApiResponse(0, 'success', $new_list);
     }
 }
