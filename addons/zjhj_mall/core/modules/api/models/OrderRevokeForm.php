@@ -73,7 +73,7 @@ class OrderRevokeForm extends ApiModel
             }
         }
 
-        $order->is_delete = 1;
+        $order->is_delete = 2;
         $order_detail_list = OrderDetail::find()->where(['order_id' => $order->id, 'is_delete' => 0])->all();
 
         $t = \Yii::$app->db->beginTransaction();

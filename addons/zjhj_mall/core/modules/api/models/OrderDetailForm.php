@@ -43,7 +43,7 @@ class OrderDetailForm extends ApiModel
             'store_id' => $this->store_id,
             'user_id' => $this->user_id,
             'id' => $this->order_id,
-            'is_delete' => 0,
+            //'is_delete' => 0,
             'is_recycle'=> 0,
         ]);
         if (!$order) {
@@ -53,16 +53,25 @@ class OrderDetailForm extends ApiModel
             ];
         }
         $status = "";
-        if ($order->is_pay == 0) {
-            $status = '等待付款';
+        $order_status = null;
+        if ($order->is_pay == 0 && $order->is_delete == 0) {
+            $status = '待付款';
+            $order_status = 0;
         } elseif ($order->is_pay == 1 && $order->is_send == 0) {
             $status = '待发货';
+            $order_status = 1;
         } elseif ($order->is_send == 1 && $order->is_confirm == 0) {
-            $status = '配送中';
+            $status = '已发货';
+            $order_status = 2;
         } elseif ($order->is_send == 1 && $order->put_status == 2){
-            $status = '等待自提';
+            $status = '待自提';
+            $order_status = 3;
         } elseif ($order->is_confirm == 1) {
-            $status = '订单已完成';
+            $status = '已完成';
+            $order_status = 4;
+        }elseif ($order->is_delete == 2){
+            $status = '已取消';
+            $order_status = 6;
         }
 
         $goods_list = OrderDetail::find()->alias('od')
@@ -131,6 +140,7 @@ class OrderDetailForm extends ApiModel
                 'is_send' => $order->is_send,
                 'is_confirm' => $order->is_confirm,
                 'status' => $status,
+                'order_status' => $order_status,
                 'express' => $order->express,
                 'express_no' => $order->express_no,
                 'name' => $order->name,

@@ -42,7 +42,7 @@ class OrderListForm extends ApiModel
             return $this->errorResponse;
         }
         $query = Order::find()->where([
-            'is_delete' => 0,
+            //'is_delete' => 0,
             'store_id' => $this->store_id,
             'user_id' => $this->user_id,
             'is_cancel' => 0
@@ -72,6 +72,11 @@ class OrderListForm extends ApiModel
         if ($this->status == 4) {//已完成
             $query->andWhere([
                 'is_confirm' => 1,
+            ]);
+        }
+        if ($this->status == 6){
+            $query->andWhere([
+                'is_delete' => 2,
             ]);
         }
         if ($this->status == 5) {//售后订单
@@ -120,16 +125,25 @@ class OrderListForm extends ApiModel
             }
             $orderRefund = OrderRefund::find()->where(['store_id' => $order->store_id, 'order_id' => $order->id])->exists();
             $status = "";
-            if ($order->is_pay == 0) {
-                $status = '等待付款';
+            $order_status = null;
+            if ($order->is_pay == 0 && $order->is_delete == 0) {
+                $status = '待付款';
+                $order_status = 0;
             } elseif ($order->is_pay == 1 && $order->is_send == 0) {
                 $status = '待发货';
+                $order_status = 1;
             } elseif ($order->is_send == 1 && $order->is_confirm == 0) {
-                $status = '配送中';
+                $status = '已发货';
+                $order_status = 2;
             } elseif ($order->is_send == 1 && $order->put_status == 2){
-                $status = '等待自提';
+                $status = '待自提';
+                $order_status = 3;
             } elseif ($order->is_confirm == 1) {
-                $status = '订单已完成';
+                $status = '已完成';
+                $order_status = 4;
+            }elseif ($order->is_delete == 2){
+                $status = '已取消';
+                $order_status = 6;
             }
             $new_list[] = (object)[
                 'order_id' => $order->id,
@@ -151,7 +165,8 @@ class OrderListForm extends ApiModel
                 'pay_type' => $order->pay_type,
                 'refund' => $orderRefund,
                 'currency' => $order->currency,
-                'status' => $status
+                'status' => $status,
+                'order_status' => $order_status
             ];
         }
         $pay_type_list = OrderData::getPayType($this->store_id, array(), ['huodao']);
