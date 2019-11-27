@@ -126,7 +126,7 @@ class OrderListForm extends ApiModel
             $orderRefund = OrderRefund::find()->where(['store_id' => $order->store_id, 'order_id' => $order->id])->exists();
             $status = "";
             $order_status = null;
-            if ($order->is_pay == 0) {
+            if ($order->is_pay == 0 && $order->is_cancel!=1) {
                 $status = '待付款';
                 $order_status = 0;
             } elseif ($order->is_pay == 1 && $order->is_send == 0) {

@@ -39,6 +39,7 @@ class OrderDetailForm extends ApiModel
         if (!$this->validate()) {
             return $this->errorResponse;
         }
+
         $order = Order::findOne([
             'store_id' => $this->store_id,
             'user_id' => $this->user_id,
@@ -54,7 +55,7 @@ class OrderDetailForm extends ApiModel
         }
         $status = "";
         $order_status = null;
-        if ($order->is_pay == 0) {
+        if ($order->is_pay == 0 && $order->is_cancel!=1) {
             $status = '待付款';
             $order_status = 0;
         } elseif ($order->is_pay == 1 && $order->is_send == 0) {
