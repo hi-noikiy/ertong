@@ -43,7 +43,7 @@ class OrderDetailForm extends ApiModel
             'store_id' => $this->store_id,
             'user_id' => $this->user_id,
             'id' => $this->order_id,
-            //'is_delete' => 0,
+            'is_delete' => 0,
             'is_recycle'=> 0,
         ]);
         if (!$order) {
@@ -54,7 +54,7 @@ class OrderDetailForm extends ApiModel
         }
         $status = "";
         $order_status = null;
-        if ($order->is_pay == 0 && $order->is_delete == 0) {
+        if ($order->is_pay == 0) {
             $status = '待付款';
             $order_status = 0;
         } elseif ($order->is_pay == 1 && $order->is_send == 0) {
@@ -69,7 +69,7 @@ class OrderDetailForm extends ApiModel
         } elseif ($order->is_confirm == 1) {
             $status = '已完成';
             $order_status = 4;
-        }elseif ($order->is_delete == 2){
+        }elseif ($order->is_cancel == 1){
             $status = '已取消';
             $order_status = 6;
         }

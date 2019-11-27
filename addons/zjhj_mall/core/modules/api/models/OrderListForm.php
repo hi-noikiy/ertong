@@ -42,7 +42,7 @@ class OrderListForm extends ApiModel
             return $this->errorResponse;
         }
         $query = Order::find()->where([
-            //'is_delete' => 0,
+            'is_delete' => 0,
             'store_id' => $this->store_id,
             'user_id' => $this->user_id,
             'is_cancel' => 0
@@ -76,7 +76,7 @@ class OrderListForm extends ApiModel
         }
         if ($this->status == 6){
             $query->andWhere([
-                'is_delete' => 2,
+                'is_cancel' => 1,
             ]);
         }
         if ($this->status == 5) {//售后订单
@@ -126,7 +126,7 @@ class OrderListForm extends ApiModel
             $orderRefund = OrderRefund::find()->where(['store_id' => $order->store_id, 'order_id' => $order->id])->exists();
             $status = "";
             $order_status = null;
-            if ($order->is_pay == 0 && $order->is_delete == 0) {
+            if ($order->is_pay == 0) {
                 $status = '待付款';
                 $order_status = 0;
             } elseif ($order->is_pay == 1 && $order->is_send == 0) {
@@ -141,7 +141,7 @@ class OrderListForm extends ApiModel
             } elseif ($order->is_confirm == 1) {
                 $status = '已完成';
                 $order_status = 4;
-            }elseif ($order->is_delete == 2){
+            }elseif ($order->is_cancel == 1){
                 $status = '已取消';
                 $order_status = 6;
             }
