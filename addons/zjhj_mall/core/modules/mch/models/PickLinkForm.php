@@ -76,7 +76,7 @@ class PickLinkForm
             ],
             [
                 'name' => "分类",
-                'link' => "/pages/cat/cat",
+                'link' => "/pages/cat-item/cat-item",
                 'open_type' => "navigate",
                 'params' => [
                     [
