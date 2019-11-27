@@ -16,7 +16,7 @@ $list = [
     ],
     [
         'name' => '分类',
-        'route' => 'pages/cat/cat',
+        'route' => 'cat-item/cat-item',
         'params' => [],
     ],
     [
