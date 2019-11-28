@@ -54,6 +54,8 @@ class Cabinet extends \yii\db\ActiveRecord
             'city' => '市',
             'address' => '详细地址',
             'addtime' => 'Addtime',
+            'latitude' => '纬度',
+            'longitude' => '经度',
             'is_delete' => 'Is Delete',
         ];
     }
