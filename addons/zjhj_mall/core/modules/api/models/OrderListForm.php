@@ -45,7 +45,7 @@ class OrderListForm extends ApiModel
             'is_delete' => 0,
             'store_id' => $this->store_id,
             'user_id' => $this->user_id,
-            'is_cancel' => 0
+            //'is_cancel' => 0
         ]);
         if ($this->status == 0) {//待付款
             $query->andWhere([

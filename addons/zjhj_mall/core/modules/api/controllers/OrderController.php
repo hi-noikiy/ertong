@@ -273,4 +273,56 @@ class OrderController extends Controller
         $form->user_id = \Yii::$app->user->id;
         return new BaseApiResponse($form->save());
     }
+
+    public function AuthAction(){
+
+    }
+
+    public function actionCreate(){
+        $orderNo =  \Yii::$app->request->get('order_no');
+        //$goods = \Yii::$app->request->get('goods');
+        $machineId = \Yii::$app->request->get('machineId');
+        $delivers = [];
+        $delivers['deliverNo'] = \Yii::$app->request->get('deliverNo');
+        $delivers['coolType'] = \Yii::$app->request->get('coolType');
+        $delivers['goods'] = \Yii::$app->request->get('goods');
+        $delivers['quantity'] = \Yii::$app->request->get('quantity');
+        $total = \Yii::$app->request->get('total');
+
+        $appId='19103111555648';
+        $appScret='105ef16489204001b046ab742b4acb7c';
+        $loginUrl="http://open.iwuyi.net/api/authorization/login";
+        $array=array(
+            'appId'=>$appId,
+            'appScret'=>$appScret,
+        );
+        $result=$this->getCurl($loginUrl,json_encode($array));
+        $machine="http://open.iwuyi.net/api/machine/location";
+
+    }
+    public function getCurl($url, $jsonStr, $authorizToken=null){
+        if(isset($authorizToken)){
+            $httpHeader=array(
+                'Content-Type: application/json; charset=utf-8',
+                'Content-Length: ' . strlen($jsonStr),
+                'authorizToken:'.$authorizToken,
+            );
+        }else{
+            $httpHeader=array(
+                'Content-Type: application/json; charset=utf-8',
+                'Content-Length: ' . strlen($jsonStr),
+            );
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonStr);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeader);
+        $response = curl_exec($ch);
+        //$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return $response;
+    }
 }
