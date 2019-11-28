@@ -19,7 +19,10 @@ class DeliveryTimeController extends Controller
         ]);
     }
     public function actionList(){
-        $list = DeliveryTime::find()->asArray()->all();
+        $time=date("H:i:s",time());
+
+        $list = DeliveryTime::find()->where(['<=', 'start_time', $time])->andWhere(['>=', 'end_time', $time])->asArray()->all();
+        
         foreach ($list as $key => $item) {
             $list[$key]['start_time'] = substr($item['start_time'], 0,5);
             $list[$key]['end_time'] = substr($item['end_time'], 0,5);
