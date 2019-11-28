@@ -25,6 +25,7 @@ class CommentListForm extends ApiModel
         return [
             [['goods_id'], 'required'],
             [['page'], 'integer'],
+            [['limit'], 'integer'],
         ];
     }
 
