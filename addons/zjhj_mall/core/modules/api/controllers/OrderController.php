@@ -279,15 +279,15 @@ class OrderController extends Controller
     }
 
     public function actionCreate(){
-        $orderNo =  \Yii::$app->request->get('order_no');
+        $orderNo =  \Yii::$app->request->post('order_no');
         //$goods = \Yii::$app->request->get('goods');
-        $machineId = \Yii::$app->request->get('machineId');
+        $machineId = \Yii::$app->request->post('machineId');
         $delivers = [];
-        $delivers['deliverNo'] = \Yii::$app->request->get('deliverNo');
-        $delivers['coolType'] = \Yii::$app->request->get('coolType');
-        $delivers['goods'] = \Yii::$app->request->get('goods');
-        $delivers['quantity'] = \Yii::$app->request->get('quantity');
-        $total = \Yii::$app->request->get('total');
+        $delivers['deliverNo'] = \Yii::$app->request->post('deliverNo');
+        $delivers['coolType'] = \Yii::$app->request->post('coolType');
+        $delivers['goods'] = \Yii::$app->request->post('goods');
+        $delivers['quantity'] = \Yii::$app->request->post('quantity');
+        $total = \Yii::$app->request->post('total');
 
         $appId='19103111555648';
         $appScret='105ef16489204001b046ab742b4acb7c';
@@ -296,9 +296,39 @@ class OrderController extends Controller
             'appId'=>$appId,
             'appScret'=>$appScret,
         );
+        $createArr = [
+            'machineId' => $machineId,
+            'order_no' => $orderNo,
+            'delivers' => $delivers,
+            'total' => $total
+        ];
         $result=$this->getCurl($loginUrl,json_encode($array));
-        $machine="http://open.iwuyi.net/api/machine/location";
+        $result_array=json_decode($result,true);
+        $authorizToken='';
+        if($result_array['code']==0){
+            $authorizToken=$result_array['data']['authorizToken'];
+        }
+        $locationUrl="http://open.iwuyi.net/api/express/createOrder";
+        $list = $this->getCurl($locationUrl, json_encode($createArr), $authorizToken);
+        $list = json_decode($list, true);
+        return new BaseApiResponse($list);
 
+
+    }
+
+    public function sign($sign_array, $appScret){
+        $sign_str='';
+        ksort($sign_array);
+        foreach ($sign_array as $key => $val) {
+            if(!isset($sign_array[$key])){
+                unset($sign_array[$key]);
+            }
+            $sign_str.=$key."=".$val."&";
+        }
+        if(isset($sign_str)){
+            $sign=substr($sign_str,0,strlen($sign_str)-1);
+        }
+        return md5($sign.$appScret);
     }
     public function getCurl($url, $jsonStr, $authorizToken=null){
         if(isset($authorizToken)){
