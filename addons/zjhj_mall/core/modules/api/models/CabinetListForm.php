@@ -9,6 +9,7 @@
 namespace app\modules\api\models;
 
 use app\models\Cabinet;
+use app\models\Order;
 use app\models\UserCard;
 use yii\data\Pagination;
 
@@ -21,6 +22,7 @@ class CabinetListForm extends ApiModel
     public $limit;
     public $status;
     public $user_card_id;
+    public $locations;
 
     public function rules()
     {
@@ -56,21 +58,27 @@ class CabinetListForm extends ApiModel
         if (!$this->validate()) {
             return $this->errorResponse;
         }
+        $fromLocation = explode(',', $this->locations);
         $userId = $this->user_id;
-        $tableName = Cabinet::tableName();
+        $tableName = Order::tableName();
 
-        $results = Cabinet::findBySql("select count(cabinet_id) as num, cabinet_id from {$tableName} where user_id = {$userId} and is_delete = 0 GROUP BY `cabinet_id` order by num desc limit 3 ");
+        $results = Order::findBySql("select count(cabinet_id) as num, cabinet_id, id from {$tableName} where user_id = {$userId} and is_delete = 0 GROUP BY `cabinet_id` order by num desc limit 3 ")->asArray()->all();
         $details = [];
         foreach ($results as $k => $result){
             $cabinet_id = $result['cabinet_id'];
-            $cabinet = Cabinet::findOne(['id' => $cabinet_id]);
-            $details[$k]['id'] = $cabinet_id;
+            $cabinet = Cabinet::findOne(['id' => $result['cabinet_id']]);
+            $details[$k]['id'] = $cabinet->id;
             $details[$k]['cabinet_id'] = $cabinet->cabinet_id;
             $details[$k]['cabinet_type'] = $cabinet->cabinet_type;
             $details[$k]['province'] = $cabinet->province;
             $details[$k]['city'] = $cabinet->city;
             $details[$k]['address'] = $cabinet->address;
-            $details[$k]['location'] = $this->getLocation($cabinet->cabinet_id);
+            //$latitude = $cabinet->
+            $details[$k]['location'] = [
+                $cabinet->longitude,
+                $cabinet->latitude
+            ];
+            $details[$k]['distance'] = $this->get_distance($fromLocation, $details[$k]['location'], false);
 
         }
         return [
@@ -81,6 +89,45 @@ class CabinetListForm extends ApiModel
             ]
         ];
 
+    }
+
+    public function getList(){
+        if (!$this->validate()) {
+            return $this->errorResponse;
+        }
+        $fromLocation = explode(',', $this->locations);
+        $userId = $this->user_id;
+        $list = Cabinet::find()->select('id,cabinet_id,cabinet_type,province,city,address,longitude,latitude')->where([
+            'store_id' => $this->store->id,
+            'is_delete' => 0,
+        ])->orderBy('addtime DESC')->asArray()->all();
+        foreach ($list as $i => $item) {
+            $list[$i]['cabinetList'] = $item['cabinet_id'].$item['cabinet_type'].$item['province'] . $item['city'].$item['address'];
+        }
+        $details = [];
+        foreach ($list as $k => $result){
+            $cabinet_id = $result['cabinet_id'];
+            $details[$k]['id'] = $result['id'];
+            $details[$k]['cabinet_id'] = $result['cabinet_id'];
+            $details[$k]['cabinet_type'] = $result['cabinet_type'];
+            $details[$k]['province'] = $result['province'];
+            $details[$k]['city'] = $result['city'];
+            $details[$k]['address'] = $result['address'];
+            //$latitude = $cabinet->
+            $details[$k]['location'] = [
+                $result['longitude'],
+                $result['latitude']
+            ];
+            $details[$k]['distance'] = $this->get_distance($fromLocation, $details[$k]['location'], false);
+
+        }
+        return [
+            'code'=>0,
+            'msg'=> '',
+            'data'=> [
+                'list'=>$details,
+            ]
+        ];
     }
 
     public function sign($sign_array, $appScret){
@@ -166,5 +213,28 @@ class CabinetListForm extends ApiModel
             'is_delete' => 0,
         ])->orderBy('addtime DESC')->asArray()->all();
         //dia
+    }
+
+    /**
+     * 根据起点坐标和终点坐标测距离
+     * @param  [array]   $from  [起点坐标(经纬度),例如:array(118.012951,36.810024)]
+     * @param  [array]   $to    [终点坐标(经纬度)]
+     * @param  [bool]    $km        是否以公里为单位 false:米 true:公里(千米)
+     * @param  [int]     $decimal   精度 保留小数位数
+     * @return [string]  距离数值
+     */
+    public function get_distance($from, $to, $km = true, $decimal = 2)
+    {
+        sort($from);
+        sort($to);
+        $EARTH_RADIUS = 6370.996; // 地球半径系数
+
+        $distance = $EARTH_RADIUS * 2 * asin(sqrt(pow(sin(($from[0] * pi() / 180 - $to[0] * pi() / 180) / 2), 2) + cos($from[0] * pi() / 180) * cos($to[0] * pi() / 180) * pow(sin(($from[1] * pi() / 180 - $to[1] * pi() / 180) / 2), 2))) * 1000;
+
+        if ($km) {
+            $distance = $distance / 1000;
+        }
+
+        return round($distance, $decimal);
     }
 }

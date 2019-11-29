@@ -16,6 +16,8 @@ use Yii;
  * @property string  $is_delete
  * @property string  $city
  * @property string  $address
+ * @property string  $latitude
+ * @property string  $longitude
  */
 class Cabinet extends \yii\db\ActiveRecord
 {
@@ -35,7 +37,7 @@ class Cabinet extends \yii\db\ActiveRecord
         return [
             [['store_id', 'cabinet_id', 'cabinet_type', 'wherehouse_id'], 'required'],
             [['store_id', 'cabinet_type', 'wherehouse_id', 'addtime', 'is_delete'], 'integer'],
-            [['cabinet_id', 'city', 'province', 'address'], 'string'],
+            [['cabinet_id', 'city', 'province', 'address','latitude','longitude'], 'string'],
         ];
     }
 

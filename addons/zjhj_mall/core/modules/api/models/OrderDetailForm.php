@@ -8,6 +8,7 @@
 
 namespace app\modules\api\models;
 
+use app\models\Cabinet;
 use app\models\Goods;
 use app\models\Level;
 use app\models\MiaoshaGoods;
@@ -132,6 +133,15 @@ class OrderDetailForm extends ApiModel
         if(!$order->integral){
             $order->integral = 0;
         }
+        $cabinet = Cabinet::findOne(['id' => $order->cabinet_id]);
+        $cabInfo = [];
+        if (!empty($cabinet)){
+            $cabInfo['cabinet_id'] = $cabinet->cabinet_id;
+            $cabInfo['cabinet_type'] = $cabinet->cabinet_type;
+            $cabInfo['province'] = $cabinet->province;
+            $cabInfo['city'] = $cabinet->city;
+            $cabInfo['address'] = $cabinet->address;
+        }
         return [
             'code' => 0,
             'msg' => 'success',
@@ -166,7 +176,9 @@ class OrderDetailForm extends ApiModel
                 'words' => $order->words,
                 'pay_type' => $order->pay_type,
                 'integral'=>\Yii::$app->serializer->decode($order->integral),
-                'apply_delete' => $order->apply_delete
+                'apply_delete' => $order->apply_delete,
+                'cab_info' => $cabInfo,
+                'put_code' => $order->put_code
             ],
         ];
     }
