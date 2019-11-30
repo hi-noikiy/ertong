@@ -14,14 +14,18 @@ class OrderController extends Controller
     //
     public function actionWaitingDelivery(){
         $form = new OrderSelfMentioningForm();
-        $form->attributes = \Yii::$app->request->post();
+        $form->orderNo = \Yii::$app->request->post('orderNo');
+        $form->machineId = \Yii::$app->request->post('machineId');
+        $form->pickupCode = \Yii::$app->request->post('pickupCode');
         $form->store_id = $this->store->id;
         return new BaseApiResponse($form->save());
     }
 
     public function actionDeliverySuccess(){
         $form = new OrderSelfMentionForm();
-        $form->attributes = \Yii::$app->request->post();
+        $form->orderNo = \Yii::$app->request->post('orderNo');
+        $form->machineId = \Yii::$app->request->post('machineId');
+        $form->pickupCode = \Yii::$app->request->post('pickupCode');
         $form->store_id = $this->store->id;
         return new BaseApiResponse($form->save());
     }
