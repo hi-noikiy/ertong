@@ -13,6 +13,7 @@ use app\model\Goods;
 use app\models\Cabinet;
 use app\models\common\api\CommonShoppingList;
 use app\models\OrderDetail;
+use app\models\OrderSub;
 use app\utils\PinterOrder;
 use app\models\Level;
 use app\models\Order;
@@ -29,11 +30,13 @@ class OrderSelfMentioningForm extends OrderForm
     public $orderNo;
     public $pickupCode;
     public $machineId;
+    public $status;
+    public $deliverNo;
 
     public function rules()
     {
         return [
-            [['orderNo', 'pickupCode', 'machineId'], 'required'],
+            [['orderNo', 'machineId', 'status', 'deliverNo'], 'required'],
         ];
     }
 
@@ -42,23 +45,15 @@ class OrderSelfMentioningForm extends OrderForm
         if (!$this->validate()) {
             return $this->errorResponse;
         }
-        $order = Order::findOne([
-            'store_id' => $this->store_id,
-            'order_no' => $this->orderNo,
-            'is_delete' => 0,
-        ]);
-        if (!$order) {
+        //$t = \Yii::$app->db->beginTransaction();
+        $subOrder = OrderSub::findOne(['order_no' => $this->deliverNo]);
+        if (!$subOrder){
             return [
                 'code' => 1,
-                'msg' => '订单不存在'
+                'msg' => '配送单号有误'
             ];
         }
-        if ($order->put_status == 3){
-            return [
-                'code' => 1,
-                'msg' => '商品已被取出'
-            ];
-        }
+
 //        $order->is_confirm = 1;
 //        $order->confirm_time = time();
 //        if ($order->pay_type == 2) {
@@ -79,8 +74,25 @@ class OrderSelfMentioningForm extends OrderForm
             $user->save();
         }
 */
-        $cab = Cabinet::findOne(['id' => $order->cabinet_id]);
-        if ($cab->cabinet_id != $this->machineId){
+        $order = Order::findOne([
+            'store_id' => $this->store_id,
+            'order_no' => $this->orderNo,
+            'is_delete' => 0,
+        ]);
+        if (!$order) {
+            return [
+                'code' => 1,
+                'msg' => '主订单不存在'
+            ];
+        }
+        if ($order->put_status == 3){
+            return [
+                'code' => 1,
+                'msg' => '商品已被取出'
+            ];
+        }
+        $cab = Cabinet::findOne(['cabinet_id' => $this->machineId]);
+        if (!$cab){
             return [
                 'code' => 1,
                 'msg' => '云柜错误'
@@ -103,21 +115,38 @@ class OrderSelfMentioningForm extends OrderForm
         $content['address'] = $cabInfo;
         $content['code'] = $this->pickupCode;
         $content = json_encode($content, true);
-        $order->put_status = 2;
-        if ($order->save()) {
-            $printer_order = new PinterOrder($this->store_id, $order->id, 'confirm', 0);
-            $a = $this->sendSms($order->mobile, $this->store_id, $content);
-            $res = $printer_order->print_order();
+        $subOrder->put_status = $this->status;
+        if ($subOrder->save()) {
+//            $subLists = OrderSub::find()->where(['origin_order_no' => $this->orderNo])->asArray()->all();
+//            $sum = 0;
+//            foreach ($subLists as $subList){
+//                if ($subList['put_status'] != $this->status){
+//                    $sum += 1;
+//                }
+//            }
+//            if ($sum == 0){
+//                $order->put_status = $this->status;
+////                if (!$order->save()){
+////                    $t->rollBack();
+////                    return [
+////                        'code' => 1,
+////                        'msg' => '业务执行失败'
+////                    ];
+////                }
+//            }
+            //$printer_order = new PinterOrder($this->store_id, $order->id, 'confirm', 0);
+            //$a = $this->sendSms($order->mobile, $this->store_id, $content);
+            //$res = $printer_order->print_order();
             $wechatAccessToken = $this->getWechat()->getAccessToken();
             //$res = CommonShoppingList::updateBuyGood($wechatAccessToken, $order, 0, 100);
             return [
                 'code' => 0,
-                'msg' => '已放入自提柜'
+                'msg' => '业务执行成功!'
             ];
         } else {
             return [
                 'code' => 1,
-                'msg' => '放入自提柜失败'
+                'msg' => '业务执行失败!'
             ];
         }
 

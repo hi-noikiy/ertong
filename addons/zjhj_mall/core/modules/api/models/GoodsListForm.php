@@ -82,6 +82,7 @@ class GoodsListForm extends ApiModel
                 ]
             );
         }
+        $query->andWhere(['>', 'goods_num', 0]);
         if ($this->max_price && $this->mini_price){
             $query->andWhere(['>=', 'g.price', $this->mini_price]);
             $query->andWhere(['<=', 'g.price', $this->max_price]);

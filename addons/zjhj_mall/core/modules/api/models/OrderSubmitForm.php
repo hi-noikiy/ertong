@@ -24,6 +24,7 @@ use app\models\Option;
 use app\models\Order;
 use app\models\OrderDetail;
 use app\models\OrderForm;
+use app\models\OrderSub;
 use app\models\PostageRules;
 use app\models\FreeDeliveryRules;
 use app\models\PrinterSetting;
@@ -31,7 +32,9 @@ use app\models\Store;
 use app\models\User;
 use app\models\UserCoupon;
 use app\modules\api\controllers\OrderController;
+use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\utils\PinterOrder;
+use phpDocumentor\Reflection\Types\Self_;
 use yii\helpers\VarDumper;
 use app\models\TerritorialLimitation;
 use app\models\Register;
@@ -970,46 +973,130 @@ class OrderSubmitForm extends OrderData
                     $register->save();
                     $user->save();
                 }
-                $goods_total_pay_price = $order->pay_price - $order->express_price;
-                $goods_total_price = 0.00;
-                foreach ($goods_list as $goods) {
-                    $goods_total_price += $goods->price;
-                }
-                foreach ($goods_list as $goods) {
-                    $order_detail = new OrderDetail();
-                    $order_detail->order_id = $order->id;
-                    $order_detail->goods_id = $goods->goods_id;
-                    $order_detail->num = $goods->num;
-                    $order_detail->total_price = doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
-                    $order_detail->addtime = time();
-                    $order_detail->is_delete = 0;
-                    $order_detail->attr = json_encode($goods->attr_list, JSON_UNESCAPED_UNICODE);
-                    $order_detail->pic = $goods->goods_pic;
-                    $order_detail->integral = $goods->give;
+                //创建子订单
+                //根据商品
+                $cabGroup = self::array_group_by($goods_list,'storage_type');
+                foreach ($cabGroup as $k=>$goodsLists){
+                    $subPrice = 0.00;
+                    $order_sub = new OrderSub();
+                    $goods_total_pay_price = $order->pay_price - $order->express_price;
+                    $goods_total_price = 0.00;
+                    foreach ($goods_list as $goods) {
+                        $goods_total_price += $goods->price;
 
-                    $attr_id_list = [];
-                    foreach ($goods->attr_list as $item) {
-                        array_push($attr_id_list, $item['attr_id']);
                     }
-                    $_goods = Goods::findOne($goods->goods_id);
-                    if (!$_goods->numSub($attr_id_list, $order_detail->num)) {
+                    foreach ($goodsLists as $goods){
+                        $subPrice += doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
+                    }
+                    $order_sub->store_id = $this->store_id;
+                    $order_sub->user_id = $this->user_id;
+                    $order_sub->order_no = $this->getOrderNo();
+                    $order_sub->cabinet_id = $this->cabinet_id;
+                    $order_sub->service_day = $this->service_day;
+                    $order_sub->service_time = $this->service_time;
+                    $order_sub->pay_price = $subPrice;
+                    $order_sub->order_id = $order->id;
+                    $order_sub->total_price = $subPrice;
+                    $order_sub->discount = $discount;
+                    $order_sub->addtime = time();
+                    if ($this->offline == 0) {
+                        $order_sub->address = $address->province . $address->city . $address->district . $address->detail;
+                        $order_sub->mobile = $address->mobile;
+                        $order_sub->name = $address->name;
+                        $order_sub->address_data = json_encode([
+                            'province' => $cabinet->province,
+                            'city' => $cabinet->city,
+                            'district' => $address->district,
+                            'detail' => $cabinet->address,
+                        ], JSON_UNESCAPED_UNICODE);
+                    } else {
+                        $order_sub->name = $this->address_name;
+                        $order_sub->mobile = $this->address_mobile;
+                        $order_sub->shop_id = $this->shop_id;
+                    }
+                    $order_sub->first_price = 0;
+                    $order_sub->second_price = 0;
+                    $order_sub->third_price = 0;
+                    $order_sub->content = $this->content;
+                    $order_sub->is_offline = $this->offline;
+                    $order_sub->integral = json_encode($resIntegral, JSON_UNESCAPED_UNICODE);
+                    $order_sub->version = $this->version;
+                    $order_sub->origin_order_no = $order->order_no;
+                    if ($this->payment == 2) {
+                        $order_sub->pay_type = 2;
+                        $order_sub->is_pay = 0;
+                    }
+                    if ($this->payment == 3) {
+                        $order_sub->pay_type = 3;
+                        $order_sub->is_pay = 0;
+                    }
+                    if (!$order_sub->save()){
                         $t->rollBack();
                         return [
                             'code' => 1,
-                            'msg' => '订单提交失败，商品“' . $_goods->name . '”库存不足',
-                            'attr_id_list' => $attr_id_list,
-                            'attr_list' => $goods->attr_list,
+                            'msg' => '订单提交失败，请稍后再重试!',
                         ];
                     }
+                    if ($k == 1){
+                        $coolType = 0;
+                    }
+                    if ($k == 2){
+                        $coolType = 1;
+                    }
+                    if ($k == 3){
+                        $coolType = 2;
+                    }
+                    $emptyData = $this->queryEmptyCell($cabinet->cabinet_id, $coolType);
 
-                    if (!$order_detail->save()) {
+                    $re = $this->createOrder($goodsLists, $order->order_no, $order_sub->order_no, $cabinet->cabinet_id, $coolType);
+                    if ($re['code'] != 0){
                         $t->rollBack();
                         return [
                             'code' => 1,
-                            'msg' => '订单提交失败，请稍后再重试',
+                            'msg' => $re['message'],
                         ];
                     }
+
+                    foreach ($goodsLists as $goods) {
+                        $order_detail = new OrderDetail();
+                        $order_detail->order_id = $order->id;
+                        $order_detail->goods_id = $goods->goods_id;
+                        $order_detail->num = $goods->num;
+                        $order_detail->total_price = doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
+                        //$subPrice += doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
+                        $order_detail->addtime = time();
+                        $order_detail->is_delete = 0;
+                        $order_detail->attr = json_encode($goods->attr_list, JSON_UNESCAPED_UNICODE);
+                        $order_detail->pic = $goods->goods_pic;
+                        $order_detail->integral = $goods->give;
+                        $order_detail->order_sub_id = $order_sub->id;
+                        $attr_id_list = [];
+                        foreach ($goods->attr_list as $item) {
+                            array_push($attr_id_list, $item['attr_id']);
+                        }
+                        $_goods = Goods::findOne($goods->goods_id);
+                        if (!$_goods->numSub($attr_id_list, $order_detail->num)) {
+                            $t->rollBack();
+                            return [
+                                'code' => 1,
+                                'msg' => '订单提交失败，商品“' . $_goods->name . '”库存不足',
+                                'attr_id_list' => $attr_id_list,
+                                'attr_list' => $goods->attr_list,
+                            ];
+                        }
+
+                        if (!$order_detail->save()) {
+                            $t->rollBack();
+                            return [
+                                'code' => 1,
+                                'msg' => '订单提交失败，请稍后再重试',
+                            ];
+                        }
+                    }
+
+
                 }
+
                 $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 0);
                 $res = $printer_order->print_order();
                 $order_id_list[] = $order->id;
@@ -1134,7 +1221,6 @@ class OrderSubmitForm extends OrderData
             'is_delete' => 0,
             'id' => json_decode($cart_id_list, true),
         ])->all();
-        //var_dump($this->user_id);die;
         $list = [];
         $total_price = 0;
         $new_cart_id_list = [];
@@ -1154,6 +1240,7 @@ class OrderSubmitForm extends OrderData
                 'is_delete' => 0,
                 'status' => 1,
             ]);
+
             if (!$goods) {
                 continue;
             }
@@ -1191,6 +1278,7 @@ class OrderSubmitForm extends OrderData
                 'weight' => $goods->weight,
                 'full_cut' => $goods->full_cut,
                 'mch_id' => $goods->mch_id,
+                'storage_type' => $goods->storage_type
             ];
             $new_goods = [
                 'goods_id' => $goods->id,
@@ -1201,6 +1289,7 @@ class OrderSubmitForm extends OrderData
                 'full_cut' => $goods->full_cut,
                 'price' => $new_item->price,
                 'mch_id' => $goods->mch_id,
+                'storage_type' => $goods->storage_type
             ];
             $goodsList[] = $new_goods;
             //积分计算
@@ -1396,6 +1485,7 @@ class OrderSubmitForm extends OrderData
             'weight' => $goods->weight,
             'full_cut' => $goods->full_cut,
             'mch_id' => $goods->mch_id,
+            'storage_type' => $goods->storage_type
         ];
 
         //积分计算
@@ -1622,4 +1712,59 @@ class OrderSubmitForm extends OrderData
         }
         return $form_list;
     }
+
+    public static function array_group_by($arr, $key)
+    {
+        $grouped = [];
+        foreach ($arr as $value) {
+            $grouped[$value->$key][] = $value;
+        }
+        // Recursively build a nested grouping if more parameters are supplied
+        // Each grouped array value is grouped according to the next sequential key
+        if (func_num_args() > 2) {
+            $args = func_get_args();
+            foreach ($grouped as $key => $value) {
+                $parms = array_merge([$value], array_slice($args, 2, func_num_args()));
+                $grouped[$key] = call_user_func_array('array_group_by', $parms);
+            }
+        }
+        return $grouped;
+    }
+
+    /**
+     * 操作云柜
+     */
+    protected function queryEmptyCell($machineId, $coolType, $timestamp = null, $sign = null){
+        $cabPlatform = new CabinetPlatForm($machineId);
+
+        $result = $cabPlatform->queryEmptyCell($coolType);
+        return $result;
+    }
+
+    /**
+     * @param $orderNo
+     * @param $machineId
+     * @param $delivers
+     * @param $total
+     * @return mixed
+     * @desc 创建订单
+     */
+    protected function createOrder($goods, $orderNo, $orderSubNo, $machineId, $coolTyep){
+        $cabPlatform = new CabinetPlatForm($machineId);
+        $goodsName = [];
+        $total = 0;
+        foreach ($goods as $k => $good) {
+            $goodsName[] = $good->goods_name;
+            $total += $good->num;
+        }
+        $goodStr = implode('|', $goodsName);
+        $delivers = [];
+        $delivers['deliverNo'] = $orderSubNo;
+        $delivers['coolType'] = $coolTyep;
+        $delivers['goods'] = $goodStr;
+        $delivers['quantity'] = $total;
+        $result = $cabPlatform->createOrder($orderNo,$delivers,$total);
+        return $result;
+    }
+
 }

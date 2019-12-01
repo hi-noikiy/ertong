@@ -14,6 +14,7 @@ use app\models\Option;
 use app\models\Order;
 use app\models\OrderDetail;
 use app\models\OrderRefund;
+use app\models\OrderSub;
 use yii\data\Pagination;
 use yii\helpers\VarDumper;
 
@@ -123,6 +124,35 @@ class OrderListForm extends ApiModel
                     'logo' => '',
                 ];
             }
+            $orderSubLists = OrderSub::find()->where(['origin_order_no' => $order->order_no])->asArray()->all();
+
+            $orderSubdetail = [];
+            foreach ($orderSubLists as $k => $orderSubList){
+                $orderSubdetail[$k]['order_no'] = $orderSubList['order_no'];
+                $orderSubdetail[$k]['total_price'] = $orderSubList['total_price'];
+                $orderSubdetail[$k]['pay_price'] = $orderSubList['pay_price'];
+                $orderSubdetail[$k]['put_status'] = $orderSubList['put_status'];
+                $order_detail_sub_list = OrderDetail::findAll(['order_sub_id' => $orderSubList['id'], 'is_delete' => 0]);
+                $goods_sub_list = [];
+                foreach ($order_detail_sub_list as $order_sub_detail) {
+                    $goods = Goods::findOne($order_sub_detail->goods_id);
+                    if (!$goods) {
+                        continue;
+                    }
+                    $goods_sub_pic = isset($order_sub_detail->pic) ? $order_sub_detail->pic ?: $goods->getGoodsPic(0)->pic_url : $goods->getGoodsPic(0)->pic_url;
+                    $goods_sub_list[] = (object)[
+                        'goods_id' => $goods->id,
+                        'goods_pic' => $goods_sub_pic,
+//                    'goods_pic' => $goods->getGoodsPic(0)->pic_url,
+                        'goods_name' => $goods->name,
+                        'num' => $order_sub_detail->num,
+                        'price' => $order_sub_detail->total_price,
+                        'attr_list' => json_decode($order_sub_detail->attr),
+                    ];
+                }
+                $orderSubdetail[$k]['goods_list'] = $goods_sub_list;
+
+            }
             $orderRefund = OrderRefund::find()->where(['store_id' => $order->store_id, 'order_id' => $order->id])->exists();
             $status = "";
             $order_status = null;
@@ -166,7 +196,8 @@ class OrderListForm extends ApiModel
                 'refund' => $orderRefund,
                 'currency' => $order->currency,
                 'status' => $status,
-                'order_status' => $order_status
+                'order_status' => $order_status,
+                'order_sub' => $orderSubdetail
             ];
         }
         $pay_type_list = OrderData::getPayType($this->store_id, array(), ['huodao']);

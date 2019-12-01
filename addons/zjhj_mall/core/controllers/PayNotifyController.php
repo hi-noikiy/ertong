@@ -17,6 +17,7 @@ use app\models\MsOrder;
 use app\models\Option;
 use app\models\Order;
 use app\models\OrderDetail;
+use app\models\OrderSub;
 use app\models\OrderUnion;
 use app\models\OrderWarn;
 use app\models\PtGoods;
@@ -124,10 +125,32 @@ class PayNotifyController extends Controller
             $form->order_type = 0;
             $form->notify();
             echo 'success';
+            $this->updateSubOrder($res['out_trade_no']);
+
             return;
         } else {
             echo "支付失败";
             return;
+        }
+    }
+
+    public function updateSubOrder($out_trade_no){
+        $orderSubLists = OrderSub::find()->where(['origin_order_no' => $out_trade_no])->asArray()->all();
+        if (!$orderSubLists){
+            return ;
+        }
+        foreach ($orderSubLists as $k => $orderSubList){
+            $orderSub = OrderSub::findOne(['id' => $orderSubList['id']]);
+            $orderSub->is_pay = 1;
+            $orderSub->pay_time = time();
+            $orderSub->pay_type = 1;
+            $orderSub->is_cancel = 0;
+            $orderSub->is_delete = 0;
+            if (!$orderSub->save()){
+                echo "子订单写入失败";
+                return;
+            }
+
         }
     }
 
@@ -203,6 +226,7 @@ class PayNotifyController extends Controller
             $form->order_type = 0;
             $form->notify();
             echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+            $this->updateSubOrder($res['out_trade_no']);
             return;
         } else {
             echo "支付失败";

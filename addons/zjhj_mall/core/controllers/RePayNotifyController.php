@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 use app\models\LevelOrder;
+use app\models\OrderSub;
 use app\models\ReOrder;
 use app\models\Store;
 use app\models\User;
@@ -104,7 +105,22 @@ class RePayNotifyController extends Controller
         }
     }
 
+    public function updateSubOrder($out_trade_no){
+        $orderSubLists = OrderSub::find()->where(['origin_order_no' => $out_trade_no])->asArray()->all();
+        foreach ($orderSubLists as $k => $orderSubList){
+            $orderSub = OrderSub::findOne(['id' => $orderSubList['id']]);
+            $orderSub->is_pay = 1;
+            $orderSub->pay_time = time();
+            $orderSub->pay_type = 1;
+            $orderSub->is_cancel = 0;
+            $orderSub->is_delete = 0;
+            if (!$orderSub->save()){
+                echo "子订单写入失败";
+                return;
+            }
 
+        }
+    }
     private function wechatPayNotify($res)
     {
         if ($res['result_code'] != 'SUCCESS' && $res['return_code'] != 'SUCCESS') {

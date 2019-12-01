@@ -13,6 +13,7 @@ use app\hejiang\BaseApiResponse;
 use app\models\ActionLog;
 use app\models\Model;
 use app\models\Order;
+use app\models\OrderSub;
 use app\modules\api\behaviors\LoginBehavior;
 use app\modules\api\models\ExpressDetailForm;
 use app\modules\api\models\LocationForm;
@@ -279,6 +280,7 @@ class OrderController extends Controller
     }
 
     public function actionCreate(){
+        var_dump(pay_notify_url('/pay-notify.php'));die;
         $orderNo =  \Yii::$app->request->post('order_no');
         //$goods = \Yii::$app->request->get('goods');
         $machineId = \Yii::$app->request->post('machineId');
@@ -298,7 +300,7 @@ class OrderController extends Controller
         );
         $createArr = [
             'machineId' => $machineId,
-            'order_no' => $orderNo,
+            'orderNo' => $orderNo,
             'delivers' => $delivers,
             'total' => $total
         ];
@@ -309,6 +311,7 @@ class OrderController extends Controller
             $authorizToken=$result_array['data']['authorizToken'];
         }
         $locationUrl="http://open.iwuyi.net/api/express/createOrder";
+        //var_dump($createArr);die;
         $list = $this->getCurl($locationUrl, json_encode($createArr), $authorizToken);
         $list = json_decode($list, true);
         return new BaseApiResponse($list);

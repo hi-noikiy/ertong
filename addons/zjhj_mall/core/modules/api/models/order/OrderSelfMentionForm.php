@@ -29,11 +29,12 @@ class OrderSelfMentionForm extends OrderForm
     public $orderNo;
     public $pickupCode;
     public $machineId;
+    public $status;
 
     public function rules()
     {
         return [
-            [['orderNo', 'pickupCode', 'machineId'], 'required'],
+            [['orderNo', 'pickupCode', 'machineId', 'status'], 'required'],
         ];
     }
 
@@ -72,7 +73,7 @@ class OrderSelfMentionForm extends OrderForm
             $user->save();
         }
 */
-        $cab = Cabinet::findOne(['id' => $order->cabinet_id]);
+        $cab = Cabinet::findOne(['cabinet_id' => $this->machineId]);
         if ($this->machineId != $cab->cabinet_id){
             return
             [
@@ -90,26 +91,40 @@ class OrderSelfMentionForm extends OrderForm
             $goods = \app\models\Goods::findOne(['id' => $value['goods_id']]);
             $goods_name[] = $goods->name;
         }
+        $cabInfo = $cab->address;
         //$goods_name = implode('、', $goods_name);
         //$content = '亲，您购买的'.$goods_name.'已存放到'.$cabInfo.'，提货码为'.$this->pickupCode.'，请及时取出。';
-        $order->put_status = 3;
+        $content['name'] = $goods_name;
+        $content['address'] = $cabInfo;
+        $content['code'] = $this->pickupCode;
+        $content = json_encode($content, true);
+        $order->put_status = $this->status;
 
         if ($order->save()) {
             $printer_order = new PinterOrder($this->store_id, $order->id, 'confirm', 0);
-            //$a = $this->sendSms($order->mobile, $this->store_id, $content);
+            if ($this->status == 2){
+                $a = $this->sendSms($order->mobile, $this->store_id, $content);
+            }
             $res = $printer_order->print_order();
             $wechatAccessToken = $this->getWechat()->getAccessToken();
            //$res = CommonShoppingList::updateBuyGood($wechatAccessToken, $order, 0, 100);
+
             return [
                 'code' => 0,
-                'msg' => '已取出'
+                'msg' => '业务执行成功'
             ];
         } else {
             return [
                 'code' => 1,
-                'msg' => '取出失败'
+                'msg' => '业务执行失败'
             ];
         }
 
+    }
+
+    public function sendSms($mobile, $store_id, $content){
+        $form = new Sms();
+        //$content = '亲，您购买的正大鸡蛋、三全水饺已存放到上海市静安区456号云柜，提货码为46478912，请及时取出。';
+        $form->sendSms($store_id, $content, $mobile, 'SMS_176942676');
     }
 }

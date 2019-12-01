@@ -18,6 +18,7 @@ use Yii;
  * @property string $pic
  * @property string $integral
  * @property integer $is_level
+ * @property integer $order_sub_id
  */
 class OrderDetail extends \yii\db\ActiveRecord
 {
@@ -36,7 +37,7 @@ class OrderDetail extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'goods_id', 'attr', 'pic'], 'required'],
-            [['order_id', 'goods_id', 'num', 'addtime', 'is_delete', 'integral', 'is_level'], 'integer'],
+            [['order_id', 'goods_id', 'num', 'addtime', 'is_delete', 'integral', 'is_level', 'order_sub_id'], 'integer'],
             [['total_price'], 'number'],
             [['attr'], 'string'],
             [['pic'], 'string', 'max' => 255],
@@ -60,6 +61,7 @@ class OrderDetail extends \yii\db\ActiveRecord
             'pic' => '商品规格图片',
             'integral' => '获取积分',
             'is_level' => '会员折扣',
+            'order_sub_id' => '子订单id'
         ];
     }
 
