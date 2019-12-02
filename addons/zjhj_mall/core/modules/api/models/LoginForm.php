@@ -134,7 +134,6 @@ class LoginForm extends ApiModel
             } else {
                 $data = json_decode($data, true);
             }
-            $binding=isset($data['binding'])?$data['binding']:'';
             $user = User::findOne(['wechat_open_id' => $data['openId'], 'store_id' => $this->store_id]);
             if (!$user) {
                 $user = new User();
@@ -152,7 +151,6 @@ class LoginForm extends ApiModel
                 $user->store_id = $this->store_id;
                 $user->invitation_code = mt_rand(100000, 999999);
                 $user->platform = 0; // 微信
-                $user->binding = $binding;
                 $user->save();
                 $same_user = User::find()->select('id')->where([
                     'AND',
