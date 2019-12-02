@@ -7,6 +7,7 @@ namespace app\modules\api\controllers;
 use app\hejiang\BaseApiResponse;
 use app\models\Cabinet;
 use app\modules\api\behaviors\LoginBehavior;
+use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\modules\api\models\CabinetListForm;
 
 class CabinetController extends Controller
@@ -40,5 +41,26 @@ class CabinetController extends Controller
         $form->store_id = $this->store->id;
         $form->user_id = \Yii::$app->user->id;
         return new BaseApiResponse($form->search());
+    }
+
+    public function actionApiList(){
+        $platform = new CabinetPlatForm(null);
+        $re = $platform->getList();
+        $data = [];
+        if ($re['code'] == 0){
+            $data = [
+                'code' => 0,
+                'msg' => '列表获取成功',
+                'data' => (object)[
+                    'order_id' => $re['data'],
+                ],
+            ];
+        }else{
+            $data = [
+                'code' => 1,
+                'msg' => $re['message']
+            ];
+        }
+        return new BaseApiResponse($data);
     }
 }

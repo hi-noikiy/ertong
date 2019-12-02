@@ -10,6 +10,7 @@ namespace app\modules\api\models;
 
 use Alipay\AlipayRequestFactory;
 use app\models\OrderUnion;
+use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\utils\Refund;
 use app\utils\SendMail;
 use app\utils\Sms;
@@ -132,6 +133,15 @@ class OrderRevokeForm extends ApiModel
             $log->order_id = $order->id;
             $log->order_type = 4;
             $log->save();
+        }
+        $cabinetPlatform = new CabinetPlatForm(null);
+        $re = $cabinetPlatform->cancelOrder($order->order_no);
+        if ($re['code'] !=0){
+            $t->rollBack();
+            return [
+                'code' => 1,
+                'msg' => $re['message']
+            ];
         }
         if (!$user->save()) {
             $register = new Register();

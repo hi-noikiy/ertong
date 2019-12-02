@@ -21,6 +21,7 @@ class CabinetPlatForm
         'createOrder' => self::URI.'/api/express/createOrder',
         'cancelOrder' => self::URI.'/api/express/cancelOrder',
         'queryOrderDetail' => self::URI.'/api/express/queryOrderDetail',
+        'list' => self::URI.'/api/machine/machineList'
 
     ];
 
@@ -111,6 +112,11 @@ class CabinetPlatForm
 
     }
 
+    public function getList(){
+        $url = self::$url['list'];
+        $result = $this->call($url,'', $this->login());
+        return $result;
+    }
 
     public function getCurl($url, $jsonStr, $authorizToken=null){
         if(isset($authorizToken)){
