@@ -936,6 +936,10 @@ class OrderSubmitForm extends OrderData
             $order->third_price = 0;
             $order->content = $this->content;
             $order->is_offline = $this->offline;
+            $userInfo = User::findOne(['id' => $this->user_id]);
+            if ($userInfo->binding){
+                $order->mobile = $userInfo->binding;
+            }
             $order->integral = json_encode($resIntegral, JSON_UNESCAPED_UNICODE);
             $order->version = $this->version;
             if ($this->payment == 2) {
