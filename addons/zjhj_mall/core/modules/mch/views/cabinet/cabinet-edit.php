@@ -29,9 +29,9 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                 </div>
                 <div class="col-sm-6">
                     <?php if ($list['cabinet_id']): ?>
-                        <input class="form-control" type="text" name="model[cabinet_id]" value="<?= $list['cabinet_id'] ?>" maxlength="12" readonly>
+                        <input class="form-control" type="text" name="model[cabinet_id]" value="<?= $list['cabinet_id'] ?>" maxlength="16" readonly>
                     <?php else : ?>
-                        <input class="form-control" type="text" name="model[cabinet_id]" value="<?= $list['cabinet_id'] ?>" maxlength="12">
+                        <input class="form-control" type="text" name="model[cabinet_id]" value="<?= $list['cabinet_id'] ?>" maxlength="16">
                     <?php endif; ?>
                     
                 </div>
