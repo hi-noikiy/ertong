@@ -8,16 +8,19 @@
 
 namespace app\modules\mch\models;
 
+use app\models\Cabinet;
 use app\models\common\api\CommonShoppingList;
 use app\models\Express;
 use app\models\FormId;
 use app\models\Goods;
 use app\models\Order;
 use app\models\OrderDetail;
+use app\models\OrderSub;
 use app\models\Store;
 use app\models\User;
 use app\models\WechatTemplateMessage;
 use app\models\WechatTplMsgSender;
+use app\utils\Sms;
 use app\utils\TaskCreate;
 
 class OrderSendForm extends MchModel
@@ -168,8 +171,32 @@ class OrderSendForm extends MchModel
         $order->words = $this->words;
         $order->is_send = 1;
         $order->send_time = time();
+        $orderDetails = OrderDetail::find()->where(
+            [
+                'order_id' => $order->id,
+            ]
+        )->asArray()->all();
+        $goods_name = [];
+        foreach ($orderDetails as $k => $value){
+            $goods = \app\models\Goods::findOne(['id' => $value['goods_id']]);
+            $goods_name[] = $goods->name;
+        }
+        $content = [];
+        $content['name'] = $goods_name;
+        $content = json_encode($content, true);
         if ($order->save()) {
             try {
+                $orderSubs = OrderSub::find()->where(['origin_order_no' => $order->order_no])->asArray()->all();
+                foreach ($orderSubs as $orderSub){
+                    $order_sub = OrderSub::findOne(['id' => $orderSub['id']]);
+                    $order_sub->is_send = 1;
+                    if ($order_sub->save()){
+                        $msg = [
+                            'code' => 0,
+                            'msg' => '成功',
+                        ];
+                    }
+                }
                 $wechat_tpl_meg_sender = new WechatTplMsgSender($this->store_id, $order->id, $this->getWechat());
                 $wechat_tpl_meg_sender->sendMsg();
             } catch (\Exception $e) {
@@ -179,6 +206,8 @@ class OrderSendForm extends MchModel
             TaskCreate::orderConfirm($order->id, 'STORE');
             $wechatAccessToken = $this->getWechat()->getAccessToken();
             $res = CommonShoppingList::updateBuyGood($wechatAccessToken, $order, 0, 4);
+            $a = $this->sendSms($order->mobile,$this->store_id,$content);
+
             return [
                 'code' => 0,
                 'msg' => '发货成功',
@@ -189,6 +218,19 @@ class OrderSendForm extends MchModel
                 'msg' => '操作失败',
             ];
         }
+    }
+
+    /**
+     * @param $mobile
+     * @param $store_id
+     * @param $content
+     * @desc 发货短信通知
+     */
+
+    public function sendSms($mobile, $store_id, $content){
+        $form = new Sms();
+        $re = $form->sendSms($store_id, $content, $mobile, 'SMS_176912718');
+        return $re;
     }
 
     /**
