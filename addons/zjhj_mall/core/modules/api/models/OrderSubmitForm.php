@@ -1060,7 +1060,7 @@ class OrderSubmitForm extends OrderData
                     if ($k == 3){
                         $coolType = 2;
                     }
-                    $emptyData = $this->queryEmptyCell($cabinet->cabinet_id, $coolType);
+                    //$emptyData = $this->queryEmptyCell($cabinet->cabinet_id, $coolType);
                     $dev[$k]['deliverNo'] = $subOrderNo;
                     $dev[$k]['coolType'] = $coolType;
                     $goodStr = implode('|', $devGoodsName);

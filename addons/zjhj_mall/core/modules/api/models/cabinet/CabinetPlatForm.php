@@ -37,12 +37,10 @@ class CabinetPlatForm
 
     }
 
-    public function sign(){
+    public function sign($data){
         $timestamp=time();
-        $sign_array=array(
-            'machineId'=>$this->mch_id,
-            'timestamp'=>$timestamp,
-        );
+        $sign_array=$data;
+        $data['timestamp'] = $timestamp;
         $sign_str='';
         ksort($sign_array);
         foreach ($sign_array as $key => $val) {
@@ -72,7 +70,7 @@ class CabinetPlatForm
         if (empty($timestamp)){
             $timestamp = time();
         }
-        $data['sign'] = $this->sign();
+        $data['sign'] = $this->sign($data);
         $data['timestamp'] = $timestamp;
         //var_dump($data, $this->login());die;
 
@@ -102,7 +100,7 @@ class CabinetPlatForm
         $url = self::$url['orderDetail'];
         $data = [];
         $data['orderNo'] = $orderNo;
-        $data['sign'] = $this->sign();
+        $data['sign'] = $this->sign($data);
         $result = $this->call($url, json_encode($data), $this->login());
         return $result;
     }
@@ -116,7 +114,7 @@ class CabinetPlatForm
         $url = self::$url['cancelOrder'];
         $data = [];
         $data['orderNo'] = $orderNo;
-        $data['sign'] = $this->sign();
+        $data['sign'] = $this->sign($data);
         $result = $this->call($url, json_encode($data), $this->login());
         return $result;
 
@@ -155,7 +153,6 @@ class CabinetPlatForm
 
     public function call($url, $jsonStr, $authorizToken=null){
         $result = $this->getCurl($url, $jsonStr, $authorizToken);
-
         $resultArr = json_decode($result, true);
 
         return $resultArr;
