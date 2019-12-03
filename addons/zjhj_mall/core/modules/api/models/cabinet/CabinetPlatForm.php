@@ -113,7 +113,7 @@ class CabinetPlatForm
      * @desc 取消订单
      */
     public function cancelOrder($orderNo){
-        $url = self::$url['createOrder'];
+        $url = self::$url['cancelOrder'];
         $data = [];
         $data['orderNo'] = $orderNo;
         $data['sign'] = $this->sign();
@@ -150,12 +150,12 @@ class CabinetPlatForm
         $response = curl_exec($ch);
         //$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-
         return $response;
     }
 
     public function call($url, $jsonStr, $authorizToken=null){
         $result = $this->getCurl($url, $jsonStr, $authorizToken);
+
         $resultArr = json_decode($result, true);
 
         return $resultArr;
