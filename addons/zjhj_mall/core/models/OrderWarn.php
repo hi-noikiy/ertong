@@ -127,11 +127,32 @@ class OrderWarn extends Model
         }
     }
 
+    public function sendSms($mobile, $store_id, $content){
+        $form = new Sms();
+        $re = $form->sendSms($store_id, $content, $mobile, 'SMS_179285287');
+        return $re;
+    }
+
     //商城
     private function OrderNotify()
     {
         /* @var Order $order */
         $order = $this->order = Order::findOne(['id' => $this->order_id]);
+        $orderDetails = OrderDetail::find()->where(
+            [
+                'order_id' => $order->id,
+            ]
+        )->asArray()->all();
+        $goods_name = [];
+        foreach ($orderDetails as $k => $value){
+            $goods = \app\models\Goods::findOne(['id' => $value['goods_id']]);
+            $goods_name[] = $goods->name;
+        }
+        //$goods_name = implode('、', $goods_name);
+        //$content = '亲，您购买的'.$goods_name.'已存放到'.$cabInfo.'，提货码为'.$this->pickupCode.'，请及时取出。';
+        $content['name'] = $goods_name;
+        $content = json_encode($content, true);
+        $this->sendSms($order->mobile,$this->store_id,$content);
         $this->updateFormIdIsUsable($order->order_no);
         //余额支付记录保存
         if ($order->pay_type == 3) {
