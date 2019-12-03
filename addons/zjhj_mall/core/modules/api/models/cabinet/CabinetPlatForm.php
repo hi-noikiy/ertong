@@ -21,7 +21,8 @@ class CabinetPlatForm
         'createOrder' => self::URI.'/api/express/createOrder',
         'cancelOrder' => self::URI.'/api/express/cancelOrder',
         'queryOrderDetail' => self::URI.'/api/express/queryOrderDetail',
-        'list' => self::URI.'/api/machine/machineList'
+        'list' => self::URI.'/api/machine/machineList',
+        'orderDetail' => self::URI.'/api/express/queryOrderDetail',
 
     ];
 
@@ -95,6 +96,15 @@ class CabinetPlatForm
         $result = $this->call($url, json_encode($data), $this->login());
         return $result;
 
+    }
+
+    public function detail($orderNo){
+        $url = self::$url['orderDetail'];
+        $data = [];
+        $data['orderNo'] = $orderNo;
+        $data['sign'] = $this->sign();
+        $result = $this->call($url, json_encode($data), $this->login());
+        return $result;
     }
 
     /**

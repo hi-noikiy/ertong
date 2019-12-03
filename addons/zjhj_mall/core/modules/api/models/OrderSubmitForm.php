@@ -992,9 +992,10 @@ class OrderSubmitForm extends OrderData
                     foreach ($goodsLists as $goods){
                         $subPrice += doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
                     }
+                    $subOrderNo = $this->getOrderNo();
                     $order_sub->store_id = $this->store_id;
                     $order_sub->user_id = $this->user_id;
-                    $order_sub->order_no = $this->getOrderNo();
+                    $order_sub->order_no = $subOrderNo;
                     $order_sub->cabinet_id = $this->cabinet_id;
                     $order_sub->service_day = $this->service_day;
                     $order_sub->service_time = $this->service_time;
@@ -1052,7 +1053,7 @@ class OrderSubmitForm extends OrderData
                     }
                     $emptyData = $this->queryEmptyCell($cabinet->cabinet_id, $coolType);
 
-                    $re = $this->createOrder($goodsLists, $order->order_no, $order_sub->order_no, $cabinet->cabinet_id, $coolType);
+                    $re = $this->createOrder($goodsLists, $order->order_no, $subOrderNo, $cabinet->cabinet_id, $coolType);
                     if ($re['code'] != 0){
                         $t->rollBack();
                         return [
