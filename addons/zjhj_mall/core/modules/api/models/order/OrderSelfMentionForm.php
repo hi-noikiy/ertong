@@ -99,6 +99,7 @@ class OrderSelfMentionForm extends OrderForm
         $content['code'] = $this->pickupCode;
         $content = json_encode($content, true);
         $order->put_status = $this->status;
+        $order->put_code = $this->pickupCode;
 
         if ($order->save()) {
             $printer_order = new PinterOrder($this->store_id, $order->id, 'confirm', 0);
