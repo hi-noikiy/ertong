@@ -980,17 +980,25 @@ class OrderSubmitForm extends OrderData
                 //创建子订单
                 //根据商品
                 $cabGroup = self::array_group_by($goods_list,'storage_type');
+                $dev = [];
+                $allTotal = 0;
                 foreach ($cabGroup as $k=>$goodsLists){
                     $subPrice = 0.00;
                     $order_sub = new OrderSub();
                     $goods_total_pay_price = $order->pay_price - $order->express_price;
                     $goods_total_price = 0.00;
                     foreach ($goods_list as $goods) {
+                        $allTotal += 1;
                         $goods_total_price += $goods->price;
-
                     }
+                    $total = 0;
+                    $devGoodsName = [];
                     foreach ($goodsLists as $goods){
                         $subPrice += doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
+                        $devGoodsName[] = $goods->goods_name;
+                        $total += $goods->num;
+                        $total += 1;
+
                     }
                     $subOrderNo = $this->getOrderNo();
                     $order_sub->store_id = $this->store_id;
@@ -1042,6 +1050,7 @@ class OrderSubmitForm extends OrderData
                             'msg' => '订单提交失败，请稍后再重试!',
                         ];
                     }
+                    $coolType = 0;
                     if ($k == 1){
                         $coolType = 0;
                     }
@@ -1052,15 +1061,11 @@ class OrderSubmitForm extends OrderData
                         $coolType = 2;
                     }
                     $emptyData = $this->queryEmptyCell($cabinet->cabinet_id, $coolType);
-
-                    $re = $this->createOrder($goodsLists, $order->order_no, $subOrderNo, $cabinet->cabinet_id, $coolType);
-                    if ($re['code'] != 0){
-                        $t->rollBack();
-                        return [
-                            'code' => 1,
-                            'msg' => $re['message'],
-                        ];
-                    }
+                    $dev[$k]['deliverNo'] = $subOrderNo;
+                    $dev[$k]['coolType'] = $coolType;
+                    $goodStr = implode('|', $devGoodsName);
+                    $dev[$k]['goods'] = $goodStr;
+                    $dev[$k]['quantity'] = $total;
 
                     foreach ($goodsLists as $goods) {
                         $order_detail = new OrderDetail();
@@ -1100,6 +1105,14 @@ class OrderSubmitForm extends OrderData
                     }
 
 
+                }
+                $re = $this->createOrder($order->order_no, $cabinet->cabinet_id, $dev, $allTotal);
+                if ($re['code'] != 0){
+                    $t->rollBack();
+                    return [
+                        'code' => 1,
+                        'msg' => $re['message'],
+                    ];
                 }
 
                 $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 0);
@@ -1754,20 +1767,9 @@ class OrderSubmitForm extends OrderData
      * @return mixed
      * @desc 创建订单
      */
-    protected function createOrder($goods, $orderNo, $orderSubNo, $machineId, $coolTyep){
+    protected function createOrder($orderNo, $machineId, $delivers, $total){
         $cabPlatform = new CabinetPlatForm($machineId);
-        $goodsName = [];
-        $total = 0;
-        foreach ($goods as $k => $good) {
-            $goodsName[] = $good->goods_name;
-            $total += $good->num;
-        }
-        $goodStr = implode('|', $goodsName);
-        $delivers = [];
-        $delivers['deliverNo'] = $orderSubNo;
-        $delivers['coolType'] = $coolTyep;
-        $delivers['goods'] = $goodStr;
-        $delivers['quantity'] = $total;
+        $delivers = array_values($delivers);
         $result = $cabPlatform->createOrder($orderNo,$delivers,$total);
         return $result;
     }
