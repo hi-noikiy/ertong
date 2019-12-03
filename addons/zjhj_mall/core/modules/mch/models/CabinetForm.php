@@ -64,7 +64,7 @@ class CabinetForm extends MchModel
     public function save()
     {
        if ($this->validate()) {
-            $preg = "/^\d{1,12}$/";
+            $preg = "/^\d{1,16}$/";
             if (!$this->cabinet_id || $this->cabinet_id=='') {
                 return [
                     'code' => 1,

@@ -80,7 +80,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['type', 'addtime', 'is_delete', 'store_id', 'is_distributor', 'parent_id', 'time', 'is_clerk', 'we7_uid', 'shop_id', 'level', 'integral', 'total_integral', 'parent_user_id', 'servicer_id', 'is_enterprise'], 'integer'],
             [['username', 'password', 'auth_key', 'access_token', 'avatar_url'], 'required'],
-            [['avatar_url', 'binding', 'invitation_code'], 'string'],
+            [['avatar_url', 'binding'], 'string'],
             [['total_price', 'price', 'money', 'order_money'], 'number'],
             [['username', 'password', 'auth_key', 'access_token', 'wechat_open_id', 'wechat_union_id', 'nickname', 'contact_way', 'comments'], 'string', 'max' => 255],
             [['platform'], 'integer',],
