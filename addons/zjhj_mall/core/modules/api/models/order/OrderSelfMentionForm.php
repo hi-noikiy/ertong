@@ -20,6 +20,7 @@ use app\models\PrinterSetting;
 use app\models\User;
 use app\utils\Sms;
 use app\utils\TaskCreate;
+use yii\log\Logger;
 
 class OrderSelfMentionForm extends OrderForm
 {
@@ -105,8 +106,13 @@ class OrderSelfMentionForm extends OrderForm
             $printer_order = new PinterOrder($this->store_id, $order->id, 'confirm', 0);
             if ($this->status == 2){
                 $a = $this->sendSms($order->mobile, $this->store_id, $content);
+                $a['status'] = $this->status;
+                $log = json_encode($a);
+                //var_dump($log);die;
+                //$log = "www";
+                \Yii::getLogger()->log($log,Logger::LEVEL_WARNING,'update_order');
             }
-            $res = $printer_order->print_order();
+            //$res = $printer_order->print_order();
             $wechatAccessToken = $this->getWechat()->getAccessToken();
            //$res = CommonShoppingList::updateBuyGood($wechatAccessToken, $order, 0, 100);
 
@@ -126,6 +132,7 @@ class OrderSelfMentionForm extends OrderForm
     public function sendSms($mobile, $store_id, $content){
         $form = new Sms();
         //$content = '亲，您购买的正大鸡蛋、三全水饺已存放到上海市静安区456号云柜，提货码为46478912，请及时取出。';
-        $form->sendSms($store_id, $content, $mobile, 'SMS_176942676');
+        $re = $form->sendSms($store_id, $content, $mobile, 'SMS_176942676');
+        return $re;
     }
 }

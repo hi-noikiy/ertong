@@ -66,13 +66,19 @@ $config = [
             ],
         ],
         'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'enabled' => env('LOG_ENABLED', false),
-                    'levels' => env('LOG_LEVELS', ['error'], ','),
-                    'logVars' => env('LOG_VARS', [], ','),
-                    'logFile' => env('LOG_FILE', '@runtime/logs/app.log'),
+                    'levels' => ['error', 'warning'],
+                    'logVars' => ['*']
+                ],
+                [
+                    'class' => 'yii\log\FileTarget', // 表示文件系统记录日志
+                    'categories' => ['pay'],// 分类名称，你也可以['pay\*']标识pay\开头的所有
+                    'levels' => ['error', 'warning'],// 错误名
+                    'logVars' => ['*'], // 输出内容，*标识只输出文字，不写的话会输出session server get post等信息
+                    'logFile' => '@runtime/logs/app.log' // 日志输出的文件路径@标识根目录
                 ],
             ],
         ],
