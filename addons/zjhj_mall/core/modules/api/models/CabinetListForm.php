@@ -63,6 +63,15 @@ class CabinetListForm extends ApiModel
         $tableName = Order::tableName();
 
         $results = Order::findBySql("select count(cabinet_id) as num, cabinet_id, id from {$tableName} where user_id = {$userId} and is_delete = 0 GROUP BY `cabinet_id` order by num desc limit 3 ")->asArray()->all();
+        if (count($results) <1){
+            return [
+                'code'=>0,
+                'msg'=> '',
+                'data'=> [
+                    'list'=>[],
+                ]
+            ];
+        }
         $details = [];
         foreach ($results as $k => $result){
             $cabinet_id = $result['cabinet_id'];
