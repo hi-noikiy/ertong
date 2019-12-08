@@ -10,9 +10,9 @@
 namespace app\modules\mch\controllers;
 
 use app\models\Feedback;
-use app\models\FeedbackDetail;
+use app\models\FeedbackType;
 use app\modules\mch\models\FeedbackForm;
-use app\modules\mch\models\FeedbackDetailForm;
+use app\modules\mch\models\FeedbackTypeForm;
 
 class FeedbackController extends Controller
 {
