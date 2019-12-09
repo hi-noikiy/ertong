@@ -481,6 +481,7 @@ class DefaultController extends Controller
             $form->user_id = \Yii::$app->user->id;
         }
         $form->store_id = $this->store->id;
-        return $form->getCouponList();
+        $list = $form->couponListV2();
+        return new ApiResponse(0, 'success', ['list' => $list]);
     }
 }
