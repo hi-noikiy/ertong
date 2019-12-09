@@ -39,7 +39,7 @@ class DeliveryTimeController extends Controller
                 $month=date("m",strtotime("+".$val['day']." day"));
                 $day=date("d",strtotime("+".$val['day']." day"));
                 $date_time[0]['list'][$k]['next_day']=$month."月".$day."日";
-
+                $date_time[0]['list'][$k]['next_day_date']=date('Y-m-d',strtotime("+".$val['day']." day"));
                 
                 $date_time[0]['list'][$k]['week']="周".$weekarray[date("w",strtotime(date("Y-m-d",strtotime("+".$val['day']." day"))))];
 
@@ -57,7 +57,7 @@ class DeliveryTimeController extends Controller
                 if ($start_time>18&&$start_time<=24){
                     $date_time[0]['list'][$k]['start_time']="晚上".$val['start_time'];
                 }
-
+                $date_time[0]['list'][$k]['start_time_date']=$val['start_time'];
                 $end_time=date("H",strtotime($val['end_time']));
                 
                 if ($end_time>0&&$end_time<=6){
@@ -72,6 +72,7 @@ class DeliveryTimeController extends Controller
                 if ($end_time>18&&$end_time<=24){
                     $date_time[0]['list'][$k]['end_time']="晚上".$val['end_time'];
                 }
+                $date_time[0]['list'][$k]['end_time_date']=$val['end_time'];
             }
             $list[$key]['service_time_app']=$date_time[0];
         }
