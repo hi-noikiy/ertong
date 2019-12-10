@@ -136,7 +136,7 @@ class CabinetForm extends MchModel
             if($result_array['code']==0){
                 $authorizToken=$result_array['data']['authorizToken'];
             }
-            
+            $locationUrl="http://open.iwuyi.net/api/machine/location";
             if(isset($authorizToken)){
                 $machineId=$this->cabinet_id;
                 $timestamp=time();
