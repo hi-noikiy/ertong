@@ -100,7 +100,6 @@ class PassportController extends Controller
         $form = new LoginFormMobile();
         $form->attributes = \Yii::$app->request->post();
         $form->store_id = $this->store->id;
-
         return new BaseApiResponse($form->register());
     }
     //找回密码
