@@ -479,7 +479,11 @@ $urlStr = get_plugin_url();
                                 </tr>
                                 <tr>
                                     <td colspan="3" style="text-align: center">
-                                        <button type="button" class="btn btn-success">确定</button>
+                                        <?php if ($order['is_order_confirm']==1) : ?>
+                                            <button type="button" class="btn btn-success success">确定</button>
+                                        <?php else : ?>
+                                            <button type="button" class="btn btn-success confirm">确认订单</button>
+                                        <?php endif; ?>
                                         <input type="button" class="btn btn-default ml-4" 
                                                name="Submit" onclick="javascript:history.back(-1);" value="返回">
                                     </td>
@@ -500,7 +504,7 @@ $urlStr = get_plugin_url();
 
 </div>
 <script>
-    $('.btn-success').on('click', function () {
+    $('.success').on('click', function () {
         var seller_comments = $("#seller_comments").val();
         var btn = $(this);
         btn.btnLoading("正在提交");
@@ -524,5 +528,72 @@ $urlStr = get_plugin_url();
             }
         });
     });
+    $('.confirm').on('click', function () {
+        var intDiff = parseInt(60*30); //倒计时总秒数量
+        timer(intDiff);
+        if(confirm("是否确认订单?")){
+            var urlStr="<?= $urlManager->createUrl([$urlStr . '/apply-confirm-status']) ?>";
+            var btn = $(this);
+            var order_id="<?= $order_id ?>";
+            // console.log(order_id)
+            btn.btnLoading("正在提交");
+            $.ajax({
+                url: urlStr,
+                dataType: "json",
+                data: {
+                    remark: '',
+                    id: order_id,
+                    type: 1
+                },
+                success: function (res) {
+                    console.log(res)
+                    $.myLoadingHide();
+                    $.myAlert({
+                        content: res.msg,
+                        confirm: function () {
+                            btn.btnReset();
+                            if (res.code == 0)
+                                location.reload();
+                        }
+                    });
+                }
+            });
+            return false;
+        　　
+        }else{
+            return false
+        }
+        
+    });
+    function timer(intDiff) {
+        window.setInterval(function () {
+            var day = 0,
+            hour = 0,
+            minute = 0,
+            second = 0; //时间默认值
+            if (intDiff == 0) {
+                var urlStr="<?= $urlManager->createUrl([$urlStr . '/apply-confirm-status']) ?>";
+                var remark = '';
+                $.ajax({
+                    url: urlStr,
+                    dataType: "json",
+                    data: {
+                        remark: remark,
+                        id: confirmId,
+                        type: 1
+                    },
+                    success: function (res) {
+                        if (res.code == 0)
+                            location.reload();
+                    }
+                });
+                return false;
+            }
 
+            if(intDiff == 0){
+                return false;
+            }
+            intDiff--;
+        }, 1000);
+    }
 </script>

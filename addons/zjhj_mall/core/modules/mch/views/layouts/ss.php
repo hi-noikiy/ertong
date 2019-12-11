@@ -189,25 +189,20 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                 </div>
                 <div class="form-group row">
                     <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
-                        <label class="col-form-label required">发件人地区</label>
+                        <label class="col-form-label required">柜子ID</label>
                     </div>
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <select class="form-control province" style="float: left;"
-                                    name="model[province]">
-                                <option v-for="(item,index) in province"
-                                        :value="item.name" :data-index="index">{{item.name}}
-                                </option>
-                            </select>
-                            <select class="form-control city" style="float: left;" name="model[city]">
-                                <option v-for="(item,index) in city"
-                                        :value="item.name" :data-index="index">{{item.name}}
+                            <select class="form-control cabinet"
+                                    name="model[cabinet_id]">
+                                <option v-for="(item,index) in cabinet"
+                                        :value="item.id" :data-index="index">{{item.cabinet_id}}
                                 </option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
                         <label class="col-form-label required">详细地址</label>
                     </div>
@@ -216,7 +211,7 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                         <ul class="sea"></ul>
                     </div>
                 </div>
-                <!-- <div class="form-group row">
+                <div class="form-group row">
                     <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
                         <label class="col-form-label required">发件人地区</label>
                     </div>
@@ -250,7 +245,6 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                         <input class="form-control address" value="">
                     </div>
                 </div> -->
-                <input style="display: none;" class="cabinet-id" name="cabinet_id" value="">
                 <input style="display: none;" class="order-id" name="orderId" value="">
                 <input style="display: none;" class="order-type" name="orderType" value="">
                 <div class="form-group row">
@@ -391,15 +385,8 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
     var editAddress = new Vue({
         el: '#editAddress',
         data: {
-            province:<?= Yii::$app->serializer->encode($province_arr) ?>,
-            city: [],
-            area: [],
-            sender_province: "<?=$sender->province?>",
-            sender_city: "<?=$sender->city?>",
-            sender_area: "<?=$sender->exp_area?>",
             orderList: <?= Yii::$app->serializer->encode($list) ?>,
             cabinet: <?= Yii::$app->serializer->encode($cabinet) ?>,
-            province_arr: <?= Yii::$app->serializer->encode($province_arr) ?>,
         }
     });
     // 弹框
@@ -410,58 +397,23 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
         var orderId = editAddress.orderList[index].id;
         var name = editAddress.orderList[index].name;
         var mobile = editAddress.orderList[index].mobile;
+        var cabinet_id = editAddress.orderList[index].cabinet_id;
 
         $('.name').val(name);
         $('.mobile').val(mobile);
         $('.order-id').val(orderId);
         $('.order-type').val(orderType);
-        $('.address').val(editAddress.orderList[index].address)
-        // $('.cabinet-id').val(editAddress.orderList[index].cabinet_id)
-        editAddress.sender_province = editAddress.orderList[index].province
-        editAddress.sender_city = editAddress.orderList[index].city
         
-        $('.province').find('option').each(function (i) {
-            if ($(this).val() == editAddress.sender_province) {
+        $('.cabinet').find('option').each(function (i) {
+            if ($(this).val() == cabinet_id) {
                 
                 $(this).prop('selected', 'selected');
                 return true;
             }
         });
         
-        $('.city').find('option').each(function (i) {
-            
-            if ($(this).val() == editAddress.sender_city) {
-                $(this).prop('selected', 'selected');
-                return true;
-            }
-        });
-
-        editAddress.city = editAddress.province_arr[0].list;
-        
-        $(editAddress.province_arr).each(function (i) {
-            if (editAddress.province_arr[i].name == editAddress.sender_province) {
-                editAddress.city = editAddress.province_arr[i].list;
-                return true;
-            }
-        });
-        
-        $(editAddress.city).each(function (i) {
-            if (editAddress.city[i].name == editAddress.sender_city) {
-                editAddress.area = editAddress.city[i].list;
-                return true;
-            }
-        });
         
         $('#editAddress').modal('show');
-    });
-
-    $(document).on('change', '.province', function () {
-        var index = $(this).find('option:selected').data('index');
-        editAddress.city = editAddress.province_arr[index].list;
-    });
-    $(document).on('change', '.city', function () {
-        var index = $(this).find('option:selected').data('index');
-        editAddress.area = editAddress.city[index].list;
     });
 
     // 提交更新
@@ -476,10 +428,7 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                 orderType: $('.order-type').val(),
                 name: $('.name').val(),
                 mobile: $('.mobile').val(),
-                province: $('.province').val(),
-                city: $('.city').val(),
-                cabinet_id: $('.cabinet-id').val(),
-                address: $('.address').val(),
+                cabinet_id: $('.cabinet option:selected').val(),
                 _csrf: _csrf
             },
             dataType: "json",

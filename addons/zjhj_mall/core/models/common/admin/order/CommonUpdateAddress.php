@@ -26,13 +26,9 @@ class CommonUpdateAddress
         $orderId = $this->data['orderId'];
         $name = $this->data['name'];
         $mobile = $this->data['mobile'];
-        $address = $this->data['address'];
-        $province = $this->data['province'];
-        $city = $this->data['city'];
-        // $district = $this->data['district'];
         $cabinet_id = $this->data['cabinet_id'];
         if(!isset($cabinet_id) || $cabinet_id==''){
-            $query = Cabinet::find()->where(['province' => $province, 'city' => $city, 'address' => $address, 'is_delete' => 0, 'store_id' => \Yii::$app->controller->store->id])->asArray()->one();
+            $query = Cabinet::find()->where(['cabinet_id' => $cabinet_id, 'is_delete' => 0, 'store_id' => \Yii::$app->controller->store->id])->asArray()->one();
             // return Cabinet::find()->where(['province' => $province, 'city' => $city, 'address' => $address, 'is_delete' => 0, 'store_id' => \Yii::$app->controller->store->id])->createCommand()->getRawSql();
             
             if($query){

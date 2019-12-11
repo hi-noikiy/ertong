@@ -39,6 +39,13 @@ class OrderController extends Controller
 {
     public function actionIndex($is_offline = null)
     {
+        // date_default_timezone_set('Asia/Hong_Kong');
+        $startDate = time();
+        $endDate = time()+30;
+         
+        // 将日期转换为Unix时间戳
+        $total = $startDate-$endDate;
+        echo $total;
         // 获取可导出数据
         $f = new ExportList();
         $exportList = $f->getList();
@@ -68,14 +75,12 @@ class OrderController extends Controller
         if ($shop_id) {
             $shop = Shop::findOne(['store_id' => $this->store->id, 'id' => $shop_id]);
         }
-        // print_r($data);die;
-        // print_r($data['list']);die;
         return $this->render('index', [
             'row_count' => $data['row_count'],
+            'page_count' => $data['page_count'],
             'pagination' => $data['pagination'],
             'list' => $data['list'],
             'cabinet' => $data['cabinet'],
-            'province_arr' => $data['province_arr'],
             'store_data' => $store_data_form->search(),
             'express_list' => $this->getExpressList(),
             'user' => $user,
@@ -202,7 +207,46 @@ class OrderController extends Controller
             'exportList' => \Yii::$app->serializer->encode($exportList)
         ]);
     }
+    //订单确认处理
+    public function actionApplyConfirmStatus($id, $type = 0)
+    {
+        $where = [
+            'id' => $id,
+            'is_delete' => 0,
+            'store_id' => 3,
+            'mch_id' => 0,
+        ];
+        // type=1 后台主要取消订单， type=0 用户发起订单取消申请
+        if ($type == 0) {
+            $where['apply_delete'] = 1;
+        }
+        $order = Order::findOne($where);
 
+        if (!$order || $order->mch_id > 0) {
+            return [
+                'code' => 1,
+                'msg' => '订单不存在，请刷新页面后重试',
+            ];
+        }
+        $confirm = \Yii::$app->request->get('remark');
+        if(!isset($confirm)){
+            $confirm="商家已确认订单";
+        }
+        $order->is_order_confirm=1;
+        $order->confirm=$confirm;
+        if($order->save()){
+            return [
+                'code' => 0,
+                'msg' => '操作成功',
+            ];
+        }else{
+            return [
+                'code' => 1,
+                'msg' => '操作失败',
+            ];
+        }
+        
+    }
     //订单取消申请处理
     public function actionApplyDeleteStatus($id, $status, $type = 0)
     {

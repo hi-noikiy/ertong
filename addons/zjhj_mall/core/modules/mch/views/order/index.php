@@ -131,12 +131,20 @@ $urlPlatform = Yii::$app->requestedRoute;
 
             </li>
             <li class="nav-item">
+                <a class="status-item nav-link <?= $status == 4 ? 'active' : null ?>"
+                   href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 4])) ?>">待确认<?= $store_data['status_count']['status_4'] ? '(' . $store_data['status_count']['status_1'] . ')' : null ?></a>
+            </li>
+            <li class="nav-item">
                 <a class="status-item nav-link <?= $status == 1 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 1])) ?>">待发货<?= $store_data['status_count']['status_1'] ? '(' . $store_data['status_count']['status_1'] . ')' : null ?></a>
             </li>
             <li class="nav-item">
                 <a class="status-item  nav-link <?= $status == 2 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 2])) ?>">待收货<?= $store_data['status_count']['status_2'] ? '(' . $store_data['status_count']['status_2'] . ')' : null ?></a>
+            </li>
+            <li class="nav-item">
+                <a class="status-item  nav-link <?= $status == 7 ? 'active' : null ?>"
+                   href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 7])) ?>">待取货<?= $store_data['status_count']['status_7'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>
             </li>
             <li class="nav-item">
                 <a class="status-item  nav-link <?= $status == 3 ? 'active' : null ?>"
@@ -183,15 +191,9 @@ $urlPlatform = Yii::$app->requestedRoute;
                         <sapn class="mr-1">
                             <?php if ($order_item['is_pay'] == 1) : ?>
                                 <span class="badge badge-success">
-                                        <?= $order_item['type'] == 1 ? '大转盘' : '' ?>
-                                    <?= $order_item['type'] == 3 ? '刮刮卡' : '' ?>
-                                    <?= $order_item['type'] == 4 ? '0元抽奖' : '' ?>
                                     已付款</span>
                             <?php else : ?>
                                 <span class="badge badge-default">
-                                        <?= $order_item['type'] == 1 ? '大转盘' : '' ?>
-                                    <?= $order_item['type'] == 3 ? '刮刮卡' : '' ?>
-                                    <?= $order_item['type'] == 4 ? '0元抽奖' : '' ?>
                                     未付款</span>
                             <?php endif; ?>
                         </sapn>
@@ -390,7 +392,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                                         修改快递单号
                                     </a>
                                 <?php endif; ?>
-                                <?php if ($order_item['is_send'] == 0 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
+                                <?php if ($order_item['is_send'] == 0 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0 && $order_item['is_order_confirm'] == 1) : ?>
                                     <a class="btn btn-sm btn-primary send-btn mt-2" href="javascript:"
                                        data-order-id="<?= $order_item['id'] ?>"
                                        data-express='<?= $order_item['express'] ?>'
@@ -398,7 +400,12 @@ $urlPlatform = Yii::$app->requestedRoute;
                                         发货
                                     </a>
                                 <?php endif; ?>
-
+                                <?php if ($order_item['is_send'] == 0 && $order_item['is_pay'] == 1 && $order_item['is_delete'] == 0 && $order_item['is_order_confirm'] == 0) : ?>
+                                    <a class="btn btn-sm btn-primary mt-2 admin-order-confirm" href="javascript:"
+                                       data-id="<?= $order_item['id'] ?>">
+                                        确认
+                                    </a>
+                                <?php endif; ?>
                                 <?php if ($order_item['is_send'] == 0 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
                                     <a class="btn btn-sm btn-primary mt-2 admin-order-cancel"
                                        data-id="<?= $order_item['id'] ?>"
@@ -686,7 +693,35 @@ $urlPlatform = Yii::$app->requestedRoute;
             </div>
         </div>
     </div>
-
+    <!-- 后台订单确认 -->
+    <div class="modal fade" data-backdrop="static" id="adminOrderConfirm">
+        <div class="modal-dialog modal-sm" role="document" style="max-width: 400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <b class="modal-title">是否确认订单</b>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input class="order-id" type="hidden">
+                    <input class="url" type="hidden">
+                    <div class="form-group row">
+                        <label class="col-4 text-right col-form-label">添加备注信息：</label>
+                        <div class="col-11" style="margin-left: 1rem;">
+                        <textarea id="order_cancel_remark-2" name="seller_comments" cols="90"
+                                  rows="3"
+                                  style="width: 100%;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary order-confirm">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- 后台订单取消 -->
     <div class="modal fade" data-backdrop="static" id="adminOrderCancel">
         <div class="modal-dialog modal-sm" role="document" style="max-width: 400px">
@@ -842,7 +877,80 @@ $urlPlatform = Yii::$app->requestedRoute;
         $('#orderCancal').modal('show');
         return false;
     });
+    // 后台订单确认
+    var intDiff = parseInt(60*2); //倒计时总秒数量
+    var cancelUrl = '';
+    var confirmId = 0;
+    $(document).on("click", ".admin-order-confirm", function () {
+        timer(parseInt(60*30));
+        var a = $(this);
+        confirmId = a.data('id');
+        $('#adminOrderConfirm').modal('show');
+        return false;
+    });
+    // 后台订单确认
+    $(document).on("click", ".order-confirm", function () {
+        var urlStr="<?= $urlManager->createUrl([$urlStr . '/apply-confirm-status']) ?>";
+        
+        var remark = $('#order_cancel_remark-2').val();
+        
+        var btn = $(this);
+        btn.btnLoading(btn.text());
+        $.ajax({
+            url: urlStr,
+            dataType: "json",
+            data: {
+                remark: remark,
+                id: confirmId,
+                type: 1
+            },
+            success: function (res) {
+                console.log(res)
+                $.myLoadingHide();
+                $.myAlert({
+                    content: res.msg,
+                    confirm: function () {
+                        btn.btnReset();
+                        if (res.code == 0)
+                            location.reload();
+                    }
+                });
+            }
+        });
+        return false;
+    });
+    function timer(intDiff) {
+        window.setInterval(function () {
+            var day = 0,
+            hour = 0,
+            minute = 0,
+            second = 0; //时间默认值
+            if (intDiff == 0) {
+                var urlStr="<?= $urlManager->createUrl([$urlStr . '/apply-confirm-status']) ?>";
+                var remark = '';
+                $.ajax({
+                    url: urlStr,
+                    dataType: "json",
+                    data: {
+                        remark: remark,
+                        id: confirmId,
+                        type: 1
+                    },
+                    success: function (res) {
+                        if (res.code == 0)
+                            location.reload();
+                    }
+                });
+                return false;
+            }
 
+            if(intDiff == 0){
+                return false;
+            }
+            intDiff--;
+        }, 1000);
+    }
+    
     // 后台点击取消
     var cancelUrl = '';
     var cancelId = 0;
