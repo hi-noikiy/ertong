@@ -69,6 +69,7 @@ use yii\db\ActiveQuery;
  * @property integer $type
  * @property string $share_price
  * @property integer $is_show
+ * @property integer is_order_confirm
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -168,7 +169,7 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['store_id', 'user_id', 'order_no', 'first_price', 'second_price', 'third_price'], 'required'],
-            [['store_id', 'user_id', 'is_pay', 'pay_type', 'pay_time', 'is_send', 'send_time', 'is_confirm', 'confirm_time', 'is_comment', 'apply_delete', 'addtime', 'is_delete', 'is_price', 'parent_id', 'is_offline', 'clerk_id', 'is_cancel', 'shop_id', 'user_coupon_id', 'give_integral', 'parent_id_1', 'parent_id_2', 'is_sale', 'mch_id', 'is_recycle', 'order_union_id', 'is_transfer', 'type', 'is_show'], 'integer'],
+            [['store_id', 'user_id', 'is_pay', 'pay_type', 'pay_time', 'is_send', 'send_time', 'is_confirm', 'confirm_time', 'is_comment', 'apply_delete', 'addtime', 'is_delete', 'is_price', 'parent_id', 'is_offline', 'clerk_id', 'is_cancel', 'shop_id', 'user_coupon_id', 'give_integral', 'parent_id_1', 'parent_id_2', 'is_sale', 'mch_id', 'is_recycle', 'order_union_id', 'is_transfer', 'type', 'is_show', 'is_order_confirm'], 'integer'],
             [['total_price', 'pay_price', 'express_price', 'first_price', 'second_price', 'third_price', 'coupon_sub_price', 'before_update_price', 'discount', 'express_price_1', 'rebate', 'before_update_express', 'share_price'], 'number'],
             [['address_data', 'content', 'offline_qrcode', 'integral', 'words', 'seller_comments'], 'string'],
             [['order_no', 'name', 'mobile', 'express', 'express_no', 'version'], 'string', 'max' => 255],
@@ -240,6 +241,7 @@ class Order extends \yii\db\ActiveRecord
             'type' => '0普通订单1大转盘订单',
             'share_price' => '发放佣金的金额',
             'is_show' => '是否显示 0--不显示 1--显示（软删除用）',
+            'is_order_confirm' => '确认状态'
         ];
     }
 

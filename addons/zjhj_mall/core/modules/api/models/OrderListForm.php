@@ -53,9 +53,10 @@ class OrderListForm extends ApiModel
                 'is_pay' => 0,
             ]);
         }
-        if ($this->status == 1) {//待发货
+        if ($this->status == 1) {//备货中
             $query->andWhere([
                 'is_send' => 0,
+                'i@property integer' => 1
             ])->andWhere(['or', ['is_pay' => 1], ['pay_type' => 2]]);
         }
         if ($this->status == 2) {//已发货
@@ -82,6 +83,13 @@ class OrderListForm extends ApiModel
         }
         if ($this->status == 5) {//售后订单
             return $this->getRefundList();
+        }
+        if ($this->status == 7) {//待确认
+            $query->andWhere([
+                'is_send' => 0,
+                'is_pay' => 1,
+                'is_order_confirm' => 0
+            ]);
         }
 
         $query->andWhere(['is_recycle' => 0]);
@@ -159,8 +167,8 @@ class OrderListForm extends ApiModel
             if ($order->is_pay == 0 && $order->is_cancel!=1) {
                 $status = '待付款';
                 $order_status = 0;
-            } elseif ($order->is_pay == 1 && $order->is_send == 0) {
-                $status = '待发货';
+            } elseif ($order->is_pay == 1 && $order->is_send == 0 && $order->is_order_confirm == 1) {
+                $status = '备货中';
                 $order_status = 1;
             } elseif ($order->is_send == 1 && $order->is_confirm == 0) {
                 $status = '已发货';
@@ -174,6 +182,9 @@ class OrderListForm extends ApiModel
             }elseif ($order->is_cancel == 1){
                 $status = '已取消';
                 $order_status = 6;
+            }elseif ($order->is_pay == 1 && $order->is_order_confirm == 0 && $order->is_send == 0){
+                $status = '待确认';
+                $order_status = 7;
             }
             $new_list[] = (object)[
                 'order_id' => $order->id,
