@@ -136,11 +136,11 @@ $urlPlatform = Yii::$app->requestedRoute;
             </li>
             <li class="nav-item">
                 <a class="status-item nav-link <?= $status == 1 ? 'active' : null ?>"
-                   href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 1])) ?>">待发货<?= $store_data['status_count']['status_1'] ? '(' . $store_data['status_count']['status_1'] . ')' : null ?></a>
+                   href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 1])) ?>">备货中<?= $store_data['status_count']['status_1'] ? '(' . $store_data['status_count']['status_1'] . ')' : null ?></a>
             </li>
             <li class="nav-item">
                 <a class="status-item  nav-link <?= $status == 2 ? 'active' : null ?>"
-                   href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 2])) ?>">待收货<?= $store_data['status_count']['status_2'] ? '(' . $store_data['status_count']['status_2'] . ')' : null ?></a>
+                   href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 2])) ?>">配送中<?= $store_data['status_count']['status_2'] ? '(' . $store_data['status_count']['status_2'] . ')' : null ?></a>
             </li>
             <li class="nav-item">
                 <a class="status-item  nav-link <?= $status == 7 ? 'active' : null ?>"
@@ -202,7 +202,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                                     <?php if ($order_item['is_confirm'] == 1) : ?>
                                         <span class="badge badge-success">已收货</span>
                                     <?php else : ?>
-                                        <span class="badge badge-default">未收货</span>
+                                        <span class="badge badge-default">配送中</span>
                                     <?php endif; ?>
                                 </span>
                         <?php else : ?>
@@ -211,7 +211,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                                     <?php if ($order_item['is_send'] == 1) : ?>
                                         <span class="badge badge-success">已发货</span>
                                     <?php else : ?>
-                                        <span class="badge badge-default">未发货</span>
+                                        <span class="badge badge-default">备货中</span>
                                     <?php endif; ?>
                                 </span>
                             <?php endif; ?>
