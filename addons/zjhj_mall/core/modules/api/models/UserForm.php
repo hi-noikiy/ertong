@@ -102,6 +102,7 @@ class UserForm extends ApiModel
         require __DIR__ . '/wxbdc/WXBizDataCrypt.php';
         $pc = new WXBizDataCrypt($this->wechat_app->app_id, $res['session_key']);
         $errCode = $pc->decryptData($this->encryptedData, $this->iv, $data);
+        return $this->user_id;
         if ($errCode == 0) {
             $dataObj = json_decode($data);
             $user = User::findOne(['id' => $this->user_id]);

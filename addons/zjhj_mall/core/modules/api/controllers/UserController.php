@@ -171,7 +171,7 @@ class UserController extends Controller
         $form->user_id = \Yii::$app->user->identity->id;
         $form->store_id = $this->store->id;
         
-        print_r($form->binding());die;
+        var_dump($form->binding());die;
         return new BaseApiResponse($form->binding());
     }
 
