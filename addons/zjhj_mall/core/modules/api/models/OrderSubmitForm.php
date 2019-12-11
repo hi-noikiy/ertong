@@ -918,8 +918,8 @@ class OrderSubmitForm extends OrderData
             $order->addtime = time();
             if ($this->offline == 0) {
                 $order->address = $address->province . $address->city . $address->district . $address->detail;
-                $order->mobile = $address->mobile;
-                $order->name = $address->name;
+                $order->mobile = $user->binding;
+                $order->name = $user->nickname;
                 $order->address_data = json_encode([
                     'province' => $cabinet->province,
                     'city' => $cabinet->city,
@@ -927,8 +927,8 @@ class OrderSubmitForm extends OrderData
                     'detail' => $cabinet->address,
                 ], JSON_UNESCAPED_UNICODE);
             } else {
-                $order->name = $this->address_name;
-                $order->mobile = $this->address_mobile;
+                $order->name = $user->nickname;
+                $order->mobile = $user->binding;
                 $order->shop_id = $this->shop_id;
             }
             $order->first_price = 0;
