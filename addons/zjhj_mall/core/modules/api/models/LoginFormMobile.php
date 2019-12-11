@@ -17,7 +17,9 @@ use Alipay\AlipayRequestFactory;
 // use app\hejiang\ApiResponse;
 use app\models\alipay\MpConfig;
 use app\models\Share;
-// use app\models\User;
+use app\models\CouponAutoSend;
+use app\models\Coupon;
+use app\models\UserCoupon;
 use app\modules\api\models\wxbdc\WXBizDataCrypt;
 // use Curl\Curl;
 use Alipay\Exception\AlipayException;
@@ -114,6 +116,7 @@ class LoginFormMobile extends ApiModel
     //注册
     public function register()
     {
+        
         $contact_way = $this->contact_way;
         $password    = $this->password;
         $preg_phone = "/^1[23456789]\d{9}$/";
@@ -155,10 +158,75 @@ class LoginFormMobile extends ApiModel
         $User->avatar_url = \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/statics/images/avatar.png';
         $User->store_id = $this->store_id;
         $User->platform = 0; // 支付宝
-        $user->invitation_code = mt_rand(100000, 999999);
+        $User->invitation_code = mt_rand(100000, 999999);
         $User->binding=$contact_way;
         if($User->save()){
             $list_user_info = User::find()->where(['id'=>$User->id])->asArray()->one();
+            $coupon_arr=CouponAutoSend::find()->where(['store_id'=>$this->store_id,'event'=>4,'is_delete'=>0])->asArray()->one();
+            $now_time=time();
+            if(!empty($coupon_arr)){
+                $coupon=Coupon::find()->where(['store_id'=>$this->store_id,'id'=>$coupon_arr['coupon_id'],'is_delete'=>0])->asArray()->one();
+                if($coupon_arr['send_times']==0){//无限制发放
+                    if($coupon['expire_type']==1){//N天有效期
+                        $end_time=strtotime("+".$coupon['expire_day']." day");
+                    }else{
+                        $end_time=$coupon['end_time'];
+                    }
+                    if($now_time<$end_time){
+                        //发放优惠券 自动发放+1
+                        $UserCoupon=new UserCoupon();
+                        $UserCoupon->store_id=$this->store_id;
+                        $UserCoupon->user_id=$User->id;
+                        $UserCoupon->coupon_id=$coupon_arr['coupon_id'];
+                        $UserCoupon->coupon_auto_send_id=$coupon_arr['id'];
+                        $UserCoupon->begin_time=time();
+                        $UserCoupon->end_time=$end_time;
+                        $UserCoupon->is_expire=0;
+                        $UserCoupon->is_use=0;
+                        $UserCoupon->is_delete=0;
+                        $UserCoupon->addtime=time();
+                        $UserCoupon->type=1;
+                        $UserCoupon->integral=$coupon['integral'];
+                        $UserCoupon->price=$coupon['sub_price'];
+                        if($UserCoupon->save()){
+                            $CouponAutoSend = CouponAutoSend::findOne(['store_id'=>$this->store_id,'event'=>4,'is_delete'=>0]);
+                            $CouponAutoSend->count=$coupon_arr['count']+1;
+                            $CouponAutoSend->save();
+                        }
+                    }
+                }else{
+                    if($coupon_arr['count']<$coupon_arr['send_times']){
+                        if($coupon['expire_type']==1){//N天有效期
+                            $end_time=strtotime("+".$coupon['expire_day']." day");
+                        }else{
+                            $end_time=$coupon['end_time'];
+                        }
+                        if($now_time<$end_time){
+                            //发放优惠券 自动发放+1
+                            $UserCoupon=new UserCoupon();
+                            $UserCoupon->store_id=$this->store_id;
+                            $UserCoupon->user_id=$User->id;
+                            $UserCoupon->coupon_id=$coupon_arr['coupon_id'];
+                            $UserCoupon->coupon_auto_send_id=$coupon_arr['id'];
+                            $UserCoupon->begin_time=time();
+                            $UserCoupon->end_time=$end_time;
+                            $UserCoupon->is_expire=0;
+                            $UserCoupon->is_use=0;
+                            $UserCoupon->is_delete=0;
+                            $UserCoupon->addtime=time();
+                            $UserCoupon->type=1;
+                            $UserCoupon->integral=$coupon['integral'];
+                            $UserCoupon->price=$coupon['sub_price'];
+                            if($UserCoupon->save()){
+                                $CouponAutoSend = CouponAutoSend::findOne(['store_id'=>$this->store_id,'event'=>4,'is_delete'=>0]);
+                                $CouponAutoSend->count=$coupon_arr['count']+1;
+                                $CouponAutoSend->save();
+                            }
+
+                        }
+                    }
+                }
+            }
             return [
                 'code' => 0,
                 'msg' => 'success',
