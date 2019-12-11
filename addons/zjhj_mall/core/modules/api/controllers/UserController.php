@@ -170,8 +170,6 @@ class UserController extends Controller
         $form->wechat_app = $this->wechat_app;
         $form->user_id = \Yii::$app->user->identity->id;
         $form->store_id = $this->store->id;
-        
-        var_dump($form->binding());die;
         return new BaseApiResponse($form->binding());
     }
 
