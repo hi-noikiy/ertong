@@ -39,13 +39,7 @@ class OrderController extends Controller
 {
     public function actionIndex($is_offline = null)
     {
-        // date_default_timezone_set('Asia/Hong_Kong');
-        $startDate = time();
-        $endDate = time()+30;
-         
-        // 将日期转换为Unix时间戳
-        $total = $startDate-$endDate;
-        echo $total;
+        
         // 获取可导出数据
         $f = new ExportList();
         $exportList = $f->getList();
@@ -213,7 +207,7 @@ class OrderController extends Controller
         $where = [
             'id' => $id,
             'is_delete' => 0,
-            'store_id' => 3,
+            'store_id' => $this->store->id,
             'mch_id' => 0,
         ];
         // type=1 后台主要取消订单， type=0 用户发起订单取消申请
