@@ -89,13 +89,13 @@ class OrderListForm extends MchModel
             case 2:
                 $query->andWhere([
                     'o.is_send' => 1,
-                    'o.is_confirm' => 0,
+                    'o.put_status' => 1,
+                    'o.is_cancel' => 0,
                 ])->andWhere(['or', ['o.is_pay' => 1]]);//is_send=1 && is_confirm=0   配送中
                 break;
             case 3:
                 $query->andWhere([
                     'o.is_send' => 1,
-                    'o.is_confirm' => 1,
                     'o.is_cancel'=>0,
                     'o.put_status'=>3,
                 ])->andWhere(['or', ['o.is_pay' => 1]]);//is_confirm=1   已完成
