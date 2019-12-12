@@ -997,7 +997,6 @@ class OrderSubmitForm extends OrderData
                         $subPrice += doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
                         $devGoodsName[] = $goods->goods_name;
                         $total += $goods->num;
-                        $total += 1;
 
                     }
                     $subOrderNo = $this->getOrderNo();
