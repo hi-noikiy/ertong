@@ -23,6 +23,7 @@ class CabinetPlatForm
         'queryOrderDetail' => self::URI.'/api/express/queryOrderDetail',
         'list' => self::URI.'/api/machine/machineList',
         'orderDetail' => self::URI.'/api/express/queryOrderDetail',
+        'location' => self::URI.'/api/machine/location',
 
     ];
 
@@ -123,6 +124,26 @@ class CabinetPlatForm
     public function getList(){
         $url = self::$url['list'];
         $result = $this->call($url,'', $this->login());
+        return $result;
+    }
+
+    /**
+     * @param $machineId
+     * @return mixed
+     * @desc 获取机器定位
+     */
+    public function getLocation(){
+        $url = self::$url['location'];
+        $data = [];
+        $data['machineId'] = $this->mch_id;
+        if (empty($timestamp)){
+            $timestamp = time();
+        }
+        $data['timestamp'] = $timestamp;
+        $data['sign'] = $this->sign($data);
+        //var_dump($data, $this->login());die;
+
+        $result = $this->call($url, json_encode($data), $this->login());
         return $result;
     }
 

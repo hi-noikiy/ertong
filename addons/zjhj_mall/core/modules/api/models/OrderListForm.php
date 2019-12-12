@@ -213,7 +213,8 @@ class OrderListForm extends ApiModel
                 'currency' => $order->currency,
                 'status' => $status,
                 'order_status' => $order_status,
-                'order_sub' => $orderSubdetail
+                'order_sub' => $orderSubdetail,
+                'put_code' => $order->put_code
             ];
         }
         $pay_type_list = OrderData::getPayType($this->store_id, array(), ['huodao']);

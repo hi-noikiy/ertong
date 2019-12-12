@@ -63,4 +63,27 @@ class CabinetController extends Controller
         }
         return new BaseApiResponse($data);
     }
+
+    public function actionLocation(){
+        $machineId = \Yii::$app->request->post('machineId');
+        $platform = new CabinetPlatForm($machineId);
+        $re = $platform->getLocation();
+        $data = [];
+        if ($re['code'] == 0){
+            $data = [
+                'code' => 0,
+                'msg' => '列表获取成功',
+                'data' => (object)[
+                    'order_id' => $re['data'],
+                ],
+            ];
+        }else{
+            $data = [
+                'code' => 1,
+                'msg' => $re['message']
+            ];
+        }
+        return new BaseApiResponse($data);
+
+    }
 }
