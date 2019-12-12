@@ -477,17 +477,21 @@ $urlStr = get_plugin_url();
                                                               style="resize: none;width: 100%;"><?= $order['seller_comments'] ?></textarea>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="3" style="text-align: center">
-                                        <?php if ($order['is_order_confirm']==1) : ?>
-                                            <button type="button" class="btn btn-success success">确定</button>
-                                        <?php else : ?>
-                                            <button type="button" class="btn btn-success confirm">确认订单</button>
-                                        <?php endif; ?>
-                                        <input type="button" class="btn btn-default ml-4" 
-                                               name="Submit" onclick="javascript:history.back(-1);" value="返回">
-                                    </td>
-                                </tr>
+                                <?php if ($order['is_pay'] == 1) : ?>
+                                    <?php if ($order['is_cancel'] != 1) : ?>
+                                        <tr>
+                                            <td colspan="3" style="text-align: center">
+                                                <?php if ($order['is_order_confirm']==1) : ?>
+                                                    <button type="button" class="btn btn-success success">确定</button>
+                                                <?php else : ?>
+                                                    <button type="button" class="btn btn-success confirm">确认订单</button>
+                                                <?php endif; ?>
+                                                <input type="button" class="btn btn-default ml-4" 
+                                                       name="Submit" onclick="javascript:history.back(-1);" value="返回">
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endif; ?>
                             <?php else : ?>
                                 <tr>
                                     <td>商家备注</td>

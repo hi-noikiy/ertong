@@ -188,55 +188,60 @@ $urlPlatform = Yii::$app->requestedRoute;
                                   data-placement="top"
                                   title="<?= $order_item['seller_comments'] ?>">有备注</span>
                         <?php endif; ?>
-                        <sapn class="mr-1">
-                            <?php if ($order_item['is_pay'] == 1) : ?>
-                                <span class="badge badge-success">
-                                    已付款</span>
-                            <?php else : ?>
-                                <span class="badge badge-default">
-                                    未付款</span>
-                            <?php endif; ?>
-                        </sapn>
-                        <?php if ($order_item['is_send'] == 1) : ?>
-                            <span class="mr-1">
-                                    <?php if ($order_item['is_confirm'] == 1) : ?>
-                                        <span class="badge badge-success">已收货</span>
-                                    <?php else : ?>
-                                        <span class="badge badge-default">配送中</span>
-                                    <?php endif; ?>
-                                </span>
-                        <?php else : ?>
-                            <?php if ($order_item['is_pay'] == 1) : ?>
-                                <span class="mr-1">
-                                    <?php if ($order_item['is_send'] == 1) : ?>
-                                        <span class="badge badge-success">已发货</span>
-                                    <?php else : ?>
-                                        <span class="badge badge-default">备货中</span>
-                                    <?php endif; ?>
-                                </span>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        <span class="mr-5"><span class='titleColor'>订单号：</span><?= $order_item['order_no'] ?></span>
-                        <span class="mr-5"><span class='titleColor'>
-                                用户名(ID)：</span><?= $order_item['nickname'] ?> <span
-                                    class='titleColor'>(<?= $order_item['user_id'] ?>)</span>
-                            <?php if (isset($order_item['platform']) && intval($order_item['platform']) === 0) : ?>
-                                <span class="badge badge-success">微信</span>
-                            <?php elseif (isset($order_item['platform']) && intval($order_item['platform']) === 1) : ?>
-                                <span class="badge badge-primary">支付宝</span>
-                            <?php else : ?>
-                                <span class="badge badge-default">未知</span>
-                            <?php endif; ?>
-                        </span>
-                        <?php if ($order_item['apply_delete'] == 1) : ?>
-                            <span class="mr-1 titleColor">
-                                    申请取消该订单：
-                                <?php if ($order_item['is_delete'] == 0) : ?>
-                                    <span class="badge badge-warning">申请中</span>
+                        <?php if ($order_item['is_cancel']==0) : ?>
+                            <sapn class="mr-1">
+                                <?php if ($order_item['is_pay'] == 1) : ?>
+                                    <span class="badge badge-success">
+                                        已付款</span>
                                 <?php else : ?>
-                                    <span class="badge badge-warning">申请成功</span>
+                                    <span class="badge badge-default">
+                                        未付款</span>
                                 <?php endif; ?>
-                                </span>
+                            </sapn>
+                            <?php if ($order_item['is_send'] == 1) : ?>
+                                <span class="mr-1">
+                                        <?php if ($order_item['is_confirm'] == 1) : ?>
+                                            <span class="badge badge-success">已收货</span>
+                                        <?php else : ?>
+                                            <span class="badge badge-default">配送中</span>
+                                        <?php endif; ?>
+                                    </span>
+                            <?php else : ?>
+                                <?php if ($order_item['is_pay'] == 1) : ?>
+                                    <span class="mr-1">
+                                        <?php if ($order_item['is_send'] == 1) : ?>
+                                            <span class="badge badge-success">已发货</span>
+                                        <?php else : ?>
+                                            <span class="badge badge-default">备货中</span>
+                                        <?php endif; ?>
+                                    </span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <span class="mr-5"><span class='titleColor'>订单号：</span><?= $order_item['order_no'] ?></span>
+                            <span class="mr-5"><span class='titleColor'>
+                                    用户名(ID)：</span><?= $order_item['nickname'] ?> <span
+                                        class='titleColor'>(<?= $order_item['user_id'] ?>)</span>
+                                <?php if (isset($order_item['platform']) && intval($order_item['platform']) === 0) : ?>
+                                    <span class="badge badge-success">微信</span>
+                                <?php elseif (isset($order_item['platform']) && intval($order_item['platform']) === 1) : ?>
+                                    <span class="badge badge-primary">支付宝</span>
+                                <?php else : ?>
+                                    <span class="badge badge-default">未知</span>
+                                <?php endif; ?>
+                            </span>
+                            <?php if ($order_item['apply_delete'] == 1) : ?>
+                                <span class="mr-1 titleColor">
+                                        申请取消该订单：
+                                    <?php if ($order_item['is_delete'] == 0) : ?>
+                                        <span class="badge badge-warning">申请中</span>
+                                    <?php else : ?>
+                                        <span class="badge badge-warning">申请成功</span>
+                                    <?php endif; ?>
+                                    </span>
+                            <?php endif; ?>
+                        <?php else : ?>
+                            <span class="badge badge-success">
+                                        已取消</span>
                         <?php endif; ?>
 
                         <?php if ($order_item['apply_delete'] == 1) : ?>
