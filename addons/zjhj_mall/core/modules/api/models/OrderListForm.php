@@ -294,7 +294,7 @@ class OrderListForm extends ApiModel
 
         $data['all'] = $res['data']['row_count'];
 
-        $form->status = 0;
+        $form->status = '0';
         $res = $form->search();
         $data['status_0'] = $res['data']['row_count'];
 
