@@ -51,6 +51,7 @@ class OrderListForm extends ApiModel
         if ($this->status === '0') {//待付款
             $query->andWhere([
                 'is_pay' => 0,
+                'is_cancel' => 0
             ]);
         }
         if ($this->status == 1) {//备货中
