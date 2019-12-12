@@ -405,7 +405,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                                         发货
                                     </a>
                                 <?php endif; ?>
-                                <?php if ($order_item['is_send'] == 0 && $order_item['is_pay'] == 1 && $order_item['is_delete'] == 0 && $order_item['is_order_confirm'] == 0) : ?>
+                                <?php if ($order_item['is_send'] == 0 && $order_item['is_cancel'] && $order_item['is_pay'] == 1 && $order_item['is_delete'] == 0 && $order_item['is_order_confirm'] == 0) : ?>
                                     <a class="btn btn-sm btn-primary mt-2 admin-order-confirm" href="javascript:"
                                        data-id="<?= $order_item['id'] ?>">
                                         确认
