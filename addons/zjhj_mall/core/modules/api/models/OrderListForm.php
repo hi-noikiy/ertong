@@ -56,7 +56,7 @@ class OrderListForm extends ApiModel
         if ($this->status == 1) {//备货中
             $query->andWhere([
                 'is_send' => 0,
-                'i@property integer' => 1
+                'is_order_confirm' => 1
             ])->andWhere(['or', ['is_pay' => 1], ['pay_type' => 2]]);
         }
         if ($this->status == 2) {//已发货
