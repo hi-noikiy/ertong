@@ -220,6 +220,107 @@ class OrderSendForm extends MchModel
         }
     }
 
+    public function saveOrder()
+    {
+        if (!$this->validate()) {
+            return $this->errorResponse;
+        }
+        $order = Order::findOne([
+            'is_delete' => 0,
+            'store_id' => $this->store_id,
+            'id' => $this->order_id,
+            'mch_id' => 0,
+        ]);
+        if (!$order) {
+            return [
+                'code' => 1,
+                'msg' => '订单不存在或已删除',
+            ];
+        }
+        if ($order->is_pay == 0 && $order->pay_type != 2) {
+            return [
+                'code' => 1,
+                'msg' => '订单未支付'
+            ];
+        }
+
+        if ($order->apply_delete == 1) {
+            return [
+                'code' => 1,
+                'msg' => '该订单正在申请取消操作，请先处理'
+            ];
+        }
+
+        // $expressList = Express::getExpressList();
+        // $ok = false;
+        // foreach ($expressList as $value) {
+        //     if ($value['name'] == $this->express) {
+        //         $ok = true;
+        //         break;
+        //     }
+        // }
+        // if (!$ok && $this->scenario == "EXPRESS") {
+        //     return [
+        //         'code' => 1,
+        //         'msg' => '快递公司不正确'
+        //     ];
+        // }
+
+        $order->express = "1";
+        $order->express_no = "1";
+        $order->words = "商家确认发货";
+        $order->is_send = 1;
+        $order->put_status=1;
+        $order->send_time = time();
+        $orderDetails = OrderDetail::find()->where(
+            [
+                'order_id' => $order->id,
+            ]
+        )->asArray()->all();
+        $goods_name = [];
+        foreach ($orderDetails as $k => $value){
+            $goods = \app\models\Goods::findOne(['id' => $value['goods_id']]);
+            $goods_name[] = $goods->name;
+        }
+        $content = [];
+        $content['name'] = $goods_name;
+        $content = json_encode($content, true);
+        if ($order->save()) {
+            try {
+                $orderSubs = OrderSub::find()->where(['origin_order_no' => $order->order_no])->asArray()->all();
+                foreach ($orderSubs as $orderSub){
+                    $order_sub = OrderSub::findOne(['id' => $orderSub['id']]);
+                    $order_sub->is_send = 1;
+                    if ($order_sub->save()){
+                        $msg = [
+                            'code' => 0,
+                            'msg' => '成功',
+                        ];
+                    }
+                }
+                $wechat_tpl_meg_sender = new WechatTplMsgSender($this->store_id, $order->id, $this->getWechat());
+                $wechat_tpl_meg_sender->sendMsg();
+            } catch (\Exception $e) {
+                \Yii::warning($e->getMessage());
+            }
+            // 创建订单自动收货定时任务
+            TaskCreate::orderConfirm($order->id, 'STORE');
+            $wechatAccessToken = $this->getWechat()->getAccessToken();
+            $res = CommonShoppingList::updateBuyGood($wechatAccessToken, $order, 0, 4);
+            $a = $this->sendSms($order->mobile,$this->store_id,$content);
+
+            return [
+                'code' => 0,
+                'msg' => '发货成功',
+            ];
+        } else {
+            return [
+                'code' => 1,
+                'msg' => '操作失败',
+            ];
+        }
+    }
+
     /**
      * @param $mobile
      * @param $store_id

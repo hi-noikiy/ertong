@@ -200,10 +200,12 @@ $urlPlatform = Yii::$app->requestedRoute;
                             </sapn>
                             <?php if ($order_item['is_send'] == 1) : ?>
                                 <span class="mr-1">
-                                        <?php if ($order_item['is_confirm'] == 1) : ?>
-                                            <span class="badge badge-success">已收货</span>
+                                        <?php if ($order_item['put_status'] == 1) : ?>
+                                            <span class="badge badge-success">配送中</span>
+                                        <?php elseif ($order_item['put_status'] == 2)  : ?>
+                                            <span class="badge badge-default">待取货</span>
                                         <?php else : ?>
-                                            <span class="badge badge-default">配送中</span>
+                                            <span class="badge badge-default">已完成</span>
                                         <?php endif; ?>
                                     </span>
                             <?php else : ?>
@@ -386,22 +388,17 @@ $urlPlatform = Yii::$app->requestedRoute;
 
                     </td>
                     <td class="order-tab-5">
-                        <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['is_confirm'] != 1 && $order_item['apply_delete'] == 0) : ?>
+                        <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['put_status'] == 1 && $order_item['apply_delete'] == 0) : ?>
                             <div>
 
                                 <?php if ($order_item['is_send'] == 1 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
-                                    <a class="btn btn-sm btn-primary send-btn mt-2" href="javascript:"
-                                       data-order-id="<?= $order_item['id'] ?>"
-                                       data-express='<?= $order_item['express'] ?>'
-                                       data-express-no='<?= $order_item['express_no'] ?>'>
-                                        修改快递单号
-                                    </a>
+                                    <a class="btn btn-sm btn-primary edit-address"
+                                       data-index="<?= $k ?>"
+                                       data-order-type="store" href="javascript:">修改自提柜</a>
                                 <?php endif; ?>
                                 <?php if ($order_item['is_send'] == 0 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0 && $order_item['is_order_confirm'] == 1) : ?>
                                     <a class="btn btn-sm btn-primary send-btn mt-2" href="javascript:"
-                                       data-order-id="<?= $order_item['id'] ?>"
-                                       data-express='<?= $order_item['express'] ?>'
-                                       data-express-no='<?= $order_item['express_no'] ?>'>
+                                       data-id="<?= $order_item['id'] ?>">
                                         发货
                                     </a>
                                 <?php endif; ?>
@@ -473,7 +470,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                                 <?php if ($order_item['is_send'] == 0) : ?>
                                     <a class="btn btn-sm btn-primary edit-address"
                                        data-index="<?= $k ?>"
-                                       data-order-type="store" href="javascript:">修改地址</a>
+                                       data-order-type="store" href="javascript:">修改自提柜</a>
                                 <?php endif; ?>
                             <?php else : ?>
                                 <span class="mr-3"><span
@@ -996,13 +993,39 @@ $urlPlatform = Yii::$app->requestedRoute;
     });
 
     $(document).on("click", ".send-btn", function () {
-        var order_id = $(this).attr("data-order-id");
-        $(".send-modal input[name=order_id]").val(order_id);
-        var express_no = $(this).attr("data-express-no");
-        $(".send-modal input[name=express_no]").val(express_no);
-        var express = $(this).attr("data-express");
-        $(".send-modal input[name=express]").val(express);
-        $(".send-modal").modal("show");
+        var a = $(this);
+        var order_id = a.data('id');
+        if(confirm("是否确认发货?")){
+            var urlStr="<?=$urlManager->createUrl([$urlStr . '/send'])?>";
+            var btn = $(this);
+            // console.log(order_id)
+            btn.btnLoading("正在提交");
+            $.ajax({
+                url: urlStr,
+                type: "post",
+                dataType: "json",
+                data: {
+                    order_id: order_id,
+                    _csrf: _csrf,
+                },
+                success: function (res) {
+                    console.log(res)
+                    $.myLoadingHide();
+                    $.myAlert({
+                        content: res.msg,
+                        confirm: function () {
+                            btn.btnReset();
+                            if (res.code == 0)
+                                location.reload();
+                        }
+                    });
+                }
+            });
+            return false;
+        　　
+        }else{
+            return false
+        }
     });
 
     $(document).on("click", ".send-confirm-btn", function () {

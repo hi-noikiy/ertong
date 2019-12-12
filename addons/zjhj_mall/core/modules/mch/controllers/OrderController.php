@@ -131,12 +131,12 @@ class OrderController extends Controller
     {
         $form = new OrderSendForm();
         $post = \Yii::$app->request->post();
-        if ($post['is_express'] == 1) {
-            $form->scenario = 'EXPRESS';
-        }
+        // if ($post['is_express'] == 1) {
+        //     $form->scenario = 'EXPRESS';
+        // }
         $form->attributes = $post;
         $form->store_id = $this->store->id;
-        return $form->save();
+        return $form->saveOrder();
     }
 
     private function getExpressList()
