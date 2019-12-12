@@ -197,7 +197,7 @@ $urlStr = get_plugin_url();
                                     <?php endif; ?>
                                     </div>                              
                                 </li>
-                                <?php if ($order['is_confirm'] == 1) : ?>
+                                <?php if ($order['put_status'] == 3) : ?>
                                 <li class="orderWord over">
                                     <i class="iconfont icon-dian"></i>
                                     <i class="iconfont icon-dian"></i>
@@ -224,7 +224,7 @@ $urlStr = get_plugin_url();
                                 <?php endif; ?>
                                 <li>
                                     <div>
-                                    <?php if ($order['is_confirm'] == 1) : ?>
+                                    <?php if ($order['put_status'] == 3) : ?>
                                         <div class="orderIcon">
                                             <i class="iconfont icon-icon-receive over"></i>
                                         </div>

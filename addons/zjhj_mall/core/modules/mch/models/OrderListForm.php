@@ -244,7 +244,7 @@ class OrderListForm extends MchModel
             $newItem['is_pay'] = $datum['is_pay'] == 1 ? "已付款" : "未付款";
             $newItem['apply_delete'] = ($datum['apply_delete'] == 1) ? "取消中" : "无";
             $newItem['is_send'] = ($datum['is_send'] == 1) ? "已发货" : "未发货";
-            $newItem['is_confirm'] = ($datum['is_confirm'] == 1) ? "已收货" : "未收货";
+            $newItem['is_confirm'] = ($datum['put_status'] == 3) ? "已收货" : "未收货";
             $newItem['addtime'] = date('Y-m-d H:i', $datum['addtime']);
             $newItem['express_price'] = $datum['express_price'] . "元";
 
