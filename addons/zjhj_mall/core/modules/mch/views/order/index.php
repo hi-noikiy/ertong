@@ -200,10 +200,12 @@ $urlPlatform = Yii::$app->requestedRoute;
                             </sapn>
                             <?php if ($order_item['is_send'] == 1) : ?>
                                 <span class="mr-1">
-                                        <?php if ($order_item['is_confirm'] == 1) : ?>
-                                            <span class="badge badge-success">已收货</span>
+                                        <?php if ($order_item['put_status'] == 1) : ?>
+                                            <span class="badge badge-success">配送中</span>
+                                        <?php elseif ($order_item['put_status'] == 2)  : ?>
+                                            <span class="badge badge-default">待取货</span>
                                         <?php else : ?>
-                                            <span class="badge badge-default">配送中</span>
+                                            <span class="badge badge-default">已完成</span>
                                         <?php endif; ?>
                                     </span>
                             <?php else : ?>
@@ -386,7 +388,7 @@ $urlPlatform = Yii::$app->requestedRoute;
 
                     </td>
                     <td class="order-tab-5">
-                        <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['is_confirm'] != 1 && $order_item['apply_delete'] == 0) : ?>
+                        <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['put_status'] == 1 && $order_item['apply_delete'] == 0) : ?>
                             <div>
 
                                 <?php if ($order_item['is_send'] == 1 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
