@@ -83,20 +83,22 @@ class OrderListForm extends MchModel
                 break;
             case 1:
                 $query->andWhere([
-                    'o.is_send' => 0,'o.is_order_confirm' => 1
-                ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);//is_pay=1 && is_send=0  待发货
+                    'o.is_send' => 0,'o.is_order_confirm' => 1,'o.is_cancel'=>0
+                ])->andWhere(['or', ['o.is_pay' => 1]]);//is_pay=1 && is_send=0  备货中
                 break;
             case 2:
                 $query->andWhere([
                     'o.is_send' => 1,
                     'o.is_confirm' => 0,
-                ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);//is_send=1 && is_confirm=0   待收货
+                ])->andWhere(['or', ['o.is_pay' => 1]]);//is_send=1 && is_confirm=0   配送中
                 break;
             case 3:
                 $query->andWhere([
                     'o.is_send' => 1,
                     'o.is_confirm' => 1,
-                ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);//is_confirm=1   已完成
+                    'o.is_cancel'=>0,
+                    'o.put_status'=>3,
+                ])->andWhere(['or', ['o.is_pay' => 1]]);//is_confirm=1   已完成
                 break;
             case 4:
                 $query->andWhere([
@@ -110,7 +112,7 @@ class OrderListForm extends MchModel
                 $query->andWhere(['o.apply_delete' => 1]);//待处理
                 break;
             case 7:
-                $query->andWhere(['o.is_send' => 1,'o.put_status' => 2]);//is_send=1 && put_status=2   待取货
+                $query->andWhere(['o.is_send' => 1,'o.put_status' => 2,'o.is_cancel'=>0,]);//is_send=1 && put_status=2   待取货
                 break;
             default:
                 break;
