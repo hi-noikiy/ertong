@@ -74,7 +74,7 @@ class OrderListForm extends ApiModel
         }
         if ($this->status == 4) {//已完成
             $query->andWhere([
-                'is_confirm' => 1,
+                'put_status' => 3,
             ]);
         }
         if ($this->status == 6){
