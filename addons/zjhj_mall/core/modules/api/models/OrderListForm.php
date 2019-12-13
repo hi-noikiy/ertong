@@ -172,22 +172,22 @@ class OrderListForm extends ApiModel
             if ($order->is_pay == 0 && $order->is_cancel!=1) {
                 $status = '待付款';
                 $order_status = 0;
-            } elseif ($order->is_pay == 1 && $order->is_send == 0 && $order->is_order_confirm == 1 && $order->put_status == 1) {
+            } elseif ($order->is_pay == 1 && $order->is_cancel == 0 && $order->is_send == 0 && $order->is_order_confirm == 1 && $order->put_status == 1) {
                 $status = '备货中';
                 $order_status = 1;
-            } elseif ($order->is_send == 1 && $order->is_confirm == 0 && $order->put_status == 1) {
+            } elseif ($order->is_send == 1 && $order->is_cancel == 0 &&  $order->is_confirm == 0 && $order->put_status == 1) {
                 $status = '已发货';
                 $order_status = 2;
-            } elseif ($order->is_send == 1 && $order->put_status == 2){
+            } elseif ($order->is_send == 1 && $order->is_cancel == 0 && $order->put_status == 2){
                 $status = '待自提';
                 $order_status = 3;
-            } elseif ($order->put_status == 3) {
+            } elseif ($order->put_status == 3 && $order->is_cancel == 0) {
                 $status = '已完成';
                 $order_status = 4;
             }elseif ($order->is_cancel == 1){
                 $status = '已取消';
                 $order_status = 6;
-            }elseif ($order->is_pay == 1 && $order->is_order_confirm == 0 && $order->is_send == 0){
+            }elseif ($order->is_pay == 1 && $order->is_order_confirm == 0 && $order->is_send == 0 && $order->is_cancel == 0){
                 $status = '待确认';
                 $order_status = 7;
             }
@@ -314,6 +314,22 @@ class OrderListForm extends ApiModel
         $form->status = 3;
         $res = $form->search();
         $data['status_3'] = $res['data']['row_count'];
+
+        $form->status = 4;
+        $res = $form->search();
+        $data['status_4'] = $res['data']['row_count'];
+
+        $form->status = 5;
+        $res = $form->search();
+        $data['status_5'] = $res['data']['row_count'];
+
+        $form->status = 6;
+        $res = $form->search();
+        $data['status_6'] = $res['data']['row_count'];
+
+        $form->status = 7;
+        $res = $form->search();
+        $data['status_7'] = $res['data']['row_count'];
 
         return $data;
     }
