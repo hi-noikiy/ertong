@@ -248,7 +248,7 @@ $urlStr = get_plugin_url();
                             <?php endforeach; ?>
                             <tr>
                                 <td>退款理由</td>
-                                <td colspan="2"><?= $list['refuse_desc'] ?></td>
+                                <td colspan="2"><?= $list['refund_desc'] ?></td>
                             </tr>
                             <!-- <tr>
                                 <td>详细说明</td>
@@ -260,7 +260,7 @@ $urlStr = get_plugin_url();
                                 <td colspan="2">
                                     <?php foreach ($list['refund_pic_list'] as $index => $value) : ?>
                                         <div class="goods-pic"
-                                         style="background-image: url('<?= $value->pic ?>')"></div>
+                                         style="background-image: url('<?= $value ?>')"></div>
                                     <?php endforeach; ?>
                                 </td>
                             </tr>
