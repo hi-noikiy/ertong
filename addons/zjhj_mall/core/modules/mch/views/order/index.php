@@ -215,9 +215,9 @@ $urlPlatform = Yii::$app->requestedRoute;
                                             <span class="badge badge-success">已发货</span>
                                         <?php else : ?>
                                             <?php if ($order_item['is_order_confirm'] == 1) : ?>
-                                                <span class="badge badge-default">待确认</span>
-                                            <?php else : ?>
                                                 <span class="badge badge-default">备货中</span>
+                                            <?php else : ?>
+                                                <span class="badge badge-default">待确认</span>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     </span>
