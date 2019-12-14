@@ -191,55 +191,16 @@ class OrderListForm extends MchModel
                 $item['address_data'] = \Yii::$app->serializer->decode($item['address_data']);
             }
             $item['flag'] = 0;
-            $city_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $item['province']])->groupBy('city')->asArray()->all();
-            $listArray[$i]['city_arr']=$city_arr;
-            $address_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'city' => $item['city']])->groupBy('address')->asArray()->all();
-            $listArray[$i]['address_arr']=$address_arr;
         }
         //查找云柜地址
         $cabinet=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->groupBy('cabinet_id')->asArray()->all();
-        $cabinet_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->groupBy('province')->asArray()->all();
-        foreach ($cabinet_arr as $key => $val) {
-            $province[]=$val['province'];
-        }
-
-        $province=array_unique($province);
         
-        $province_arr=array();
-        $city=array();
-        foreach ($province as $key => $val) {
-            $cabinet_province=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $val])->groupBy('city')->asArray()->all();
-            foreach ($cabinet_province as $k => $v) {
-                $city[$key][]=array(
-                        'id' => $v['id']+1,
-                        'level' => "city",
-                        'list' => array(),
-                        'name' => $v['city'],
-                        'parent_id' => $key+1,
-                );
-            }
-        }
-        foreach ($province as $key => $val) {
-            foreach ($city as $k => $v) {
-                if($key==$k){
-                    $province_arr[]=array(
-                        'id' => $key+1,
-                        'level' => "province",
-                        'list' => $city[$k],
-                        'name' => $val,
-                        'parent_id' => 1,
-                    );
-                }
-            }
-        }
-        // return $listArray;
         return [
             'row_count' => $count,
             'page_count' => $pagination->pageCount,
             'pagination' => $pagination,
             'list' => $listArray,
             'cabinet' => $cabinet,
-            'province_arr' => $province_arr,
         ];
     }
 

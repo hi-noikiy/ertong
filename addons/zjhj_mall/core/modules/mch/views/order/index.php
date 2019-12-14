@@ -214,11 +214,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                                         <?php if ($order_item['is_send'] == 1) : ?>
                                             <span class="badge badge-success">已发货</span>
                                         <?php else : ?>
-                                            <?php if ($order_item['is_order_confirm'] == 1) : ?>
-                                                <span class="badge badge-default">待确认</span>
-                                            <?php else : ?>
-                                                <span class="badge badge-default">备货中</span>
-                                            <?php endif; ?>
+                                            <span class="badge badge-default">备货中</span>
                                         <?php endif; ?>
                                     </span>
                                 <?php endif; ?>
@@ -482,7 +478,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                                 <span class="mr-3"><span
                                             class="titleColor">联系电话：</span><?= $order_item['mobile'] ?></span>
                             <?php endif; ?>
-                            <!-- <?php if ($order_item['is_send'] == 1) : ?>
+                            <?php if ($order_item['is_send'] == 1) : ?>
                                 <?php if ($order_item['is_offline'] == 0 || $order_item['express']) : ?>
                                     <?php if ($order_item['express_no'] != '') : ?>
                                         <span class=" badge badge-default"><?= $order_item['express'] ?></span>
@@ -493,7 +489,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                                 <?php elseif ($order_item['is_offline'] == 1) : ?>
                                     <span><span class="titleColor">核销员：</span><?= $order_item['clerk_name'] ?></span>
                                 <?php endif; ?>
-                            <?php endif; ?> -->
+                            <?php endif; ?>
                         </div>
                         <div <?= $order_item['remark'] ? '' : 'hidden' ?>>
                             <span class="titleColor">用户备注：</span><?= $order_item['remark'] ?>
@@ -788,78 +784,6 @@ $urlPlatform = Yii::$app->requestedRoute;
         </div>
     </div>
 </div>
-<!--修改地址-->
-<div class="modal fade" id="editAddress">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">修改自提柜地址</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <div class="form-group row">
-                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
-                        <label class="col-form-label required">收件人</label>
-                    </div>
-                    <div class="col-sm-6">
-                        <input class="form-control name" value="">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
-                        <label class="col-form-label required">电话</label>
-                    </div>
-                    <div class="col-sm-6">
-                        <input class="form-control mobile" value="">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
-                        <label class="col-form-label required">发件人地区</label>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <select class="form-control province" style="float: left;" name="province">
-                                <?php foreach ($province_arr as $key => $val) : ?>
-                                    <option value="<?= $val['name'] ?>" data-index="index"><?= $val['name'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                            <select class="form-control city" style="float: left;" name="city">
-                                
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
-                        <label class="col-form-label required">柜子ID</label>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <select class="form-control cabinet" name="cabinet_id">
-                                <!-- <option v-for="(item,index) in cabinet"
-                                        :value="item.id" :data-index="index">{{item.address}}({{item.cabinet_id}})
-                                </option> -->
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <input style="display: none;" class="order-id" name="orderId" value="">
-                <input style="display: none;" class="order-type" name="orderType" value="">
-                <div class="form-group row">
-                    <div class="form-group-label col-sm-2 text-right">
-                    </div>
-                    <div class="col-sm-6">
-                        <a class="btn btn-primary update-address" href="javascript:">保存</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?= $this->render('/layouts/ss', [
     'exportList' => $exportList,
@@ -879,166 +803,7 @@ $urlPlatform = Yii::$app->requestedRoute;
         },
     });
 </script>
-<script>
-    // console.log(<?=$district?>);
-    // var editAddress = new Vue({
-    //     el: '#editAddress',
-    //     data: {
-    //         province:<?= Yii::$app->serializer->encode($province_arr) ?>,
-    //         city: [],
-    //         area: [],
-    //         sender_province: "<?=$sender->province?>",
-    //         sender_city: "<?=$sender->city?>",
-    //         sender_area: "<?=$sender->exp_area?>",
 
-    //         orderList: <?= Yii::$app->serializer->encode($list) ?>,
-    //         cabinet: <?= Yii::$app->serializer->encode($cabinet) ?>,
-    //         province_arr: <?= Yii::$app->serializer->encode($province_arr) ?>,
-    //     }
-    // });
-    // 弹框
-    $(document).on("click", ".edit-address", function () {
-        var orderList=<?= Yii::$app->serializer->encode($list) ?>;
-        var province_arr=<?= Yii::$app->serializer->encode($province_arr) ?>;
-        var cabinet=<?= Yii::$app->serializer->encode($cabinet) ?>;
-        var orderType = $(this).data('orderType');
-        var index = $(this).data('index');
-        var orderId = orderList[index].id;
-        var name = orderList[index].name;
-        var mobile = orderList[index].mobile;
-        var cabinet_id = orderList[index].cabinet_id;
-        var city_arr = orderList[index].city_arr;
-        var address_arr = orderList[index].address_arr;
-
-        $('.name').val(name);
-        $('.mobile').val(mobile);
-        $('.order-id').val(orderId);
-        $('.order-type').val(orderType);
-
-        var sender_province = orderList[index].province
-        var sender_city = orderList[index].city
-        
-        $('.province').find('option').each(function (i) {
-            if ($(this).val() == sender_province) {
-                $(this).prop('selected', 'selected');
-                return true;
-            }
-        });
-        var cityHtml="";
-        for (var i = 0; i < city_arr.length; i++) {
-            if(sender_city==city_arr[i]['city']){
-                cityHtml+="<option value="+city_arr[i]['city']+" data-index='i' selected >"+city_arr[i]['city']+"</option>";
-            }else{
-                cityHtml+="<option value="+city_arr[i]['city']+" data-index='i'>"+city_arr[i]['city']+"</option>";
-            }
-        }
-        $(".city").html(cityHtml)
-        var cabinetHtml="";
-        for (var i = 0; i < address_arr.length; i++) {
-            if(cabinet_id==address_arr[i]['id']){
-                cabinetHtml+="<option value="+address_arr[i]['id']+" data-index='i' selected >"+address_arr[i]['address']+"("+address_arr[i]['cabinet_id']+")"+"</option>";
-            }else{
-                cabinetHtml+="<option value="+address_arr[i]['id']+" data-index='i'>"+address_arr[i]['address']+"("+address_arr[i]['cabinet_id']+")"+"</option>";
-            }
-        }
-        $(".cabinet").html(cabinetHtml)
-        
-        $('#editAddress').modal('show');
-    });
-    $(document).on('change', '.province', function () {
-        var province = $(this).find('option:selected').val();
-        $.ajax({
-            type: "POST",
-            url: '<?= $urlManager->createUrl(['mch/order/select-city']) ?>',
-            dataType: "json",
-            data: {
-                'province': province,
-                _csrf: _csrf
-            }, 
-            cache: false,
-            success: function(data) {
-                if(data.code==0){
-                    $(".city").empty();
-                    $(".cabinet").empty();
-                    var cityHtml="";
-                    for (var i = 0; i < data.city_arr.length; i++) {
-                        
-                        cityHtml+="<option value="+data.city_arr[i]['city']+" data-index='i'>"+data.city_arr[i]['city']+"</option>";
-                        
-                    }
-                    var cabinetHtml="";
-                    for (var i = 0; i < data.address_arr.length; i++) {
-                        
-                        cabinetHtml+="<option value="+data.address_arr[i]['id']+" data-index='i'>"+data.address_arr[i]['address']+"("+data.address_arr[i]['cabinet_id']+")"+"</option>";
-                        
-                    }
-                    $(".cabinet").html(cabinetHtml)
-                    $(".city").html(cityHtml)
-                }else{
-                    alert(data.msg)
-                }
-            }
-        });
-        
-    });
-    $(document).on('change', '.city', function () {
-        var city = $(this).find('option:selected').val();
-        $.ajax({
-            type: "POST",
-            url: '<?= $urlManager->createUrl(['mch/order/select-address']) ?>',
-            dataType: "json",
-            data: {
-                'city': city,
-                _csrf: _csrf
-            }, 
-            cache: false,
-            success: function(data) {
-                if(data.code==0){
-                    $(".cabinet").empty();
-                    var cabinetHtml="";
-                    for (var i = 0; i < data.address_arr.length; i++) {
-                        
-                        cabinetHtml+="<option value="+data.address_arr[i]['id']+" data-index='i'>"+data.address_arr[i]['address']+"("+data.address_arr[i]['cabinet_id']+")"+"</option>";
-                        
-                    }
-                    $(".cabinet").html(cabinetHtml)
-                }else{
-                    alert(data.msg)
-                }
-            }
-        });
-    });
-    // 提交更新
-    $(document).on('click', '.update-address', function () {
-        $('.update-address').btnLoading('更新中');
-        var href = '<?= $urlManager->createUrl(['mch/order/update-order-address']) ?>';
-        $.ajax({
-            url: href,
-            type: "post",
-            data: {
-                orderId: $('.order-id').val(),
-                orderType: $('.order-type').val(),
-                name: $('.name').val(),
-                mobile: $('.mobile').val(),
-                cabinet_id: $('.cabinet option:selected').val(),
-                _csrf: _csrf
-            },
-            dataType: "json",
-            success: function (res) {
-                $('.update-address').btnReset();
-                $.myAlert({
-                    content: res.msg,
-                    confirm: function () {
-                        if (res.code == 0) {
-                            location.reload();
-                        }
-                    }
-                })
-            }
-        });
-        return false;
-    });
-</script>
 <script>
     $(document).on('click', '.del', function () {
         var a = $(this);
