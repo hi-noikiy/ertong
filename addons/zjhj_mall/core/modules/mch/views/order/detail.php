@@ -472,17 +472,10 @@ $urlStr = get_plugin_url();
                             <?php if ($is_update) : ?>
                                 <tr>
                                     <td>商家备注</td>
-                                    <?php if ($order['is_order_confirm']==1) : ?>
-                                        <td colspan="2"><textarea id="seller_comments" name="seller_comments" cols="90"
-                                                                  rows="5"
-                                                                  style="resize: none;width: 100%;"><?= $order['confirm'] ?></textarea>
-                                        </td>
-                                    <?php else : ?>
-                                        <td colspan="2"><textarea id="seller_comments" name="seller_comments" cols="90"
-                                                                  rows="5"
-                                                                  style="resize: none;width: 100%;"><?= $order['seller_comments'] ?></textarea>
-                                        </td>
-                                    <?php endif; ?>
+                                    <td colspan="2"><textarea id="seller_comments" name="seller_comments" cols="90"
+                                                              rows="5"
+                                                              style="resize: none;width: 100%;"><?= $order['seller_comments'] ?></textarea>
+                                    </td>
                                 </tr>
                                 <?php if ($order['is_pay'] == 1) : ?>
                                     <?php if ($order['is_cancel'] != 1) : ?>
