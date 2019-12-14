@@ -248,7 +248,7 @@ $urlStr = get_plugin_url();
                             <?php endforeach; ?>
                             <tr>
                                 <td>退款理由</td>
-                                <td colspan="2"><?= $list['desc'] ?></td>
+                                <td colspan="2"><?= $list['refuse_desc'] ?></td>
                             </tr>
                             <!-- <tr>
                                 <td>详细说明</td>
