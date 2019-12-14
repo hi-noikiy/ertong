@@ -15,6 +15,7 @@ use app\models\Express;
 use app\models\Order;
 use app\models\Shop;
 use app\models\User;
+use app\models\Cabinet;
 use app\models\WechatTplMsgSender;
 use app\modules\api\models\OrderRevokeForm;
 use app\modules\mch\models\ExportList;
@@ -69,12 +70,14 @@ class OrderController extends Controller
         if ($shop_id) {
             $shop = Shop::findOne(['store_id' => $this->store->id, 'id' => $shop_id]);
         }
+        // print_r($data);die;
         return $this->render('index', [
             'row_count' => $data['row_count'],
             'page_count' => $data['page_count'],
             'pagination' => $data['pagination'],
             'list' => $data['list'],
             'cabinet' => $data['cabinet'],
+            'province_arr' => $data['province_arr'],
             'store_data' => $store_data_form->search(),
             'express_list' => $this->getExpressList(),
             'user' => $user,
@@ -563,4 +566,39 @@ class OrderController extends Controller
         return $print->print_order();
     }
 
+    public function actionSelectCity()
+    {
+        $province = \Yii::$app->request->post();
+        $city_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $province])->groupBy('city')->asArray()->all();
+
+        if($city_arr){
+            $address_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'city' => $city_arr[0]['city']])->groupBy('address')->asArray()->all();
+            return [
+                'code' => 0,
+                'city_arr' => $city_arr,
+                'address_arr' => $address_arr,
+            ];
+        }else{
+            return [
+                'code' => 1,
+                'msg' => "没有查到所在的市",
+            ];
+        }
+    }
+    public function actionSelectAddress()
+    {
+        $city = \Yii::$app->request->post();
+        $address_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'city' => $city])->groupBy('address')->asArray()->all();
+        if($address_arr){
+            return [
+                'code' => 0,
+                'address_arr' => $address_arr,
+            ];
+        }else{
+            return [
+                'code' => 1,
+                'msg' => "没有查到所在省市的柜子",
+            ];
+        }
+    }
 }
