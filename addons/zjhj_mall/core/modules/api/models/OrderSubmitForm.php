@@ -88,6 +88,7 @@ class OrderSubmitForm extends OrderData
             [['cart_id_list', 'goods_info', 'content', 'address_name', 'address_mobile', 'cart_list', 'mch_list', 'service_day', 'service_time'], 'string'],
             [['cabinet_id'], 'required', 'on' => "EXPRESS"],
             [['address_name', 'address_mobile'], 'required', 'on' => "OFFLINE"],
+            [['service_day', 'service_time'], 'required' , 'message' => '下单时间不能为空'],
             [['user_coupon_id', 'offline', 'shop_id', 'use_integral'], 'integer'],
             [['type'], 'default', 'value' => 0],
             [['pond_id', 'scratch_id', 'lottery_id', 'step_id'], 'default', 'value' => 0],
@@ -715,7 +716,6 @@ class OrderSubmitForm extends OrderData
         }
         $t = \Yii::$app->db->beginTransaction();
         $mch_list = json_decode($this->mch_list, true);
-
         //判断自定义表单是否按照要求填写
         $form_list = $this->getForm();
         //判断自提或者快递
