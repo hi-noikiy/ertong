@@ -87,6 +87,29 @@ $urlStr = get_plugin_url();
         background-position: center;
         margin-right: 1rem;
     }
+    /*查看img图片大图的弹出框样式*/
+    .jump2{
+        width:100%;
+        height:100%;
+        position: fixed;
+        z-index: 99;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        top: 0;
+        left: 0;
+    }
+    .jump2 .jump2_img{
+        display: block;
+        width:30%;
+        height: 93%;
+        margin: 2% auto;
+        overflow-y: scroll;
+    }
+    .jump2 .jump2_img img{
+        display: block;
+        width:100%;
+        height: auto;
+    }
 </style>
 <div class="panel mb-3">
     <div class="panel-header"><?= $this->title ?></div>
@@ -260,7 +283,8 @@ $urlStr = get_plugin_url();
                                 <td colspan="2">
                                     <?php foreach ($list['refund_pic_list'] as $index => $value) : ?>
                                         <div class="goods-pic"
-                                         style="background-image: url('<?= $value ?>')"></div>
+                                         style="background-image: url('<?= $value ?>')"
+                                         attr-url="<?= $value ?>"></div>
                                     <?php endforeach; ?>
                                 </td>
                             </tr>
@@ -296,7 +320,9 @@ $urlStr = get_plugin_url();
     </div>
     <!-- 添加按钮结束 -->
 </div>
-
+<div class="jump2">
+    <div class="jump2_img"></div>
+</div>
 <?= $this->render('/layouts/order-refund', [
     'orderType' => 'STORE'
 ]) ?>
@@ -325,5 +351,15 @@ $urlStr = get_plugin_url();
             }
         });
     });
+    $(".goods-pic").on("click",function(){
 
+        var src_url=$(this).attr('attr-url')
+
+        $(".jump2").show()
+        $(".jump2_img").html('<img src="'+  src_url +'">')
+    })
+    $(".jump2").on("click",function(){
+        $(".jump2").hide()
+        return false;
+    })
 </script>
