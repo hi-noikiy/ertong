@@ -149,7 +149,7 @@ class OrderDetailForm extends ApiModel
         if ($expireTime<0){
             $expireTime = 0;
         }
-        if ($expireTime = 0){
+        if ($expireTime == 0){
             $order->is_cancel = 1;
             $order->save();
         }
