@@ -56,6 +56,14 @@ class OrderDetailForm extends ApiModel
         }
         $status = "";
         $order_status = null;
+        $expireTime = (int)($order->addtime + 60*5-time());
+        if ($expireTime<0){
+            $expireTime = 0;
+        }
+        if ($expireTime == 0){
+            $order->is_cancel = 1;
+            $order->save();
+        }
         if ($order->is_pay == 0 && $order->is_cancel!=1) {
             $status = '待付款';
             $order_status = 0;
@@ -145,14 +153,7 @@ class OrderDetailForm extends ApiModel
             $cabInfo['city'] = $cabinet->city;
             $cabInfo['address'] = $cabinet->address;
         }
-        $expireTime = (int)($order->addtime + 60*5-time());
-        if ($expireTime<0){
-            $expireTime = 0;
-        }
-        if ($expireTime == 0){
-            $order->is_cancel = 1;
-            $order->save();
-        }
+
         return [
             'code' => 0,
             'msg' => 'success',
