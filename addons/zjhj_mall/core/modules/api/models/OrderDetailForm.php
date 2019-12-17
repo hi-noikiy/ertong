@@ -145,6 +145,14 @@ class OrderDetailForm extends ApiModel
             $cabInfo['city'] = $cabinet->city;
             $cabInfo['address'] = $cabinet->address;
         }
+        $expireTime = (int)($order->addtime + 60*5-time());
+        if ($expireTime<0){
+            $expireTime = 0;
+        }
+        if ($expireTime = 0){
+            $order->is_cancel = 1;
+            $order->save();
+        }
         return [
             'code' => 0,
             'msg' => 'success',
@@ -181,7 +189,8 @@ class OrderDetailForm extends ApiModel
                 'integral'=>\Yii::$app->serializer->decode($order->integral),
                 'apply_delete' => $order->apply_delete,
                 'cab_info' => $cabInfo,
-                'put_code' => $order->put_code
+                'put_code' => $order->put_code,
+                'expire_time' => $expireTime
             ],
         ];
     }

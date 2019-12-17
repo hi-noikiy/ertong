@@ -11,6 +11,7 @@ namespace app\modules\api\models\miaosha;
 use app\models\Address;
 use app\models\Attr;
 use app\models\AttrGroup;
+use app\models\Cabinet;
 use app\models\common\api\CommonOrder;
 use app\models\common\CommonFormId;
 use app\models\common\CommonGoods;
@@ -23,11 +24,13 @@ use app\models\MsGoods;
 use app\models\MsOrder;
 use app\models\MsSetting;
 use app\models\Option;
+use app\models\OrderSub;
 use app\models\PostageRules;
 use app\models\Store;
 use app\models\task\order\OrderAutoCancel;
 use app\models\User;
 use app\models\UserCoupon;
+use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\utils\PinterOrder;
 use app\modules\api\models\ApiModel;
 use app\modules\api\models\OrderData;
@@ -60,14 +63,18 @@ class OrderSubmitForm extends ApiModel
 
     public $payment;
     public $formId;
+    public $service_day;
+    public $service_time;
+    public $cabinet_id;
 
     public function rules()
     {
         return [
-            [['cart_id_list', 'goods_info', 'content', 'address_name', 'address_mobile'], 'string'],
+            [['cart_id_list', 'goods_info', 'content', 'address_name', 'address_mobile', 'service_day', 'service_time'], 'string'],
             [['address_id',], 'required', 'on' => "EXPRESS"],
             [['address_name', 'address_mobile'], 'required', 'on' => "OFFLINE"],
             [['user_coupon_id', 'offline', 'shop_id', 'use_integral'], 'integer'],
+            [['service_day', 'service_time'], 'required' , 'message' => '下单时间不能为空'],
             [['offline'], 'default', 'value' => 0],
             [['payment'], 'default', 'value' => 0],
             [['form', 'formId'], 'safe'],
@@ -111,6 +118,10 @@ class OrderSubmitForm extends ApiModel
                     'msg' => '收货地址不存在',
                 ];
             }
+            $cabinet = Cabinet::findOne([
+                'id' => $this->cabinet_id,
+                'store_id' => $this->store_id,
+            ]);
             $this->address = $address;
             $option = Option::getList('mobile_verify', \Yii::$app->controller->store->id, 'admin', 1);
             if ($option['mobile_verify']) {
@@ -200,6 +211,9 @@ class OrderSubmitForm extends ApiModel
         $order->store_id = $this->store_id;
         $order->user_id = $this->user_id;
         $order->order_no = $this->getOrderNo();
+        $order->cabinet_id = $this->cabinet_id;
+        $order->service_day = $this->service_day;
+        $order->service_time = $this->service_time;
 
         //此处计算所有的优惠措施
 //        $total_price_2 = $total_price; //实际支付金额
@@ -263,13 +277,13 @@ class OrderSubmitForm extends ApiModel
         $order->addtime = time();
         if ($this->offline == 0) {
             $order->address = $address->province . $address->city . $address->district . $address->detail;
-            $order->mobile = $address->mobile;
-            $order->name = $address->name;
+            $order->mobile = $user->binding;
+            $order->name = $user->nickname;
             $order->address_data = json_encode([
-                'province' => $address->province,
-                'city' => $address->city,
+                'province' => $cabinet->province,
+                'city' => $cabinet->city,
                 'district' => $address->district,
-                'detail' => $address->detail,
+                'detail' => $cabinet->address,
             ], JSON_UNESCAPED_UNICODE);
         } else {
             $order->name = $this->address_name;
@@ -320,6 +334,104 @@ class OrderSubmitForm extends ApiModel
                 $register->order_id = $order->id;
                 $register->save();
                 $user->save();
+            }
+            //根据商品
+            $cabGroup = self::array_group_by($goods_list,'storage_type');
+            $dev = [];
+            $allTotal = 0;
+            foreach ($cabGroup as $k=>$goodsLists){
+                $subPrice = 0.00;
+                $order_sub = new OrderSub();
+                $goods_total_pay_price = $order->pay_price - $order->express_price;
+                $goods_total_price = 0.00;
+                foreach ($goods_list as $goods) {
+                    $allTotal += 1;
+                    $goods_total_price += $goods->price;
+                }
+                $total = 0;
+                $devGoodsName = [];
+                foreach ($goodsLists as $goods){
+                    $subPrice += doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
+                    $devGoodsName[] = $goods->goods_name;
+                    $total += $goods->num;
+
+                }
+                $subOrderNo = $this->getOrderNo();
+                $order_sub->store_id = $this->store_id;
+                $order_sub->user_id = $this->user_id;
+                $order_sub->order_no = $subOrderNo;
+                $order_sub->cabinet_id = $this->cabinet_id;
+                $order_sub->service_day = $this->service_day;
+                $order_sub->service_time = $this->service_time;
+                $order_sub->pay_price = $subPrice;
+                $order_sub->order_id = $order->id;
+                $order_sub->total_price = $subPrice;
+                $order_sub->discount = $discount;
+                $order_sub->addtime = time();
+                if ($this->offline == 0) {
+                    $order_sub->address = $address->province . $address->city . $address->district . $address->detail;
+                    $order_sub->mobile = $address->mobile;
+                    $order_sub->name = $address->name;
+                    $order_sub->address_data = json_encode([
+                        'province' => $cabinet->province,
+                        'city' => $cabinet->city,
+                        'district' => $address->district,
+                        'detail' => $cabinet->address,
+                    ], JSON_UNESCAPED_UNICODE);
+                } else {
+                    $order_sub->name = $this->address_name;
+                    $order_sub->mobile = $this->address_mobile;
+                    $order_sub->shop_id = $this->shop_id;
+                }
+                $order_sub->first_price = 0;
+                $order_sub->second_price = 0;
+                $order_sub->third_price = 0;
+                $order_sub->content = $this->content;
+                $order_sub->is_offline = $this->offline;
+                $order_sub->integral = json_encode($resIntegral, JSON_UNESCAPED_UNICODE);
+                $order_sub->version = $this->version;
+                $order_sub->origin_order_no = $order->order_no;
+                if ($this->payment == 2) {
+                    $order_sub->pay_type = 2;
+                    $order_sub->is_pay = 0;
+                }
+                if ($this->payment == 3) {
+                    $order_sub->pay_type = 3;
+                    $order_sub->is_pay = 0;
+                }
+                if (!$order_sub->save()){
+                    $t->rollBack();
+                    return [
+                        'code' => 1,
+                        'msg' => '订单提交失败，请稍后再重试!',
+                    ];
+                }
+                $coolType = 0;
+                if ($k == 1){
+                    $coolType = 0;
+                }
+                if ($k == 2){
+                    $coolType = 1;
+                }
+                if ($k == 3){
+                    $coolType = 2;
+                }
+                //$emptyData = $this->queryEmptyCell($cabinet->cabinet_id, $coolType);
+                $dev[$k]['deliverNo'] = $subOrderNo;
+                $dev[$k]['coolType'] = $coolType;
+                $goodStr = implode('|', $devGoodsName);
+                $dev[$k]['goods'] = $goodStr;
+                $dev[$k]['quantity'] = $total;
+
+
+            }
+            $re = $this->createOrder($order->order_no, $cabinet->cabinet_id, $dev, $allTotal);
+            if ($re['code'] != 0){
+                $t->rollBack();
+                return [
+                    'code' => 1,
+                    'msg' => $re['message'],
+                ];
             }
             $goods_total_pay_price = $order->pay_price - $order->express_price;
             $goods_total_price = 0.00;
@@ -376,7 +488,30 @@ class OrderSubmitForm extends ApiModel
             return $this->getErrorResponse($order);
         }
     }
+    /**
+     * 操作云柜
+     */
+    protected function queryEmptyCell($machineId, $coolType, $timestamp = null, $sign = null){
+        $cabPlatform = new CabinetPlatForm($machineId);
 
+        $result = $cabPlatform->queryEmptyCell($coolType);
+        return $result;
+    }
+
+    /**
+     * @param $orderNo
+     * @param $machineId
+     * @param $delivers
+     * @param $total
+     * @return mixed
+     * @desc 创建订单
+     */
+    protected function createOrder($orderNo, $machineId, $delivers, $total){
+        $cabPlatform = new CabinetPlatForm($machineId);
+        $delivers = array_values($delivers);
+        $result = $cabPlatform->createOrder($orderNo,$delivers,$total);
+        return $result;
+    }
 
     /**
      * @param string $goods_info
