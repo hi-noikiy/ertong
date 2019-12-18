@@ -82,8 +82,17 @@ class CabinetController extends Controller
         $list = ArrayHelper::toArray($cabinet);
         $warehouse_list=Warehouse::find()->where(['is_delete'=>0, 'store_id' => $this->store->id])->orderBy('addtime DESC')->asArray()->all();
         
+        
+        $province_arr=array();
+        $city_arr=array();
+        $province_arr=Cabinet::find()->where(['store_id' => $this->store->id, 'is_delete' => 0])->groupBy('province')->asArray()->all();
+
+        $city_arr=Cabinet::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'province' => $list['province']])->groupBy('city')->asArray()->all();
+        
         return $this->render('cabinet-edit', [
             'list' => $list,
+            'city_arr' => $city_arr,
+            'province_arr' => $province_arr,
             'warehouse_list' => $warehouse_list,
         ]);
     }

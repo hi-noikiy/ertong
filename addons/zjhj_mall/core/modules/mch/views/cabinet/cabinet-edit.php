@@ -10,9 +10,7 @@ defined('YII_ENV') or exit('Access Denied');
 $this->title = '编辑柜子';
 $this->params['active_nav_group'] = 2;
 $returnUrl = Yii::$app->request->referrer;
-if (!$returnUrl) {
-    $returnUrl = $urlManager->createUrl([get_plugin_url() . '/goods']);
-}
+$urlManager = Yii::$app->urlManager;
 $commonDistrict = new \app\models\common\CommonDistrict();
 $district = Yii::$app->serializer->encode($commonDistrict->search());
 ?>
@@ -103,14 +101,11 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
                         <div class="input-group">
                             <select class="form-control province" style="float: left;"
                                     name="model[province]">
-                                <option v-for="(item,index) in province"
-                                        :value="item.name" :data-index="index">{{item.name}}
-                                </option>
+                                <?php foreach ($province_arr as $key => $val) : ?>
+                                    <option value="<?= $val['province'] ?>" data-index="index"><?= $val['province'] ?></option>
+                                <?php endforeach; ?>
                             </select>
                             <select class="form-control city" style="float: left;" name="model[city]">
-                                <option v-for="(item,index) in city"
-                                        :value="item.name" :data-index="index">{{item.name}}
-                                </option>
                             </select>
                         </div>
                     </div>
@@ -148,67 +143,74 @@ $district = Yii::$app->serializer->encode($commonDistrict->search());
     //     });
     // });
     $(function(){
-        var editAddress = new Vue({
-            el: '#Address',
-            data: {
-                province:<?=$district?>,
-                city: [],
-                area: [],
-                sender_province: "<?=$sender->province?>",
-                sender_city: "<?=$sender->city?>",
-                orderList: <?= Yii::$app->serializer->encode($list) ?>
-            }
-        });
+        // var editAddress = new Vue({
+        //     el: '#Address',
+        //     data: {
+        //         province:<?=$district?>,
+        //         city: [],
+        //         area: [],
+        //         sender_province: "<?=$sender->province?>",
+        //         sender_city: "<?=$sender->city?>",
+        //         orderList: <?= Yii::$app->serializer->encode($list) ?>
+        //     }
+        // });
+        var orderList=<?= Yii::$app->serializer->encode($list) ?>;
+        var province_arr=<?= Yii::$app->serializer->encode($province_arr) ?>;
+        var city_arr = <?= Yii::$app->serializer->encode($city_arr) ?>;
 
         // 弹框
-        editAddress.sender_province = editAddress.orderList.province
-        editAddress.sender_city = editAddress.orderList.city
-        console.log(editAddress.sender_city);
+        var sender_province = orderList.province
+        var sender_city = orderList.city
+        
         $('.province').find('option').each(function (i) {
-            if ($(this).val() == editAddress.sender_province) {
+            if ($(this).val() == sender_province) {
                 $(this).prop('selected', 'selected');
                 return true;
             }
         });
-        $('.city').find('option').each(function (i) {
-            if ($(this).val() == editAddress.sender_city) {
-                $(this).prop('selected', 'selected');
-                return true;
+        var cityHtml="";
+        for (var i = 0; i < city_arr.length; i++) {
+            if(sender_city==city_arr[i]['city']){
+                cityHtml+="<option value="+city_arr[i]['city']+" data-index='i' selected >"+city_arr[i]['city']+"</option>";
+            }else{
+                cityHtml+="<option value="+city_arr[i]['city']+" data-index='i'>"+city_arr[i]['city']+"</option>";
             }
-        });
-        $('.area').find('option').each(function (i) {
-            if ($(this).val() == editAddress.sender_area) {
-                $(this).prop('selected', 'selected');
-                return true;
-            }
-        });
-
-        editAddress.city = editAddress.province[0].list;
-        editAddress.area = editAddress.city[0].list;
-        $(editAddress.province).each(function (i) {
-            if (editAddress.province[i].name == editAddress.sender_province) {
-                editAddress.city = editAddress.province[i].list;
-                return true;
-            }
-        });
-        $(editAddress.city).each(function (i) {
-            if (editAddress.city[i].name == editAddress.sender_city) {
-                editAddress.area = editAddress.city[i].list;
-                return true;
-            }
-        });
+        }
+        $(".city").html(cityHtml)
+        
 
         $('#editAddress').modal('show');
 
         $(document).on('change', '.province', function () {
-            var index = $(this).find('option:selected').data('index');
-            editAddress.city = editAddress.province[index].list;
-            editAddress.area = editAddress.city[0].list;
+            var province = $(this).find('option:selected').val();
+            $.ajax({
+                type: "POST",
+                url: '<?= $urlManager->createUrl(['mch/order/select-city']) ?>',
+                dataType: "json",
+                data: {
+                    'province': province,
+                    _csrf: _csrf
+                }, 
+                cache: false,
+                success: function(data) {
+                    if(data.code==0){
+                        $(".city").empty();
+                        $(".cabinet").empty();
+                        var cityHtml="";
+                        for (var i = 0; i < data.city_arr.length; i++) {
+                            
+                            cityHtml+="<option value="+data.city_arr[i]['city']+" data-index='i'>"+data.city_arr[i]['city']+"</option>";
+                            
+                        }
+                        $(".city").html(cityHtml)
+                    }else{
+                        alert(data.msg)
+                    }
+                }
+            });
+            
         });
-        $(document).on('change', '.city', function () {
-            var index = $(this).find('option:selected').data('index');
-            editAddress.area = editAddress.city[index].list;
-        });
+        
     })
 
 </script>
