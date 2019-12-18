@@ -70,7 +70,7 @@ class OrderController extends Controller
         if ($shop_id) {
             $shop = Shop::findOne(['store_id' => $this->store->id, 'id' => $shop_id]);
         }
-        // print_r($data);die;
+        // print_r($data['list']);die;
         return $this->render('index', [
             'row_count' => $data['row_count'],
             'page_count' => $data['page_count'],

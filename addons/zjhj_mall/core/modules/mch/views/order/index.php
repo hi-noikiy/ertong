@@ -392,7 +392,7 @@ $urlPlatform = Yii::$app->requestedRoute;
 
                     </td>
                     <td class="order-tab-5">
-                        <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['put_status'] == 1 && $order_item['apply_delete'] == 0) : ?>
+                        <?php if (($order_item['is_pay'] == 1 ) && $order_item['put_status'] == 1 && $order_item['apply_delete'] == 0) : ?>
                             <div>
 
                                 <?php if ($order_item['is_send'] == 1 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
