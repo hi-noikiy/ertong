@@ -98,6 +98,7 @@ class OrderListForm extends MchModel
                     'o.is_send' => 1,
                     'o.is_cancel'=>0,
                     'o.put_status'=>3,
+                    'o.is_comment'=>1,
                 ])->andWhere(['or', ['o.is_pay' => 1]]);//is_confirm=1   已完成
                 break;
             case 4:
@@ -112,7 +113,10 @@ class OrderListForm extends MchModel
                 $query->andWhere(['o.apply_delete' => 1]);//待处理
                 break;
             case 7:
-                $query->andWhere(['o.is_send' => 1,'o.put_status' => 2,'o.is_cancel'=>0,]);//is_send=1 && put_status=2   待取货
+                $query->andWhere(['o.is_send' => 1,'o.put_status' => 2,'o.is_cancel'=>0]);//is_send=1 && put_status=2   待取货
+                break;
+            case 8:
+                $query->andWhere(['o.is_send' => 1,'o.put_status' => 3,'o.is_cancel'=>0,'o.is_comment'=>0]);//is_send=1 && put_status=2   待取货
                 break;
             default:
                 break;
