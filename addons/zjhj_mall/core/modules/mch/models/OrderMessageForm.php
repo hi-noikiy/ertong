@@ -82,7 +82,7 @@ class OrderMessageForm extends MchModel
                     break;
                 default:
                     if ($value['type'] == 0) {
-                        $value['url'] = $urlManager->createUrl(['mch/order/index', 'status' => 1]);
+                        $value['url'] = $urlManager->createUrl(['mch/order/index']);
                     } else {
                         $value['url'] = $urlManager->createUrl(['mch/order/refund']);
                     }
