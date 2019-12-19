@@ -116,7 +116,7 @@ class OrderListForm extends MchModel
                 $query->andWhere(['o.is_send' => 1,'o.put_status' => 2,'o.is_cancel'=>0]);//is_send=1 && put_status=2   待取货
                 break;
             case 8:
-                $query->andWhere(['o.is_send' => 1,'o.put_status' => 3,'o.is_cancel'=>0,'o.is_comment'=>0]);//is_send=1 && put_status=2   待取货
+                $query->andWhere(['o.is_send' => 1,'o.put_status' => 3,'o.is_cancel'=>0,'o.is_comment'=>0]);//   待评价
                 break;
             default:
                 break;

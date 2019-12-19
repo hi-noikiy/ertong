@@ -208,8 +208,13 @@ $urlPlatform = Yii::$app->requestedRoute;
                                             <span class="badge badge-success">配送中</span>
                                         <?php elseif ($order_item['put_status'] == 2)  : ?>
                                             <span class="badge badge-default">待自提</span>
-                                        <?php else : ?>
-                                            <span class="badge badge-default">已完成</span>
+                                        <?php elseif ($order_item['put_status'] == 3) : ?>
+                                            <?php if ($order_item['is_comment'] == 0) : ?>
+                                                <span class="badge badge-default">待评价</span>
+                                            <?php else : ?>
+                                                <span class="badge badge-default">已完成</span>
+                                            <?php endif; ?>
+                                            
                                         <?php endif; ?>
                                     </span>
                             <?php else : ?>
