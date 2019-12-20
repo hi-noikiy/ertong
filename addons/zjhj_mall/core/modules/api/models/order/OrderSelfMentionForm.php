@@ -101,17 +101,20 @@ class OrderSelfMentionForm extends OrderForm
         $content = json_encode($content, true);
         $order->put_status = $this->status;
         $order->put_code = $this->pickupCode;
-
+        \Yii::getLogger()->log($this->status,Logger::LEVEL_WARNING,'input_status');
+        $a = [];
         if ($order->save()) {
             $printer_order = new PinterOrder($this->store_id, $order->id, 'confirm', 0);
             if ($this->status == 2){
-                $a = $this->sendSms($order->mobile, $this->store_id, $content);
-                $a['status'] = $this->status;
-                $log = json_encode($a);
-                //var_dump($log);die;
-                //$log = "www";
-                \Yii::getLogger()->log($log,Logger::LEVEL_WARNING,'update_order');
+                $a['mobile'] = $order->mobile;
+                $a['sms'] = $this->sendSms($order->mobile, $this->store_id, $content);
+
             }
+            $a['status'] = $this->status;
+            $log = json_encode($a);
+            //var_dump($log);die;
+            //$log = "www";
+            \Yii::getLogger()->log($log,Logger::LEVEL_WARNING,'update_order');
             //$res = $printer_order->print_order();
             $wechatAccessToken = $this->getWechat()->getAccessToken();
            //$res = CommonShoppingList::updateBuyGood($wechatAccessToken, $order, 0, 100);
