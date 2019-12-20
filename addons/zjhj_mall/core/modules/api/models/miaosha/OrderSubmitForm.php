@@ -22,6 +22,7 @@ use app\models\MiaoshaGoods;
 use app\models\Model;
 use app\models\MsGoods;
 use app\models\MsOrder;
+use app\models\MsOrderSub;
 use app\models\MsSetting;
 use app\models\Option;
 use app\models\OrderSub;
@@ -71,10 +72,10 @@ class OrderSubmitForm extends ApiModel
     {
         return [
             [['cart_id_list', 'goods_info', 'content', 'address_name', 'address_mobile', 'service_day', 'service_time'], 'string'],
-            [['address_id',], 'required', 'on' => "EXPRESS"],
+            [['address_id',], 'string', 'on' => "EXPRESS"],
             [['address_name', 'address_mobile'], 'required', 'on' => "OFFLINE"],
-            [['user_coupon_id', 'offline', 'shop_id', 'use_integral'], 'integer'],
-            [['service_day', 'service_time'], 'required' , 'message' => '下单时间不能为空'],
+            [['user_coupon_id', 'offline', 'shop_id', 'use_integral', 'cabinet_id'], 'integer'],
+            //[['service_day', 'service_time'], 'required' , 'message' => '下单时间不能为空'],
             [['offline'], 'default', 'value' => 0],
             [['payment'], 'default', 'value' => 0],
             [['form', 'formId'], 'safe'],
@@ -112,12 +113,12 @@ class OrderSubmitForm extends ApiModel
                 'store_id' => $this->store_id,
                 'user_id' => $this->user_id,
             ]);
-            if (!$address) {
-                return [
-                    'code' => 1,
-                    'msg' => '收货地址不存在',
-                ];
-            }
+//            if (!$address) {
+//                return [
+//                    'code' => 1,
+//                    'msg' => '收货地址不存在',
+//                ];
+//            }
             $cabinet = Cabinet::findOne([
                 'id' => $this->cabinet_id,
                 'store_id' => $this->store_id,
@@ -126,10 +127,10 @@ class OrderSubmitForm extends ApiModel
             $option = Option::getList('mobile_verify', \Yii::$app->controller->store->id, 'admin', 1);
             if ($option['mobile_verify']) {
                 if (!preg_match(Model::MOBILE_VERIFY, $address->mobile)) {
-                    return [
-                        'code' => 1,
-                        'msg' => '请输入正确的手机号'
-                    ];
+//                    return [
+//                        'code' => 1,
+//                        'msg' => '请输入正确的手机号'
+//                    ];
                 }
             }
 
@@ -341,7 +342,7 @@ class OrderSubmitForm extends ApiModel
             $allTotal = 0;
             foreach ($cabGroup as $k=>$goodsLists){
                 $subPrice = 0.00;
-                $order_sub = new OrderSub();
+                $order_sub = new MsOrderSub();
                 $goods_total_pay_price = $order->pay_price - $order->express_price;
                 $goods_total_price = 0.00;
                 foreach ($goods_list as $goods) {
@@ -488,6 +489,24 @@ class OrderSubmitForm extends ApiModel
             return $this->getErrorResponse($order);
         }
     }
+
+    public static function array_group_by($arr, $key)
+    {
+        $grouped = [];
+        foreach ($arr as $value) {
+            $grouped[$value->$key][] = $value;
+        }
+        // Recursively build a nested grouping if more parameters are supplied
+        // Each grouped array value is grouped according to the next sequential key
+        if (func_num_args() > 2) {
+            $args = func_get_args();
+            foreach ($grouped as $key => $value) {
+                $parms = array_merge([$value], array_slice($args, 2, func_num_args()));
+                $grouped[$key] = call_user_func_array('array_group_by', $parms);
+            }
+        }
+        return $grouped;
+    }
     /**
      * 操作云柜
      */
@@ -520,6 +539,7 @@ class OrderSubmitForm extends ApiModel
     private function getGoodsListByGoodsInfo($goods_info)
     {
         $goods_info = json_decode($goods_info);
+       // var_dump($goods_info);die;
         // 进行行锁
         $sql = 'select * from ' . MiaoshaGoods::tableName() . " where id={$goods_info->goods_id} and is_delete=0 and open_date='" . date('Y-m-d') . "' and start_time=" . date('H') . " for update";
         $miaosha_goods = \Yii::$app->db->createCommand($sql)->queryOne();
@@ -621,6 +641,7 @@ class OrderSubmitForm extends ApiModel
             'single_price' => doubleval(empty($goods_attr_info['price']) ? $goods->original_price : $goods_attr_info['price']),
             'coupon' => $goods->coupon,
             'is_discount' => $goods->is_discount,
+            'storage_type' => $goods->storage_type,
         ];
 
         //秒杀价计算

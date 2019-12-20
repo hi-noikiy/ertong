@@ -12,6 +12,8 @@ namespace app\modules\api\models\order;
 use app\model\Goods;
 use app\models\Cabinet;
 use app\models\common\api\CommonShoppingList;
+use app\models\MsGoods;
+use app\models\MsOrder;
 use app\models\OrderDetail;
 use app\utils\PinterOrder;
 use app\models\Level;
@@ -44,11 +46,40 @@ class OrderSelfMentionForm extends OrderForm
         if (!$this->validate()) {
             return $this->errorResponse;
         }
-        $order = Order::findOne([
-            'store_id' => $this->store_id,
-            'order_no' => $this->orderNo,
-            'is_delete' => 0,
-        ]);
+
+
+        $orderStr = substr( $this->orderNo, 0, 1 );
+        if ($orderStr == 'M'){
+            $order = MsOrder::findOne([
+                'store_id' => $this->store_id,
+                'order_no' => $this->orderNo,
+                'is_delete' => 0,
+            ]);
+            $goodsId = $order->goods_id;
+            $goods = MsGoods::findOne(
+                [
+                    'id' => $goodsId
+                ]
+            );
+            $goods_name = [$goods->name];
+        }else{
+            $order = Order::findOne([
+                'store_id' => $this->store_id,
+                'order_no' => $this->orderNo,
+                'is_delete' => 0,
+            ]);
+
+            $orderDetails = OrderDetail::find()->where(
+                [
+                    'order_id' => $order->id,
+                ]
+            )->asArray()->all();
+            $goods_name = [];
+            foreach ($orderDetails as $k => $value){
+                $goods = \app\models\Goods::findOne(['id' => $value['goods_id']]);
+                $goods_name[] = $goods->name;
+            }
+        }
         if (!$order) {
             return [
                 'code' => 1,
@@ -82,16 +113,7 @@ class OrderSelfMentionForm extends OrderForm
                 'msg' => '云柜错误'
             ];
         }
-        $orderDetails = OrderDetail::find()->where(
-            [
-                'order_id' => $order->id,
-            ]
-        )->asArray()->all();
-        $goods_name = [];
-        foreach ($orderDetails as $k => $value){
-            $goods = \app\models\Goods::findOne(['id' => $value['goods_id']]);
-            $goods_name[] = $goods->name;
-        }
+
         $cabInfo = $cab->address;
         //$goods_name = implode('、', $goods_name);
         //$content = '亲，您购买的'.$goods_name.'已存放到'.$cabInfo.'，提货码为'.$this->pickupCode.'，请及时取出。';

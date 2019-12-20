@@ -95,7 +95,8 @@ class OrderListForm extends ApiModel
                 'is_send' => 0,
                 'is_pay' => 1,
                 'is_order_confirm' => 0,
-                'is_cancel' => 0
+                'is_cancel' => 0,
+                'put_status' => 1
             ]);
         }
 
