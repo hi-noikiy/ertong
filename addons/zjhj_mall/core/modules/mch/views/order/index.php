@@ -144,7 +144,11 @@ $urlPlatform = Yii::$app->requestedRoute;
             </li>
             <li class="nav-item">
                 <a class="status-item  nav-link <?= $status == 7 ? 'active' : null ?>"
-                   href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 7])) ?>">待取货<?= $store_data['status_count']['status_7'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>
+                   href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 7])) ?>">待自提<?= $store_data['status_count']['status_7'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>
+            </li>
+            <li class="nav-item">
+                <a class="status-item  nav-link <?= $status == 8 ? 'active' : null ?>"
+                   href="<?= $urlManager->createUrl(array_merge([$_GET['r']], $condition, ['status' => 8])) ?>">待评价<?= $store_data['status_count']['status_8'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>
             </li>
             <li class="nav-item">
                 <a class="status-item  nav-link <?= $status == 3 ? 'active' : null ?>"
@@ -203,9 +207,14 @@ $urlPlatform = Yii::$app->requestedRoute;
                                         <?php if ($order_item['put_status'] == 1) : ?>
                                             <span class="badge badge-success">配送中</span>
                                         <?php elseif ($order_item['put_status'] == 2)  : ?>
-                                            <span class="badge badge-default">待取货</span>
-                                        <?php else : ?>
-                                            <span class="badge badge-default">已完成</span>
+                                            <span class="badge badge-default">待自提</span>
+                                        <?php elseif ($order_item['put_status'] == 3) : ?>
+                                            <?php if ($order_item['is_comment'] == 0) : ?>
+                                                <span class="badge badge-default">待评价</span>
+                                            <?php else : ?>
+                                                <span class="badge badge-default">已完成</span>
+                                            <?php endif; ?>
+                                            
                                         <?php endif; ?>
                                     </span>
                             <?php else : ?>

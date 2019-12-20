@@ -68,7 +68,7 @@ $urlStr = get_plugin_url();
                         <div class="input-group" style="width: 25%;float: left;">
                             <input class="form-control" placeholder="用户账户关键词搜索" name="keyword"  value="<?= isset($_GET['keyword']) ? trim($_GET['keyword']) : null ?>">
                         </div>
-                        <div class="input-group" style="width: 15%;float: left;padding-left: 1%;">
+                        <div class="input-group" style="width: 18%;float: left;padding-left: 1%;">
                             <span>营销类型</span>
                             <select class="form-control province" name="type_id">
                                 <option value="0">全部</option>
@@ -83,7 +83,7 @@ $urlStr = get_plugin_url();
                             </select>
                             
                         </div>
-                        <div class="input-group" style="width: 15%;float: left;padding-left: 1%;">
+                        <div class="input-group" style="width: 18%;float: left;padding-left: 1%;">
                             <span>状态</span>
                             <select class="form-control province" name="status">
                                 <option value="0">全部</option>
