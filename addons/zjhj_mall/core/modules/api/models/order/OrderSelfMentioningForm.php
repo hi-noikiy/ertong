@@ -12,6 +12,9 @@ namespace app\modules\api\models\order;
 use app\model\Goods;
 use app\models\Cabinet;
 use app\models\common\api\CommonShoppingList;
+use app\models\MsGoods;
+use app\models\MsOrder;
+use app\models\MsOrderSub;
 use app\models\OrderDetail;
 use app\models\OrderSub;
 use app\utils\PinterOrder;
@@ -46,7 +49,15 @@ class OrderSelfMentioningForm extends OrderForm
             return $this->errorResponse;
         }
         //$t = \Yii::$app->db->beginTransaction();
-        $subOrder = OrderSub::findOne(['order_no' => $this->deliverNo]);
+        $substr = substr( $this->deliverNo, 0, 1 );
+        if ($substr == 'M'){
+            $subOrder = MsOrderSub::findOne(['order_no' => $this->deliverNo]);
+        }elseif ($substr == 'M'){
+            $subOrder = MsOrderSub::findOne(['order_no' => $this->deliverNo]);
+        }else{
+            $subOrder = OrderSub::findOne(['order_no' => $this->deliverNo]);
+
+        }
         if (!$subOrder){
             return [
                 'code' => 1,
@@ -74,11 +85,39 @@ class OrderSelfMentioningForm extends OrderForm
             $user->save();
         }
 */
-        $order = Order::findOne([
-            'store_id' => $this->store_id,
-            'order_no' => $this->orderNo,
-            'is_delete' => 0,
-        ]);
+        $orderStr = substr( $this->orderNo, 0, 1 );
+        if ($orderStr == 'M'){
+            $order = MsOrder::findOne([
+                'store_id' => $this->store_id,
+                'order_no' => $this->orderNo,
+                'is_delete' => 0,
+            ]);
+            $goodsId = $order->goods_id;
+            $goods = MsGoods::findOne(
+                [
+                    'id' => $goodsId
+                ]
+            );
+            $goods_name = [$goods->name];
+        }else{
+            $order = Order::findOne([
+                'store_id' => $this->store_id,
+                'order_no' => $this->orderNo,
+                'is_delete' => 0,
+            ]);
+            $orderDetails = OrderDetail::find()->where(
+                [
+                    'order_id' => $order->id,
+                ]
+            )->asArray()->all();
+            $goods_name = [];
+            foreach ($orderDetails as $k => $value){
+                $goods = \app\models\Goods::findOne(['id' => $value['goods_id']]);
+                $goods_name[] = $goods->name;
+            }
+            $goods_name = implode('、', $goods_name);
+        }
+
         if (!$order) {
             return [
                 'code' => 1,
@@ -99,17 +138,8 @@ class OrderSelfMentioningForm extends OrderForm
             ];
         }
         $cabInfo = $cab->address;
-        $orderDetails = OrderDetail::find()->where(
-            [
-                'order_id' => $order->id,
-            ]
-        )->asArray()->all();
-        $goods_name = [];
-        foreach ($orderDetails as $k => $value){
-            $goods = \app\models\Goods::findOne(['id' => $value['goods_id']]);
-            $goods_name[] = $goods->name;
-        }
-        $goods_name = implode('、', $goods_name);
+
+
         //$content = '亲，您购买的'.$goods_name.'已存放到'.$cabInfo.'，提货码为'.$this->pickupCode.'，请及时取出。';
         $content['name'] = $goods_name;
         $content['address'] = $cabInfo;

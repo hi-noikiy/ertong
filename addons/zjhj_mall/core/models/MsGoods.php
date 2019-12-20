@@ -38,6 +38,7 @@ use Yii;
  * @property string $share_commission_third
  * @property integer $share_type
  * @property string $rebate
+ * @property string $storage_type
  */
 class MsGoods extends \yii\db\ActiveRecord
 {
@@ -57,7 +58,7 @@ class MsGoods extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'original_price', 'detail', 'store_id', 'attr'], 'required'],
-            [['original_price', 'weight', 'share_commission_first', 'share_commission_second', 'share_commission_third', 'rebate','is_level'], 'number'],
+            [['original_price', 'weight', 'share_commission_first', 'share_commission_second', 'share_commission_third', 'rebate','is_level', 'storage_type'], 'number'],
             [['detail', 'cover_pic', 'video_url', 'full_cut', 'integral', 'attr'], 'string'],
             [['status', 'sort', 'virtual_sales', 'addtime', 'is_delete', 'sales', 'store_id', 'freight', 'use_attr', 'is_discount', 'coupon', 'individual_share', 'share_type'], 'integer'],
             [['name', 'unit', 'payment'], 'string', 'max' => 255],
@@ -101,6 +102,7 @@ class MsGoods extends \yii\db\ActiveRecord
             'share_commission_third' => '三级分销佣金比例',
             'share_type' => '佣金配比 0--百分比 1--固定金额',
             'rebate' => '自购返利',
+            'storage_type' => '商品存放类型1常温2冷藏3冷冻'
         ];
     }
 
