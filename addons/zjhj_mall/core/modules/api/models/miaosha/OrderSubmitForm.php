@@ -75,7 +75,7 @@ class OrderSubmitForm extends ApiModel
             [['address_id',], 'string', 'on' => "EXPRESS"],
             [['address_name', 'address_mobile'], 'required', 'on' => "OFFLINE"],
             [['user_coupon_id', 'offline', 'shop_id', 'use_integral', 'cabinet_id'], 'integer'],
-            //[['service_day', 'service_time'], 'required' , 'message' => '下单时间不能为空'],
+            [['service_day', 'service_time'], 'required' , 'message' => '下单时间不能为空'],
             [['offline'], 'default', 'value' => 0],
             [['payment'], 'default', 'value' => 0],
             [['form', 'formId'], 'safe'],
@@ -159,10 +159,10 @@ class OrderSubmitForm extends ApiModel
                     ];
                     $addressArray = array_intersect($addressArr, $city_id);
                     if (empty($addressArray)) {
-                        return [
-                            'code' => 1,
-                            'msg' => '所选地区无货'
-                        ];
+//                        return [
+//                            'code' => 1,
+//                            'msg' => '所选地区无货'
+//                        ];
                     }
                 }
             }

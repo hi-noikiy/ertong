@@ -53,6 +53,12 @@ use yii\db\ActiveQuery;
  * @property integer $is_recycle
  * @property integer $is_show
  * @property string $seller_comments
+ * @property integer $cabinet_id
+ * @property integer $put_status
+ * @property integer $put_code
+ * @property string service_day
+ * @property string service_time
+ * @property integer is_order_confirm
  */
 class PtOrder extends \yii\db\ActiveRecord
 {
@@ -131,6 +137,12 @@ class PtOrder extends \yii\db\ActiveRecord
             'is_recycle' => '是否加入回收站 0--不加入 1--加入',
             'is_show' => '是否显示 0--不显示 1--显示（软删除）',
             'seller_comments' => '商家备注',
+            'put_status' => '自提柜投放状态1未投放2已投放',
+            'cabinet_id' => '自提柜id',
+            'service_day' => '送达日期',
+            'service_time' => '送达时间',
+            'put_code' => '取货码',
+            'is_order_confirm' => '订单确认字段'
         ];
     }
 

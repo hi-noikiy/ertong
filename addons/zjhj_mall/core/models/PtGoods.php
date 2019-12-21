@@ -39,6 +39,7 @@ use Yii;
  * @property string $payment
  * @property int $is_level
  * @property string $video_url
+ * @property string $storage_type
  */
 class PtGoods extends \yii\db\ActiveRecord
 {
@@ -57,7 +58,7 @@ class PtGoods extends \yii\db\ActiveRecord
     {
         return [
             [['store_id', 'name', 'original_price', 'price', 'detail', 'attr'], 'required'],
-            [['store_id', 'cat_id', 'status', 'grouptime', 'sort', 'virtual_sales', 'weight', 'freight', 'addtime', 'is_delete', 'group_num', 'is_hot', 'limit_time', 'is_only', 'is_more', 'buy_limit', 'type', 'use_attr', 'one_buy_limit'], 'integer'],
+            [['store_id', 'cat_id', 'status', 'grouptime', 'sort', 'virtual_sales', 'weight', 'freight', 'addtime', 'is_delete', 'group_num', 'is_hot', 'limit_time', 'is_only', 'is_more', 'buy_limit', 'type', 'use_attr', 'one_buy_limit', 'storage_type'], 'integer'],
             [['original_price', 'price', 'colonel'], 'number'],
             [['detail', 'attr', 'cover_pic'], 'string'],
             [['name', 'unit', 'payment', 'video_url'], 'string', 'max' => 255],
@@ -103,6 +104,7 @@ class PtGoods extends \yii\db\ActiveRecord
             'payment' => '支付方式',
             'is_level' => '是否享受会员折扣 0-不享受 1--享受',
             'video_url' => '商品视频',
+            'storage_type' => '商品存放类型1常温2冷藏3冷冻'
         ];
     }
 

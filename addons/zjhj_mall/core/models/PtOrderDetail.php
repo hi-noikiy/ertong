@@ -16,6 +16,7 @@ use Yii;
  * @property integer $is_delete
  * @property string $attr
  * @property string $pic
+ * @property string $order_sub_id
  */
 class PtOrderDetail extends \yii\db\ActiveRecord
 {
@@ -34,7 +35,7 @@ class PtOrderDetail extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'goods_id', 'attr', 'pic'], 'required'],
-            [['order_id', 'goods_id', 'num', 'addtime', 'is_delete'], 'integer'],
+            [['order_id', 'goods_id', 'num', 'addtime', 'is_delete', 'order_sub_id'], 'integer'],
             [['total_price'], 'number'],
             [['attr'], 'string'],
             [['pic'], 'string', 'max' => 255],
@@ -56,6 +57,7 @@ class PtOrderDetail extends \yii\db\ActiveRecord
             'is_delete' => 'Is Delete',
             'attr' => '商品规格',
             'pic' => '商品规格图片',
+            'order_sub_id' => '子订单id'
         ];
     }
 

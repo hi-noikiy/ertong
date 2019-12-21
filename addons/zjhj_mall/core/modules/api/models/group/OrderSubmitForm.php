@@ -8,13 +8,17 @@
 
 namespace app\modules\api\models\group;
 
+use app\models\Cabinet;
 use app\models\common\api\CommonOrder;
 use app\models\common\CommonFormId;
 use app\models\common\CommonGoods;
 use app\models\common\CommonGoodsAttr;
 use app\models\Model;
 use app\models\Option;
+use app\models\OrderSub;
+use app\models\PtOrderSub;
 use app\models\task\order\OrderAutoCancel;
+use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\utils\PinterOrder;
 use app\models\Address;
 use app\models\Attr;
@@ -52,18 +56,22 @@ class OrderSubmitForm extends ApiModel
 
     public $payment;
     public $formId;
+    public $service_day;
+    public $service_time;
+    public $cabinet_id;
 
     public function rules()
     {
         return [
             [['goods_info', 'content', 'address_name', 'address_mobile', 'formId'], 'string'],
             [['type',], 'required'],
-            [['shop_id', 'use_integral'], 'integer'],
+            [['shop_id', 'use_integral', 'cabinet_id'], 'integer'],
             [['parent_id', 'payment'], 'default', 'value' => 0],
-            [['address_id',], 'required', 'on' => "EXPRESS"],
+            [['address_id',], 'integer', 'on' => "EXPRESS"],
             [['address_name', 'address_mobile'], 'required', 'on' => "OFFLINE"],
             [['offline'], 'default', 'value' => 1],
             [['payment'], 'integer', 'message' => '请选择支付方式'],
+            //[['service_day', 'service_time'], 'required' , 'message' => '下单时间不能为空'],
 //            [['address_mobile'], 'match', 'pattern' => Model::MOBILE_PATTERN, 'message' => '手机号错误']
         ];
     }
@@ -99,21 +107,24 @@ class OrderSubmitForm extends ApiModel
                 'user_id' => $this->user_id,
             ]);
             if (!$address) {
-                return [
-                    'code' => 1,
-                    'msg' => '收货地址不存在',
-                ];
+//                return [
+//                    'code' => 1,
+//                    'msg' => '收货地址不存在',
+//                ];
             }
-
+            $cabinet = Cabinet::findOne([
+                'id' => $this->cabinet_id,
+                'store_id' => $this->store_id,
+            ]);
             $option = Option::getList('mobile_verify', \Yii::$app->controller->store->id, 'admin', 1);
-            if ($option['mobile_verify']) {
-                if (!preg_match(Model::MOBILE_VERIFY, $address->mobile)) {
-                    return [
-                        'code' => 1,
-                        'msg' => '请输入正确的手机号'
-                    ];
-                }
-            }
+//            if ($option['mobile_verify']) {
+//                if (!preg_match(Model::MOBILE_VERIFY, $address->mobile)) {
+//                    return [
+//                        'code' => 1,
+//                        'msg' => '请输入正确的手机号'
+//                    ];
+//                }
+//            }
 
             $area = TerritorialLimitation::findOne([
                 'store_id' => $this->store_id,
@@ -140,10 +151,10 @@ class OrderSubmitForm extends ApiModel
                     ];
                     $addressArray = array_intersect($addressArr, $city_id);
                     if (empty($addressArray)) {
-                        return [
-                            'code' => 1,
-                            'msg' => '所选地区无货'
-                        ];
+//                        return [
+//                            'code' => 1,
+//                            'msg' => '所选地区无货'
+//                        ];
                     }
                 }
             }
@@ -264,6 +275,10 @@ class OrderSubmitForm extends ApiModel
         $order->store_id = $this->store_id;
         $order->user_id = $this->user_id;
         $order->order_no = $this->getOrderNo();
+        $order->cabinet_id = $this->cabinet_id;
+        $order->service_day = $this->service_day;
+        $order->service_time = $this->service_time;
+
         $order->total_price = $total_price_1;
         $order->pay_type = $this->payment;
         $order->pay_price = $total_price_2 < 0.01 ? 0.01 : $total_price_2;
@@ -275,10 +290,10 @@ class OrderSubmitForm extends ApiModel
             $order->mobile = $address->mobile;
             $order->name = $address->name;
             $order->address_data = json_encode([
-                'province' => $address->province,
-                'city' => $address->city,
+                'province' => $cabinet->province,
+                'city' => $cabinet->city,
                 'district' => $address->district,
-                'detail' => $address->detail,
+                'detail' => $cabinet->address,
             ], JSON_UNESCAPED_UNICODE);
         } else {
             $order->name = $this->address_name;
@@ -300,67 +315,237 @@ class OrderSubmitForm extends ApiModel
         $order->colonel = $colonel;
 
         if ($order->save()) {
-            foreach ($goods_list as $goods) {
-                $order_detail = new PtOrderDetail();
-                $order_detail->order_id = $order->id;
-                $order_detail->goods_id = $goods->goods_id;
-                $order_detail->num = $goods->num;
-                $order_detail->total_price = round($order->pay_price - $order->express_price, 2);
-                $order_detail->addtime = time();
-                $order_detail->is_delete = 0;
-                $order_detail->attr = json_encode($goods->attr_list, JSON_UNESCAPED_UNICODE);
-                $order_detail->pic = $goods->goods_pic;
-
-                $attr_id_list = [];
-                foreach ($goods->attr_list as $item) {
-                    array_push($attr_id_list, $item['attr_id']);
-                }
-
-
-//                $_goods = PtGoods::findOne($goods->goods_id);
-                $res = CommonGoodsAttr::num($attr_id_list, $order_detail->num, [
-                    'good_type' => 'PINTUAN',
-                    'good_id' => $goods->goods_id,
-                    'action_type' => 'sub'
-                ]);
-
-                if ($res['code'] === 1) {
-                    $t->rollBack();
-                    return [
-                        'code' => 1,
-//                        'msg' => '订单提交失败，商品“' . $_goods->name . '”库存不足',
-                        'msg' => $res['msg'],
-                        'attr_id_list' => $attr_id_list,
-                        'attr_list' => $goods->attr_list,
-                    ];
-                }
-
-//                if (!$_goods->numSub($attr_id_list, $order_detail->num)) {
+//            foreach ($goods_list as $goods) {
+//                $order_detail = new PtOrderDetail();
+//                $order_detail->order_id = $order->id;
+//                $order_detail->goods_id = $goods->goods_id;
+//                $order_detail->num = $goods->num;
+//                $order_detail->total_price = round($order->pay_price - $order->express_price, 2);
+//                $order_detail->addtime = time();
+//                $order_detail->is_delete = 0;
+//                $order_detail->attr = json_encode($goods->attr_list, JSON_UNESCAPED_UNICODE);
+//                $order_detail->pic = $goods->goods_pic;
+//
+//                $attr_id_list = [];
+//                foreach ($goods->attr_list as $item) {
+//                    array_push($attr_id_list, $item['attr_id']);
+//                }
+//
+//
+////                $_goods = PtGoods::findOne($goods->goods_id);
+//                $res = CommonGoodsAttr::num($attr_id_list, $order_detail->num, [
+//                    'good_type' => 'PINTUAN',
+//                    'good_id' => $goods->goods_id,
+//                    'action_type' => 'sub'
+//                ]);
+//
+//                if ($res['code'] === 1) {
 //                    $t->rollBack();
 //                    return [
 //                        'code' => 1,
-//                        'msg' => '订单提交失败，商品“' . $_goods->name . '”库存不足',
+////                        'msg' => '订单提交失败，商品“' . $_goods->name . '”库存不足',
+//                        'msg' => $res['msg'],
 //                        'attr_id_list' => $attr_id_list,
 //                        'attr_list' => $goods->attr_list,
 //                    ];
 //                }
-                if (!$order_detail->save()) {
+//
+////                if (!$_goods->numSub($attr_id_list, $order_detail->num)) {
+////                    $t->rollBack();
+////                    return [
+////                        'code' => 1,
+////                        'msg' => '订单提交失败，商品“' . $_goods->name . '”库存不足',
+////                        'attr_id_list' => $attr_id_list,
+////                        'attr_list' => $goods->attr_list,
+////                    ];
+////                }
+//                if (!$order_detail->save()) {
+//                    $t->rollBack();
+//                    return [
+//                        'code' => 1,
+//                        'msg' => '订单提交失败，请稍后再重试',
+//                    ];
+//                }
+//            }
+//
+//            $res = CommonFormId::save([
+//                [
+//                    'form_id' => $this->formId
+//                ]
+//            ]);
+//
+//            $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 2);
+//            $res = $printer_order->print_order();
+//            $t->commit();
+//
+//            $delay_seconds = \Yii::$app->controller->store->over_day * 3600;
+//            if ($delay_seconds > 0) {
+//                \Yii::$app->task->create(OrderAutoCancel::className(), $delay_seconds, [
+//                    // 任务自定义参数，选填，将在执行TaskRunnable->run()传入
+//                    'order_id' => $order->id,
+//                    'order_type' => 'PINTUAN',
+//                    'store_id' => $this->getCurrentStoreId(),
+//                ], '拼团订单自动取消');
+//            }
+//
+//            return [
+//                'code' => 0,
+//                'msg' => '订单提交成功',
+//                'data' => (object)[
+//                    'order_id' => $order->id,
+//                ],
+//            ];
+//        } else {
+//            $t->rollBack();
+//            return $this->getErrorResponse($order);
+//        }
+
+
+            //创建子订单
+            //根据商品
+            $cabGroup = self::array_group_by($goods_list, 'storage_type');
+            $dev = [];
+            $allTotal = 0;
+            foreach ($cabGroup as $k => $goodsLists) {
+                $subPrice = 0.00;
+                $order_sub = new PtOrderSub();
+                $goods_total_pay_price = $order->pay_price - $order->express_price;
+                $goods_total_price = 0.00;
+                foreach ($goods_list as $goods) {
+                    $allTotal += 1;
+                    $goods_total_price += $goods->price;
+                }
+                $total = 0;
+                $devGoodsName = [];
+                foreach ($goodsLists as $goods) {
+                    $subPrice += doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
+                    $devGoodsName[] = $goods->goods_name;
+                    $total += $goods->num;
+
+                }
+                $subOrderNo = $this->getOrderNo();
+                $order_sub->store_id = $this->store_id;
+                $order_sub->user_id = $this->user_id;
+                $order_sub->order_no = $subOrderNo;
+                $order_sub->cabinet_id = $this->cabinet_id;
+                $order_sub->service_day = $this->service_day;
+                $order_sub->service_time = $this->service_time;
+                $order_sub->pay_price = $subPrice;
+                $order_sub->order_id = $order->id;
+                $order_sub->total_price = $subPrice;
+                // $order_sub->discount = $discount;
+                $order_sub->addtime = time();
+                if ($this->offline == 0) {
+                    $order_sub->address = $address->province . $address->city . $address->district . $address->detail;
+                    $order_sub->mobile = $address->mobile;
+                    $order_sub->name = $address->name;
+                    $order_sub->address_data = json_encode([
+                        'province' => $cabinet->province,
+                        'city' => $cabinet->city,
+                        'district' => $address->district,
+                        'detail' => $cabinet->address,
+                    ], JSON_UNESCAPED_UNICODE);
+                } else {
+                    $order_sub->name = $this->address_name;
+                    $order_sub->mobile = $this->address_mobile;
+                    $order_sub->shop_id = $this->shop_id;
+                }
+                $order_sub->first_price = 0;
+                $order_sub->second_price = 0;
+                $order_sub->third_price = 0;
+                $order_sub->content = $this->content;
+                $order_sub->is_offline = $this->offline;
+                //$order_sub->integral = json_encode($resIntegral, JSON_UNESCAPED_UNICODE);
+                $order_sub->version = 'version';
+                $order_sub->origin_order_no = $order->order_no;
+                if ($this->payment == 2) {
+                    $order_sub->pay_type = 2;
+                    $order_sub->is_pay = 0;
+                }
+                if ($this->payment == 3) {
+                    $order_sub->pay_type = 3;
+                    $order_sub->is_pay = 0;
+                }
+                if (!$order_sub->save()) {
                     $t->rollBack();
                     return [
                         'code' => 1,
-                        'msg' => '订单提交失败，请稍后再重试',
+                        'msg' => '订单提交失败，请稍后再重试!',
                     ];
                 }
+                $coolType = 0;
+                if ($k == 1) {
+                    $coolType = 0;
+                }
+                if ($k == 2) {
+                    $coolType = 1;
+                }
+                if ($k == 3) {
+                    $coolType = 2;
+                }
+                //$emptyData = $this->queryEmptyCell($cabinet->cabinet_id, $coolType);
+                $dev[$k]['deliverNo'] = $subOrderNo;
+                $dev[$k]['coolType'] = $coolType;
+                $goodStr = implode('|', $devGoodsName);
+                $dev[$k]['goods'] = $goodStr;
+                $dev[$k]['quantity'] = $total;
+                foreach ($goodsLists as $goods) {
+                    $order_detail = new PtOrderDetail();
+                    $order_detail->order_id = $order->id;
+                    $order_detail->goods_id = $goods->goods_id;
+                    $order_detail->num = $goods->num;
+                    $order_detail->total_price = round($order->pay_price - $order->express_price, 2);
+                    $order_detail->addtime = time();
+                    $order_detail->is_delete = 0;
+                    $order_detail->attr = json_encode($goods->attr_list, JSON_UNESCAPED_UNICODE);
+                    $order_detail->pic = $goods->goods_pic;
+                    $order_detail->order_sub_id = $order_sub->id;
+                    $attr_id_list = [];
+                    foreach ($goods->attr_list as $item) {
+                        array_push($attr_id_list, $item['attr_id']);
+                    }
+                    //$_goods = PtGoods::findOne($goods->goods_id);
+                    $res = CommonGoodsAttr::num($attr_id_list, $order_detail->num, [
+                        'good_type' => 'PINTUAN',
+                        'good_id' => $goods->goods_id,
+                        'action_type' => 'sub'
+                    ]);
+
+                    if ($res['code'] === 1) {
+                        $t->rollBack();
+                        return [
+                            'code' => 1,
+//                        'msg' => '订单提交失败，商品“' . $_goods->name . '”库存不足',
+                            'msg' => $res['msg'],
+                            'attr_id_list' => $attr_id_list,
+                            'attr_list' => $goods->attr_list,
+                        ];
+                    }
+
+                    if (!$order_detail->save()) {
+                        $t->rollBack();
+                        return [
+                            'code' => 1,
+                            'msg' => '订单提交失败，请稍后再重试!!',
+                        ];
+                    }
+                }
+
+
             }
 
-            $res = CommonFormId::save([
-                [
-                    'form_id' => $this->formId
-                ]
-            ]);
+            //$re = $this->createOrder($order->order_no, $cabinet->cabinet_id, $dev, $allTotal);
+//            if ($re['code'] != 0){
+//                $t->rollBack();
+//                return [
+//                    'code' => 1,
+//                    'msg' => $re['message'],
+//                ];
+//            }
 
-            $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 2);
+            $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 0);
             $res = $printer_order->print_order();
+            $order_id_list[] = $order->id;
             $t->commit();
 
             $delay_seconds = \Yii::$app->controller->store->over_day * 3600;
@@ -501,6 +686,7 @@ class OrderSubmitForm extends ApiModel
             'num' => $goods_info->num,
             'price' => $price,
             'attr_list' => $attr_list,
+            'storage_type' => $ptGoods->storage_type
         ];
         $total_price += $goods_item->price;
         return [
@@ -520,12 +706,55 @@ class OrderSubmitForm extends ApiModel
         $store_id = empty($this->store_id) ? 0 : $this->store_id;
         $order_no = null;
         while (true) {
-            $order_no = date('YmdHis') . mt_rand(100000, 999999);
+            $order_no = 'P'.date('YmdHis') . mt_rand(100000, 999999);
             $exist_order_no = Order::find()->where(['order_no' => $order_no])->exists();
             if (!$exist_order_no) {
                 break;
             }
         }
         return $order_no;
+    }
+
+    public static function array_group_by($arr, $key)
+    {
+        $grouped = [];
+        foreach ($arr as $value) {
+            $grouped[$value->$key][] = $value;
+        }
+        // Recursively build a nested grouping if more parameters are supplied
+        // Each grouped array value is grouped according to the next sequential key
+        if (func_num_args() > 2) {
+            $args = func_get_args();
+            foreach ($grouped as $key => $value) {
+                $parms = array_merge([$value], array_slice($args, 2, func_num_args()));
+                $grouped[$key] = call_user_func_array('array_group_by', $parms);
+            }
+        }
+        return $grouped;
+    }
+
+    /**
+     * 操作云柜
+     */
+    protected function queryEmptyCell($machineId, $coolType, $timestamp = null, $sign = null){
+        $cabPlatform = new CabinetPlatForm($machineId);
+
+        $result = $cabPlatform->queryEmptyCell($coolType);
+        return $result;
+    }
+
+    /**
+     * @param $orderNo
+     * @param $machineId
+     * @param $delivers
+     * @param $total
+     * @return mixed
+     * @desc 创建订单
+     */
+    protected function createOrder($orderNo, $machineId, $delivers, $total){
+        $cabPlatform = new CabinetPlatForm($machineId);
+        $delivers = array_values($delivers);
+        $result = $cabPlatform->createOrder($orderNo,$delivers,$total);
+        return $result;
     }
 }
