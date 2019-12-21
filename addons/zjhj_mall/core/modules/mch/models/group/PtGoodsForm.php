@@ -73,6 +73,8 @@ class PtGoodsForm extends MchModel
     public $is_level;
     public $video_url;
 
+    public $storage_type;
+
     /**
      * @inheritdoc
      */
@@ -80,7 +82,7 @@ class PtGoodsForm extends MchModel
     {
         return [
             [['store_id', 'name', 'original_price', 'price', 'cover_pic', 'detail', 'group_num', 'grouptime', 'cat_id', 'one_buy_limit'], 'required'],
-            [['store_id', 'cat_id', 'freight', 'limit_time', 'is_only', 'is_more', 'type', 'use_attr', 'share_type', 'attr_setting_type', 'is_level'], 'integer'],
+            [['store_id', 'cat_id', 'freight', 'limit_time', 'is_only', 'is_more', 'type', 'use_attr', 'share_type', 'attr_setting_type', 'is_level', 'storage_type'], 'integer'],
             [['original_price', 'price'], 'number', 'min' => 0.01, 'max' => 999999],
             [['detail', 'cover_pic', 'goods_no'], 'string'],
             [['attr', 'goods_pic_list', 'payment'], 'safe',],
@@ -143,6 +145,7 @@ class PtGoodsForm extends MchModel
             'single_share_commission_third' => '三级佣金',
             'is_level' => '会员折扣',
             'video_url' => '商品视频',
+            'storage_type' => '商品存放类型',
         ];
     }
 
@@ -229,7 +232,12 @@ class PtGoodsForm extends MchModel
                     'msg' => '商品售价超过限制',
                 ];
             }
-
+            if (!$this->storage_type && ($this->storage_type === null || $this->storage_type === '')) {
+                return [
+                    'code' => 1,
+                    'msg' => '请选择商品存放类型',
+                ];
+            }
 
             if (!$this->virtual_sales) {
                 $this->virtual_sales = 0;
@@ -263,6 +271,7 @@ class PtGoodsForm extends MchModel
 
             $goods->use_attr = $this->use_attr ? 1 : 0;
             $goods->is_level = $this->is_level;
+            $goods->storage_type = $this->storage_type;//商品存放类型
             if ($goods->save()) {
                 PtGoodsPic::updateAll(['is_delete' => 1], ['goods_id' => $goods->id]);
                 foreach ($this->goods_pic_list as $pic_url) {

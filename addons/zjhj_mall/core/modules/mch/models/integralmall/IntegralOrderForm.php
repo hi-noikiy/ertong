@@ -19,6 +19,7 @@ use app\utils\TaskCreate;
 use yii\data\Pagination;
 use app\models\User;
 use app\models\Register;
+use app\models\Cabinet;
 
 class IntegralOrderForm extends MchModel
 {
@@ -46,7 +47,7 @@ class IntegralOrderForm extends MchModel
         return [
             [['status','is_express','keyword_1'], 'integer'],
             [['express', 'express_no', 'words','keyword','date_start', 'date_end'], 'trim'],
-            [['express', 'express_no',], 'required', 'on' => 'EXPRESS'],
+            [['express', 'express_no'], 'required', 'on' => 'EXPRESS'],
             [['order_id'], 'required'],
             [['express', 'express_no',], 'string',],
             [['express', 'express_no',], 'default', 'value' => ''],
@@ -87,27 +88,48 @@ class IntegralOrderForm extends MchModel
                     'is_pay' => 0,
                 ]);
                 break;
-            case '1'://待发货
-                $query->andWhere([
-                    'is_send' => 0,
-                ])->andWhere(['or',['is_pay'=>1],['pay_type'=>1]]);
-                break;
-            case '2'://待收货
+            case '1'://配送中
                 $query->andWhere([
                     'is_send' => 1,
+                    'put_status'=>1,
+                    'is_cancel'=>0,
+                ])->andWhere(['or',['is_pay'=>1],['pay_type'=>1]]);
+                break;
+            case '2'://待自提
+                $query->andWhere([
+                    'is_send' => 1,
+                    'put_status'=>2,
                     'is_confirm' => 0,
                 ])->andWhere(['or',['is_pay'=>1],['pay_type'=>1]]);
                 break;
             case '3'://已完成
                 $query->andWhere([
                     'is_send' => 1,
+                    'put_status'=>3,
                     'is_confirm' => 1,
+                    'is_comment'=>1,
+                ])->andWhere(['or',['is_pay'=>1],['pay_type'=>1]]);
+                break;
+            case '4'://待确认
+                $query->andWhere([
+                    'is_send' => 0,
+                    'is_confirm' => 0,
+                    'is_order_confirm'=>0,
                 ])->andWhere(['or',['is_pay'=>1],['pay_type'=>1]]);
                 break;
             case '5'://已取消订单
                 break;
-            case '6'://申请取消待订单
+            case '6'://待处理
                 $query->andWhere(['apply_delete'=>1]);
+                break;
+            case '7'://备货中
+                $query->andWhere(['is_send' => 0,'is_order_confirm' => 1,'is_cancel'=>0]);
+                break;
+            case '8'://回收站
+                $query->andWhere(['is_cancel' => 0, 'is_delete' => 1, 'is_recycle'=>1]);
+                break;
+            case '9'://待评价
+                $query->andWhere(['is_send' => 1,'put_status' => 3,'is_cancel'=>0,'is_comment'=>0]);
                 break;
             default:
                 break;
@@ -163,9 +185,53 @@ class IntegralOrderForm extends MchModel
             if (isset($item['address_data'])) {
                 $list[$k]['address_data'] = \Yii::$app->serializer->decode($item['address_data']);
             }
+            $Cabinet=Cabinet::find()->where(['id' => $item['cabinet_id'], 'is_delete' => 0])->asArray()->one();
+            $list[$k]['province']=$Cabinet['province'];
+            $list[$k]['city']=$Cabinet['city'];
+            $list[$k]['address']=$Cabinet['address'];
+
+            $city_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $Cabinet['province']])->groupBy('city')->asArray()->all();
+            $list[$k]['city_arr']=$city_arr;
+            $address_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'city' => $Cabinet['city']])->groupBy('address')->asArray()->all();
+            $list[$k]['address_arr']=$address_arr;
+        }
+        //查找云柜地址
+        $cabinet=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->groupBy('cabinet_id')->asArray()->all();
+        $cabinet_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->groupBy('province')->asArray()->all();
+        foreach ($cabinet_arr as $key => $val) {
+            $province[]=$val['province'];
         }
 
-        return [$list, $p,$count];
+        $province=array_unique($province);
+        
+        $province_arr=array();
+        $city=array();
+        foreach ($province as $key => $val) {
+            $cabinet_province=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $val])->groupBy('city')->asArray()->all();
+            foreach ($cabinet_province as $k => $v) {
+                $city[$key][]=array(
+                        'id' => $v['id']+1,
+                        'level' => "city",
+                        'list' => array(),
+                        'name' => $v['city'],
+                        'parent_id' => $key+1,
+                );
+            }
+        }
+        foreach ($province as $key => $val) {
+            foreach ($city as $k => $v) {
+                if($key==$k){
+                    $province_arr[]=array(
+                        'id' => $key+1,
+                        'level' => "province",
+                        'list' => $city[$k],
+                        'name' => $val,
+                        'parent_id' => 1,
+                    );
+                }
+            }
+        }
+        return [$list, $p,$count,$cabinet,$province_arr];
     }
 
     public function detail()

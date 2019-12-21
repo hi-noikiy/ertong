@@ -64,6 +64,8 @@ class YyGoodsForm extends MchModel
     public $is_level;
     public $video_url;
 
+    public $storage_type;
+
     /**
      * @inheritdoc
      */
@@ -72,7 +74,7 @@ class YyGoodsForm extends MchModel
         return [
             [['name', 'price', 'original_price', 'detail', 'service', 'store_id', 'buy_limit', 'stock', 'is_level'], 'required'],
             [['detail', 'cover_pic', 'video_url'], 'string'],
-            [['cat_id', 'store_id','share_type', 'use_attr', 'attr_setting_type'], 'integer'],
+            [['cat_id', 'store_id','share_type', 'use_attr', 'attr_setting_type', 'storage_type'], 'integer'],
             [['name','shop_id'], 'string', 'max' => 255],
             [['service'], 'string', 'max' => 2000],
             [['attr', 'goods_pic_list','form_list',], 'safe',],
@@ -120,7 +122,8 @@ class YyGoodsForm extends MchModel
             'single_share_commission_second' => '二级佣金',
             'single_share_commission_third' => '三级佣金',
             'is_level' => '会员折扣',
-            'video_url' => '商品视频'
+            'video_url' => '商品视频',
+            'storage_type' => '商品存放类型',
         ];
     }
 
@@ -189,7 +192,12 @@ class YyGoodsForm extends MchModel
                     'msg' => '商品售价超过限制',
                 ];
             }
-
+            if (!$this->storage_type && ($this->storage_type === null || $this->storage_type === '')) {
+                return [
+                    'code' => 1,
+                    'msg' => '请选择商品存放类型',
+                ];
+            }
             $goods = $this->goods;
             if ($goods->isNewRecord) {
                 $goods->is_delete = 0;
@@ -218,6 +226,7 @@ class YyGoodsForm extends MchModel
 
             $goods->use_attr = $this->use_attr ? 1 : 0;
             $goods->is_level = $this->is_level;
+            $goods->storage_type = $this->storage_type;//商品存放类型
             if ($goods->save()) {
                 YyGoodsPic::updateAll(['is_delete' => 1], ['goods_id' => $goods->id]);
                 foreach ($this->goods_pic_list as $pic_url) {

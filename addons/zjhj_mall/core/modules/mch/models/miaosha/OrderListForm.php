@@ -10,6 +10,7 @@ namespace app\modules\mch\models\miaosha;
 
 use app\models\common\admin\order\CommonOrderSearch;
 use app\models\Goods;
+use app\models\Cabinet;
 use app\models\MsGoods;
 use app\models\MsOrder;
 use app\models\MsOrderRefund;
@@ -65,53 +66,59 @@ class OrderListForm extends MchModel
             'o.store_id' => $this->store_id,
         ])
             ->leftJoin(['u' => User::tableName()], 'u.id=o.user_id')
+            ->leftJoin(['c' => Cabinet::tableName()], 'o.cabinet_id=c.id')
             ->leftJoin(['g' => MsGoods::tableName()], 'g.id=o.goods_id');
 
         switch ($this->status) {
-            case 0:
+            case 0://未付款
                 $query->andWhere([
                     'o.is_pay' => 0,
                 ]);
                 break;
-            case 1:
+            case 1://备货中
                 $query->andWhere([
-                    'o.is_send' => 0,
+                    'o.is_send' => 0,'o.is_order_confirm' => 1,'o.is_cancel'=>0
                 ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);
                 break;
-            case 2:
-                $query->andWhere([
-                    'o.is_send' => 1,
-                    'o.is_confirm' => 0,
-                ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);
-                break;
-            case 3:
+            case 2://配送中
                 $query->andWhere([
                     'o.is_send' => 1,
-                    'o.is_confirm' => 1,
+                    'o.put_status' => 1,
+                    'o.is_cancel' => 0,
                 ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);
                 break;
-            case 4:
+            case 3://已完成
+                $query->andWhere([
+                    'o.is_send' => 1,
+                    'o.put_status'=>3,
+                    'o.is_comment'=>1,
+                    'o.is_cancel' => 0,
+                ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);
                 break;
-            case 5:
+            case 4://待确认
+                $query->andWhere([
+                    'o.is_send' => 0,'o.is_pay' => 1,'o.is_order_confirm' => 0
+                ]);
                 break;
-            case 6:
+            case 5://已取消
+                $query->andWhere(['or', ['o.is_cancel' => 1], ['o.apply_delete' => 1, 'o.is_delete' => 1]]);
+                break;
+            case 6://待处理
                 $query->andWhere(['o.apply_delete' => 1]);
+                break;
+            case 8://回收站
+                $query->andWhere(['o.is_recycle' => 1]);
+                break;
+            case 9://待自提
+                $query->andWhere(['o.is_send' => 1,'o.put_status' => 2,'o.is_cancel'=>0]);
+                break;
+            case 10://待评价
+                $query->andWhere(['o.is_send' => 1,'o.put_status' => 3,'o.is_cancel'=>0,'o.is_comment'=>0]);
                 break;
             default:
                 break;
         }
-        if ($this->status == 8) {
-            $query->andWhere(['o.is_recycle' => 1]);
-        } else {
-            $query->andWhere(['o.is_recycle' => 0]);
-        }
-
-        if ($this->status == 5) {//已取消订单
-            $query->andWhere(['or', ['o.is_cancel' => 1], ['o.apply_delete' => 1, 'o.is_delete' => 1]]);
-        } else {
-            $query->andWhere(['o.is_cancel' => 0, 'o.is_delete' => 0]);
-        }
-
+        
         //TODO 只优化了关键字搜索 持续优化中...
         $commonOrderSearch = new CommonOrderSearch();
         $query = $commonOrderSearch->search($query, $this);
@@ -141,7 +148,7 @@ class OrderListForm extends MchModel
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => $this->limit, 'page' => $this->page - 1]);
         $list = $query->limit($pagination->limit)->offset($pagination->offset)->orderBy('o.addtime DESC')
-            ->select('o.*,u.nickname,u.platform')->asArray()->all();
+            ->select('o.*,u.nickname,u.platform,c.province,c.city,c.address')->asArray()->all();
         foreach ($list as $i => $item) {
             $list[$i]['goods_list'] = $this->getOrderGoodsList($item['id']);
             if ($item['is_offline'] == 1 && $item['is_send'] == 1) {
@@ -164,13 +171,54 @@ class OrderListForm extends MchModel
             }
 
             $list[$i]['flag'] = 0;
+            $city_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $item['province']])->groupBy('city')->asArray()->all();
+            $list[$i]['city_arr']=$city_arr;
+            $address_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'city' => $item['city']])->groupBy('address')->asArray()->all();
+            $list[$i]['address_arr']=$address_arr;
+        }
+        //查找云柜地址
+        $cabinet=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->groupBy('cabinet_id')->asArray()->all();
+        $cabinet_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->groupBy('province')->asArray()->all();
+        foreach ($cabinet_arr as $key => $val) {
+            $province[]=$val['province'];
         }
 
+        $province=array_unique($province);
+        
+        $province_arr=array();
+        $city=array();
+        foreach ($province as $key => $val) {
+            $cabinet_province=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $val])->groupBy('city')->asArray()->all();
+            foreach ($cabinet_province as $k => $v) {
+                $city[$key][]=array(
+                        'id' => $v['id']+1,
+                        'level' => "city",
+                        'list' => array(),
+                        'name' => $v['city'],
+                        'parent_id' => $key+1,
+                );
+            }
+        }
+        foreach ($province as $key => $val) {
+            foreach ($city as $k => $v) {
+                if($key==$k){
+                    $province_arr[]=array(
+                        'id' => $key+1,
+                        'level' => "province",
+                        'list' => $city[$k],
+                        'name' => $val,
+                        'parent_id' => 1,
+                    );
+                }
+            }
+        }
         return [
             'row_count' => $count,
             'page_count' => $pagination->pageCount,
             'pagination' => $pagination,
+            'cabinet' => $cabinet,
             'list' => $list,
+            'province_arr' => $province_arr,
         ];
     }
 

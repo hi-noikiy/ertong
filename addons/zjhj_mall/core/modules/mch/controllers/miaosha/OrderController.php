@@ -10,6 +10,7 @@
 namespace app\modules\mch\controllers\miaosha;
 
 use app\models\common\api\CommonShoppingList;
+use app\models\common\admin\order\CommonUpdateAddress;
 use app\models\Express;
 use app\models\MsOrder;
 use app\models\MsWechatTplMsgSender;
@@ -68,10 +69,12 @@ class OrderController extends Controller
         if ($shop_id) {
             $shop = Shop::findOne(['store_id' => $this->store->id, 'id' => $shop_id]);
         }
+        // print_r($data['province_arr']);die;
         return $this->render('index', [
             'row_count' => $data['row_count'],
             'pagination' => $data['pagination'],
             'list' => $data['list'],
+            'province_arr' => $data['province_arr'],
             //'count_data' => OrderListForm::getCountData($this->store->id),
             'store_data' => $store_data_form->search(),
             'express_list' => $this->getExpressList(),
@@ -460,4 +463,53 @@ class OrderController extends Controller
         $form->store = $this->store;
         return $form->clerk();
     }
+    // 更新订单地址
+    public function actionUpdateOrderAddress()
+    {
+        $commonUpdateAddress = new CommonUpdateAddress();
+        $commonUpdateAddress->data = \Yii::$app->request->post();
+        $updateAddress = $commonUpdateAddress->updateAddress();
+        return $updateAddress;
+
+    }
+    //订单确认处理
+    public function actionApplyConfirmStatus($id, $type = 0)
+    {
+        $where = [
+            'id' => $id,
+            'is_delete' => 0,
+            'store_id' => $this->store->id,
+        ];
+        // type=1 后台主要取消订单， type=0 用户发起订单取消申请
+        if ($type == 0) {
+            $where['apply_delete'] = 1;
+        }
+        $order = MsOrder::findOne($where);
+
+        if (!$order) {
+            return [
+                'code' => 1,
+                'msg' => '订单不存在，请刷新页面后重试',
+            ];
+        }
+        $confirm = \Yii::$app->request->get('remark');
+        if(!isset($confirm)){
+            $confirm="商家已确认订单";
+        }
+        $order->is_order_confirm=1;
+        $order->confirm=$confirm;
+        if($order->save()){
+            return [
+                'code' => 0,
+                'msg' => '操作成功',
+            ];
+        }else{
+            return [
+                'code' => 1,
+                'msg' => '操作失败',
+            ];
+        }
+        
+    }
+
 }

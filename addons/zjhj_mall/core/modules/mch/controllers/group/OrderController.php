@@ -10,6 +10,7 @@
 namespace app\modules\mch\controllers\group;
 
 use app\models\common\api\CommonShoppingList;
+use app\models\common\admin\order\CommonUpdateAddress;
 use app\models\Express;
 use app\models\PtNoticeSender;
 use app\models\PtOrder;
@@ -65,6 +66,7 @@ class OrderController extends Controller
             'pagination' => $arr['p'],
             'express_list' => $this->getExpressList(),
             'row_count' => $arr['row_count'],
+            'province_arr' => $arr['province_arr'],
             'exportList' => \Yii::$app->serializer->encode($exportList)
         ]);
     }
@@ -447,5 +449,53 @@ class OrderController extends Controller
         $form->order_type = 2;
         $form->store = $this->store;
         return $form->clerk();
+    }
+    // 更新订单地址
+    public function actionUpdateOrderAddress()
+    {
+        $commonUpdateAddress = new CommonUpdateAddress();
+        $commonUpdateAddress->data = \Yii::$app->request->post();
+        $updateAddress = $commonUpdateAddress->updateAddress();
+        return $updateAddress;
+
+    }
+    //订单确认处理
+    public function actionApplyConfirmStatus($id, $type = 0)
+    {
+        $where = [
+            'id' => $id,
+            'is_delete' => 0,
+            'store_id' => $this->store->id,
+        ];
+        // type=1 后台主要取消订单， type=0 用户发起订单取消申请
+        if ($type == 0) {
+            $where['apply_delete'] = 1;
+        }
+        $order = PtOrder::findOne($where);
+
+        if (!$order) {
+            return [
+                'code' => 1,
+                'msg' => '订单不存在，请刷新页面后重试',
+            ];
+        }
+        $confirm = \Yii::$app->request->get('remark');
+        if(!isset($confirm)){
+            $confirm="商家已确认订单";
+        }
+        $order->is_order_confirm=1;
+        $order->confirm=$confirm;
+        if($order->save()){
+            return [
+                'code' => 0,
+                'msg' => '操作成功',
+            ];
+        }else{
+            return [
+                'code' => 1,
+                'msg' => '操作失败',
+            ];
+        }
+        
     }
 }

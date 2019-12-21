@@ -204,19 +204,19 @@ $urlPlatform = Yii::$app->requestedRoute;
                             </sapn>
                             <?php if ($order_item['is_send'] == 1) : ?>
                                 <span class="mr-1">
-                                        <?php if ($order_item['put_status'] == 1) : ?>
-                                            <span class="badge badge-success">配送中</span>
-                                        <?php elseif ($order_item['put_status'] == 2)  : ?>
-                                            <span class="badge badge-default">待自提</span>
-                                        <?php elseif ($order_item['put_status'] == 3) : ?>
-                                            <?php if ($order_item['is_comment'] == 0) : ?>
-                                                <span class="badge badge-default">待评价</span>
-                                            <?php else : ?>
-                                                <span class="badge badge-default">已完成</span>
-                                            <?php endif; ?>
-                                            
+                                    <?php if ($order_item['put_status'] == 1) : ?>
+                                        <span class="badge badge-success">配送中</span>
+                                    <?php elseif ($order_item['put_status'] == 2)  : ?>
+                                        <span class="badge badge-default">待自提</span>
+                                    <?php elseif ($order_item['put_status'] == 3) : ?>
+                                        <?php if ($order_item['is_comment'] == 0) : ?>
+                                            <span class="badge badge-default">待评价</span>
+                                        <?php else : ?>
+                                            <span class="badge badge-default">已完成</span>
                                         <?php endif; ?>
-                                    </span>
+                                        
+                                    <?php endif; ?>
+                                </span>
                             <?php else : ?>
                                 <?php if ($order_item['is_pay'] == 1) : ?>
                                     <span class="mr-1">

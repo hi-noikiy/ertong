@@ -133,18 +133,30 @@ $urlPlatform = Yii::$app->controller->route;
                 <a class="status-item nav-link <?= $status == 0 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 0])) ?>">未付款<?= $store_data['status_count']['status_0'] ? '(' . $store_data['status_count']['status_0'] . ')' : null ?></a>
             </li>
+            <!-- <li class="nav-item">
+                <a class="status-item nav-link <?= $status == 9 ? 'active' : null ?>"
+                   href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 9])) ?>">待确认<?= $store_data['status_count']['status_9'] ? '(' . $store_data['status_count']['status_1'] . ')' : null ?></a>
+            </li> -->
             <li class="nav-item">
                 <a class="status-item nav-link <?= $status == 1 ? 'active' : null ?>"
-                   href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 1])) ?>">待发货<?= $store_data['status_count']['status_1'] ? '(' . $store_data['status_count']['status_1'] . ')' : null ?></a>
+                   href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 1])) ?>">备货中<?= $store_data['status_count']['status_1'] ? '(' . $store_data['status_count']['status_1'] . ')' : null ?></a>
             </li>
             <li class="nav-item">
                 <a class="status-item nav-link <?= $status == 2 ? 'active' : null ?>"
-                   href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 2])) ?>">已发货<?= $store_data['status_count']['status_2'] ? '(' . $store_data['status_count']['status_2'] . ')' : null ?></a>
+                   href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 2])) ?>">配送中<?= $store_data['status_count']['status_2'] ? '(' . $store_data['status_count']['status_2'] . ')' : null ?></a>
             </li>
             <li class="nav-item">
                 <a class="status-item nav-link <?= $status == 6 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 6])) ?>">拼团中<?= $store_data['status_count']['status_6'] ? '(' . $store_data['status_count']['status_6'] . ')' : null ?></a>
             </li>
+            <li class="nav-item">
+                <a class="status-item  nav-link <?= $status == 10 ? 'active' : null ?>"
+                   href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 10])) ?>">待自提<?= $store_data['status_count']['status_10'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="status-item  nav-link <?= $status == 11 ? 'active' : null ?>"
+                   href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 11])) ?>">待评价<?= $store_data['status_count']['status_11'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>
+            </li> -->
             <li class="nav-item">
                 <a class="status-item nav-link <?= $status == 3 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 3])) ?>">已完成<?= $store_data['status_count']['status_3'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>
@@ -195,19 +207,30 @@ $urlPlatform = Yii::$app->controller->route;
                             </span>
                         <?php if ($order_item['is_send'] == 1): ?>
                             <span class="mr-1">
-                                    <?php if ($order_item['is_confirm'] == 1): ?>
-                                        <span class="badge badge-success">已收货</span>
-                                    <?php else: ?>
-                                        <span class="badge badge-default">未收货</span>
+                                <?php if ($order_item['put_status'] == 1) : ?>
+                                    <span class="badge badge-success">配送中</span>
+                                <?php elseif ($order_item['put_status'] == 2)  : ?>
+                                    <span class="badge badge-default">待自提</span>
+                                <?php elseif ($order_item['put_status'] == 3) : ?>
+                                    <?php if ($order_item['is_comment'] == 0) : ?>
+                                        <span class="badge badge-default">待评价</span>
+                                    <?php else : ?>
+                                        <span class="badge badge-default">已完成</span>
                                     <?php endif; ?>
-                                </span>
+                                    
+                                <?php endif; ?>
+                            </span>
                         <?php else: ?>
                             <?php if ($order_item['is_pay'] == 1): ?>
                                 <span class="mr-1">
-                                    <?php if ($order_item['is_send'] == 1): ?>
+                                    <?php if ($order_item['is_send'] == 1) : ?>
                                         <span class="badge badge-success">已发货</span>
-                                    <?php else: ?>
-                                        <span class="badge badge-default">未发货</span>
+                                    <?php else : ?>
+                                        <?php if ($order_item['is_order_confirm'] == 1) : ?>
+                                            <span class="badge badge-default">备货中</span>
+                                        <?php else : ?>
+                                            <span class="badge badge-default">待确认</span>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                 </span>
                             <?php endif; ?>
@@ -322,29 +345,41 @@ $urlPlatform = Yii::$app->controller->route;
                             </div>
                         <?php else: ?>
                         <?php endif; ?>
-                        <div>
-                            发货方式：
-                            <?php if ($order_item['offline'] == 1): ?>
-                                <span class="badge badge-warning">送货上门</span>
-                            <?php else: ?>
-                                <span class="badge badge-default">到店自提</span>
-                            <?php endif; ?>
-                        </div>
+                        
                     </td>
                     <td class="order-tab-5">
                         <?php if ($order_item['apply_delete'] == 0): ?>
+                            <?php if (($order_item['is_pay'] == 1 ) && $order_item['put_status'] == 1 && $order_item['apply_delete'] == 0) : ?>
                             <div>
-                                <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['is_confirm'] != 1 && $order_item['is_success'] == 1 && $order_item['apply_delete'] == 0): ?>
-                                    <a class="btn btn-sm btn-primary mt-2 send-btn" href="javascript:"
-                                       data-order-id="<?= $order_item['id'] ?>"
-                                       data-express='<?= $order_item['express'] ?>'
-                                       data-express-no='<?= $order_item['express_no'] ?>'><?= ($order_item['is_send'] == 1) ? "修改快递单号" : "发货" ?></a>
+
+                                <?php if ($order_item['is_send'] == 1 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
+                                    <a class="btn btn-sm btn-primary edit-address"
+                                       data-index="<?= $k ?>"
+                                       data-order-type="pintuan" href="javascript:">修改自提柜</a>
                                 <?php endif; ?>
-                                <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['status'] == 3 && $order_item['offline'] == 2 && $order_item['is_send'] != 1) : ?>
+                                <?php if ($order_item['is_send'] == 0 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0 && $order_item['is_order_confirm'] == 1) : ?>
+                                    <a class="btn btn-sm btn-primary send-btn mt-2" href="javascript:"
+                                       data-id="<?= $order_item['id'] ?>">
+                                        发货
+                                    </a>
+                                <?php endif; ?>
+                                <?php if ($order_item['is_send'] == 0 && $order_item['is_cancel']==0 && $order_item['is_pay'] == 1 && $order_item['is_delete'] == 0 && $order_item['is_order_confirm'] == 0) : ?>
+                                    <a class="btn btn-sm btn-primary mt-2 admin-order-confirm" href="javascript:"
+                                       data-id="<?= $order_item['id'] ?>">
+                                        确认
+                                    </a>
+                                <?php endif; ?>
+                                <?php if ($order_item['is_send'] == 0 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
+                                    <a class="btn btn-sm btn-primary mt-2 admin-order-cancel"
+                                       data-id="<?= $order_item['id'] ?>"
+                                       href='<?= $urlManager->createUrl([$urlStr . '/apply-delete-status']) ?>'>取消</a>
+                                <?php endif; ?>
+                                <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['is_offline'] == 1 && $order_item['is_send'] != 1 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
                                     <a class="btn btn-sm btn-primary clerk-btn mt-2" href="javascript:"
                                        data-order-id="<?= $order_item['id'] ?>">核销</a>
                                 <?php endif; ?>
                             </div>
+                        <?php endif; ?>
                         <?php endif; ?>
                         <div class="mt-2">
                             <a class="btn btn-sm btn-info del" href="javascript:"
@@ -399,7 +434,7 @@ $urlPlatform = Yii::$app->controller->route;
                                     <?php if ($order_item['is_send'] == 0) : ?>
                                         <a class="btn btn-sm btn-primary edit-address"
                                            data-index="<?= $k ?>"
-                                           data-order-type="pintuan" href="javascript:">修改地址</a>
+                                           data-order-type="pintuan" href="javascript:">修改自提柜</a>
                                     <?php endif; ?>
                                 <?php else: ?>
                                     <span class="mr-3"><span
@@ -605,10 +640,432 @@ $urlPlatform = Yii::$app->controller->route;
     </div>
 </div>
 
+
+
+<!--修改地址-->
+<div class="modal fade" id="editAddress">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">修改自提柜地址</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="form-group row">
+                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
+                        <label class="col-form-label required">收件人</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input class="form-control name" value="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
+                        <label class="col-form-label required">电话</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input class="form-control mobile" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
+                        <label class="col-form-label required">发件人地区</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select class="form-control province" style="float: left;" name="province">
+                                <?php foreach ($province_arr as $key => $val) : ?>
+                                    <option value="<?= $val['name'] ?>" data-index="index"><?= $val['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <select class="form-control city" style="float: left;" name="city">
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div style="margin-right: 10px;" class="form-group-label col-sm-2 text-right">
+                        <label class="col-form-label required">柜子ID</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <select class="form-control cabinet" name="cabinet_id">
+                                <!-- <option v-for="(item,index) in cabinet"
+                                        :value="item.id" :data-index="index">{{item.address}}({{item.cabinet_id}})
+                                </option> -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <input style="display: none;" class="order-id" name="orderId" value="">
+                <input style="display: none;" class="order-type" name="orderType" value="">
+                <div class="form-group row">
+                    <div class="form-group-label col-sm-2 text-right">
+                    </div>
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary update-address" href="javascript:">保存</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 后台订单确认 -->
+<div class="modal fade" data-backdrop="static" id="adminOrderConfirm">
+    <div class="modal-dialog modal-sm" role="document" style="max-width: 400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <b class="modal-title">是否确认订单</b>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input class="order-id" type="hidden">
+                <input class="url" type="hidden">
+                <div class="form-group row">
+                    <label class="col-4 text-right col-form-label">添加备注信息：</label>
+                    <div class="col-11" style="margin-left: 1rem;">
+                    <textarea id="order_cancel_remark-2" name="seller_comments" cols="90"
+                              rows="3"
+                              style="width: 100%;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary order-confirm">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 后台订单取消 -->
+<div class="modal fade" data-backdrop="static" id="adminOrderCancel">
+    <div class="modal-dialog modal-sm" role="document" style="max-width: 400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <b class="modal-title">订单取消</b>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input class="order-id" type="hidden">
+                <input class="url" type="hidden">
+                <div class="form-group row">
+                    <label class="col-4 text-right col-form-label">填写取消理由：</label>
+                    <div class="col-11" style="margin-left: 1rem;">
+                    <textarea id="order_cancel_remark-1" name="seller_comments" cols="90"
+                              rows="3"
+                              style="width: 100%;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary order-cancel">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?= $this->render('/layouts/ss', [
     'exportList' => $exportList,
     'list' => $list
 ]); ?>
+<script type="text/javascript">
+    // 弹框
+    $(document).on("click", ".edit-address", function () {
+        var orderList=<?= Yii::$app->serializer->encode($list) ?>;
+        var province_arr=<?= Yii::$app->serializer->encode($province_arr) ?>;
+        var cabinet=<?= Yii::$app->serializer->encode($cabinet) ?>;
+        var orderType = $(this).data('orderType');
+        var index = $(this).data('index');
+        var orderId = orderList[index].id;
+        var name = orderList[index].name;
+        var mobile = orderList[index].mobile;
+        var cabinet_id = orderList[index].cabinet_id;
+        var city_arr = orderList[index].city_arr;
+        var address_arr = orderList[index].address_arr;
+
+        $('.name').val(name);
+        $('.mobile').val(mobile);
+        $('.order-id').val(orderId);
+        $('.order-type').val(orderType);
+
+        var sender_province = orderList[index].province
+        var sender_city = orderList[index].city
+        
+        $('.province').find('option').each(function (i) {
+            if ($(this).val() == sender_province) {
+                $(this).prop('selected', 'selected');
+                return true;
+            }
+        });
+        var cityHtml="";
+        for (var i = 0; i < city_arr.length; i++) {
+            if(sender_city==city_arr[i]['city']){
+                cityHtml+="<option value="+city_arr[i]['city']+" data-index='i' selected >"+city_arr[i]['city']+"</option>";
+            }else{
+                cityHtml+="<option value="+city_arr[i]['city']+" data-index='i'>"+city_arr[i]['city']+"</option>";
+            }
+        }
+        $(".city").html(cityHtml)
+        var cabinetHtml="";
+        for (var i = 0; i < address_arr.length; i++) {
+            if(cabinet_id==address_arr[i]['id']){
+                cabinetHtml+="<option value="+address_arr[i]['id']+" data-index='i' selected >"+address_arr[i]['address']+"("+address_arr[i]['cabinet_id']+")"+"</option>";
+            }else{
+                cabinetHtml+="<option value="+address_arr[i]['id']+" data-index='i'>"+address_arr[i]['address']+"("+address_arr[i]['cabinet_id']+")"+"</option>";
+            }
+        }
+        $(".cabinet").html(cabinetHtml)
+        
+        $('#editAddress').modal('show');
+    });
+    $(document).on('change', '.province', function () {
+        var province = $(this).find('option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: '<?= $urlManager->createUrl(['mch/order/select-city']) ?>',
+            dataType: "json",
+            data: {
+                'province': province,
+                _csrf: _csrf
+            }, 
+            cache: false,
+            success: function(data) {
+                if(data.code==0){
+                    $(".city").empty();
+                    $(".cabinet").empty();
+                    var cityHtml="";
+                    for (var i = 0; i < data.city_arr.length; i++) {
+                        
+                        cityHtml+="<option value="+data.city_arr[i]['city']+" data-index='i'>"+data.city_arr[i]['city']+"</option>";
+                        
+                    }
+                    var cabinetHtml="";
+                    for (var i = 0; i < data.address_arr.length; i++) {
+                        
+                        cabinetHtml+="<option value="+data.address_arr[i]['id']+" data-index='i'>"+data.address_arr[i]['address']+"("+data.address_arr[i]['cabinet_id']+")"+"</option>";
+                        
+                    }
+                    $(".cabinet").html(cabinetHtml)
+                    $(".city").html(cityHtml)
+                }else{
+                    alert(data.msg)
+                }
+            }
+        });
+        
+    });
+    $(document).on('change', '.city', function () {
+        var city = $(this).find('option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: '<?= $urlManager->createUrl(['mch/order/select-address']) ?>',
+            dataType: "json",
+            data: {
+                'city': city,
+                _csrf: _csrf
+            }, 
+            cache: false,
+            success: function(data) {
+                if(data.code==0){
+                    $(".cabinet").empty();
+                    var cabinetHtml="";
+                    for (var i = 0; i < data.address_arr.length; i++) {
+                        
+                        cabinetHtml+="<option value="+data.address_arr[i]['id']+" data-index='i'>"+data.address_arr[i]['address']+"("+data.address_arr[i]['cabinet_id']+")"+"</option>";
+                        
+                    }
+                    $(".cabinet").html(cabinetHtml)
+                }else{
+                    alert(data.msg)
+                }
+            }
+        });
+    });
+    // 提交更新
+    $(document).on('click', '.update-address', function () {
+        $('.update-address').btnLoading('更新中');
+        var href = '<?= $urlManager->createUrl(['mch/order/update-order-address']) ?>';
+        $.ajax({
+            url: href,
+            type: "post",
+            data: {
+                orderId: $('.order-id').val(),
+                orderType: $('.order-type').val(),
+                name: $('.name').val(),
+                mobile: $('.mobile').val(),
+                cabinet_id: $('.cabinet option:selected').val(),
+                _csrf: _csrf
+            },
+            dataType: "json",
+            success: function (res) {
+                $('.update-address').btnReset();
+                $.myAlert({
+                    content: res.msg,
+                    confirm: function () {
+                        if (res.code == 0) {
+                            location.reload();
+                        }
+                    }
+                })
+            }
+        });
+        return false;
+    });
+    // 后台订单确认
+    var intDiff = parseInt(60*2); //倒计时总秒数量
+    var cancelUrl = '';
+    var confirmId = 0;
+    $(document).on("click", ".admin-order-confirm", function () {
+        timer(parseInt(60*30));
+        var a = $(this);
+        confirmId = a.data('id');
+        $('#adminOrderConfirm').modal('show');
+        return false;
+    });
+    // 后台订单确认
+    $(document).on("click", ".order-confirm", function () {
+        var urlStr="<?= $urlManager->createUrl([$urlStr . '/apply-confirm-status']) ?>";
+        
+        var remark = $('#order_cancel_remark-2').val();
+        
+        var btn = $(this);
+        btn.btnLoading(btn.text());
+        $.ajax({
+            url: urlStr,
+            dataType: "json",
+            data: {
+                remark: remark,
+                id: confirmId,
+                type: 1
+            },
+            success: function (res) {
+                console.log(res)
+                $.myLoadingHide();
+                $.myAlert({
+                    content: res.msg,
+                    confirm: function () {
+                        btn.btnReset();
+                        if (res.code == 0)
+                            location.reload();
+                    }
+                });
+            }
+        });
+        return false;
+    });
+    function timer(intDiff) {
+        window.setInterval(function () {
+            var day = 0,
+            hour = 0,
+            minute = 0,
+            second = 0; //时间默认值
+            if (intDiff == 0) {
+                var urlStr="<?= $urlManager->createUrl([$urlStr . '/apply-confirm-status']) ?>";
+                var remark = '';
+                $.ajax({
+                    url: urlStr,
+                    dataType: "json",
+                    data: {
+                        remark: remark,
+                        id: confirmId,
+                        type: 1
+                    },
+                    success: function (res) {
+                        if (res.code == 0)
+                            location.reload();
+                    }
+                });
+                return false;
+            }
+
+            if(intDiff == 0){
+                return false;
+            }
+            intDiff--;
+        }, 1000);
+    }
+    // 后台点击取消
+    var cancelUrl = '';
+    var cancelId = 0;
+    $(document).on("click", ".admin-order-cancel", function () {
+        var a = $(this);
+        cancelId = a.data('id');
+        cancelUrl = a.attr('href');
+        $('#adminOrderCancel').modal('show');
+        return false;
+    });
+    // 后台主动取消订单
+    $(document).on("click", ".order-cancel", function () {
+        var remark = $('#order_cancel_remark-1').val();
+        var btn = $(this);
+        btn.btnLoading(btn.text());
+        $.ajax({
+            url: cancelUrl,
+            dataType: "json",
+            data: {
+                remark: remark,
+                id: cancelId,
+                status: 1,
+                type: 1
+            },
+            success: function (res) {
+                $.myLoadingHide();
+                $.myAlert({
+                    content: res.msg,
+                    confirm: function () {
+                        btn.btnReset();
+                        if (res.code == 0)
+                            location.reload();
+                    }
+                });
+            }
+        });
+        return false;
+    });
+    $(document).on("click", ".send-btn", function () {
+        var a = $(this);
+        var order_id = a.data('id');
+        if(confirm("是否确认发货?")){
+            var urlStr="<?=$urlManager->createUrl([$urlStr . '/send'])?>";
+            var btn = $(this);
+            // console.log(order_id)
+            btn.btnLoading("正在提交");
+            $.ajax({
+                url: urlStr,
+                type: "post",
+                dataType: "json",
+                data: {
+                    order_id: order_id,
+                    _csrf: _csrf,
+                },
+                success: function (res) {
+                    console.log(res)
+                    $.myLoadingHide();
+                    $.myAlert({
+                        content: res.msg,
+                        confirm: function () {
+                            btn.btnReset();
+                            if (res.code == 0)
+                                location.reload();
+                        }
+                    });
+                }
+            });
+            return false;
+        　　
+        }else{
+            return false
+        }
+    });
+</script>
 <script>
     var app = new Vue({
         el: '#modalBox',
@@ -662,15 +1119,15 @@ $urlPlatform = Yii::$app->controller->route;
         return false;
     });
 
-    $(document).on("click", ".send-btn", function () {
-        var order_id = $(this).attr("data-order-id");
-        $(".send-modal input[name=order_id]").val(order_id);
-        var express_no = $(this).attr("data-express-no");
-        $(".send-modal input[name=express_no]").val(express_no);
-        var express = $(this).attr("data-express");
-        $(".send-modal input[name=express]").val(express);
-        $(".send-modal").modal("show");
-    });
+    // $(document).on("click", ".send-btn", function () {
+    //     var order_id = $(this).attr("data-order-id");
+    //     $(".send-modal input[name=order_id]").val(order_id);
+    //     var express_no = $(this).attr("data-express-no");
+    //     $(".send-modal input[name=express_no]").val(express_no);
+    //     var express = $(this).attr("data-express");
+    //     $(".send-modal input[name=express]").val(express);
+    //     $(".send-modal").modal("show");
+    // });
     $(document).on("click", ".send-confirm-btn", function () {
         var btn = $(this);
         var error = $(".send-form").find(".form-error");

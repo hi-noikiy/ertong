@@ -42,12 +42,13 @@ class IntegralGoodsForm extends MchModel
     public $user_num;
     public $id;
     public $goods_no;
+    public $storage_type;
 
     public function rules()
     {
         return [
             [['store_id', 'cat_id', 'name', 'cover_pic', 'goods_pic_list', 'integral', 'original_price', 'detail', 'user_num'], 'required'],
-            [['store_id', 'cat_id', 'freight', 'use_attr'], 'integer'],
+            [['store_id', 'cat_id', 'freight', 'use_attr', 'storage_type'], 'integer'],
             [['detail', 'cover_pic', 'goods_no'], 'string'],
             [['name', 'unit'], 'string', 'max' => 255],
             [['service'], 'string', 'max' => 2000],
@@ -85,6 +86,7 @@ class IntegralGoodsForm extends MchModel
             'goods_pic_list' => '商品图片',
             'user_num' => '用户每日可兑换数量',
             'goods_no' => '商品货号',
+            'storage_type' => '商品存放类型',
         ];
     }
 
@@ -135,6 +137,12 @@ class IntegralGoodsForm extends MchModel
                     ];
                 }
             }
+            if (!$this->storage_type && ($this->storage_type === null || $this->storage_type === '')) {
+                return [
+                    'code' => 1,
+                    'msg' => '请选择商品存放类型',
+                ];
+            }
             $goods = $this->goods;
             if ($goods->isNewRecord) {
                 $goods->is_delete = 0;
@@ -167,7 +175,7 @@ class IntegralGoodsForm extends MchModel
 
             ;
             $goods->detail = preg_replace('/\\\u[a-z0-9]{4}/', '', userTextEncode($_this_attributes['detail']));
-
+            $goods->storage_type = $this->storage_type;//商品存放类型
             if ($goods->save()) {
                 return [
                     'code' => 0,

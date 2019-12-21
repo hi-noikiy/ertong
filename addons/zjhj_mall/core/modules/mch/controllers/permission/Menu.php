@@ -1041,23 +1041,23 @@ class Menu
                             ],
                         ],
                     ],
-                    // [
-                    //     'name' => '充值',
-                    //     'is_menu' => true,
-                    //     'route' => 'mch/recharge/index',
-                    //     'sub' => [
-                    //         [
-                    //             'name' => '充值编辑',
-                    //             'is_menu' => false,
-                    //             'route' => 'mch/recharge/edit',
-                    //         ],
-                    //         [
-                    //             'name' => '充值设置',
-                    //             'is_menu' => false,
-                    //             'route' => 'mch/recharge/setting',
-                    //         ],
-                    //     ],
-                    // ],
+                    [
+                        'name' => '充值',
+                        'is_menu' => true,
+                        'route' => 'mch/recharge/index',
+                        'sub' => [
+                            [
+                                'name' => '充值编辑',
+                                'is_menu' => false,
+                                'route' => 'mch/recharge/edit',
+                            ],
+                            [
+                                'name' => '充值设置',
+                                'is_menu' => false,
+                                'route' => 'mch/recharge/setting',
+                            ],
+                        ],
+                    ],
                     [
                         'name' => '轮播图',
                         'is_menu' => true,
@@ -1163,6 +1163,37 @@ class Menu
                                     ]
                                 ]
                             ],
+                                    [
+                                'name' => '批量发货',
+                                'is_menu' => true,
+                                'route' => 'mch/miaosha/order/batch-ship',
+                            ],
+                            [
+                                'name' => '售后订单',
+                                'is_menu' => true,
+                                'route' => 'mch/miaosha/order/refund',
+                                'action' => [
+                                    [
+                                        'name' => '秒杀订单取消申请处理',
+                                        'route' => 'mch/miaosha/order/apply-delete-status'
+                                    ]
+                                ]
+                            ],
+                            [
+                                'name' => '评价管理',
+                                'is_menu' => true,
+                                'route' => 'mch/miaosha/comment/index',
+                                'action' => [
+                                    [
+                                        'name' => '整点秒杀隐藏评论',
+                                        'route' => 'mch/miaosha/comment/hide-status',
+                                    ],
+                                    [
+                                        'name' => '整点秒杀评论删除',
+                                        'route' => 'mch/miaosha/comment/delete-status',
+                                    ],
+                                ]
+                            ],
                         ]
                     ],
                     [
@@ -1236,6 +1267,40 @@ class Menu
                                 'name' => '售后订单',
                                 'is_menu' => true,
                                 'route' => 'mch/group/order/refund',
+                            ],
+                            [
+                                'name' => '拼团规则',
+                                'is_menu' => true,
+                                'route' => 'mch/group/article/edit',
+                            ],
+                            [
+                                'name' => '评论管理',
+                                'is_menu' => true,
+                                'route' => 'mch/group/comment/index',
+                                'sub' => [
+                                    [
+                                        'name' => '客户评价编辑',
+                                        'is_menu' => false,
+                                        'route' => 'mch/group/comment/edit'
+                                    ],
+                                ]
+                            ],
+                            [
+                                'name' => '批量发货',
+                                'is_menu' => true,
+                                'route' => 'mch/group/order/batch-ship',
+                            ],
+                            [
+                                'name' => '拼团管理',
+                                'is_menu' => true,
+                                'route' => 'mch/group/order/group',
+                                'sub' => [
+                                    [
+                                        'name' => '拼团列表',
+                                        'is_menu' => false,
+                                        'route' => 'mch/group/order/group-list'
+                                    ],
+                                ],
                             ],
                         ]
                     ],

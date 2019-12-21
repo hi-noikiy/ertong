@@ -649,10 +649,12 @@ class IntegralmallController extends Controller
         $form->store_id = $this->store->id;
         $form->limit = 10;
         $arr = $form->search();
+        // print_r($arr[0]);die;
         return $this->render('order', [
             'list' => $arr[0],
             'pagination' => $arr[1],
             'row_count' => $arr[2],
+            'province_arr' =>$arr[4],
             'express_list' => $this->getExpressList(),
             'exportList' => \Yii::$app->serializer->encode($exportList)
         ]);
@@ -850,5 +852,44 @@ class IntegralmallController extends Controller
         $form->order_type = 4;
         $form->store = $this->store;
         return $form->clerk();
+    }
+    //订单确认处理
+    public function actionApplyConfirmStatus($id, $type = 0)
+    {
+        $where = [
+            'id' => $id,
+            'is_delete' => 0,
+            'store_id' => $this->store->id,
+        ];
+        // type=1 后台主要取消订单， type=0 用户发起订单取消申请
+        if ($type == 0) {
+            $where['apply_delete'] = 1;
+        }
+        $order = IntegralOrder::findOne($where);
+
+        if (!$order) {
+            return [
+                'code' => 1,
+                'msg' => '订单不存在，请刷新页面后重试',
+            ];
+        }
+        $confirm = \Yii::$app->request->get('remark');
+        if(!isset($confirm)){
+            $confirm="商家已确认订单";
+        }
+        $order->is_order_confirm=1;
+        $order->confirm=$confirm;
+        if($order->save()){
+            return [
+                'code' => 0,
+                'msg' => '操作成功',
+            ];
+        }else{
+            return [
+                'code' => 1,
+                'msg' => '操作失败',
+            ];
+        }
+        
     }
 }

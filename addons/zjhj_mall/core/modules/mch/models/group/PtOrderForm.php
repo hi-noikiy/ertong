@@ -12,6 +12,7 @@ use app\models\common\admin\order\CommonOrderSearch;
 use app\models\Order;
 use app\models\PtGoods;
 use app\models\PtOrder;
+use app\models\Cabinet;
 use app\models\PtOrderDetail;
 use app\models\PtRobot;
 use app\models\Shop;
@@ -67,10 +68,12 @@ class PtOrderForm extends MchModel
                 'od.attr', 'od.num', 'od.pic',
                 'g.name AS goods_name',
                 'u.nickname', 'u.platform',
-                'c.nickname AS clerk_name'
+                'c.nickname AS clerk_name',
+                'cc.province','cc.city','cc.address'
             ])
             ->andWhere(['o.is_delete' => 0, 'o.store_id' => $this->store_id])
             ->leftJoin(['u' => User::tableName()], 'u.id=o.user_id')
+            ->leftJoin(['cc' => Cabinet::tableName()], 'o.cabinet_id=cc.id')
             ->leftJoin(['c' => User::tableName()], 'c.id=o.clerk_id');
 
         if ($this->offline != null) {
@@ -83,11 +86,12 @@ class PtOrderForm extends MchModel
                     'o.is_pay' => 0,
                 ])->andWhere(['or', ['o.status' => 1], 'o.pay_type' => 2]);
                 break;
-            case 1: //待发货
+            case 1: //备货中
                 $query->andWhere([
                     'o.is_send' => 0,
                     'o.status' => 3,
                     'o.is_success' => 1,
+                    'o.is_order_confirm' => 1,
                 ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);
                 break;
             case 2: //待确认收货
@@ -95,6 +99,7 @@ class PtOrderForm extends MchModel
                     'o.is_send' => 1,
                     'o.is_confirm' => 0,
                     'o.is_success' => 1,
+                    'o.put_status' => 1,
                 ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);
                 break;
             case 3: //已确认收货
@@ -102,14 +107,16 @@ class PtOrderForm extends MchModel
                     'o.is_send' => 1,
                     'o.is_confirm' => 1,
                     'o.status' => 3,
+                    'o.put_status'=>3,
+                    'o.is_comment'=>1
                 ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);
                 break;
-            case 4:
+            case 4://拼团失败
                 $query->andWhere([
                     'o.status' => 4,
                 ]);
                 break;
-            case 6: //
+            case 6: //拼团中
                 $query->andWhere([
                     'o.is_success' => 0,
                     'o.is_group' => 1,
@@ -117,10 +124,21 @@ class PtOrderForm extends MchModel
 
                 ])->andWhere(['or', ['o.is_pay' => 1], ['o.pay_type' => 2]]);
                 break;
+            case 9: //待确认
+                $query->andWhere([
+                    'o.is_success'=>1,'o.is_send' => 0,'o.is_pay' => 1,'o.is_order_confirm' => 0,'o.status' => 3
+                ]);
+                break;
+            case 10: //待自提
+                $query->andWhere(['o.is_send' => 1,'o.put_status' => 2]);
+                break;
+            case 11: //待评价
+                $query->andWhere(['o.is_send' => 1,'o.put_status' => 3,'o.is_comment'=>0]);
+                break;
             default:
                 break;
         }
-        if ($this->status == 8) {
+        if ($this->status == 8) {//回收站
             $query->andWhere(['o.is_recycle' => 1]);
         } else {
             $query->andWhere(['o.is_recycle' => 0]);
@@ -143,7 +161,7 @@ class PtOrderForm extends MchModel
         $query = $commonOrderSearch->keyword($query, $this->keyword_1, $this->keyword);
         $query->innerJoin(['od' => PtOrderDetail::tableName()], 'od.order_id=o.id')
             ->leftJoin(['g' => PtGoods::tableName()], 'g.id=od.goods_id');
-
+        // return $query->createCommand()->getRawSql();
         if ($this->flag == "EXPORT") {
             $list_ex = $query->andWhere(['!=', 'order_no', 'robot']);
             if ($this->offline == 2) {
@@ -179,10 +197,51 @@ class PtOrderForm extends MchModel
             if (isset($v['address_data']) && !empty($v['address_data'])) {
                 $list[$k]['address_data'] = \Yii::$app->serializer->decode($v['address_data']);
             }
+            $city_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $v['province']])->groupBy('city')->asArray()->all();
+            $list[$k]['city_arr']=$city_arr;
+            $address_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'city' => $v['city']])->groupBy('address')->asArray()->all();
+            $list[$k]['address_arr']=$address_arr;
+        }
+        //查找云柜地址
+        $cabinet=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->groupBy('cabinet_id')->asArray()->all();
+        $cabinet_arr=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0])->groupBy('province')->asArray()->all();
+        foreach ($cabinet_arr as $key => $val) {
+            $province[]=$val['province'];
         }
 
+        $province=array_unique($province);
+        
+        $province_arr=array();
+        $city=array();
+        foreach ($province as $key => $val) {
+            $cabinet_province=Cabinet::find()->where(['store_id' => $this->store_id, 'is_delete' => 0, 'province' => $val])->groupBy('city')->asArray()->all();
+            foreach ($cabinet_province as $k => $v) {
+                $city[$key][]=array(
+                        'id' => $v['id']+1,
+                        'level' => "city",
+                        'list' => array(),
+                        'name' => $v['city'],
+                        'parent_id' => $key+1,
+                );
+            }
+        }
+        foreach ($province as $key => $val) {
+            foreach ($city as $k => $v) {
+                if($key==$k){
+                    $province_arr[]=array(
+                        'id' => $key+1,
+                        'level' => "province",
+                        'list' => $city[$k],
+                        'name' => $val,
+                        'parent_id' => 1,
+                    );
+                }
+            }
+        }
         return [
+            'cabinet' => $cabinet,
             'list' => $list,
+            'province_arr' => $province_arr,
             'p' => $p,
             'row_count' => $count,
         ];

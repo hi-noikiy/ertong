@@ -59,6 +59,8 @@ class GoodsForm extends MchModel
     public $single_share_commission_second;
     public $single_share_commission_third;
 
+    public $storage_type;
+
 
     /**
      * @inheritdoc
@@ -68,7 +70,7 @@ class GoodsForm extends MchModel
         return [
             [['name', 'original_price', 'detail', 'store_id', 'goods_pic_list'], 'required'],
             [['detail', 'cover_pic', 'video_url','goods_no'], 'string'],
-            [['store_id', 'freight', 'use_attr', 'is_discount', 'coupon', 'attr_setting_type'], 'integer'],
+            [['store_id', 'freight', 'use_attr', 'is_discount', 'coupon', 'attr_setting_type', 'storage_type'], 'integer'],
             [['name', 'unit','goods_no'], 'string', 'max' => 255],
             [['service'], 'string', 'max' => 2000],
             [['attr', 'full_cut', 'integral'], 'safe',],
@@ -122,6 +124,7 @@ class GoodsForm extends MchModel
             'single_share_commission_first' => '一级佣金',
             'single_share_commission_second' => '二级佣金',
             'single_share_commission_third' => '三级佣金',
+            'storage_type' => '商品存放类型',
         ];
     }
 
@@ -189,7 +192,12 @@ class GoodsForm extends MchModel
                     'msg' => '商品原价超过限制',
                 ];
             }
-
+            if (!$this->storage_type && ($this->storage_type === null || $this->storage_type === '')) {
+                return [
+                    'code' => 1,
+                    'msg' => '请选择商品存放类型',
+                ];
+            }
             $goods = $this->goods;
             if ($goods->isNewRecord) {
                 $goods->is_delete = 0;
@@ -225,7 +233,7 @@ class GoodsForm extends MchModel
             $goods->detail = preg_replace('/\\\u[a-z0-9]{4}/', '', userTextEncode($_this_attributes['detail']));
             $goods->use_attr = $this->use_attr ? 1 : 0;
             $goods->attr_setting_type = $this->attr_setting_type;
-
+            $goods->storage_type = $this->storage_type;//商品存放类型
             if ($goods->save()) {
                 MsGoodsPic::updateAll(['is_delete' => 1], ['goods_id' => $goods->id]);
                 foreach ($this->goods_pic_list as $pic_url) {
