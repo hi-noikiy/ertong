@@ -442,10 +442,10 @@ $urlPlatform = Yii::$app->controller->route;
                                            data-id="<?= $order_item['id'] ?>"
                                            href='<?= $urlManager->createUrl([$urlStr . '/apply-delete-status']) ?>'>取消</a>
                                     <?php endif; ?>
-                                    <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['is_offline'] == 1 && $order_item['is_send'] != 1 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
+                                    <!-- <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['is_offline'] == 1 && $order_item['is_send'] != 1 && $order_item['is_cancel'] == 0 && $order_item['is_delete'] == 0) : ?>
                                         <a class="btn btn-sm btn-primary clerk-btn mt-2" href="javascript:"
                                            data-order-id="<?= $order_item['id'] ?>">核销</a>
-                                    <?php endif; ?>
+                                    <?php endif; ?> -->
                                 </div>
                             <?php endif; ?>
                             <div>
