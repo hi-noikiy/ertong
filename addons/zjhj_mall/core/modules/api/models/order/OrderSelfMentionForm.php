@@ -15,6 +15,9 @@ use app\models\common\api\CommonShoppingList;
 use app\models\MsGoods;
 use app\models\MsOrder;
 use app\models\OrderDetail;
+use app\models\PtGoods;
+use app\models\PtOrder;
+use app\models\PtOrderDetail;
 use app\utils\PinterOrder;
 use app\models\Level;
 use app\models\Order;
@@ -62,7 +65,24 @@ class OrderSelfMentionForm extends OrderForm
                 ]
             );
             $goods_name = [$goods->name];
-        }else{
+        }elseif ($orderStr == 'P'){
+            $order = PtOrder::findOne([
+                'store_id' => $this->store_id,
+                'order_no' => $this->orderNo,
+                'is_delete' => 0,
+            ]);
+
+            $orderDetails = PtOrderDetail::find()->where(
+                [
+                    'order_id' => $order->id,
+                ]
+            )->asArray()->all();
+            $goods_name = [];
+            foreach ($orderDetails as $k => $value){
+                $goods = PtGoods::findOne(['id' => $value['goods_id']]);
+                $goods_name[] = $goods->name;
+            }
+        } else{
             $order = Order::findOne([
                 'store_id' => $this->store_id,
                 'order_no' => $this->orderNo,

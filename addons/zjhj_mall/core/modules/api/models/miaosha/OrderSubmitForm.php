@@ -277,7 +277,7 @@ class OrderSubmitForm extends ApiModel
         $order->discount = $discount;
         $order->addtime = time();
         if ($this->offline == 0) {
-            $order->address = $address->province . $address->city . $address->district . $address->detail;
+            $order->address = $cabinet->address;
             $order->mobile = $user->binding;
             $order->name = $user->nickname;
             $order->address_data = json_encode([

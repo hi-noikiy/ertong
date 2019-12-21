@@ -17,6 +17,9 @@ use app\models\MsOrder;
 use app\models\MsOrderSub;
 use app\models\OrderDetail;
 use app\models\OrderSub;
+use app\models\PtOrder;
+use app\models\PtOrderDetail;
+use app\models\PtOrderSub;
 use app\utils\PinterOrder;
 use app\models\Level;
 use app\models\Order;
@@ -52,8 +55,8 @@ class OrderSelfMentioningForm extends OrderForm
         $substr = substr( $this->deliverNo, 0, 1 );
         if ($substr == 'M'){
             $subOrder = MsOrderSub::findOne(['order_no' => $this->deliverNo]);
-        }elseif ($substr == 'M'){
-            $subOrder = MsOrderSub::findOne(['order_no' => $this->deliverNo]);
+        }elseif ($substr == 'P'){
+            $subOrder = PtOrderSub::findOne(['order_no' => $this->deliverNo]);
         }else{
             $subOrder = OrderSub::findOne(['order_no' => $this->deliverNo]);
 
@@ -99,7 +102,24 @@ class OrderSelfMentioningForm extends OrderForm
                 ]
             );
             $goods_name = [$goods->name];
-        }else{
+        }elseif ($orderStr == 'P'){
+            $order = PtOrder::findOne([
+                'store_id' => $this->store_id,
+                'order_no' => $this->orderNo,
+                'is_delete' => 0,
+            ]);
+            $orderDetails = PtOrderDetail::find()->where(
+                [
+                    'order_id' => $order->id,
+                ]
+            )->asArray()->all();
+            $goods_name = [];
+            foreach ($orderDetails as $k => $value){
+                $goods = \app\models\Goods::findOne(['id' => $value['goods_id']]);
+                $goods_name[] = $goods->name;
+            }
+            $goods_name = implode('、', $goods_name);
+        } else{
             $order = Order::findOne([
                 'store_id' => $this->store_id,
                 'order_no' => $this->orderNo,

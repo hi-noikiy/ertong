@@ -18,6 +18,7 @@ use app\models\Option;
 use app\models\OrderSub;
 use app\models\PtOrderSub;
 use app\models\task\order\OrderAutoCancel;
+use app\models\User;
 use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\utils\PinterOrder;
 use app\models\Address;
@@ -278,6 +279,11 @@ class OrderSubmitForm extends ApiModel
         $order->cabinet_id = $this->cabinet_id;
         $order->service_day = $this->service_day;
         $order->service_time = $this->service_time;
+        $user = User::findOne(
+            [
+                'id' => $this->user_id
+            ]
+        );
 
         $order->total_price = $total_price_1;
         $order->pay_type = $this->payment;
@@ -286,9 +292,9 @@ class OrderSubmitForm extends ApiModel
         $order->addtime = time();
         $order->offline = $this->offline;
         if ($this->offline == 1) {
-            $order->address = $address->province . $address->city . $address->district . $address->detail;
-            $order->mobile = $address->mobile;
-            $order->name = $address->name;
+            $order->address = $cabinet->address;
+            $order->mobile = $user->binding;
+            $order->name = $user->nickname;
             $order->address_data = json_encode([
                 'province' => $cabinet->province,
                 'city' => $cabinet->city,
@@ -534,14 +540,14 @@ class OrderSubmitForm extends ApiModel
 
             }
 
-            //$re = $this->createOrder($order->order_no, $cabinet->cabinet_id, $dev, $allTotal);
-//            if ($re['code'] != 0){
-//                $t->rollBack();
-//                return [
-//                    'code' => 1,
-//                    'msg' => $re['message'],
-//                ];
-//            }
+            $re = $this->createOrder($order->order_no, $cabinet->cabinet_id, $dev, $allTotal);
+            if ($re['code'] != 0){
+                $t->rollBack();
+                return [
+                    'code' => 1,
+                    'msg' => $re['message'],
+                ];
+            }
 
             $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 0);
             $res = $printer_order->print_order();
