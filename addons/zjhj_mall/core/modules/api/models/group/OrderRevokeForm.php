@@ -9,6 +9,7 @@
 namespace app\modules\api\models\group;
 
 
+use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\utils\Refund;
 use app\utils\SendMail;
 use app\utils\Sms;
@@ -120,6 +121,15 @@ class OrderRevokeForm extends ApiModel
         }
 
         if ($order->save()) {
+            $cabinetPlatform = new CabinetPlatForm(null);
+            $re = $cabinetPlatform->cancelOrder($order->order_no);
+            if ($re['code'] !=0){
+                $t->rollBack();
+                return [
+                    'code' => 1,
+                    'msg' => $re['message']
+                ];
+            }
             $t->commit();
             $msg_sender = new PtNoticeSender($this->getWechat(), $this->store_id);
             if ($order->is_pay) {

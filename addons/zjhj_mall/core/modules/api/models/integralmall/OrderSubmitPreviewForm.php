@@ -842,6 +842,15 @@ class OrderSubmitPreviewForm extends ApiModel
         $goods->numAdd($attr_id_list, 1);
         //     删除订单
         if ($order->save()) {
+            $cabinetPlatform = new CabinetPlatForm(null);
+            $re = $cabinetPlatform->cancelOrder($order->order_no);
+            if ($re['code'] !=0){
+                //$t->rollBack();
+                return [
+                    'code' => 1,
+                    'msg' => $re['message']
+                ];
+            }
             //删除订单详情
             $order_detail->save();
             return [

@@ -8,6 +8,7 @@
 
 namespace app\modules\api\models\miaosha;
 
+use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\utils\Refund;
 use app\utils\SendMail;
 use app\utils\Sms;
@@ -168,6 +169,15 @@ class OrderRevokeForm extends ApiModel
         if ($order->save()) {
             if ($order->is_pay == 0) {
                 UserCoupon::updateAll(['is_use' => 0], ['id' => $order->user_coupon_id]);
+            }
+            $cabinetPlatform = new CabinetPlatForm(null);
+            $re = $cabinetPlatform->cancelOrder($order->order_no);
+            if ($re['code'] !=0){
+                $t->rollBack();
+                return [
+                    'code' => 1,
+                    'msg' => $re['message']
+                ];
             }
 
             $t->commit();
