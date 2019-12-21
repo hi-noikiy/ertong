@@ -12,6 +12,9 @@ namespace app\modules\api\models\order;
 use app\model\Goods;
 use app\models\Cabinet;
 use app\models\common\api\CommonShoppingList;
+use app\models\IntegralGoods;
+use app\models\IntegralOrder;
+use app\models\IntegralOrderDetail;
 use app\models\MsGoods;
 use app\models\MsOrder;
 use app\models\OrderDetail;
@@ -80,6 +83,23 @@ class OrderSelfMentionForm extends OrderForm
             $goods_name = [];
             foreach ($orderDetails as $k => $value){
                 $goods = PtGoods::findOne(['id' => $value['goods_id']]);
+                $goods_name[] = $goods->name;
+            }
+        }elseif ($orderStr == 'G'){
+            $order = IntegralOrder::findOne([
+                'store_id' => $this->store_id,
+                'order_no' => $this->orderNo,
+                'is_delete' => 0,
+            ]);
+
+            $orderDetails = IntegralOrderDetail::find()->where(
+                [
+                    'order_id' => $order->id,
+                ]
+            )->asArray()->all();
+            $goods_name = [];
+            foreach ($orderDetails as $k => $value){
+                $goods = IntegralGoods::findOne(['id' => $value['goods_id']]);
                 $goods_name[] = $goods->name;
             }
         } else{

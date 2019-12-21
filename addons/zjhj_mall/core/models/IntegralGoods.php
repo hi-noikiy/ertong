@@ -32,6 +32,7 @@ use Yii;
  * @property integer $goods_pic_list
  * @property integer $is_index
  * @property integer $user_num
+ * @property integer $storage_type
  */
 class IntegralGoods extends \yii\db\ActiveRecord
 {
@@ -50,7 +51,7 @@ class IntegralGoods extends \yii\db\ActiveRecord
     {
         return [
             [['store_id', 'name', 'cat_id','original_price', 'detail', 'integral','user_num'], 'required'],
-            [['store_id', 'cat_id', 'status', 'addtime', 'is_delete', 'sort', 'virtual_sales', 'freight', 'use_attr', 'goods_num', 'integral','is_index'], 'integer'],
+            [['store_id', 'cat_id', 'status', 'addtime', 'is_delete', 'sort', 'virtual_sales', 'freight', 'use_attr', 'goods_num', 'integral','is_index', 'storage_type'], 'integer'],
             [['price', 'original_price', 'weight','cost_price'], 'number'],
             [['detail', 'cover_pic'], 'string'],
             [['name', 'unit'], 'string', 'max' => 255],
@@ -87,6 +88,7 @@ class IntegralGoods extends \yii\db\ActiveRecord
             'goods_pic_list' => '商品图片',
             'is_index' => '放置首页',
             'user_num' => '用户每日可兑换数量',
+            'storage_type' => '商品存放类型1常温2冷藏3冷冻'
         ];
     }
 

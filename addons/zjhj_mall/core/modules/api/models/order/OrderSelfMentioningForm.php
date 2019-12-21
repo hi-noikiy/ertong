@@ -12,6 +12,9 @@ namespace app\modules\api\models\order;
 use app\model\Goods;
 use app\models\Cabinet;
 use app\models\common\api\CommonShoppingList;
+use app\models\IntegralOrder;
+use app\models\IntegralOrderDetail;
+use app\models\IntegralOrderSub;
 use app\models\MsGoods;
 use app\models\MsOrder;
 use app\models\MsOrderSub;
@@ -57,6 +60,8 @@ class OrderSelfMentioningForm extends OrderForm
             $subOrder = MsOrderSub::findOne(['order_no' => $this->deliverNo]);
         }elseif ($substr == 'P'){
             $subOrder = PtOrderSub::findOne(['order_no' => $this->deliverNo]);
+        }elseif ($substr == 'G'){
+            $subOrder = IntegralOrderSub::findOne(['order_no' => $this->deliverNo]);
         }else{
             $subOrder = OrderSub::findOne(['order_no' => $this->deliverNo]);
 
@@ -119,7 +124,25 @@ class OrderSelfMentioningForm extends OrderForm
                 $goods_name[] = $goods->name;
             }
             $goods_name = implode('、', $goods_name);
-        } else{
+        }
+        elseif ($orderStr == 'G'){
+            $order = IntegralOrder::findOne([
+                'store_id' => $this->store_id,
+                'order_no' => $this->orderNo,
+                'is_delete' => 0,
+            ]);
+            $orderDetails = IntegralOrderDetail::find()->where(
+                [
+                    'order_id' => $order->id,
+                ]
+            )->asArray()->all();
+            $goods_name = [];
+            foreach ($orderDetails as $k => $value){
+                $goods = \app\models\IntegralGoods::findOne(['id' => $value['goods_id']]);
+                $goods_name[] = $goods->name;
+            }
+            $goods_name = implode('、', $goods_name);
+        }else{
             $order = Order::findOne([
                 'store_id' => $this->store_id,
                 'order_no' => $this->orderNo,

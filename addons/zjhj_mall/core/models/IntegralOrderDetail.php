@@ -20,6 +20,7 @@ use Yii;
  * @property string $goods_name
  * @property string $user_id
  * @property string $store_id
+ * @property string order_sub_id
  */
 class IntegralOrderDetail extends \yii\db\ActiveRecord
 {
@@ -38,7 +39,7 @@ class IntegralOrderDetail extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'goods_id', 'attr', 'pic'], 'required'],
-            [['order_id', 'goods_id', 'num', 'addtime', 'is_delete', 'pay_integral','user_id','store_id'], 'integer'],
+            [['order_id', 'goods_id', 'num', 'addtime', 'is_delete', 'pay_integral','user_id','store_id', 'order_sub_id'], 'integer'],
             [['total_price'], 'number'],
             [['attr'], 'string'],
             [['pic','goods_name'], 'string', 'max' => 255],
@@ -64,6 +65,7 @@ class IntegralOrderDetail extends \yii\db\ActiveRecord
             'goods_name' => 'goods_name',
             'user_id' => 'user_id',
             'store_id' => 'store_id',
+            'order_sub_id' => '子订单id'
         ];
     }
 

@@ -426,14 +426,7 @@ class OrderSubmitForm extends ApiModel
 
 
             }
-            $re = $this->createOrder($order->order_no, $cabinet->cabinet_id, $dev, $allTotal);
-            if ($re['code'] != 0){
-                $t->rollBack();
-                return [
-                    'code' => 1,
-                    'msg' => $re['message'],
-                ];
-            }
+
             $goods_total_pay_price = $order->pay_price - $order->express_price;
             $goods_total_price = 0.00;
             foreach ($goods_list as $goods) {
@@ -464,7 +457,14 @@ class OrderSubmitForm extends ApiModel
                     'form_id' => $this->formId
                 ]
             ]);
-
+            $re = $this->createOrder($order->order_no, $cabinet->cabinet_id, $dev, $allTotal);
+            if ($re['code'] != 0){
+                $t->rollBack();
+                return [
+                    'code' => 1,
+                    'msg' => $re['message'],
+                ];
+            }
             $t->commit();
 
             $delay_seconds = $unpaid * 60;

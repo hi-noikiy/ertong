@@ -10,10 +10,15 @@ namespace app\modules\api\models\integralmall;
 
 use app\models\Attr;
 use app\models\AttrGroup;
+use app\models\Cabinet;
 use app\models\common\api\CommonOrder;
 use app\models\common\CommonFormId;
+use app\models\IntegralOrderSub;
 use app\models\Model;
+use app\models\MsOrderSub;
 use app\models\Option;
+use app\models\PtOrderDetail;
+use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\utils\PayNotify;
 use app\modules\api\models\ApiModel;
 use app\models\Store;
@@ -57,11 +62,15 @@ class OrderSubmitPreviewForm extends ApiModel
     public $page;
     public $formId;
 
+    public $service_day;
+    public $service_time;
+    public $cabinet_id;
+
     public function rules()
     {
         return [
-            [['goods_info', 'content', 'address_name', 'address_mobile', 'attr', 'formId'], 'string'],
-            [['address_id', 'offline', 'shop_id', 'type', 'user_id', 'status', 'order_id'], 'integer'],
+            [['goods_info', 'content', 'address_name', 'address_mobile', 'attr', 'formId', 'service_day', 'service_time'], 'string'],
+            [['address_id', 'offline', 'shop_id', 'type', 'user_id', 'status', 'order_id','cabinet_id'], 'integer'],
             [['express_price'], 'number'],
 //            [['address_mobile'],'match','pattern' =>Model::MOBILE_PATTERN , 'message'=>'手机号错误']
         ];
@@ -214,6 +223,12 @@ class OrderSubmitPreviewForm extends ApiModel
         $res = CommonOrder::checkOrder([
             'mobile' => $this->address_mobile
         ]);
+        if (empty($this->cabinet_id)){
+            return [
+                'code' => 1,
+                'msg' => '下单时间不能为空',
+            ];
+        }
         if ($res['code'] === 1) {
             return $res;
         }
@@ -233,23 +248,24 @@ class OrderSubmitPreviewForm extends ApiModel
                 'user_id' => $this->user->id,
             ]);
             if (!$address) {
-                return [
-                    'code' => 1,
-                    'msg' => '收货地址不存在',
-                ];
+//                return [
+//                    'code' => 1,
+//                    'msg' => '收货地址不存在',
+//                ];
             }
             $option = Option::getList('mobile_verify', \Yii::$app->controller->store->id, 'admin', 1);
             if ($option['mobile_verify']) {
                 if (!preg_match(Model::MOBILE_VERIFY, $address->mobile)) {
-                    return [
-                        'code' => 1,
-                        'msg' => '请输入正确的手机号'
-                    ];
+//                    return [
+//                        'code' => 1,
+//                        'msg' => '请输入正确的手机号'
+//                    ];
                 }
             }
         }
         $goods_info = \Yii::$app->serializer->decode($this->goods_info);
         $goods = IntegralGoods::findOne(['id' => $goods_info->goods_id, 'is_delete' => 0, 'store_id' => $this->store_id, 'status' => 1]);
+        $goods_list = IntegralGoods::find()->where(['id' => $goods_info->goods_id, 'is_delete' => 0, 'store_id' => $this->store_id, 'status' => 1])->all();
         $user = User::findOne(['id' => $this->user->id, 'store_id' => $this->store_id]);
         if (!$user) {
             return [
@@ -321,24 +337,34 @@ class OrderSubmitPreviewForm extends ApiModel
                 'msg' => '所选商品库存不足',
             ];
         }
+        $cabinet = Cabinet::findOne([
+            'id' => $this->cabinet_id,
+            'store_id' => $this->store_id,
+        ]);
+        $t = \Yii::$app->db->beginTransaction();
         $order = new IntegralOrder();
         $order->store_id = $this->store_id;
         $order->goods_id = $goods->id;
         $order->user_id = $this->user->id;
         $order->order_no = $this->getOrderNo();
+
+        $order->cabinet_id = $this->cabinet_id;
+        $order->service_day = $this->service_day;
+        $order->service_time = $this->service_time;
+
         if ($this->offline == 2) {
-            $order->name = $this->address_name;
-            $order->mobile = $this->address_mobile;
+            $order->name = $user->nickname;
+            $order->mobile = $user->binding;
             $order->shop_id = $shop->id;
         } else {
-            $order->name = $address->name;
-            $order->mobile = $address->mobile;
-            $order->address = $address->province . $address->city . $address->district . $address->detail;
+            $order->name = $user->nickname;
+            $order->mobile = $user->binding;
+            $order->address = $cabinet->address;
             $order->address_data = json_encode([
-                'province' => $address->province,
-                'city' => $address->city,
-                'district' => $address->district,
-                'detail' => $address->detail,
+                'province' => $cabinet->province,
+                'city' => $cabinet->city,
+                'district' => '',
+                'detail' => $cabinet->address,
             ], JSON_UNESCAPED_UNICODE);
         }
         $order->remark = $this->content ? $this->content : '';
@@ -372,101 +398,199 @@ class OrderSubmitPreviewForm extends ApiModel
             ]);
             //减少库存
             $goods->numSub($attr_id_list, 1);
-            $order_detail = new IntegralOrderDetail();
-            $order_detail->order_id = $order->id;
-            $order_detail->goods_id = $goods->id;
-            $order_detail->num = 1;
-            $order_detail->total_price = $total_price;
-            $order_detail->addtime = time();
-            $order_detail->is_delete = 0;
-            $order_detail->attr = \Yii::$app->serializer->encode($attr_list);
-            $order_detail->pic = $goods_pic;
-            $order_detail->pay_integral = $integral;
-            $order_detail->user_id = $this->user->id;
-            $order_detail->store_id = $this->store_id;
-            $order_detail->goods_name = $goods->name;
-            if ($order_detail->save()) {
-                if ($this->type == 1) {
-                    $user->integral -= $integral;
-                    $register = new Register();
-                    $register->store_id = $this->store_id;
-                    $register->user_id = $user->id;
-                    $register->register_time = '..';
-                    $register->addtime = time();
-                    $register->continuation = 0;
-                    $register->type = 11;
-                    $register->integral = '-' . $integral;
-                    $register->order_id = $order->id;
-                    $register->save();
-                    if ($user->save()) {
-                        return [
-                            'code' => 0,
-                            'type' => 1,
-                            'msg' => '兑换成功'
-                        ];
-                    } else {
-                        return [
-                            'code' => 1,
-                            'msg' => $user->getErrors()
-                        ];
-                    }
+            //根据商品
+            $cabGroup = self::array_group_by($goods_list,'storage_type');
+            $dev = [];
+            $allTotal = 0;
+            foreach ($cabGroup as $k=>$goodsLists){
+                $subPrice = 0.00;
+                $order_sub = new IntegralOrderSub();
+                $goods_total_pay_price = $order->pay_price - $order->express_price;
+                $goods_total_price = 0.00;
+                foreach ($goods_list as $goods) {
+                    $allTotal += 1;
+                    $goods_total_price += $goods->price;
+                }
+                $total = 0;
+                $devGoodsName = [];
+                //var_dump($goodsLists);die;
+                foreach ($goodsLists as $goods){
+                    $subPrice += doubleval(sprintf('%.2f', $goods_total_pay_price * $goods->price / $goods_total_price));
+                    $devGoodsName[] = $goods->name;
+                    $total += $goods->num;
+
+                }
+                $subOrderNo = $this->getOrderNo();
+                $order_sub->store_id = $this->store_id;
+                $order_sub->user_id = $this->user->id;
+                $order_sub->order_no = $subOrderNo;
+                $order_sub->cabinet_id = $this->cabinet_id;
+                $order_sub->service_day = $this->service_day;
+                $order_sub->service_time = $this->service_time;
+                $order_sub->pay_price = $subPrice;
+                $order_sub->order_id = $order->id;
+                $order_sub->total_price = $subPrice;
+                $order_sub->addtime = time();
+                if ($this->offline == 0) {
+                    $order_sub->address = $cabinet->address;
+                    $order_sub->mobile = $user->binding;
+                    $order_sub->name = $user->nickname;
+                    $order_sub->address_data = json_encode([
+                        'province' => $cabinet->province,
+                        'city' => $cabinet->city,
+                        'district' => $address->district,
+                        'detail' => $cabinet->address,
+                    ], JSON_UNESCAPED_UNICODE);
                 } else {
-                    $this->wechat = $this->getWechat();
-                    $body = "充值";
-
-                    if (\Yii::$app->fromAlipayApp()) {
-                        $request = AlipayRequestFactory::create('alipay.trade.create', [
-                            'notify_url' => pay_notify_url('/in-alipay-notify.php'),
-                            'biz_content' => [
-                                'body' => $body, // 对一笔交易的具体描述信息。如果是多种商品，请将商品描述字符串累加
-                                'subject' => $body, // 商品的标题 / 交易标题 / 订单标题 / 订单关键字等
-                                'out_trade_no' => $this->order->order_no, // 商户网站唯一订单号
-                                'total_amount' => $this->order->pay_price, // 订单总金额，单位为元，精确到小数点后两位，取值范围 [0.01,100000000]
-                                'buyer_id' => $this->user->wechat_open_id, // 购买人的支付宝用户 ID
-
-                            ],
-                        ]);
-
-                        $aop = $this->getAlipay();
-                        $res = $aop->execute($request)->getData();
-
-                        return [
-                            'code' => 0,
-                            'data' => $res,
-                            'res' => $res,
-                            'type' => 2,
-                        ];
-                    }
-
-                    $res = $this->unifiedOrder($body);
-                    if (isset($res['code']) && $res['code'] == 1) {
-                        return $res;
-                    }
-                    //记录prepay_id发送模板消息用到
-                    FormId::addFormId([
-                        'store_id' => $this->store_id,
-                        'user_id' => $this->user->id,
-                        'wechat_open_id' => $this->user->wechat_open_id,
-                        'form_id' => $res['prepay_id'],
-                        'type' => 'prepay_id',
-                        'order_no' => $this->order->order_no,
-                    ]);
-                    $pay_data = [
-                        'appId' => $this->wechat->appId,
-                        'timeStamp' => '' . time(),
-                        'nonceStr' => md5(uniqid()),
-                        'package' => 'prepay_id=' . $res['prepay_id'],
-                        'signType' => 'MD5',
-                    ];
-                    $pay_data['paySign'] = $this->wechat->pay->makeSign($pay_data);
+                    $order_sub->name = $user->nickname;
+                    $order_sub->mobile = $user->binding;
+                    //$order_sub->shop_id = $this->shop_id;
+                }
+                $order_sub->first_price = 0;
+                $order_sub->second_price = 0;
+                $order_sub->third_price = 0;
+                $order_sub->content = $this->content;
+                $order_sub->is_offline = $this->offline;
+                $order_sub->version = $this->version;
+                $order_sub->origin_order_no = $order->order_no;
+                $order_sub->discount = 1;
+                if (!$order_sub->save()){
+                    $t->rollBack();
                     return [
-                        'code' => 0,
-                        'data' => (object)$pay_data,
-                        'res' => $res,
-                        'type' => 2,
+                        'code' => 1,
+                        'msg' => '订单提交失败，请稍后再重试!',
                     ];
                 }
+                $coolType = 0;
+                if ($k == 1){
+                    $coolType = 0;
+                }
+                if ($k == 2){
+                    $coolType = 1;
+                }
+                if ($k == 3){
+                    $coolType = 2;
+                }
+                //$emptyData = $this->queryEmptyCell($cabinet->cabinet_id, $coolType);
+                $dev[$k]['deliverNo'] = $subOrderNo;
+                $dev[$k]['coolType'] = $coolType;
+                $goodStr = implode('|', $devGoodsName);
+                $dev[$k]['goods'] = $goodStr;
+                $dev[$k]['quantity'] = $total;
+                foreach ($goodsLists as $goods) {
+                    $order_detail = new IntegralOrderDetail();
+                    $order_detail->order_id = $order->id;
+                    $order_detail->goods_id = $goods->id;
+                    $order_detail->num = 1;
+                    $order_detail->total_price = $total_price;
+                    $order_detail->addtime = time();
+                    $order_detail->is_delete = 0;
+                    $order_detail->attr = \Yii::$app->serializer->encode($attr_list);
+                    $order_detail->pic = $goods_pic;
+                    $order_detail->pay_integral = $integral;
+                    $order_detail->user_id = $this->user->id;
+                    $order_detail->store_id = $this->store_id;
+                    $order_detail->goods_name = $goods->name;
+                    $order_detail->order_sub_id = $order_sub->id;
+
+                    if ($order_detail->save()) {
+                        $re = $this->createOrder($order->order_no, $cabinet->cabinet_id, $dev, $allTotal);
+                        if ($re['code'] != 0){
+                            $t->rollBack();
+                            return [
+                                'code' => 1,
+                                'msg' => $re['message'],
+                            ];
+                        }
+                        if ($this->type == 1) {
+                            $user->integral -= $integral;
+                            $register = new Register();
+                            $register->store_id = $this->store_id;
+                            $register->user_id = $user->id;
+                            $register->register_time = '..';
+                            $register->addtime = time();
+                            $register->continuation = 0;
+                            $register->type = 11;
+                            $register->integral = '-' . $integral;
+                            $register->order_id = $order->id;
+                            $register->save();
+                            if ($user->save()) {
+                                $t->commit();
+                                return [
+                                    'code' => 0,
+                                    'type' => 1,
+                                    'msg' => '兑换成功'
+                                ];
+
+                            } else {
+                                $t->rollBack();
+                                return [
+                                    'code' => 1,
+                                    'msg' => $user->getErrors()
+                                ];
+                            }
+                        } else {
+                            $t->commit();
+                            $this->wechat = $this->getWechat();
+                            $body = "充值";
+
+                            if (\Yii::$app->fromAlipayApp()) {
+                                $request = AlipayRequestFactory::create('alipay.trade.create', [
+                                    'notify_url' => pay_notify_url('/in-alipay-notify.php'),
+                                    'biz_content' => [
+                                        'body' => $body, // 对一笔交易的具体描述信息。如果是多种商品，请将商品描述字符串累加
+                                        'subject' => $body, // 商品的标题 / 交易标题 / 订单标题 / 订单关键字等
+                                        'out_trade_no' => $this->order->order_no, // 商户网站唯一订单号
+                                        'total_amount' => $this->order->pay_price, // 订单总金额，单位为元，精确到小数点后两位，取值范围 [0.01,100000000]
+                                        'buyer_id' => $this->user->wechat_open_id, // 购买人的支付宝用户 ID
+
+                                    ],
+                                ]);
+
+                                $aop = $this->getAlipay();
+                                $res = $aop->execute($request)->getData();
+
+                                return [
+                                    'code' => 0,
+                                    'data' => $res,
+                                    'res' => $res,
+                                    'type' => 2,
+                                ];
+                            }
+
+                            $res = $this->unifiedOrder($body);
+                            if (isset($res['code']) && $res['code'] == 1) {
+                                return $res;
+                            }
+                            //记录prepay_id发送模板消息用到
+                            FormId::addFormId([
+                                'store_id' => $this->store_id,
+                                'user_id' => $this->user->id,
+                                'wechat_open_id' => $this->user->wechat_open_id,
+                                'form_id' => $res['prepay_id'],
+                                'type' => 'prepay_id',
+                                'order_no' => $this->order->order_no,
+                            ]);
+                            $pay_data = [
+                                'appId' => $this->wechat->appId,
+                                'timeStamp' => '' . time(),
+                                'nonceStr' => md5(uniqid()),
+                                'package' => 'prepay_id=' . $res['prepay_id'],
+                                'signType' => 'MD5',
+                            ];
+                            $pay_data['paySign'] = $this->wechat->pay->makeSign($pay_data);
+                            return [
+                                'code' => 0,
+                                'data' => (object)$pay_data,
+                                'res' => $res,
+                                'type' => 2,
+                            ];
+                        }
+                    }
+                }
+
             }
+
         } else {
             return $this->getErrorResponse($order);
         }
@@ -781,5 +905,47 @@ class OrderSubmitPreviewForm extends ApiModel
                 'msg' => '确认收货失败'
             ];
         }
+    }
+
+    public static function array_group_by($arr, $key)
+    {
+        $grouped = [];
+        foreach ($arr as $value) {
+            $grouped[$value->$key][] = $value;
+        }
+        // Recursively build a nested grouping if more parameters are supplied
+        // Each grouped array value is grouped according to the next sequential key
+        if (func_num_args() > 2) {
+            $args = func_get_args();
+            foreach ($grouped as $key => $value) {
+                $parms = array_merge([$value], array_slice($args, 2, func_num_args()));
+                $grouped[$key] = call_user_func_array('array_group_by', $parms);
+            }
+        }
+        return $grouped;
+    }
+    /**
+     * 操作云柜
+     */
+    protected function queryEmptyCell($machineId, $coolType, $timestamp = null, $sign = null){
+        $cabPlatform = new CabinetPlatForm($machineId);
+
+        $result = $cabPlatform->queryEmptyCell($coolType);
+        return $result;
+    }
+
+    /**
+     * @param $orderNo
+     * @param $machineId
+     * @param $delivers
+     * @param $total
+     * @return mixed
+     * @desc 创建订单
+     */
+    protected function createOrder($orderNo, $machineId, $delivers, $total){
+        $cabPlatform = new CabinetPlatForm($machineId);
+        $delivers = array_values($delivers);
+        $result = $cabPlatform->createOrder($orderNo,$delivers,$total);
+        return $result;
     }
 }
