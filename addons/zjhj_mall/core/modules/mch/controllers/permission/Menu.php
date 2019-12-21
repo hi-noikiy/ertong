@@ -190,6 +190,24 @@ class Menu
                             ],
                         ]
                     ],
+                    [
+                        'name' => '送达时间',
+                        'is_menu' => true,
+                        'route' => 'mch/delivery-time/list',
+                        'sub' => [
+                            [
+                                'name' => '添加送达时间(S|U)',
+                                'is_menu' => false,
+                                'route' => 'mch/delivery-time/delivery-time-edit',
+                            ],
+                        ],
+                        'action' => [
+                            [
+                                'name' => '删除送达时间',
+                                'route' => 'mch/delivery-time/delivery-time-del'
+                            ],
+                        ]
+                    ],
                 ],
             ],
             [
