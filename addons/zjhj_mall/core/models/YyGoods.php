@@ -29,6 +29,7 @@ use Yii;
  * @property integer $use_attr
  * @property integer $is_level
  * @property string $video_url
+ * @property string $storage_type
  */
 class YyGoods extends \yii\db\ActiveRecord
 {
@@ -49,7 +50,7 @@ class YyGoods extends \yii\db\ActiveRecord
             [['name', 'price', 'original_price', 'detail', 'service', 'store_id', 'buy_limit', 'stock'], 'required'],
             [['price', 'original_price'], 'number'],
             [['detail', 'cover_pic', 'attr'], 'string'],
-            [['cat_id', 'status', 'sort', 'virtual_sales', 'addtime', 'is_delete', 'sales', 'store_id', 'buy_limit', 'stock', 'use_attr'], 'integer'],
+            [['cat_id', 'status', 'sort', 'virtual_sales', 'addtime', 'is_delete', 'sales', 'store_id', 'buy_limit', 'stock', 'use_attr','storage_type'], 'integer'],
             [['name', 'shop_id', 'video_url'], 'string', 'max' => 255],
             [['service'], 'string', 'max' => 2000],
         ];
@@ -83,6 +84,7 @@ class YyGoods extends \yii\db\ActiveRecord
             'use_attr' => '是否启用规格',
             'is_level' => '是否享受会员折扣 0-不享受 1--享受',
             'video_url' => '商品视频',
+            'storage_type' => '商品存放类型1常温2冷藏3冷冻'
         ];
     }
 
