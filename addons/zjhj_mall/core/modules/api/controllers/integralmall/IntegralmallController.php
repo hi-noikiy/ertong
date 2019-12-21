@@ -233,8 +233,38 @@ class IntegralmallController extends Controller
         if (!$order) {
             return new \app\hejiang\ApiResponse(1, '订单不存在');
         }
+
         $order['detail']['attr'] = json_decode($order['detail']['attr']);
         $order['addtime'] = date('Y-m-d H:i:s', $order['addtime']);
+        $orders = IntegralOrder::findOne(['order_no' => $id]);
+        if ($orders->is_pay == 0 && $orders->is_cancel!=1) {
+            $status = '待付款';
+            $order_status = 0;
+        } elseif ($orders->is_pay == 1 && $orders->is_cancel == 0 && $orders->is_send == 0 && $orders->is_order_confirm == 1 && $orders->put_status == 1) {
+            $status = '备货中';
+            $order_status = 1;
+        } elseif ($orders->is_send == 1 && $orders->is_cancel == 0 &&  $orders->is_confirm == 0 && $orders->put_status == 1) {
+            $status = '已发货';
+            $order_status = 2;
+        } elseif ($orders->is_send == 1 && $orders->is_cancel == 0 && $orders->put_status == 2){
+            $status = '待自提';
+            $order_status = 3;
+        } elseif ($orders->put_status == 3 && $orders->is_cancel == 0 && $orders->is_comment == 1) {
+            $status = '已完成';
+            $order_status = 4;
+        }elseif ($orders->is_cancel == 1){
+            $status = '已取消';
+            $order_status = 6;
+        }elseif ($orders->is_pay == 1 && $orders->is_order_confirm == 0 && $orders->is_send == 0 && $orders->is_cancel == 0){
+            $status = '待确认';
+            $order_status = 7;
+        }else if ($orders->put_status == 3 && $orders->is_cancel == 0 && $orders->is_comment == 0){
+            $status = '待评价';
+            $order_status = 8;
+        }
+        $order['detail']['status'] = $status;
+        $order['detail']['order_status'] = $order_status;
+        $order['detail']['put_code'] = $orders->put_code;
         $data = [
             'code' => 0,
             'data' => $order

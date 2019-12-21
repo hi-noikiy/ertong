@@ -53,14 +53,31 @@ class OrderDetailForm extends ApiModel
             ];
         }
         $status = "";
-        if ($order->is_pay == 0) {
-            $status = '订单未付款';
-        } elseif ($order->is_pay == 1 && $order->is_send == 0) {
-            $status = '订单待发货';
-        } elseif ($order->is_send == 1 && $order->is_confirm == 0) {
-            $status = '订单已发货';
-        } elseif ($order->is_confirm == 1) {
-            $status = '订单已完成';
+        $order_status = "";
+        if ($order->is_pay == 0 && $order->is_cancel!=1) {
+            $status = '待付款';
+            $order_status = 0;
+        } elseif ($order->is_pay == 1 && $order->is_cancel == 0 && $order->is_send == 0 && $order->is_order_confirm == 1 && $order->put_status == 1) {
+            $status = '备货中';
+            $order_status = 1;
+        } elseif ($order->is_send == 1 && $order->is_cancel == 0 &&  $order->is_confirm == 0 && $order->put_status == 1) {
+            $status = '已发货';
+            $order_status = 2;
+        } elseif ($order->is_send == 1 && $order->is_cancel == 0 && $order->put_status == 2){
+            $status = '待自提';
+            $order_status = 3;
+        } elseif ($order->put_status == 3 && $order->is_cancel == 0 && $order->is_comment == 1) {
+            $status = '已完成';
+            $order_status = 4;
+        }elseif ($order->is_cancel == 1){
+            $status = '已取消';
+            $order_status = 6;
+        }elseif ($order->is_pay == 1 && $order->is_order_confirm == 0 && $order->is_send == 0 && $order->is_cancel == 0){
+            $status = '待确认';
+            $order_status = 7;
+        }else if ($order->put_status == 3 && $order->is_cancel == 0 && $order->is_comment == 0){
+            $status = '待评价';
+            $order_status = 8;
         }
         $goods_list = MsGoods::find()->andWhere(['id'=>$order->goods_id])->select('id AS goods_id,name,cover_pic')->asArray()->all();
 //        $goods_list = Goods::tableName()], 'od.goods_id=g.id')
@@ -140,7 +157,9 @@ class OrderDetailForm extends ApiModel
                 'user_coupon_id'=>$order->user_coupon_id,
                 'words'=>$order->words,
                 'pay_type'=>$order->pay_type,
-                'apply_delete' => $order->apply_delete
+                'apply_delete' => $order->apply_delete,
+                'order_status' => $order_status,
+                'put_code' => $order->put_code
             ],
         ];
     }

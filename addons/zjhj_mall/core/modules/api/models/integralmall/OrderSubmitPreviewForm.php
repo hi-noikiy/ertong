@@ -17,6 +17,7 @@ use app\models\IntegralOrderSub;
 use app\models\Model;
 use app\models\MsOrderSub;
 use app\models\Option;
+use app\models\Order;
 use app\models\PtOrderDetail;
 use app\modules\api\models\cabinet\CabinetPlatForm;
 use app\utils\PayNotify;
@@ -671,43 +672,75 @@ class OrderSubmitPreviewForm extends ApiModel
                 ]);
             }]);
 
-        if ($this->status == 0) {//待付款
+//        if ($this->status == 0) {//待付款
+//            $query->andWhere([
+//                'is_pay' => 0,
+//            ]);
+//
+//        }
+        if ($this->status === '0') {//待付款
             $query->andWhere([
                 'is_pay' => 0,
+                'is_cancel' => 0
             ]);
-            $list = $query
-                ->orderBy('addtime DESC')
-                ->asArray()
-                ->all();
         }
-        if ($this->status == 1) {//待发货
+        if ($this->status == 1) {//备货中
             $query->andWhere([
                 'is_send' => 0,
-            ])->andWhere(['or', ['is_pay' => 1], ['pay_type' => 1]]);
-            $list = $query
-                ->orderBy('pay_time DESC')
-                ->asArray()
-                ->all();
+                'is_order_confirm' => 1,
+                'is_cancel' => 0
+            ])->andWhere(['or', ['is_pay' => 1], ['pay_type' => 2]]);
         }
-        if ($this->status == 2) {//待收货
+        if ($this->status == 2) {//已发货
             $query->andWhere([
                 'is_send' => 1,
-                'is_confirm' => 0,
+                'put_status' => 1,
+                'is_cancel' => 0
             ]);
-            $list = $query
-                ->orderBy('send_time DESC')
-                ->asArray()
-                ->all();
         }
-        if ($this->status == 3) {//已完成
+        if ($this->status == 3){//待自提
             $query->andWhere([
-                'is_confirm' => 1,
+                'is_send' => 1,
+                'put_status' => 2,
+                'is_cancel' => 0
             ]);
-            $list = $query
-                ->orderBy('confirm_time DESC')
-                ->asArray()
-                ->all();
         }
+        if ($this->status == 4) {//已完成
+            $query->andWhere([
+                'put_status' => 3,
+                'is_cancel' => 0,
+                'is_comment' => 1
+            ]);
+        }
+        if ($this->status == 6){
+            $query->andWhere([
+                'is_cancel' => 1,
+            ]);
+        }
+//        if ($this->status == 5) {//售后订单
+//            return $this->getRefundList();
+//        }
+        if ($this->status == 7) {//待确认
+            $query->andWhere([
+                'is_send' => 0,
+                'is_pay' => 1,
+                'is_order_confirm' => 0,
+                'is_cancel' => 0,
+                'put_status' => 1
+            ]);
+        }
+
+        if ($this->status == 8){//待评价
+            $query->andWhere([
+                'put_status' => 3,
+                'is_cancel' => 0,
+                'is_confirm' => 0
+            ]);
+        }
+        $list = $query
+            ->orderBy('addtime DESC')
+            ->asArray()
+            ->all();
         foreach ($list as $key => &$value) {
             if ($value['mch_id'] == 0) {
                 $value['mch'] = [
@@ -725,6 +758,36 @@ class OrderSubmitPreviewForm extends ApiModel
             }
             $value['addtime'] = date('Y-m-d H:i:s', $value['addtime']);
             $value['detail']['attr'] = json_decode($value['detail']['attr']);
+            $order_status = null;
+            $order = IntegralOrder::findOne(['id' => $value['id']]);
+            if ($order->is_pay == 0 && $order->is_cancel!=1) {
+                $status = '待付款';
+                $order_status = 0;
+            } elseif ($order->is_pay == 1 && $order->is_cancel == 0 && $order->is_send == 0 && $order->is_order_confirm == 1 && $order->put_status == 1) {
+                $status = '备货中';
+                $order_status = 1;
+            } elseif ($order->is_send == 1 && $order->is_cancel == 0 &&  $order->is_confirm == 0 && $order->put_status == 1) {
+                $status = '已发货';
+                $order_status = 2;
+            } elseif ($order->is_send == 1 && $order->is_cancel == 0 && $order->put_status == 2){
+                $status = '待自提';
+                $order_status = 3;
+            } elseif ($order->put_status == 3 && $order->is_cancel == 0 && $order->is_comment == 1) {
+                $status = '已完成';
+                $order_status = 4;
+            }elseif ($order->is_cancel == 1){
+                $status = '已取消';
+                $order_status = 6;
+            }elseif ($order->is_pay == 1 && $order->is_order_confirm == 0 && $order->is_send == 0 && $order->is_cancel == 0){
+                $status = '待确认';
+                $order_status = 7;
+            }else if ($order->put_status == 3 && $order->is_cancel == 0 && $order->is_comment == 0){
+                $status = '待评价';
+                $order_status = 8;
+            }
+            $list[$key]['status'] = $status;
+            $list[$key]['order_status'] = $order_status;
+            $list[$key]['put_code'] = $order->put_code;
         }
         return [
             'code' => 0,

@@ -57,6 +57,7 @@ class OrderDetailForm extends ApiModel
             2=> '拼团中',
             3=> '拼团成功',
             4=> '拼团失败',
+            5=> '待自提'
         ];
         $goods_list = PtOrderDetail::find()->alias('od')
             ->leftJoin(['g' => PtGoods::tableName()], 'od.goods_id=g.id')
@@ -123,7 +124,10 @@ class OrderDetailForm extends ApiModel
 //                $inAfterSaleTime = false;   // 订单超过售后时间
 //            }
 //        }
-
+        $order_status = $order->status;
+        if ($order->put_status == 2 && $order->status == 3){
+            $order_status = 5;
+        }
         return [
             'code' => 0,
             'msg' => 'success',
@@ -132,8 +136,8 @@ class OrderDetailForm extends ApiModel
                 'is_pay' => $order->is_pay,
                 'is_send' => $order->is_send,
                 'is_confirm' => $order->is_confirm,
-                'status' => $order->status,
-                'status_name' => $status[$order->status],
+                'status' => $order_status,
+                'status_name' => $status[$order_status],
                 'express' => $order->express,
                 'express_no' => $order->express_no,
                 'name' => $order->name,
@@ -158,6 +162,7 @@ class OrderDetailForm extends ApiModel
                 'content'=>$order->content,
                 'words'=>$order->words,
                 'is_cancel'=>$order->is_cancel,
+                'put_code' => $order->put_code
             ],
         ];
     }

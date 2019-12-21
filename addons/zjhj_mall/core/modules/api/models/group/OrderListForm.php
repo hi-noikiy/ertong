@@ -80,11 +80,19 @@ class OrderListForm extends ApiModel
             return $this->getRefundList();
         }
 
+        if ($this->status == 5) {//待自提
+            $query->andWhere([
+                'is_success' => 1,
+                'status' => 3,
+            ]);
+        }
+
         $status = [
             1=> '待付款',
             2=> '拼团中',
             3=> '拼团成功',
             4=> '拼团失败',
+            5=> '待自提'
         ];
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'page' => $this->page - 1, 'pageSize' => $this->limit]);
@@ -151,7 +159,10 @@ class OrderListForm extends ApiModel
             //计算秒数
             $limit_time_res['secs'] = $remain%60>0?$remain%60:0;
             $limit_time_ms = explode('-', date('Y-m-d-H-i-s', $limit_time));
-
+            $order_status = $order->status;
+            if ($order->put_status == 2 && $order->status == 3){
+                $order_status = 5;
+            }
             $new_list[] = (object)[
                 'order_id' => $order->id,
                 'order_no' => $order->order_no,
@@ -165,8 +176,8 @@ class OrderListForm extends ApiModel
                 'is_comment' => $order->is_comment,
                 'is_group' => $order->is_group,
                 'apply_delete' => $order->apply_delete,
-                'status' => $order->status,
-                'status_name' => $status[$order->status],
+                'status' => $order_status,
+                'status_name' => $status[$order_status],
                 'express'=>$order->express,
                 'surplusGruopNum'=>$order->getSurplusGruop(),
                 'is_cancel'=>$order->is_cancel,
@@ -174,7 +185,8 @@ class OrderListForm extends ApiModel
                 'limit_time_ms'=>$limit_time_ms,
                 'is_show_time'=>$isShowTime,
                 'offline'=>$order->offline,
-                'pay_type'=>$order->pay_type
+                'pay_type'=>$order->pay_type,
+                'put_code' => $order->put_code
             ];
         }
         return [

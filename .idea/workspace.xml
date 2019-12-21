@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59005c7c-2a1c-4748-85f6-d07db8604500" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderSub.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralGoods.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralGoods.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderDetail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/integralmall/IntegralmallController.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/integralmall/IntegralmallController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderDetailForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderDetailForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderListForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderListForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderSubmitForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderSubmitForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentionForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentionForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentioningForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentioningForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderDetailForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderDetailForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderListForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderListForm.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,95 +17,92 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
-              <caret line="560" column="28" selection-start-line="560" selection-start-column="28" selection-end-line="560" selection-end-column="28" />
+            <state relative-caret-position="2757">
+              <caret line="786" column="13" lean-forward="true" selection-start-line="761" selection-start-column="12" selection-end-line="786" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/cabinet/OrderController.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/MiaoshaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="33" column="44" lean-forward="true" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="44" />
+            <state relative-caret-position="712">
+              <caret line="161" column="43" selection-start-line="161" selection-start-column="43" selection-end-line="161" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentionForm.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderDetailForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="969">
-              <caret line="101" column="38" selection-start-line="101" selection-start-column="38" selection-end-line="101" selection-end-column="38" />
+            <state relative-caret-position="1887">
+              <caret line="161" column="46" selection-start-line="161" selection-start-column="46" selection-end-line="161" selection-end-column="46" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentioningForm.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderListForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="168" column="9" lean-forward="true" selection-start-line="168" selection-start-column="9" selection-end-line="168" selection-end-column="9" />
+            <state relative-caret-position="-15">
+              <caret line="122" column="41" lean-forward="true" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderDetail.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderListForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="69" column="5" lean-forward="true" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
+            <state relative-caret-position="250">
+              <caret line="181" column="12" selection-start-line="181" selection-start-column="12" selection-end-line="206" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderSubmitForm.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderDetailForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="1068" column="52" lean-forward="true" selection-start-line="1068" selection-start-column="52" selection-end-line="1068" selection-end-column="52" />
-              <folding>
-                <element signature="e#128#151#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="333">
+              <caret line="126" column="8" selection-start-line="126" selection-start-column="8" selection-end-line="129" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderSub.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderListForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1037">
-              <caret line="197" column="12" selection-start-line="197" selection-start-column="12" selection-end-line="197" selection-end-column="12" />
+            <state relative-caret-position="758">
+              <caret line="188" column="46" selection-start-line="188" selection-start-column="46" selection-end-line="188" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/integralmall/IntegralmallController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="783">
+              <caret line="266" column="57" selection-start-line="266" selection-start-column="57" selection-end-line="266" selection-end-column="57" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/OrderSub.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/group/OrderController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2079">
-              <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
+            <state relative-caret-position="-2862">
+              <caret line="90" column="56" lean-forward="true" selection-start-line="90" selection-start-column="56" selection-end-line="90" selection-end-column="56" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/Order.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/IntegralForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="270" column="12" selection-start-line="270" selection-start-column="12" selection-end-line="275" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrder.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
-              <caret line="94" column="17" selection-start-line="94" selection-start-column="17" selection-end-line="94" selection-end-column="17" />
+            <state relative-caret-position="372">
+              <caret line="155" column="20" selection-start-line="155" selection-start-column="20" selection-end-line="155" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -117,8 +111,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>order_id</find>
-      <find>order_union</find>
       <find>callback</find>
       <find>PayNotify</find>
       <find>Inpay</find>
@@ -145,8 +137,10 @@
       <find>Upload</find>
       <find>微擎配置文件不存在</find>
       <find>pay_type</find>
-      <find>is_offline</find>
       <find>order_sub_id</find>
+      <find>is_offline</find>
+      <find>exchange</find>
+      <find>Clea</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -207,7 +201,12 @@
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderSub.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentioningForm.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentionForm.php" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderDetailForm.php" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderListForm.php" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderListForm.php" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderDetailForm.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/integralmall/IntegralmallController.php" />
       </list>
     </option>
   </component>
@@ -283,7 +282,51 @@
               <item name="modules" type="462c0819:PsiDirectoryNode" />
               <item name="api" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="bargain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="addons" type="462c0819:PsiDirectoryNode" />
+              <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
               <item name="cabinet" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="addons" type="462c0819:PsiDirectoryNode" />
+              <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="group" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="addons" type="462c0819:PsiDirectoryNode" />
+              <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="integralmall" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="addons" type="462c0819:PsiDirectoryNode" />
+              <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="mch" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
@@ -344,13 +387,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97933000" />
+    <option name="totallyTimeSpent" value="103210000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-2560" y="-479" width="2560" height="1351" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17077045" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17077045" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -362,7 +405,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.27879268" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.0929309" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -395,67 +438,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/cloud/CloudTask.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
-          <folding>
-            <element signature="e#6#154#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/CabinetListForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="891">
-          <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="74" selection-end-column="22" />
-          <folding>
-            <element signature="e#132#155#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/index.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/web/index.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/scripts/cancelOrder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" selection-start-column="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/CancelOrderForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3319">
-          <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/admin/behaviors/LoginBehavior.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/behaviors/LoginBehavior.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/utils/GenerateShareQrcode.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1832">
@@ -543,13 +525,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1273">
           <caret line="71" column="3" selection-start-line="71" selection-start-column="3" selection-end-line="71" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/MiaoshaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="128" column="44" selection-start-line="128" selection-start-column="44" selection-end-line="128" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -671,13 +646,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/integralmall/IntegralmallController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="769">
-          <caret line="126" column="57" selection-start-line="126" selection-start-column="57" selection-end-line="126" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/Order.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
@@ -723,45 +691,122 @@
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderDetail.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
-          <caret line="69" column="5" lean-forward="true" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentioningForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="168" column="9" lean-forward="true" selection-start-line="168" selection-start-column="9" selection-end-line="168" selection-end-column="9" />
+          <caret line="69" column="5" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/cabinet/OrderController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="551">
-          <caret line="33" column="44" lean-forward="true" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="44" />
+          <caret line="33" column="44" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentionForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentioningForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="167" column="4" selection-start-line="167" selection-start-column="4" selection-end-line="167" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/bargain/BargainSubmitForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/bargain/OrderController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="37" column="25" lean-forward="true" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderSubmitForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="1068" column="52" lean-forward="true" selection-start-line="1068" selection-start-column="52" selection-end-line="1068" selection-end-column="52" />
+        <state relative-caret-position="401">
+          <caret line="1068" column="52" selection-start-line="1068" selection-start-column="52" selection-end-line="1068" selection-end-column="52" />
           <folding>
             <element signature="e#128#151#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentionForm.php">
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/MiaoshaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="101" column="38" selection-start-line="101" selection-start-column="38" selection-end-line="101" selection-end-column="38" />
+        <state relative-caret-position="712">
+          <caret line="161" column="43" selection-start-line="161" selection-start-column="43" selection-end-line="161" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderListForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="181" column="12" selection-start-line="181" selection-start-column="12" selection-end-line="206" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderDetailForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1887">
+          <caret line="161" column="46" selection-start-line="161" selection-start-column="46" selection-end-line="161" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/IntegralForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="155" column="20" selection-start-line="155" selection-start-column="20" selection-end-line="155" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/group/OrderController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2862">
+          <caret line="90" column="56" lean-forward="true" selection-start-line="90" selection-start-column="56" selection-end-line="90" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderListForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15">
+          <caret line="122" column="41" lean-forward="true" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderListForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="758">
+          <caret line="188" column="46" selection-start-line="188" selection-start-column="46" selection-end-line="188" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderDetailForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="126" column="8" selection-start-line="126" selection-start-column="8" selection-end-line="129" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="560" column="28" selection-start-line="560" selection-start-column="28" selection-end-line="560" selection-end-column="28" />
+        <state relative-caret-position="2757">
+          <caret line="786" column="13" lean-forward="true" selection-start-line="761" selection-start-column="12" selection-end-line="786" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/integralmall/IntegralmallController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="783">
+          <caret line="266" column="57" selection-start-line="266" selection-start-column="57" selection-end-line="266" selection-end-column="57" />
         </state>
       </provider>
     </entry>
