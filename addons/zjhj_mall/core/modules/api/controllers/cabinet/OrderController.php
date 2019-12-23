@@ -52,4 +52,23 @@ class OrderController extends Controller
         }
         return new BaseApiResponse($data);
     }
+
+    public function actionCancelOrder(){
+        $orderNo = \Yii::$app->request->post('orderNo');
+        $platform = new CabinetPlatForm(null);
+        $re = $platform->cancelOrder($orderNo);
+        if ($re['code'] == 0){
+            $data = [
+                'code' => 0,
+                'msg' => 'success',
+                'data' => $re['data']
+            ];
+        }else{
+            $data = [
+                'code' => 1,
+                'msg' => $re['message'],
+            ];
+        }
+        return new BaseApiResponse($data);
+    }
 }

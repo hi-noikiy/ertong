@@ -17,6 +17,9 @@ class OrderExpireTask extends BaseObject implements \yii\queue\JobInterface
         $order = Order::findOne(
             [
                 'id' => $this->orderId,
+                'is_cancel' => 0,
+                'is_pay' => 0
+
             ]
         );
         $order->is_cancel = 1;
@@ -25,7 +28,7 @@ class OrderExpireTask extends BaseObject implements \yii\queue\JobInterface
             $cab = new CabinetPlatForm(null);
             $re = $cab->cancelOrder($order->order_no);
         if ($re['code'] == 0){
-            echo date('Y-m-d H:i:s').'取消云柜订单成功-'.$order->order_no;
+            echo date('Y-m-d H:i:s').'取消云柜订单成功-'.$order->order_no.PHP_EOL;
         }else{
             echo date('Y-m-d H:i:s').'取消云柜订单失败'.$re['message'].PHP_EOL;
         }
