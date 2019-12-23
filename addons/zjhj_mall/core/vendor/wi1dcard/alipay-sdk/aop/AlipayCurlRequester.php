@@ -34,8 +34,8 @@ class AlipayCurlRequester extends AlipayRequester
     public function post($url, $params)
     {
         $ch = curl_init();
-        curl_setopt_array($ch, $this->options);
 
+        curl_setopt_array($ch, $this->options);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -52,11 +52,15 @@ class AlipayCurlRequester extends AlipayRequester
         $response = curl_exec($ch);
 
         if ($response === false) {
+            curl_close($ch);
+
             throw new AlipayCurlException(curl_error($ch), curl_errno($ch));
         }
 
         $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if (200 !== $httpStatusCode) {
+            curl_close($ch);
+
             throw new AlipayHttpException($response, $httpStatusCode);
         }
 

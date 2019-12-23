@@ -134,6 +134,7 @@ class UploadedFile extends BaseObject
                 $results[] = new static($file);
             }
         }
+
         return $results;
     }
 
@@ -165,6 +166,7 @@ class UploadedFile extends BaseObject
                 return copy($this->tempName, $file);
             }
         }
+
         return false;
     }
 
@@ -209,6 +211,7 @@ class UploadedFile extends BaseObject
                 }
             }
         }
+
         return self::$_files;
     }
 
@@ -227,7 +230,7 @@ class UploadedFile extends BaseObject
             foreach ($names as $i => $name) {
                 self::loadFilesRecursive($key . '[' . $i . ']', $name, $tempNames[$i], $types[$i], $sizes[$i], $errors[$i]);
             }
-        } elseif ((int)$errors !== UPLOAD_ERR_NO_FILE) {
+        } elseif ((int) $errors !== UPLOAD_ERR_NO_FILE) {
             self::$_files[$key] = [
                 'name' => $names,
                 'tempName' => $tempNames,

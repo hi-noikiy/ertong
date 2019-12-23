@@ -10,7 +10,7 @@ namespace yii\base;
 use Yii;
 
 /**
- * Object is the base class that implements the *property* feature.
+ * BaseObject is the base class that implements the *property* feature.
  *
  * A property is defined by a getter method (e.g. `getLabel`), and/or a setter method (e.g. `setLabel`). For example,
  * the following getter and setter methods define a property named `label`:
@@ -46,8 +46,8 @@ use Yii;
  *
  * One can call [[hasProperty()]], [[canGetProperty()]] and/or [[canSetProperty()]] to check the existence of a property.
  *
- * Besides the property feature, Object also introduces an important object initialization life cycle. In particular,
- * creating an new instance of Object or its derived class will involve the following life cycles sequentially:
+ * Besides the property feature, BaseObject also introduces an important object initialization life cycle. In particular,
+ * creating an new instance of BaseObject or its derived class will involve the following life cycles sequentially:
  *
  * 1. the class constructor is invoked;
  * 2. object properties are initialized according to the given configuration;
@@ -57,7 +57,7 @@ use Yii;
  * you perform object initialization in the `init()` method because at that stage, the object configuration
  * is already applied.
  *
- * In order to ensure the above life cycles, if a child class of Object needs to override the constructor,
+ * In order to ensure the above life cycles, if a child class of BaseObject needs to override the constructor,
  * it should be done like the following:
  *
  * ```php
@@ -72,13 +72,14 @@ use Yii;
  * of the constructor, and the parent implementation should be called at the end of the constructor.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @since 2.0.13
  */
 class BaseObject implements Configurable
 {
     /**
      * Returns the fully qualified name of this class.
      * @return string the fully qualified name of this class.
+     * @deprecated since 2.0.14. On PHP >=5.5, use `::class` instead.
      */
     public static function className()
     {
@@ -87,6 +88,7 @@ class BaseObject implements Configurable
 
     /**
      * Constructor.
+     *
      * The default implementation does two things:
      *
      * - Initializes the object with the given configuration `$config`.
@@ -134,9 +136,9 @@ class BaseObject implements Configurable
             return $this->$getter();
         } elseif (method_exists($this, 'set' . $name)) {
             throw new InvalidCallException('Getting write-only property: ' . get_class($this) . '::' . $name);
-        } else {
-            throw new UnknownPropertyException('Getting unknown property: ' . get_class($this) . '::' . $name);
         }
+
+        throw new UnknownPropertyException('Getting unknown property: ' . get_class($this) . '::' . $name);
     }
 
     /**
@@ -178,9 +180,9 @@ class BaseObject implements Configurable
         $getter = 'get' . $name;
         if (method_exists($this, $getter)) {
             return $this->$getter() !== null;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -222,6 +224,7 @@ class BaseObject implements Configurable
 
     /**
      * Returns a value indicating whether a property is defined.
+     *
      * A property is defined if:
      *
      * - the class has a getter or setter method associated with the specified name
@@ -241,6 +244,7 @@ class BaseObject implements Configurable
 
     /**
      * Returns a value indicating whether a property can be read.
+     *
      * A property is readable if:
      *
      * - the class has a getter method associated with the specified name
@@ -259,6 +263,7 @@ class BaseObject implements Configurable
 
     /**
      * Returns a value indicating whether a property can be set.
+     *
      * A property is writable if:
      *
      * - the class has a setter method associated with the specified name

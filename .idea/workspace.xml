@@ -2,9 +2,521 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59005c7c-2a1c-4748-85f6-d07db8604500" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderRevokeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderRevokeForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderRevokeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderRevokeForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/config/console.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/config/console.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/config/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/config/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderSubmitForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderSubmitForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/ClassLoader.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/ClassLoader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/autoload_classmap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/composer/installed.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayAccessorTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayAccessorTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayCurlRequester.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayCurlRequester.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayMobilePublicMultiMediaClient.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayMobilePublicMultiMediaExecute.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayRequestFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayRequestFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayRequester.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayRequester.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayResponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayResponse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayResponseFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipayResponseFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipaySign.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AlipaySigner.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AopClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/AopClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayBase64Exception.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayBase64Exception.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayCurlException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayCurlException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayErrorResponseException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayErrorResponseException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayHttpException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayHttpException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidKeyException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidKeyException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidPropertyException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidPropertyException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidRequestException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidRequestException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidResponseException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidResponseException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidSignException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayInvalidSignException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayOpenSslException.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayOpenSslException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Exception/AlipayResponseException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Key/AlipayKey.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Key/AlipayKey.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Key/AlipayKeyPair.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Key/AlipayKeyPair.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Key/AlipayPrivateKey.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Key/AlipayPrivateKey.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Key/AlipayPublicKey.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Key/AlipayPublicKey.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AbstractAlipayRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AbstractAlipayRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AlipayBossFncXwbtestRetModifyRequest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AlipayOpenAppCodetesttestRequest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AlipayOpenAppXwbtestabcQueryRequest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AlipayOpenMiniVersionAuditApplyRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AlipayOpenMiniVersionAuditApplyRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AlipayOpenPublicXwbtestabcdBatchqueryRequest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AlipaySecurityProdXwbtestabcAbcQueryRequest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Request/AlipaySecurityProdXwbtestprodQueryRequest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Signer/AlipayRSA2Signer.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Signer/AlipayRSA2Signer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Signer/AlipayRSASigner.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/aop/Signer/AlipayRSASigner.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/bin/genrsa" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/bin/genrsa" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/phpstan.neon" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/wi1dcard/alipay-sdk/phpstan.neon" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/extensions.php" beforeDir="false" afterPath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/extensions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/.htaccess" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/BaseYii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/Yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/assets/yii.activeForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/assets/yii.captcha.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/assets/yii.gridView.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/assets/yii.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/assets/yii.validation.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Action.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ActionEvent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ActionFilter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Application.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ArrayAccessTrait.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Arrayable.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ArrayableTrait.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/BaseObject.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Behavior.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/BootstrapInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Component.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Configurable.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Controller.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/DynamicModel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ErrorException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ErrorHandler.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Event.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Exception.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ExitException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/InlineAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/InvalidCallException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/InvalidConfigException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/InvalidParamException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/InvalidRouteException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/InvalidValueException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Model.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ModelEvent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Module.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/NotSupportedException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Object.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Request.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Response.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Security.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Theme.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/UnknownClassException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/UnknownMethodException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/UnknownPropertyException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/UserException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/View.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ViewContextInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ViewEvent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ViewNotFoundException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/ViewRenderer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/Widget.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/base/WidgetEvent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/behaviors/AttributeBehavior.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/behaviors/AttributeTypecastBehavior.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/behaviors/BlameableBehavior.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/behaviors/SluggableBehavior.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/behaviors/TimestampBehavior.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/ApcCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/ArrayCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/Cache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/ChainedDependency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/DbCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/DbDependency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/DbQueryDependency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/Dependency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/DummyCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/ExpressionDependency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/FileCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/FileDependency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/MemCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/MemCacheServer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/TagDependency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/WinCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/XCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/ZendDataCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/migrations/m150909_153426_cache_init.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/migrations/schema-mssql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/migrations/schema-mysql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/migrations/schema-oci.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/migrations/schema-pgsql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/caching/migrations/schema-sqlite.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/captcha/Captcha.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/captcha/CaptchaAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/captcha/CaptchaAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/captcha/CaptchaValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/captcha/SpicyRice.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/classes.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/composer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/Application.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/Controller.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/ErrorHandler.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/Exception.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/Markdown.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/Request.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/Response.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/UnknownCommandException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/controllers/AssetController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/controllers/BaseMigrateController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/controllers/CacheController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/controllers/FixtureController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/controllers/HelpController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/controllers/MessageController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/controllers/MigrateController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/console/controllers/ServeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/data/ActiveDataProvider.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/data/ArrayDataProvider.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/data/BaseDataProvider.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/data/DataProviderInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/data/Pagination.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/data/Sort.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/data/SqlDataProvider.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/ActiveQuery.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/ActiveQueryInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/ActiveQueryTrait.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/ActiveRecord.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/ActiveRecordInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/ActiveRelationTrait.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/AfterSaveEvent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/BaseActiveRecord.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/BatchQueryResult.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/ColumnSchema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/ColumnSchemaBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/Command.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/Connection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/DataReader.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/Exception.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/Expression.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/IntegrityException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/Migration.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/MigrationInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/Query.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/QueryBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/QueryInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/QueryTrait.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/Schema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/SchemaBuilderTrait.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/StaleObjectException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/TableSchema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/Transaction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/ViewFinderTrait.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/cubrid/ColumnSchemaBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/cubrid/QueryBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/cubrid/Schema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/mssql/PDO.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/mssql/QueryBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/mssql/Schema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/mssql/SqlsrvPDO.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/mssql/TableSchema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/mysql/ColumnSchemaBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/mysql/QueryBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/mysql/Schema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/oci/ColumnSchemaBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/oci/QueryBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/oci/Schema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/pgsql/QueryBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/pgsql/Schema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/sqlite/ColumnSchemaBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/sqlite/QueryBuilder.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/db/sqlite/Schema.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/di/Container.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/di/Instance.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/di/NotInstantiableException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/di/ServiceLocator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/AccessControl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/AccessRule.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/ContentNegotiator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/Cors.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/HostControl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/HttpCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/PageCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/RateLimitInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/RateLimiter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/VerbFilter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/auth/AuthInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/auth/AuthMethod.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/auth/CompositeAuth.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/auth/HttpBasicAuth.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/auth/HttpBearerAuth.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/filters/auth/QueryParamAuth.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/grid/ActionColumn.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/grid/CheckboxColumn.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/grid/Column.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/grid/DataColumn.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/grid/GridView.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/grid/GridViewAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/grid/RadioButtonColumn.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/grid/SerialColumn.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/ArrayHelper.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseArrayHelper.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseConsole.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseFileHelper.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseFormatConverter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseHtml.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseHtmlPurifier.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseInflector.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseJson.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseMarkdown.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseStringHelper.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseUrl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/BaseVarDumper.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/Console.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/FileHelper.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/FormatConverter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/Html.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/HtmlPurifier.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/Inflector.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/Json.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/Markdown.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/ReplaceArrayValue.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/StringHelper.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/UnsetArrayValue.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/Url.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/VarDumper.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/helpers/mimeTypes.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/DbMessageSource.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/Formatter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/GettextFile.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/GettextMessageSource.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/GettextMoFile.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/GettextPoFile.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/I18N.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/MessageFormatter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/MessageSource.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/MissingTranslationEvent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/PhpMessageSource.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/migrations/m150207_210500_i18n_init.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/migrations/schema-mssql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/migrations/schema-mysql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/migrations/schema-oci.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/migrations/schema-pgsql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/i18n/migrations/schema-sqlite.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/DbTarget.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/Dispatcher.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/EmailTarget.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/FileTarget.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/Logger.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/SyslogTarget.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/Target.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/migrations/m141106_185632_log_init.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/migrations/schema-mssql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/migrations/schema-mysql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/migrations/schema-oci.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/migrations/schema-pgsql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/log/migrations/schema-sqlite.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mail/BaseMailer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mail/BaseMessage.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mail/MailEvent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mail/MailerInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mail/MessageInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/ar/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/az/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/bg/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/bs/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/ca/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/cs/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/da/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/de/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/el/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/es/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/et/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/fa/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/fi/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/fr/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/he/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/hr/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/hu/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/id/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/it/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/ja/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/ka/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/kk/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/ko/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/lt/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/lv/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/ms/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/nb-NO/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/nl/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/pl/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/pt-BR/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/pt/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/ro/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/ru/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/sk/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/sl/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/sr-Latn/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/sr/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/sv/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/tg/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/th/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/tr/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/uk/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/uz/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/vi/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/zh-CN/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/messages/zh-TW/yii.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mutex/DbMutex.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mutex/FileMutex.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mutex/Mutex.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mutex/MysqlMutex.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mutex/OracleMutex.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/mutex/PgsqlMutex.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/Assignment.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/BaseManager.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/CheckAccessInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/DbManager.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/Item.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/ManagerInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/Permission.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/PhpManager.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/Role.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/Rule.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/migrations/m140506_102106_rbac_init.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/migrations/schema-mssql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/migrations/schema-mysql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/migrations/schema-oci.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/migrations/schema-pgsql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rbac/migrations/schema-sqlite.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/requirements/YiiRequirementChecker.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/requirements/requirements.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/requirements/views/console/index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/requirements/views/web/css.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/requirements/views/web/index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/Action.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/ActiveController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/Controller.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/CreateAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/DeleteAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/IndexAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/OptionsAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/Serializer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/UpdateAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/UrlRule.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/rest/ViewAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/BooleanValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/CompareValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/DateValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/DefaultValueValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/EachValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/EmailValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/ExistValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/FileValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/FilterValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/ImageValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/InlineValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/IpValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/NumberValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/PunycodeAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/RangeValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/RegularExpressionValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/RequiredValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/SafeValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/StringValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/UniqueValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/UrlValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/ValidationAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/validators/Validator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/_addColumns.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/_addForeignKeys.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/_createTable.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/_dropColumns.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/_dropForeignKeys.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/_dropTable.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/_foreignTables.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/addColumnMigration.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/createJunctionMigration.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/createTableMigration.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/dropColumnMigration.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/dropTableMigration.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/errorHandler/callStackItem.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/errorHandler/error.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/errorHandler/exception.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/errorHandler/previousException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/messageConfig.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/views/migration.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/Application.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/AssetBundle.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/AssetConverter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/AssetConverterInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/AssetManager.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/BadRequestHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/CacheSession.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/CompositeUrlRule.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/ConflictHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/Controller.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/Cookie.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/CookieCollection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/DbSession.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/ErrorAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/ErrorHandler.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/ForbiddenHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/GoneHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/GroupUrlRule.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/HeaderCollection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/HtmlResponseFormatter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/HttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/IdentityInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/JqueryAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/JsExpression.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/JsonParser.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/JsonResponseFormatter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/Link.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/Linkable.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/MethodNotAllowedHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/MultiFieldSession.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/MultipartFormDataParser.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/NotAcceptableHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/NotFoundHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/RangeNotSatisfiableHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/Request.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/RequestParserInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/Response.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/ResponseFormatterInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/ServerErrorHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/Session.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/SessionIterator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/TooManyRequestsHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UnauthorizedHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UnprocessableEntityHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UnsupportedMediaTypeHttpException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UploadedFile.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UrlManager.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UrlNormalizer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UrlNormalizerRedirectException.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UrlRule.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UrlRuleInterface.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/User.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/UserEvent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/View.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/ViewAction.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/XmlResponseFormatter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/YiiAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/migrations/m160313_153426_session_init.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/migrations/schema-mssql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/migrations/schema-mysql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/migrations/schema-oci.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/migrations/schema-pgsql.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/web/migrations/schema-sqlite.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/ActiveField.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/ActiveForm.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/ActiveFormAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/BaseListView.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/Block.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/Breadcrumbs.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/ContentDecorator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/DetailView.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/FragmentCache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/InputWidget.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/LinkPager.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/LinkSorter.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/ListView.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/MaskedInput.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/MaskedInputAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/Menu.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/Pjax.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/PjaxAsset.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/widgets/Spaceless.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/yii" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/addons/zjhj_mall/core/vendor/yiisoft/yii2/yii.bat" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,36 +527,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/OrderController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="124" column="44" lean-forward="true" selection-start-line="124" selection-start-column="44" selection-end-line="124" selection-end-column="44" />
-              <folding>
-                <element signature="e#133#161#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderRevokeForm.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="133" column="33" lean-forward="true" selection-start-line="133" selection-start-column="33" selection-end-line="133" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/group/IndexController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="327">
@@ -54,49 +536,79 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/MiaoshaController.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/composer.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="172" column="45" selection-start-line="172" selection-start-column="45" selection-end-line="172" selection-end-column="45" />
+            <state relative-caret-position="283">
+              <caret line="23" column="24" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderRevokeForm.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/composer.lock">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="180" column="13" selection-start-line="180" selection-start-column="13" selection-end-line="180" selection-end-column="13" />
+            <state relative-caret-position="193">
+              <caret line="1410" column="36" selection-start-line="1410" selection-start-column="36" selection-end-line="1410" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/config/console.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="507">
+              <caret line="38" column="48" lean-forward="true" selection-start-line="38" selection-start-column="48" selection-end-line="38" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/Application.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="13" column="66" lean-forward="true" selection-start-line="13" selection-start-column="66" selection-end-line="13" selection-end-column="66" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/config/web.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="569">
+              <caret line="180" column="15" selection-start-line="180" selection-start-column="15" selection-end-line="180" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderSubmitForm.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="1116" column="64" selection-start-line="1116" selection-start-column="64" selection-end-line="1116" selection-end-column="64" />
               <folding>
-                <element signature="e#136#187#0#PHP" expanded="true" />
+                <element signature="e#128#165#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/task/OrderExpireTask.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="426">
+              <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+              <folding>
+                <element signature="e#38#59#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderListForm.php">
+        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/cabinet/OrderController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="758">
-              <caret line="188" column="46" selection-start-line="188" selection-start-column="46" selection-end-line="188" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/integralmall/IntegralmallController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="674">
-              <caret line="146" column="57" lean-forward="true" selection-start-line="146" selection-start-column="57" selection-end-line="146" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/group/OrderController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="786">
-              <caret line="305" column="57" lean-forward="true" selection-start-line="305" selection-start-column="57" selection-end-line="305" selection-end-column="57" />
+            <state relative-caret-position="286">
+              <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="51" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -104,7 +616,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderRevokeForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
+            <state relative-caret-position="589">
               <caret line="47" column="8" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
               <folding>
                 <element signature="e#129#180#0#PHP" expanded="true" />
@@ -117,12 +629,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>callback</find>
-      <find>PayNotify</find>
-      <find>Inpay</find>
-      <find>InpayNo</find>
-      <find>alipay-notify</find>
-      <find>pay_price</find>
       <find>i@property integer</find>
       <find>延时</find>
       <find>脚本</find>
@@ -147,6 +653,12 @@
       <find>is_offline</find>
       <find>exchange</find>
       <find>Clea</find>
+      <find>2.0.12</find>
+      <find>2.0.2</find>
+      <find>2.0.5</find>
+      <find>2.0.14</find>
+      <find>yii2</find>
+      <find>alipay</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -164,11 +676,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/data/config.php" />
-        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/GoodsForm.php" />
-        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/DefaultController.php" />
-        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/OfficialController.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/AddCartForm.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/price/Price.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/models/Cabinet.php" />
@@ -189,7 +696,6 @@
         <option value="$PROJECT_DIR$/addons/zxshop_mall/core/models/Order.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderListForm.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/models/UploadForm.php" />
-        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderSubmitForm.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/CancelOrderForm.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/scripts/cancelOrder.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/controllers/OrderController.php" />
@@ -215,109 +721,88 @@
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderRevokeForm.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderRevokeForm.php" />
         <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/composer.json" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/composer.lock" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/config/console.php" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderSubmitForm.php" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/config/web.php" />
+        <option value="$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/task/OrderExpireTask.php" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="23" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-27" />
+    <option name="y" value="49" />
     <option name="width" value="1440" />
-    <option name="height" value="811" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="ertongkeji" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertongkeji" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="ertongkeji" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertongkeji" type="462c0819:PsiDirectoryNode" />
               <item name="addons" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ertong" type="462c0819:PsiDirectoryNode" />
-              <item name="addons" type="462c0819:PsiDirectoryNode" />
-              <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="ertongkeji" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertongkeji" type="462c0819:PsiDirectoryNode" />
               <item name="addons" type="462c0819:PsiDirectoryNode" />
               <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="ertongkeji" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertongkeji" type="462c0819:PsiDirectoryNode" />
               <item name="addons" type="462c0819:PsiDirectoryNode" />
               <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="ertongkeji" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertongkeji" type="462c0819:PsiDirectoryNode" />
               <item name="addons" type="462c0819:PsiDirectoryNode" />
               <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ertong" type="462c0819:PsiDirectoryNode" />
+              <item name="ertongkeji" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ertongkeji" type="462c0819:PsiDirectoryNode" />
               <item name="addons" type="462c0819:PsiDirectoryNode" />
               <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="hejiang" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ertong" type="462c0819:PsiDirectoryNode" />
-              <item name="addons" type="462c0819:PsiDirectoryNode" />
-              <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="group" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ertong" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ertong" type="462c0819:PsiDirectoryNode" />
-              <item name="addons" type="462c0819:PsiDirectoryNode" />
-              <item name="zjhj_mall" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="integralmall" type="462c0819:PsiDirectoryNode" />
+              <item name="ertongkeji" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/addons/zjhj_mall/core/models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/task" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/task" />
       <recent name="$PROJECT_DIR$/addons/zjhj_mall/core/models" />
     </key>
   </component>
@@ -348,17 +833,18 @@
       <workItem from="1574526107938" duration="9000" />
       <workItem from="1576135007113" duration="1219000" />
       <workItem from="1576573155922" duration="3544000" />
+      <workItem from="1577092222640" duration="2644000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103692000" />
+    <option name="totallyTimeSpent" value="106336000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2560" y="-479" width="2560" height="1351" extended-state="0" />
+    <frame x="-27" y="49" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17077045" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.36552218" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -370,7 +856,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.14932486" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.14904459" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -403,312 +889,40 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/QrcodeForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-592">
-          <caret line="31" column="40" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/ShareQrcodeForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-729">
-          <caret line="83" column="20" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/responses/BaseApiResponse.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/BaseApiResponse.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-173">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/controllers/InstallController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/controllers/OrderController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/PassportController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="16" column="32" lean-forward="true" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-          <folding>
-            <element signature="e#133#153#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zxshop_mall/core/models/Order.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1273">
-          <caret line="71" column="3" selection-start-line="71" selection-start-column="3" selection-end-line="71" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/MsOrder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1805">
-          <caret line="96" column="135" selection-start-line="96" selection-start-column="135" selection-end-line="96" selection-end-column="135" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/DefaultController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="239" column="58" selection-start-line="239" selection-start-column="53" selection-end-line="239" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/controllers/UploadController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="583">
-          <caret line="56" column="27" selection-start-line="56" selection-start-column="27" selection-end-line="56" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/UploadForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="415" column="21" selection-start-line="415" selection-start-column="21" selection-end-line="415" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/mch/controllers/StoreController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="1113" column="27" selection-start-line="1113" selection-start-column="27" selection-end-line="1113" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/We7Db.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="25" column="29" lean-forward="true" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/common/admin/store/CommonStore.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-158">
-          <caret line="28" column="6" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/mch/controllers/We7Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderDetailForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="65" column="9" selection-start-line="65" selection-start-column="9" selection-end-line="65" selection-end-column="9" />
-          <folding>
-            <element signature="e#128#151#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/book/OrderController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="596">
-          <caret line="62" column="56" selection-start-line="62" selection-start-column="56" selection-end-line="62" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/YyGoods.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="79" column="37" lean-forward="true" selection-start-line="79" selection-start-column="37" selection-end-line="79" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/scratch/ScratchController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/book/OrderPreviewFrom.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="410" column="27" selection-start-line="410" selection-start-column="27" selection-end-line="410" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/book/OrderCommentForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralGoods.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-375">
-          <caret line="24" column="27" lean-forward="true" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/Order.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="270" column="12" selection-start-line="270" selection-start-column="12" selection-end-line="275" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="94" column="17" selection-start-line="94" selection-start-column="17" selection-end-line="94" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderSubmitForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1103">
-          <caret line="466" column="13" selection-start-line="466" selection-start-column="13" selection-end-line="466" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/book/OrderClerkForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1461">
-          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/OrderSub.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2079">
-          <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderSub.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1037">
-          <caret line="197" column="12" selection-start-line="197" selection-start-column="12" selection-end-line="197" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderDetail.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="69" column="5" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/cabinet/OrderController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="33" column="44" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentionForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentioningForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="167" column="4" selection-start-line="167" selection-start-column="4" selection-end-line="167" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/bargain/BargainSubmitForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/bargain/OrderController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="37" column="25" lean-forward="true" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderSubmitForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="1068" column="52" selection-start-line="1068" selection-start-column="52" selection-end-line="1068" selection-end-column="52" />
-          <folding>
-            <element signature="e#128#151#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderListForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="181" column="12" selection-start-line="181" selection-start-column="12" selection-end-line="206" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderDetailForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1887">
-          <caret line="161" column="46" selection-start-line="161" selection-start-column="46" selection-end-line="161" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/IntegralForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="155" column="20" selection-start-line="155" selection-start-column="20" selection-end-line="155" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderListForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-15">
-          <caret line="122" column="41" lean-forward="true" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderListForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="758">
-          <caret line="188" column="46" selection-start-line="188" selection-start-column="46" selection-end-line="188" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderDetailForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="126" column="8" selection-start-line="126" selection-start-column="8" selection-end-line="129" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zxshop_mall/core/models/Order.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/MsOrder.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/DefaultController.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/controllers/UploadController.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/UploadForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/mch/controllers/StoreController.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/We7Db.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/common/admin/store/CommonStore.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/mch/controllers/We7Controller.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderDetailForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/book/OrderController.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/YyGoods.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/scratch/ScratchController.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/book/OrderPreviewFrom.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/book/OrderCommentForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralGoods.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/Order.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrder.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderSubmitForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/book/OrderClerkForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/OrderSub.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderSub.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/models/IntegralOrderDetail.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentioningForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/bargain/BargainSubmitForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/bargain/OrderController.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderListForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderDetailForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/IntegralForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderListForm.php" />
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderDetailForm.php" />
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/OrderController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
+        <state relative-caret-position="1805">
           <caret line="124" column="44" lean-forward="true" selection-start-line="124" selection-start-column="44" selection-end-line="124" selection-end-column="44" />
           <folding>
             <element signature="e#133#161#0#PHP" expanded="true" />
@@ -716,26 +930,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/MiaoshaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="172" column="45" selection-start-line="172" selection-start-column="45" selection-end-line="172" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderRevokeForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="180" column="13" selection-start-line="180" selection-start-column="13" selection-end-line="180" selection-end-column="13" />
-          <folding>
-            <element signature="e#136#187#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderRevokeForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
+        <state relative-caret-position="2147">
           <caret line="133" column="33" lean-forward="true" selection-start-line="133" selection-start-column="33" selection-end-line="133" selection-end-column="33" />
         </state>
       </provider>
@@ -747,16 +944,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/MiaoshaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2793">
+          <caret line="172" column="45" selection-start-line="172" selection-start-column="45" selection-end-line="172" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/miaosha/OrderRevokeForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3021">
+          <caret line="180" column="13" selection-start-line="180" selection-start-column="13" selection-end-line="180" selection-end-column="13" />
+          <folding>
+            <element signature="e#136#187#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderListForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3287">
+          <caret line="188" column="46" selection-start-line="188" selection-start-column="46" selection-end-line="188" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/integralmall/IntegralmallController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2508">
+          <caret line="146" column="57" selection-start-line="146" selection-start-column="57" selection-end-line="146" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/group/OrderController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="786">
-          <caret line="305" column="57" lean-forward="true" selection-start-line="305" selection-start-column="57" selection-end-line="305" selection-end-column="57" />
+        <state relative-caret-position="5244">
+          <caret line="305" column="57" selection-start-line="305" selection-start-column="57" selection-end-line="305" selection-end-column="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/group/OrderRevokeForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
+        <state relative-caret-position="589">
           <caret line="47" column="8" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
           <folding>
             <element signature="e#129#180#0#PHP" expanded="true" />
@@ -764,17 +992,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/integralmall/IntegralmallController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="146" column="57" lean-forward="true" selection-start-line="146" selection-start-column="57" selection-end-line="146" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/integralmall/OrderSubmitPreviewForm.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="327">
           <caret line="801" column="8" selection-start-line="801" selection-start-column="8" selection-end-line="801" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="23" column="24" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/composer.lock">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="1410" column="36" selection-start-line="1410" selection-start-column="36" selection-end-line="1410" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zxshop_mall/core/modules/api/models/OrderSubmitForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-24850">
+          <caret line="38" column="6" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/order/OrderSelfMentionForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="49" column="20" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/controllers/cabinet/OrderController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="51" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/config/console.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="507">
+          <caret line="38" column="48" lean-forward="true" selection-start-line="38" selection-start-column="48" selection-end-line="38" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/Application.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="13" column="66" lean-forward="true" selection-start-line="13" selection-start-column="66" selection-end-line="13" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/config/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="569">
+          <caret line="180" column="15" selection-start-line="180" selection-start-column="15" selection-end-line="180" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/modules/api/models/OrderSubmitForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="1116" column="64" selection-start-line="1116" selection-start-column="64" selection-end-line="1116" selection-end-column="64" />
+          <folding>
+            <element signature="e#128#165#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/zjhj_mall/core/hejiang/task/OrderExpireTask.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+          <folding>
+            <element signature="e#38#59#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

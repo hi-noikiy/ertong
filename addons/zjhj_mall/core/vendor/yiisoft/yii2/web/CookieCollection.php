@@ -7,10 +7,10 @@
 
 namespace yii\web;
 
-use Yii;
 use ArrayIterator;
-use yii\base\InvalidCallException;
+use Yii;
 use yii\base\BaseObject;
+use yii\base\InvalidCallException;
 
 /**
  * CookieCollection maintains the cookies available in the current request.
@@ -147,7 +147,8 @@ class CookieCollection extends BaseObject implements \IteratorAggregate, \ArrayA
             $cookie->expire = 1;
             $cookie->value = '';
         } else {
-            $cookie = new Cookie([
+            $cookie = Yii::createObject([
+                'class' => 'yii\web\Cookie',
                 'name' => $cookie,
                 'expire' => 1,
             ]);

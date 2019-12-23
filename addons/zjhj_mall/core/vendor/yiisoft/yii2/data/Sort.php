@@ -8,8 +8,8 @@
 namespace yii\data;
 
 use Yii;
-use yii\base\InvalidConfigException;
 use yii\base\BaseObject;
+use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\web\Request;
@@ -412,9 +412,9 @@ class Sort extends BaseObject
         $urlManager = $this->urlManager === null ? Yii::$app->getUrlManager() : $this->urlManager;
         if ($absolute) {
             return $urlManager->createAbsoluteUrl($params);
-        } else {
-            return $urlManager->createUrl($params);
         }
+
+        return $urlManager->createUrl($params);
     }
 
     /**

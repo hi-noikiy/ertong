@@ -8,6 +8,7 @@
 
 namespace app\modules\api\models;
 
+use app\hejiang\task\OrderExpireTask;
 use app\models\Address;
 use app\models\Attr;
 use app\models\AttrGroup;
@@ -1113,6 +1114,9 @@ class OrderSubmitForm extends OrderData
                         'msg' => $re['message'],
                     ];
                 }
+                \Yii::$app->queue->delay(2)->push(new OrderExpireTask([
+                    'orderId' => $order->id
+                ]));
 
                 $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 0);
                 $res = $printer_order->print_order();
