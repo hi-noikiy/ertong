@@ -36,6 +36,8 @@ use app\modules\mch\extensions\Export;
 use app\utils\TaskCreate;
 use yii\web\UploadedFile;
 
+use app\modules\api\models\cabinet\CabinetPlatForm;
+
 class OrderController extends Controller
 {
     public function actionIndex()
@@ -170,6 +172,14 @@ class OrderController extends Controller
         }
         $remark = \Yii::$app->request->get('remark');
         if ($status == 1) { //同意
+            $cab = new CabinetPlatForm(null);
+            $re = $cab->cancelOrder($order->order_no);
+            if ($re['code'] != 0){
+                return [
+                    'code' => 1,
+                    'msg' => '取消云柜订单失败'.$re['message'],
+                ];
+            }
             $form = new OrderRevokeForm();
             $form->order_id = $order->id;
             $form->delete_pass = true;
@@ -177,6 +187,7 @@ class OrderController extends Controller
             $form->store_id = $order->store_id;
             $res = $form->save();
             if ($res['code'] == 0) {
+                
                 $msg_sender = new MsWechatTplMsgSender($this->store->id, $order->id, $this->wechat);
                 $msg_sender->revokeMsg($remark ? $remark : '商家同意了您的订单取消请求');
                 $wechatAccessToken = $this->wechat->getAccessToken();

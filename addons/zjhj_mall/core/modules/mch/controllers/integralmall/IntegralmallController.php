@@ -41,6 +41,8 @@ use app\modules\mch\models\PrintForm;
 use app\utils\TaskCreate;
 use yii\data\Pagination;
 
+use app\modules\api\models\cabinet\CabinetPlatForm;
+
 class IntegralmallController extends Controller
 {
     public $keyword;
@@ -745,6 +747,14 @@ class IntegralmallController extends Controller
             ];
         }
         if ($status == 1) { //同意
+            $cab = new CabinetPlatForm(null);
+            $re = $cab->cancelOrder($order->order_no);
+            if ($re['code'] != 0){
+                return [
+                    'code' => 1,
+                    'msg' => '取消云柜订单失败'.$re['message'],
+                ];
+            }
             $form = new IntegralOrderForm();
             $form->order_id = $order->id;
             $form->user_id = $order->user_id;
