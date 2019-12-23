@@ -403,7 +403,7 @@ $this->params['active_nav_group'] = 7;
                         </div>
                         <div class="col-9">
                             <div class="cat-list">
-                                <?php foreach ($goods_arr as $item) : ?>
+                                <?php foreach ($goods as $item) : ?>
                                     <label class="cat-item">
                                         <div style="position:absolute;width:20px;height:20px;border:1px solid #E3E3E3" onclick="delete_goods(<?= $item->id ?>,<?= $model->id ?>)">X</div>
                                         <img src="<?= $item->cover_pic ?>">

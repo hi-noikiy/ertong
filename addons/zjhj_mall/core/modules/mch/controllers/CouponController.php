@@ -39,13 +39,7 @@ class CouponController extends Controller
         $cat_id = json_decode($model->cat_id_list);
         $cat = Cat::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'id' => $cat_id])->all();
         $goods_id = json_decode($model->goods_id_list);
-        $goods=$goods_arr=array();
-        if($model->appoint_type==2){
-            $goods = Goods::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'status' => 1, 'id' => $goods_id])->all();
-        }
-        if($model->appoint_type==3){
-            $goods_arr = Goods::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'status' => 1, 'id' => $goods_id])->all();
-        }
+        $goods = Goods::find()->where(['store_id' => $this->store->id, 'is_delete' => 0, 'status' => 1, 'id' => $goods_id])->all();
         if (!$model) {
             $model = new Coupon();
         }
@@ -66,7 +60,6 @@ class CouponController extends Controller
                 'model' => $model,
                 'cat' => $cat,
                 'goods' => $goods,
-                'goods_arr' => $goods_arr,
             ]);
         }
     }
