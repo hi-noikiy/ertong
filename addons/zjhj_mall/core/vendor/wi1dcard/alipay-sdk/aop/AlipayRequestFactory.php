@@ -8,18 +8,6 @@ use Alipay\Request\AbstractAlipayRequest;
 
 class AlipayRequestFactory
 {
-    public $namespace = '';
-
-    /**
-     * 创建请求类工厂
-     *
-     * @param string $namespace
-     */
-    public function __construct($namespace = 'Alipay\Request\\')
-    {
-        $this->namespace = $namespace;
-    }
-
     /**
      * 通过 `API 名称` 创建请求类实例
      *
@@ -28,11 +16,11 @@ class AlipayRequestFactory
      *
      * @return AbstractAlipayRequest
      */
-    public function createByApi($apiName, $config = [])
+    public static function createByApi($apiName, $config = [])
     {
         $className = AlipayHelper::studlyCase($apiName, '.') . 'Request';
 
-        return $this->createByClass($className, $config);
+        return static::create($className, $config);
     }
 
     /**
@@ -43,22 +31,21 @@ class AlipayRequestFactory
      *
      * @return AbstractAlipayRequest
      */
-    public function createByClass($className, $config = [])
+    public static function createByClass($className, $config = [])
     {
-        $className = $this->namespace . $className;
+        $className = 'Alipay\Request' . '\\' . $className;
 
-        $this->validate($className);
+        static::validate($className);
 
         $instance = new $className();
 
-        foreach ($config as $key => $value) {
-            $property = AlipayHelper::studlyCase($key, '_');
-
-            try {
+        try {
+            foreach ($config as $key => $value) {
+                $property = AlipayHelper::studlyCase($key, '_');
                 $instance->$property = $value;
-            } catch (AlipayInvalidPropertyException $ex) {
-                throw new AlipayInvalidRequestException($ex->getMessage() . ': ' . $key);
             }
+        } catch (AlipayInvalidPropertyException $ex) {
+            throw new AlipayInvalidRequestException($ex->getMessage() . ': ' . $key);
         }
 
         return $instance;
@@ -71,10 +58,10 @@ class AlipayRequestFactory
      *
      * @return void
      */
-    protected function validate($className)
+    protected static function validate($className)
     {
         if (!class_exists($className)) {
-            throw new AlipayInvalidRequestException("Class {$className} doesn't exist");
+            throw new AlipayInvalidRequestException("Class `{$className}` doesn't exist");
         }
         $abstractClass = AbstractAlipayRequest::className();
         if (!is_subclass_of($className, $abstractClass)) {
@@ -92,12 +79,10 @@ class AlipayRequestFactory
      */
     public static function create($classOrApi, $config = [])
     {
-        $factory = isset($this) ? $this : new self();
-
         if (strpos($classOrApi, '.')) {
-            return $factory->createByApi($classOrApi, $config);
+            return static::createByApi($classOrApi, $config);
         } else {
-            return $factory->createByClass($classOrApi, $config);
+            return static::createByClass($classOrApi, $config);
         }
     }
 }

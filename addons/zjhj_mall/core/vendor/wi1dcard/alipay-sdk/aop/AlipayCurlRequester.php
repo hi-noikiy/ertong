@@ -7,40 +7,25 @@ use Alipay\Exception\AlipayHttpException;
 
 class AlipayCurlRequester extends AlipayRequester
 {
-    /**
-     * Curl 选项
-     *
-     * @param array $options
-     */
-    public $options = [];
-
-    public function __construct($options = [])
+    public function __construct()
     {
-        $this->options = $options + [
-            CURLOPT_FAILONERROR    => false,
-            CURLOPT_SSL_VERIFYPEER => false,
-        ];
         parent::__construct([$this, 'post']);
     }
 
-    /**
-     * 发起 POST 请求
-     *
-     * @param string $url
-     * @param array  $params
-     *
-     * @return mixed
-     */
     public function post($url, $params)
     {
         $ch = curl_init();
-        curl_setopt_array($ch, $this->options);
+        if ($ch === false) {
+            throw new AlipayCurlException('CURL initialization error');
+        }
 
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_FAILONERROR, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         foreach ($params as &$value) {
-            if (is_string($value) && strlen($value) > 0 && $value[0] === '@' && class_exists('CURLFile')) {
+            if (is_string($value) && $value[0] === '@' && class_exists('CURLFile')) {
                 $file = substr($value, 1);
                 if (is_file($file)) {
                     $value = new \CURLFile($file);

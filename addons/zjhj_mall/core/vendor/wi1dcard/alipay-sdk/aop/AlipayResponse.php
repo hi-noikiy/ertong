@@ -29,12 +29,12 @@ class AlipayResponse
      *
      * @var mixed
      */
-    protected $parsed;
+    protected $data;
 
     public function __construct($raw, $data)
     {
         $this->raw = $raw;
-        $this->parsed = $data;
+        $this->data = $data;
     }
 
     /**
@@ -46,7 +46,7 @@ class AlipayResponse
      */
     public function stripData()
     {
-        $nodeName = current(array_keys($this->parsed));
+        $nodeName = current(array_keys($this->data));
         $nodeIndex = strpos($this->raw, $nodeName);
 
         $signDataStartIndex = $nodeIndex + strlen($nodeName) + 2;
@@ -68,8 +68,8 @@ class AlipayResponse
      */
     public function getSign()
     {
-        if (isset($this->parsed[static::SIGN_NODE])) {
-            return $this->parsed[static::SIGN_NODE];
+        if (isset($this->data[static::SIGN_NODE])) {
+            return $this->data[static::SIGN_NODE];
         }
 
         throw new AlipayInvalidResponseException($this->raw, 'Response sign not found');
@@ -87,7 +87,7 @@ class AlipayResponse
         if ($this->isSuccess() === false) {
             throw new AlipayErrorResponseException($this->getError());
         }
-        $result = $this->getFirstElement();
+        $result = reset($this->data);
         if ($assoc == false) {
             $result = (object) ($result);
         }
@@ -106,30 +106,13 @@ class AlipayResponse
     }
 
     /**
-     * 获取响应数据内的首元素
-     *
-     * @return mixed
-     */
-    protected function getFirstElement()
-    {
-        $data = array_reverse($this->parsed);
-
-        return array_pop($data);
-    }
-
-    /**
-     * 判断响应是否成功
+     * 根据是否存在错误字段，判断响应是否成功
      *
      * @return bool
      */
     public function isSuccess()
     {
-        if (isset($this->parsed[static::ERROR_NODE])) {
-            return false;
-        }
-        $data = $this->getFirstElement();
-
-        return !isset($data['code']) || empty($data['code']) || $data['code'] == '10000';
+        return !isset($this->data[static::ERROR_NODE]);
     }
 
     /**
@@ -142,11 +125,7 @@ class AlipayResponse
         if ($this->isSuccess()) {
             return null;
         }
-        if (isset($this->parsed[static::ERROR_NODE])) {
-            $result = $this->parsed[static::ERROR_NODE];
-        } else {
-            $result = $this->getFirstElement();
-        }
+        $result = $this->data[static::ERROR_NODE];
         if ($assoc == false) {
             $result = (object) ($result);
         }

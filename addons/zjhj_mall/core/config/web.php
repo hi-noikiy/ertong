@@ -7,7 +7,7 @@ $config = [
     'language' => 'zh-CN',
     'timeZone' => env('TIME_ZONE', 'PRC'),
     'basePath' => $basePath,
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','queue'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
@@ -20,6 +20,16 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+        ],
+        'queue' => [
+            'class' => \yii\queue\redis\Queue::class,
+            'as log' => \yii\queue\LogBehavior::class,//错误日志 默认为 console/runtime/logs/app.log
+            'redis' => 'redis', // 连接组件或它的配置
+            'channel' => 'queue', // Queue channel key
+        ],
+        'redis' => [
+            'class' => \yii\redis\Connection::class,
+            // ...
         ],
         'admin' => [
             'class' => 'yii\web\User',
