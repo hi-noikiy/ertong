@@ -133,10 +133,10 @@ $urlPlatform = Yii::$app->controller->route;
                 <a class="status-item nav-link <?= $status == 0 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 0])) ?>">未付款<?= $store_data['status_count']['status_0'] ? '(' . $store_data['status_count']['status_0'] . ')' : null ?></a>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
                 <a class="status-item nav-link <?= $status == 9 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 9])) ?>">待确认<?= $store_data['status_count']['status_9'] ? '(' . $store_data['status_count']['status_1'] . ')' : null ?></a>
-            </li> -->
+            </li>
             <li class="nav-item">
                 <a class="status-item nav-link <?= $status == 1 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 1])) ?>">备货中<?= $store_data['status_count']['status_1'] ? '(' . $store_data['status_count']['status_1'] . ')' : null ?></a>
@@ -153,10 +153,10 @@ $urlPlatform = Yii::$app->controller->route;
                 <a class="status-item  nav-link <?= $status == 10 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 10])) ?>">待自提<?= $store_data['status_count']['status_10'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
                 <a class="status-item  nav-link <?= $status == 11 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 11])) ?>">待评价<?= $store_data['status_count']['status_11'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>
-            </li> -->
+            </li>
             <li class="nav-item">
                 <a class="status-item nav-link <?= $status == 3 ? 'active' : null ?>"
                    href="<?= $urlManager->createUrl(array_merge(['mch/group/order/index'], $condition, ['status' => 3])) ?>">已完成<?= $store_data['status_count']['status_3'] ? '(' . $store_data['status_count']['status_3'] . ')' : null ?></a>

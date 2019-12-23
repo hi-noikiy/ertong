@@ -278,6 +278,13 @@ $this->params['active_nav_group'] = 7;
                             <span class="label-icon"></span>
                             <span class="label-text">指定商品</span>
                         </label>
+                        <label class="radio-label">
+                            <input name="appoint_type"
+                                <?= $model->appoint_type == 3 ? 'checked' : null ?>
+                                   value="3" type="radio" class="custom-control-input">
+                            <span class="label-icon"></span>
+                            <span class="label-text">剔除商品</span>
+                        </label>
                     </div>
                 </div>
 
@@ -389,7 +396,63 @@ $this->params['active_nav_group'] = 7;
                         </div>
                     </div>
                 </div>
-
+                <div class="coupon-type coupon-type-3" style="<?= $model->appoint_type != 3 ? 'display:none' : null ?>">
+                    <div class="form-group row">
+                        <div class="form-group-label col-3 text-right">
+                            <label class="">已剔除商品</label>
+                        </div>
+                        <div class="col-9">
+                            <div class="cat-list">
+                                <?php foreach ($goods as $item) : ?>
+                                    <label class="cat-item">
+                                        <div style="position:absolute;width:20px;height:20px;border:1px solid #E3E3E3" onclick="delete_goods(<?= $item->id ?>,<?= $model->id ?>)">X</div>
+                                        <img src="<?= $item->cover_pic ?>">
+                                        <input type="hidden" name="cat_id[]" value="<?= $item->id ?>">
+                                        <div style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden">
+                                            <?= $item->name ?>
+                                        </div>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group-label col-3 text-right">
+                            <label class="">添加剔除商品</label>
+                            <label style="color:red;">不添加表示全场通用</label>
+                        </div>
+                        <div class="col-9">
+                            <div class="input-group mb-3" style="max-width: 250px">
+                                <input class="form-control search-goods-keyword" placeholder="商品名称"
+                                       onkeydown="if(event.keyCode==13) {search_cat();return false;}">
+                                <span class="input-group-btn">
+                                    <a class="btn btn-secondary search-goods-btn" onclick="search_goods()"
+                                       href="javascript:">查找商品</a>
+                                </span>
+                            </div>
+                            <div class="cat-list">
+                                <div v-if="goods_list">
+                                    <label class="cat-item" v-for="(goods,index) in goods_list">
+                                        <img v-bind:src="goods.cover_pic">
+                                        <input v-bind:value="goods.id" type="checkbox" name="goods_id_list[]"
+                                               style="display: none">
+                                        <div style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden">
+                                            {{goods.name}}
+                                        </div>
+                                    </label>
+<!--                                    <div class="text-center">-->
+<!--                                        <div>-->
+<!--                                            <span>上一页</span>-->
+<!--                                            <span>下一页</span>-->
+<!--                                        </div>-->
+<!--                                        <div class="text-muted">{{row_count}}条数据</div>-->
+<!--                                    </div>-->
+                                </div>
+                                <div v-else style="color: #ddd;">请输入商品</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group row">
                     <div class="form-group-label col-sm-2 text-right">

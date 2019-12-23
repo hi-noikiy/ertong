@@ -63,7 +63,7 @@ class DiyController extends Controller
 
         $data = Option::get('overrun', 0, 'admin', [
             'max_picture' => 1,
-            'max_diy' => 20,
+            'max_diy' => 40,
             'over_picture' => 0,
             'over_diy' => 0,
         ]);
