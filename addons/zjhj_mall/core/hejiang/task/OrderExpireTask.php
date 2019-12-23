@@ -13,7 +13,7 @@ class OrderExpireTask extends BaseObject implements \yii\queue\JobInterface
     public $orderId;
     public function execute($queue)
     {
-        echo '开始执行队列'.$this->orderId.PHP_EOL;
+        echo date('Y-m-d H:i:s').'开始执行队列'.$this->orderId.PHP_EOL;
         $order = Order::findOne(
             [
                 'id' => $this->orderId,
@@ -25,9 +25,9 @@ class OrderExpireTask extends BaseObject implements \yii\queue\JobInterface
             $cab = new CabinetPlatForm(null);
             $re = $cab->cancelOrder($order->order_no);
         if ($re['code'] == 0){
-            echo '取消云柜订单成功-'.$order->order_no;
+            echo date('Y-m-d H:i:s').'取消云柜订单成功-'.$order->order_no;
         }else{
-            echo '取消云柜订单失败'.$re['message'].PHP_EOL;
+            echo date('Y-m-d H:i:s').'取消云柜订单失败'.$re['message'].PHP_EOL;
         }
         //}
         $order->save();

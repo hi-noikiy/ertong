@@ -5,15 +5,26 @@ namespace app\models;
 
 
 use app\utils\CurlHelper;
+use phpDocumentor\Reflection\Types\Self_;
 
 class ErpPlatform
 {
+    const USER_NAME = 'ERP01';
+    const PASSWORD = 'ERP01';
+
     private $userName;
     private $password;
+
+    private static $url = [
+        'insert' => 'u8cloud/api/so/saleorder/insert',
+        'query' => 'u8cloud/api/so/saleorder/query',
+        'unapprove' => 'u8cloud/api/so/saleorder/unapprove',
+
+    ];
     public function __construct($userName, $password)
     {
-        $this->userName = $userName;
-        $this->password = $password;
+        $this->userName = Self::USER_NAME;
+        $this->password = md5(self::PASSWORD);
     }
 
     public function getCurl($url, $jsonStr, $authorizToken=null){
