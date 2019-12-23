@@ -144,9 +144,9 @@ class OrderDetailForm extends ApiModel
             $money = "";
         }
         
-        if(!$order->integral){
-            $order->integral = 0;
-        }
+//        if(!$order->integral){
+//            $order->integral = 0;
+//        }
         $cabinet = Cabinet::findOne(['id' => $order->cabinet_id]);
         $cabInfo = [];
         if (!empty($cabinet)){

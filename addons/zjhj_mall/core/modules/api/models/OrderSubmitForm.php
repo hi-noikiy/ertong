@@ -1114,7 +1114,7 @@ class OrderSubmitForm extends OrderData
                         'msg' => $re['message'],
                     ];
                 }
-                \Yii::$app->queue->delay(2)->push(new OrderExpireTask([
+                \Yii::$app->queue->delay(300)->push(new OrderExpireTask([
                     'orderId' => $order->id
                 ]));
 
