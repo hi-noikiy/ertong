@@ -177,7 +177,7 @@ class OrderListForm extends MchModel
             ->limit(1);
 
         $list = $query->limit($pagination->limit)->offset($pagination->offset)->orderBy('o.addtime DESC')
-            ->select(['o.*', 'c.province', 'c.city', 'c.address', 'u.nickname', 'u.platform', 'clerk_name' => $clerkQuery, 'refund' => $refundQuery])->asArray()->all();
+            ->select(['o.id','o.store_id','o.user_id','o.order_no','o.total_price','o.pay_price','o.express_price','o.name','o.mobile','o.address','o.remark','o.is_pay','o.pay_type','o.pay_time','o.is_send','o.send_time','o.express','o.express_no','o.is_confirm','o.confirm_time','o.is_comment','o.apply_delete','o.addtime','o.is_delete','o.is_price','o.parent_id','o.first_price','o.second_price','o.third_price','o.coupon_sub_price','o.content','o.is_offline','o.clerk_id','o.address_data','o.is_cancel','o.offline_qrcode','o.before_update_price','o.shop_id','o.discount','o.user_coupon_id','o.integral','o.give_integral','o.parent_id_1','o.parent_id_2','o.is_sale','o.words','o.version','o.express_price_1','o.mch_id','o.is_recycle','o.seller_comments','o.order_union_id','o.rebate','o.before_update_express','o.is_transfer','o.type','o.share_price','o.is_show','o.currency','o.put_status','o.cabinet_id','o.service_day','o.service_time','o.put_code','o.is_order_confirm', 'c.province', 'c.city', 'c.address', 'u.nickname', 'u.platform', 'clerk_name' => $clerkQuery, 'refund' => $refundQuery])->asArray()->all();
 
         $listArray = ArrayHelper::toArray($list);
         foreach ($listArray as $i => &$item) {
