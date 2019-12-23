@@ -8,6 +8,7 @@
 
 namespace app\modules\api\models\group;
 
+use app\hejiang\task\OrderExpireTask;
 use app\models\Cabinet;
 use app\models\common\api\CommonOrder;
 use app\models\common\CommonFormId;
@@ -548,6 +549,10 @@ class OrderSubmitForm extends ApiModel
                     'msg' => $re['message'],
                 ];
             }
+            \Yii::$app->queue->delay(300)->push(new OrderExpireTask([
+                'orderId' => $order->id,
+                'type' => 'P'
+            ]));
 
             $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 0);
             $res = $printer_order->print_order();

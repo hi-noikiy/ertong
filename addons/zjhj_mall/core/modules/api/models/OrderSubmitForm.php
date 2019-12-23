@@ -1115,7 +1115,8 @@ class OrderSubmitForm extends OrderData
                     ];
                 }
                 \Yii::$app->queue->delay(300)->push(new OrderExpireTask([
-                    'orderId' => $order->id
+                    'orderId' => $order->id,
+                    'type' => 'Nor'
                 ]));
 
                 $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 0);

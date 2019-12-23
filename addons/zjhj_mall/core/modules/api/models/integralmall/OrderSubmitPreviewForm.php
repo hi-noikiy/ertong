@@ -8,6 +8,7 @@
 
 namespace app\modules\api\models\integralmall;
 
+use app\hejiang\task\OrderExpireTask;
 use app\models\Attr;
 use app\models\AttrGroup;
 use app\models\Cabinet;
@@ -496,6 +497,7 @@ class OrderSubmitPreviewForm extends ApiModel
 
                     if ($order_detail->save()) {
                         $re = $this->createOrder($order->order_no, $cabinet->cabinet_id, $dev, $allTotal);
+
                         if ($re['code'] != 0){
                             $t->rollBack();
                             return [
@@ -503,6 +505,10 @@ class OrderSubmitPreviewForm extends ApiModel
                                 'msg' => $re['message'],
                             ];
                         }
+                        \Yii::$app->queue->delay(300)->push(new OrderExpireTask([
+                            'orderId' => $order->id,
+                            'type' => 'G'
+                        ]));
                         if ($this->type == 1) {
                             $user->integral -= $integral;
                             $register = new Register();

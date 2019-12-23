@@ -8,6 +8,7 @@
 
 namespace app\modules\api\models\miaosha;
 
+use app\hejiang\task\OrderExpireTask;
 use app\models\Address;
 use app\models\Attr;
 use app\models\AttrGroup;
@@ -465,6 +466,10 @@ class OrderSubmitForm extends ApiModel
                     'msg' => $re['message'],
                 ];
             }
+            \Yii::$app->queue->delay(300)->push(new OrderExpireTask([
+                'orderId' => $order->id,
+                'type' => 'M'
+            ]));
             $t->commit();
 
             $delay_seconds = $unpaid * 60;
