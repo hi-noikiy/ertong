@@ -37,7 +37,7 @@ $this->title = '模板编辑';
                             <label class="col-form-label">温馨提示：</label>
                         </div>
                         <div class="col-sm-6" style="padding: 0;">
-                            <label class="col-form-label">最多添加<?= $max_diy ? $max_diy : 20 ?>个组件</label>
+                            <label class="col-form-label">最多添加<?= $max_diy ? $max_diy : 40 ?>个组件</label>
                         </div>
                     </div>
                     <?php endif;?>
@@ -201,7 +201,7 @@ $this->title = '模板编辑';
     var SUBMITURL = "<?= $urlManager->createUrl(['mch/diy/diy/edit'])?>";
     var GETURL = "<?= $urlManager->createUrl(['mch/diy/diy/get-nav-banner'])?>";
     var Url = "<?=\Yii::$app->request->hostInfo . $statics?>";
-    var MAX_DIY = <?= $max_diy ? $max_diy : 20 ?>;
+    var MAX_DIY = <?= $max_diy ? $max_diy : 40 ?>;
 </script>
 <script src="<?= Yii::$app->request->baseUrl ?>/statics/mch/js/Sortable.min.js"></script>
 <script src="<?= Yii::$app->request->baseUrl ?>/statics/mch/js/colorpicker.js"></script>

@@ -214,7 +214,7 @@ class CouponController extends Controller
         $query = User::find()->alias('u')->where([
             'AND',
             ['or',['LIKE', 'u.nickname', $keyword],['u.id' => $keyword]],
-            ['store_id' => $this->store->id, 'u.type' => 1],
+            ['store_id' => $this->store->id, 'u.type' => 1,'u.is_delete'=>0],
         ]);
         $list = $query->orderBy('u.nickname')->limit(30)->asArray()->select('id,nickname,avatar_url')->all();
         return [
