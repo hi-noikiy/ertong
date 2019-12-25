@@ -96,7 +96,8 @@ class InvoiceController extends Controller
                 
             }
         }
-        return $result;
+        return new BaseApiResponse($result);
+        // return $result;
     }
     //开蓝票接口
     public function blueInvoice($blueInvoice_arr=array()) {
