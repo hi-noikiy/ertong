@@ -24,6 +24,7 @@ class InvoiceController extends Controller
     //开具电子发票提交form表单页面接口
     public function actionFormSubmit(){
         $modul=\Yii::$app->request->post();
+        return $modul;
         $GMF_MC=$modul['corporate_name'];//公司名称
         $total_sum=$modul['total_sum'];//总价格
         $email=$modul['email'];//邮箱地址
