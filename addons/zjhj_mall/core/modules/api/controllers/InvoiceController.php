@@ -9,7 +9,6 @@ use app\hejiang\BaseApiResponse;
 use app\models\Invoice;
 use app\modules\api\models\InvoiceForm;
 use app\modules\api\models\JWTForm;
-use app\modules\api\behaviors\LoginBehavior;
 
 header('content-type:application/json;charset=utf-8;');
 class InvoiceController extends Controller
