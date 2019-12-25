@@ -16,7 +16,7 @@ class InvoiceController extends Controller
     private static $appid = 'commontesterCA';
     private static $baseUrl = 'https://yesfp.yonyoucloud.com/invoiceclient-web/api/invoiceApply/';
 
-    private static $keyfile='/etc/pki/tls/pro22.pfx';
+    private static $keyfile='/etc/pki/tls/pro22.crt';
 
     private static $blueApi = 'insertWithArray';
     
