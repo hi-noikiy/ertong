@@ -4,8 +4,8 @@
 namespace app\modules\api\controllers;
 
 
-use app\hejiang\BaseApiResponse;
 use app\hejiang\ApiResponse;
+use app\hejiang\BaseApiResponse;
 use app\models\Invoice;
 use app\modules\api\models\InvoiceForm;
 use app\modules\api\models\JWTForm;
@@ -96,7 +96,7 @@ class InvoiceController extends Controller
                 
             }
         }
-        return new BaseApiResponse($result);
+        return new BaseApiResponse($result_arr);
         // return $result;
     }
     //开蓝票接口
