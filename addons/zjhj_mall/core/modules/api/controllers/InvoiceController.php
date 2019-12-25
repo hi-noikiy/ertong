@@ -50,10 +50,10 @@ class InvoiceController extends Controller
         $invoice->addtime=time();
         // return $invoice->save();
         if(!$invoice->save()){
-            return [
+            return new BaseApiResponse([
                 'code'=>1,
                 'msg'=> '提交失败',
-            ];
+            ]);
         }else{
             $id=$invoice->id;
         }
