@@ -149,7 +149,7 @@ class InvoiceController extends Controller
     //查询开票状态
     public function actionStateQuery(){
         $modul=\Yii::$app->request->post();
-        $fpqqlsh=$modul['fpqqlsh'];//订单流水号
+        $fpqqlsh=$modul['order_no'];//订单流水号
         // $fpqqlsh="2018052615511000005";
         $requestdatas =array('fpqqlsh'=>$fpqqlsh);
         $params = array(
