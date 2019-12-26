@@ -163,6 +163,7 @@ class OrderSelfMentionForm extends OrderForm
         $content = json_encode($content, true);
         $order->put_status = $this->status;
         $order->put_code = $this->pickupCode;
+        $order->confirm_time = time();
         \Yii::getLogger()->log($this->status,Logger::LEVEL_WARNING,'input_status');
         $a = [];
         if ($order->save()) {
