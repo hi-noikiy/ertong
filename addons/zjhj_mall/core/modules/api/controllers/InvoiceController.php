@@ -169,7 +169,7 @@ class InvoiceController extends Controller
             )
         );
         $result=self::post($api, $requestdatas, $options);
-        return $result;
+        return new BaseApiResponse($result);
     }
     //发票红冲请求接口
     public function actionSubmitRed(){
