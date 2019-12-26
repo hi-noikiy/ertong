@@ -52,10 +52,6 @@ class InvoiceController extends Controller
         if(!$invoice->save()){
             $error=$invoice->getErrors();
             return new BaseApiResponse($error);
-            return new BaseApiResponse([
-                'code'=>1,
-                'msg'=> '提交失败',
-            ]);
         }else{
             $id=$invoice->id;
         }
@@ -169,7 +165,8 @@ class InvoiceController extends Controller
             )
         );
         $result=self::post($api, $requestdatas, $options);
-        return new BaseApiResponse($result);
+        $result_arr=json_decode($result,true);
+        return new BaseApiResponse($result_arr);
     }
     //发票红冲请求接口
     public function actionSubmitRed(){
@@ -248,7 +245,8 @@ class InvoiceController extends Controller
                 
             }
         }
-        return $result;
+        
+        return new BaseApiResponse($result_arr);
     }
     //发票申请审核通过接口
     public function actionSubmitIssue(){
@@ -293,7 +291,7 @@ class InvoiceController extends Controller
                 // return $invoice->getErrors();
             }
         }
-        return $result;
+        return new BaseApiResponse($result_arr);
     }
     //电子发票部分红冲
     public function actionSubmitPartRed(){
@@ -395,7 +393,7 @@ class InvoiceController extends Controller
                 
             }
         }
-        return $result;
+        return new BaseApiResponse($result_arr);
     }
     //获取发票请求流水号(唯一)
     private function buildFpqqlsh(){
