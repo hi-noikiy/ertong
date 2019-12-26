@@ -16,7 +16,7 @@ class InvoiceController extends Controller
     private static $appid = 'commontesterCA';
     private static $baseUrl = 'https://yesfp.yonyoucloud.com/invoiceclient-web/api/invoiceApply/';
 
-    private static $keyfile='/etc/pki/tls/pro22.crt';
+    private static $keyfile='https://shop.ertongkeji.com/addons/zjhj_mall/core/web/pro22/pro22.pfx';
 
     private static $blueApi = 'insertWithArray';
     
@@ -452,9 +452,9 @@ class InvoiceController extends Controller
     }
     //读取证书私钥
     private function loadPrivateKeyOfCA($file) {
-        if(!file_exists($file)) {
-            throw new \Exception("Error: Cert file $file is not exists.");
-        }
+        // if(!file_exists($file)) {
+        //     throw new \Exception("Error: Cert file $file is not exists.");
+        // }
         if (!$cert_store = file_get_contents($file)) {
             throw new \Exception("Error: Unable to read the cert file $file .");
         }
