@@ -194,9 +194,9 @@ class OrderController extends Controller
         $order = PtOrder::findOne([
             'id' => $id,
             'is_cancel' => 0,
+            'is_delete' => 0,
             'store_id' => $this->store->id,
         ]);
-        return 
         if (!$order) {
             return [
                 'code' => 1,
