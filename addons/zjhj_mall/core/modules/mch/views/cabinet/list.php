@@ -108,6 +108,8 @@ $urlStr = get_plugin_url();
                 <td style="text-align: center;">投放时间</td>
                 <td style="text-align: center;">仓库分类</td>
                 <td style="text-align: center;">投放城市</td>
+                <td style="text-align: center;">经度</td>
+                <td style="text-align: center;">纬度</td>
                 <td style="text-align: center;">类型</td>
                 <td style="text-align: center;">操作</td>
             </tr>
@@ -127,6 +129,12 @@ $urlStr = get_plugin_url();
                     </td>
                     <td class="nowrap" style="text-align: center;">
                         <?= $value['province'] ?>-<?= $value['city'] ?>
+                    </td>
+                    <td class="nowrap" style="text-align: center;">
+                        <?= $value['longitude'] ?>
+                    </td>
+                    <td class="nowrap" style="text-align: center;">
+                        <?= $value['latitude'] ?>
                     </td>
                     <td class="nowrap" style="text-align: center;">
                         <?= $value['cabinet_type'] ?>

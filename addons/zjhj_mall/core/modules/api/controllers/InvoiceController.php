@@ -4,12 +4,11 @@
 namespace app\modules\api\controllers;
 
 
+use app\hejiang\ApiResponse;
 use app\hejiang\BaseApiResponse;
-
 use app\models\Invoice;
 use app\modules\api\models\InvoiceForm;
 use app\modules\api\models\JWTForm;
-use app\modules\api\behaviors\LoginBehavior;
 
 header('content-type:application/json;charset=utf-8;');
 class InvoiceController extends Controller
@@ -17,13 +16,14 @@ class InvoiceController extends Controller
     private static $appid = 'commontesterCA';
     private static $baseUrl = 'https://yesfp.yonyoucloud.com/invoiceclient-web/api/invoiceApply/';
 
-    private static $keyfile='C:/Users/Administrator/Desktop/pro22(1)(1).pfx';
+    private static $keyfile='/etc/pki/tls/pro22.crt';
 
     private static $blueApi = 'insertWithArray';
     
     //开具电子发票提交form表单页面接口
     public function actionFormSubmit(){
         $modul=\Yii::$app->request->post();
+        // return new BaseApiResponse($modul);
         $GMF_MC=$modul['corporate_name'];//公司名称
         $total_sum=$modul['total_sum'];//总价格
         $email=$modul['email'];//邮箱地址
@@ -50,10 +50,12 @@ class InvoiceController extends Controller
         $invoice->addtime=time();
         // return $invoice->save();
         if(!$invoice->save()){
-            return [
+            $error=$invoice->getErrors();
+            return new BaseApiResponse($error);
+            return new BaseApiResponse([
                 'code'=>1,
                 'msg'=> '提交失败',
-            ];
+            ]);
         }else{
             $id=$invoice->id;
         }
@@ -96,7 +98,8 @@ class InvoiceController extends Controller
                 
             }
         }
-        return $result;
+        return new BaseApiResponse($result_arr);
+        // return $result;
     }
     //开蓝票接口
     public function blueInvoice($blueInvoice_arr=array()) {
