@@ -198,6 +198,7 @@ $urlPlatform = Yii::$app->controller->route;
                             data-placement="top"
                             title="<?=  $order_item['seller_comments'] ?>">有备注</span>
                         <?php endif; ?>
+                        <?php if ($order_item['is_cancel']==0) : ?>
                         <span class="mr-1">
                                 <?php if ($order_item['is_pay'] == 1): ?>
                                     <span class="badge badge-success">已付款</span>
@@ -205,7 +206,7 @@ $urlPlatform = Yii::$app->controller->route;
                                     <span class="badge badge-default">未付款</span>
                                 <?php endif; ?>
                             </span>
-                        <?php if ($order_item['is_send'] == 1): ?>
+                        <?php if ($order_item['is_send'] == 1) : ?>
                             <span class="mr-1">
                                 <?php if ($order_item['put_status'] == 1) : ?>
                                     <span class="badge badge-success">配送中</span>
@@ -220,8 +221,8 @@ $urlPlatform = Yii::$app->controller->route;
                                     
                                 <?php endif; ?>
                             </span>
-                        <?php else: ?>
-                            <?php if ($order_item['is_pay'] == 1): ?>
+                        <?php else : ?>
+                            <?php if ($order_item['is_pay'] == 1) : ?>
                                 <span class="mr-1">
                                     <?php if ($order_item['is_send'] == 1) : ?>
                                         <span class="badge badge-success">已发货</span>
@@ -264,6 +265,19 @@ $urlPlatform = Yii::$app->controller->route;
                             <span class="mr-5">
                                 <span class="badge badge-danger">团长</span>
                                 </span>
+                        <?php endif; ?>
+                        <?php if ($order_item['apply_delete'] == 1) : ?>
+                            <span class="mr-1 titleColor">
+                                    申请取消该订单：
+                                <?php if ($order_item['is_delete'] == 0) : ?>
+                                    <span class="badge badge-warning">申请中</span>
+                                <?php else : ?>
+                                    <span class="badge badge-warning">申请成功</span>
+                                <?php endif; ?>
+                                </span>
+                        <?php endif; ?>
+                        <?php else : ?>
+                            <span class="badge badge-success">已取消</span>
                         <?php endif; ?>
                         <?php if ($order_item['apply_delete'] == 2): ?>
                             <?php if ($order_item['is_cancel'] == 0): ?>
